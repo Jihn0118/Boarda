@@ -1,12 +1,11 @@
-# JPA
 spring:
   profiles:
     include: secret
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${prod_database.url}
-    username: ${prod_database.username}
-    password: ${prod_database.password}
+    url: ${dev_database.url}
+    username: ${dev_database.username}
+    password: ${dev_database.password}
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -16,3 +15,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
+server:
+  port: 8081
