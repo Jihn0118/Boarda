@@ -7,11 +7,11 @@ const MoimWrite = () => {
 
   const [moim, setMoim] = useState({
     title: '',
-    createdBy: '',
+    created: '',
     contents: '',
   });
 
-  const { title, createdBy, contents } = moim; //비구조화 할당
+  const { title, created: created, contents } = moim; //비구조화 할당
 
   const onChange = (event) => {
     const { value, name } = event.target; //event.target에서 name과 value만 가져오기
@@ -22,7 +22,7 @@ const MoimWrite = () => {
   };
 
   const saveMoim = async () => {
-    await axios.post(`//localhost:8080/moim`, moim).then((res) => {
+    await axios.post(`//localhost:8081/moim`, moim).then((res) => {
       alert('등록되었습니다.');
       navigate('/moim');
     });
@@ -43,8 +43,8 @@ const MoimWrite = () => {
         <span>작성자</span>
         <input
           type="text"
-          name="createdBy"
-          value={createdBy}
+          name="created"
+          value={created}
           onChange={onChange}
         />
       </div>

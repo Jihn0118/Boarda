@@ -8,7 +8,7 @@ const MoimDetail = () => {
   const [loading, setLoading] = useState(true);
   const [moim, setMoim] = useState({});
   const getMoim = async () => {
-    const resp = await (await axios.get(`//localhost:8080/moim/${idx}`)).data;
+    const resp = await (await axios.get(`//localhost:8081/moim/${idx}`)).data;
     setMoim(resp.data);
     setLoading(false);
   };

@@ -11,7 +11,7 @@ const Moim = ({ idx, title, contents, createdBy }) => {
 
   const deleteMoim = async () => {
     if (window.confirm('게시글을 삭제하시겠습니까?')) {
-      await axios.delete(`//localhost:8080/moim/${idx}`).then((res) => {
+      await axios.delete(`//localhost:8081/moim/${idx}`).then((res) => {
         alert('삭제되었습니다.');
         navigate('/moim');
       });

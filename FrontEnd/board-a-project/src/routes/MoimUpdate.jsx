@@ -4,15 +4,15 @@ import axios from 'axios';
 
 const MoimUpdate = () => {
   const navigate = useNavigate();
-  const { idx } = useParams(); // /update/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
+  const { id: id } = useParams(); // /update/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const [moim, setMoim] = useState({
     idx: 0,
     title: '',
-    createdBy: '',
+    created: '',
     contents: '',
   });
 
-  const { title, createdBy, contents } = moim; //비구조화 할당
+  const { title, created: created, contents } = moim; //비구조화 할당
 
   const onChange = (event) => {
     const { value, name } = event.target; //event.target에서 name과 value만 가져오기
@@ -23,19 +23,19 @@ const MoimUpdate = () => {
   };
 
   const getMoim = async () => {
-    const resp = await (await axios.get(`//localhost:8080/moim/${idx}`)).data;
+    const resp = await (await axios.get(`//localhost:8081/moim/${id}`)).data;
     setMoim(resp.data);
   };
 
   const updateMoim = async () => {
-    await axios.patch(`//localhost:8080/moim`, moim).then((res) => {
+    await axios.patch(`//localhost:8081/moim`, moim).then((res) => {
       alert('수정되었습니다.');
-      navigate('/moim/' + idx);
+      navigate('/moim/' + id);
     });
   };
 
   const backToDetail = () => {
-    navigate('/moim/' + idx);
+    navigate('/moim/' + id);
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const MoimUpdate = () => {
       <br />
       <div>
         <span>작성자</span>
-        <input type="text" name="createdBy" value={createdBy} readOnly={true} />
+        <input type="text" name="createdBy" value={created} readOnly={true} />
       </div>
       <br />
       <div>

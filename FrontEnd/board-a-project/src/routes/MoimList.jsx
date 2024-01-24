@@ -4,12 +4,15 @@ import { Link, navigate } from '@reach/router';
 
 const MoimList = () => {
   const [moimList, setMoimList] = useState([]);
-  const [location, setLocation] = useState('강남구'); // 초기값 설정
+  const [location, setLocation] = useState('서울시 강남구'); // 초기값 설정
 
   const getMoimList = async () => {
     try {
-      const resp = await axios.get(`//localhost:8080/moim/choice?location=${location}`);
-      setMoimList(resp.data.data);
+      console.log(location);
+      console.log()
+      const resp = await axios.get(`//localhost:8081/moim/choice?location=${location}`);
+      console.log(resp.data);
+      setMoimList(resp.data);
       
       const pngn = resp.data.pagination;
       console.log(pngn);
@@ -36,15 +39,15 @@ const MoimList = () => {
       <label>
         Location:
         <select value={location} onChange={(e) => handleLocationChange(e.target.value)}>
-          <option value="강남구">강남구</option>
-          <option value="마포구">마포구</option>
+          <option value="서울시 강남구">강남구</option>
+          <option value="서울시 마포구">마포구</option>
         </select>
       </label>
       
       <ul>
         {moimList.map((moim) => (
-          <li key={moim.idx}>
-            <Link to={`/moim/${moim.idx}`}>{moim.title}</Link>
+          <li key={moim.id}>
+            <Link to={`/moim/${moim.id}`}>{moim.id} {moim.title} {moim.datetime} temp/{moim.number}</Link>
           </li>
         ))}
       </ul>
