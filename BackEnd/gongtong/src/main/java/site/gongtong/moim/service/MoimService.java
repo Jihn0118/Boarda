@@ -1,7 +1,11 @@
 package site.gongtong.moim.service;
 
-import org.springframework.stereotype.Service;
+import site.gongtong.moim.model.Moim;
 
-@Service
-public class MoimService {
+import java.util.List;
+
+public interface MoimService {
+    List<Moim> getMoimList(String location);
+
+    List<Moim> getDeadlineList();
 }
