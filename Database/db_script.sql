@@ -6,9 +6,9 @@ use boarda;
 
 CREATE TABLE `member` (
 	`num`	int	PRIMARY KEY auto_increment,
-	`id`	varchar(50)	NULL,
+	`id`	varchar(50)	UNIQUE,
 	`password`	varchar(200)	NULL,
-	`nickname`	varchar(20)	NULL,
+	`nickname`	varchar(20)	UNIQUE,
 	`birth`	varchar(20)	NULL,
 	`gender`	char(1)	NULL,
 	`profile_image`	text	NULL
@@ -21,7 +21,7 @@ CREATE TABLE `article` (
 	`type`	tinyint	NULL,
 	`title`	varchar(45)	NULL,
 	`content`	text	NULL,
-	`created_at`	timestamp	NULL,
+	`created_at`	timestamp DEFAULT CURRENT_TIMESTAMP ,
 	`status`	char(1)	NULL,
 	`member_id`	int	NOT NULL
 );
@@ -42,10 +42,10 @@ CREATE TABLE `boardgame` (
 
 #DROP TABLE IF EXISTS `chattingroom`;
 
-CREATE TABLE `chattingroom` (
+CREATE TABLE `chatting_room` (
 	`room_id`	int	PRIMARY KEY auto_increment,
 	`room_name`	varchar(50)	NULL,
-	`updated_at`	timestamp	NULL
+	`updated_at`	timestamp	DEFAULT CURRENT_TIMESTAMP
 );
 
 #DROP TABLE IF EXISTS `chatting`;
@@ -54,7 +54,7 @@ CREATE TABLE `chatting` (
 	`chatting_id`	int PRIMARY KEY auto_increment,
 	`room_id`	int	NOT NULL,
 	`member_id`	int	NOT NULL,
-	`entry_time`	timestamp	NULL
+	`entry_time`	timestamp	DEFAULT CURRENT_TIMESTAMP
 );
 
 #DROP TABLE IF EXISTS `message`;
@@ -64,7 +64,7 @@ CREATE TABLE `message` (
 	`room_id`	int	NOT NULL,
 	`member_id`	int	NOT NULL,
 	`content`	text	NULL,
-	`created_at`	timestamp	NULL,
+	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`is_read`	int	NULL
 );
 
@@ -99,12 +99,12 @@ CREATE TABLE `follow` (
 	`follower`	varchar(20)	NOT NULL,
 	`following`	varchar(20)	NOT NULL,
 	`flag`	char(1)	NULL,
-	`created_at`	timestamp	NULL
+	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP
 );
 
 #DROP TABLE IF EXISTS `moimmember`;
 
-CREATE TABLE `moimmember` (
+CREATE TABLE `moim_member` (
 	`mm_id`	int	PRIMARY KEY auto_increment,
 	`member_id`	int	NOT NULL,
 	`moim_id`	int	NOT NULL
@@ -115,7 +115,7 @@ CREATE TABLE `moimmember` (
 CREATE TABLE `review` (
 	`id`	int	PRIMARY KEY auto_increment,
 	`content`	text	NULL,
-	`created_at`	timestamp	NULL,
+	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`rate`	float	NULL,
 	`status`	char(1)	NULL,
 	`member_id`	int	NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE `tag` (
 CREATE TABLE `alarm` (
 	`id`	int	PRIMARY KEY auto_increment,
 	`content`	text	NULL,
-	`created_at`	timestamp	NULL,
+	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`read_at`	tinyint	NULL,
 	`member_num`	int	NOT NULL
 );
@@ -145,11 +145,11 @@ CREATE TABLE `alarm` (
 
 CREATE TABLE `moim` (
 	`id`	int	PRIMARY KEY auto_increment,
-	`status`	char(2)	NULL,
+	`status`	char(1)	NULL,
 	`datetime`	datetime	NULL,
 	`location`	varchar(100)	NULL,
 	`number`	int	NULL,
-	`created_at`	timestamp	NULL,
+	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`title`	varchar(200)	NULL,
 	`content`	text	NULL
 );
@@ -160,7 +160,7 @@ CREATE TABLE `ranking` (
 	`id`	int	PRIMARY KEY auto_increment,
 	`flag`	char(2)	NULL,
 	`num`	int	NULL,
-	`created_at`	timestamp	NULL,
+	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`cafe_id`	int	NOT NULL,
 	`game_id`	int	NOT NULL
 );
@@ -168,7 +168,7 @@ CREATE TABLE `ranking` (
 ALTER TABLE `Chatting` ADD CONSTRAINT `FK_ChattingRoom_TO_Chatting_1` FOREIGN KEY (
 	`room_id`
 )
-REFERENCES `ChattingRoom` (
+REFERENCES `Chatting_Room` (
 	`room_id`
 );
 
@@ -193,3 +193,16 @@ REFERENCES `Chatting` (
 	`member_id`
 );
 
+ALTER TABLE `Moim_Member` ADD CONSTRAINT `FK_Member_TO_MoimMember_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `Member` (
+	`num`
+);
+
+ALTER TABLE `Moim_Member` ADD CONSTRAINT `FK_Moim_TO_MoimMember_1` FOREIGN KEY (
+	`moim_id`
+)
+REFERENCES `Moim` (
+	`id`
+);
