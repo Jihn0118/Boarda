@@ -8,4 +8,8 @@ public interface MoimService {
     List<Moim> getMoimList(String location);
 
     List<Moim> getDeadlineList();
+
+    Integer checkRoom(int userNum);
+
+    void createRoom(Moim moim, int userNum);
 }

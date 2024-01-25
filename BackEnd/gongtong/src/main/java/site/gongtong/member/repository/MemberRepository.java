@@ -6,4 +6,5 @@ import site.gongtong.member.model.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member,Long> {
+    Member findByNum(int num);
 }

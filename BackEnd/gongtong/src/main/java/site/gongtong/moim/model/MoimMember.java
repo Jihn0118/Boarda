@@ -1,16 +1,15 @@
 package site.gongtong.moim.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import site.gongtong.member.model.Member;
 
-@Entity
+@Entity(name="moim_member")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class MoimMember {
 
     @Id
@@ -18,7 +17,11 @@ public class MoimMember {
     @Column(name = "mm_id")
     private Integer id;
 
-    private Integer memberId;
+    @ManyToOne //JOIN
+    @JoinColumn(name = "MEMBER_ID") //FK
+    private Member member;
 
-    private Integer moimId;
+    @ManyToOne // JOIN
+    @JoinColumn(name = "MOIM_ID") //FK
+    private Moim moim;
 }

@@ -33,6 +33,7 @@ public class Moim {
     private String title;           // 모임 제목
 
     private String content;         // 모임 본문
+
 }
 
 
