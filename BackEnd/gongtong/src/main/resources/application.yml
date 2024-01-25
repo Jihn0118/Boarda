@@ -16,6 +16,9 @@ spring:
       hibernate:
         format_sql: true
   security:
+    user:
+      name: user
+      password: 1234
     oauth2:
       client:
         registration:

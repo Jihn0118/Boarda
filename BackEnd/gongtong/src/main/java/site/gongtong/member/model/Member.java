@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Member {
     private String profile_image;
 
     //OAuth 로그인에 사용 -> 따로 만들어야 하나?/
-    private String provider;
-    private String providerId;
+//    private String provider;
+//    private String providerId;
 
 }

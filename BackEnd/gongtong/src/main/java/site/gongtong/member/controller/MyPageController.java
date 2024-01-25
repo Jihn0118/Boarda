@@ -1,10 +1,10 @@
-package site.gongtong.member.controller;
-
-import org.springframework.stereotype.Controller;
-
-@Controller
-public class MyPageController {
-}
+//package site.gongtong.member.controller;
+//
+//import org.springframework.stereotype.Controller;
+//
+//@Controller
+//public class MyPageController {
+//}
 
 /**
  * @Controller
