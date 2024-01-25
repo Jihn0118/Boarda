@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import site.gongtong.member.model.Member;
@@ -17,6 +18,8 @@ import site.gongtong.member.repository.MemberRepository;
 public class MemberController {
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 //    @GetMapping("/checkid")
 //    public String checkId(@RequestParam String id) { //sns x
@@ -46,9 +49,13 @@ public class MemberController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody Member member) { //sns x
-        Member savedMember = memberRepository.save(member);
+        Member savedMember = null;
         ResponseEntity response = null;
         try {
+            String hashPwd = passwordEncoder.encode(member.getPassword());
+            member.setPassword(hashPwd);
+            savedMember = memberRepository.save(member);
+
             if (savedMember.getNum() > 0) {
                 response = ResponseEntity
                         .status(HttpStatus.CREATED)
