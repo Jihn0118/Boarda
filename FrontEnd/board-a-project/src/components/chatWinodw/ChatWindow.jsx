@@ -58,7 +58,6 @@ const ChatWindow = () => {
         <StyledTextField
           label="Type your message"
           value={newMessage}
-          onKeyDown={handleSendMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
         <Button variant="contained" color="primary" onClick={handleSendMessage}>

@@ -6,6 +6,8 @@ import MoimDetail from "./routes/MoimDetail";
 import MoimWrite from "./routes/MoimWrite";
 import MoimUpdate from "./routes/MoimUpdate";
 import ChatButton from "./components/chatButton/ChatButton";
+import WebSocketService from "./util/websocket/WebsocketService";
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
       </Routes>
       <div id="chatting-ing">
         <ChatButton></ChatButton>
+        <button onClick={() => WebSocketService.connect()}>웹소켓열기</button>
       </div>
     </div>
   );

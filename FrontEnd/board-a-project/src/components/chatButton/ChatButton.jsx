@@ -8,7 +8,7 @@ const FloatingChatButton = styled(Button)`
     position: fixed;
     bottom: 1rem;
     right: 1rem;
-    z-index: 1000;
+    z-index: 10;
   }
 `;
 
