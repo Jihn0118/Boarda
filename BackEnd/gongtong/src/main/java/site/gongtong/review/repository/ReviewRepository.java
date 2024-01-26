@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import site.gongtong.review.model.Review;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Integer> {
 }

@@ -19,7 +19,13 @@ public class QReview extends EntityPathBase<Review> {
 
     public static final QReview review = new QReview("review");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final StringPath content = createString("content");
+
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final NumberPath<Float> rate = createNumber("rate", Float.class);
+
+    public final ComparablePath<Character> status = createComparable("status", Character.class);
 
     public QReview(String variable) {
         super(Review.class, forVariable(variable));
