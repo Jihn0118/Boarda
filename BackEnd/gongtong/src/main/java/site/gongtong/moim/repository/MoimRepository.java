@@ -12,7 +12,7 @@ import java.util.List;
 public interface MoimRepository extends JpaRepository<Moim, Integer> {
     List<Moim> getMoimsByLocation(String location);
     //@Query("SELECT m FROM Moim m WHERE (SELECT COUNT(mm) FROM MoimMember mm WHERE mm.moim = m) = m.number - 1")
-    @Query(value = "SELECT * FROM moim m WHERE (SELECT COUNT(*) FROM moimmember mm WHERE mm.moim_id = m.id) = m.number - 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM moim m WHERE (SELECT COUNT(*) FROM moim_member mm WHERE mm.moim_id = m.id) = m.number - 1", nativeQuery = true)
     List<Moim> getMoimsDeadLine();
 
 }

@@ -165,44 +165,44 @@ CREATE TABLE `ranking` (
 	`game_id`	int	NOT NULL
 );
 
-ALTER TABLE `Chatting` ADD CONSTRAINT `FK_ChattingRoom_TO_Chatting_1` FOREIGN KEY (
+ALTER TABLE `chatting` ADD CONSTRAINT `FK_ChattingRoom_TO_Chatting_1` FOREIGN KEY (
 	`room_id`
 )
-REFERENCES `Chatting_Room` (
+REFERENCES `chatting_room` (
 	`room_id`
 );
 
-ALTER TABLE `Chatting` ADD CONSTRAINT `FK_Member_TO_Chatting_1` FOREIGN KEY (
+ALTER TABLE `chatting` ADD CONSTRAINT `FK_Member_TO_Chatting_1` FOREIGN KEY (
 	`member_id`
 )
-REFERENCES `Member` (
+REFERENCES `member` (
 	`num`
 );
 
-ALTER TABLE `Message` ADD CONSTRAINT `FK_Chatting_TO_Message_1` FOREIGN KEY (
+ALTER TABLE `message` ADD CONSTRAINT `FK_Chatting_TO_Message_1` FOREIGN KEY (
 	`room_id`
 )
-REFERENCES `Chatting` (
+REFERENCES `chatting` (
 	`room_id`
 );
 
-ALTER TABLE `Message` ADD CONSTRAINT `FK_Chatting_TO_Message_2` FOREIGN KEY (
+ALTER TABLE `message` ADD CONSTRAINT `FK_Chatting_TO_Message_2` FOREIGN KEY (
 	`member_id`
 )
-REFERENCES `Chatting` (
+REFERENCES `chatting` (
 	`member_id`
 );
 
-ALTER TABLE `Moim_Member` ADD CONSTRAINT `FK_Member_TO_MoimMember_1` FOREIGN KEY (
+ALTER TABLE `moim_member` ADD CONSTRAINT `FK_Member_TO_MoimMember_1` FOREIGN KEY (
 	`member_id`
 )
-REFERENCES `Member` (
+REFERENCES `member` (
 	`num`
 );
 
-ALTER TABLE `Moim_Member` ADD CONSTRAINT `FK_Moim_TO_MoimMember_1` FOREIGN KEY (
+ALTER TABLE `moim_member` ADD CONSTRAINT `FK_Moim_TO_MoimMember_1` FOREIGN KEY (
 	`moim_id`
 )
-REFERENCES `Moim` (
+REFERENCES `moim` (
 	`id`
 );
