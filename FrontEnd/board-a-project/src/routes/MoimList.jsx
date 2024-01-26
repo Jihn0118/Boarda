@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { Link, navigate } from '@reach/router';
+import { useDispatch } from 'react-redux';
+import { setMoimList } from '../actions/moim'
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from "react-modal";
 
@@ -11,14 +12,15 @@ const MoimList = () => {
   const [location, setLocation] = useState('서울시 강남구'); // 초기값 설정
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const getMoimList = async () => {
     try {
       console.log(location);
       console.log()
       const resp = await axios.get(`//localhost:8081/moim/choice?location=${location}`);
+      dispatch(setMoimList(resp.data)); 
       console.log(resp.data);
-      setMoimList(resp.data);
       
       const pngn = resp.data.pagination;
       console.log(pngn);

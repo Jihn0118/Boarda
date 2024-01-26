@@ -3,6 +3,25 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Moim from '../components/Moim';
 
+
+
+// import { useSelector } from 'react-redux';
+
+// // ...
+
+// const MoimDetail = ({ moimId }) => {
+//   const moimList = useSelector(state => state.moim.moimList);
+//   const moim = moimList.find(m => m.id === moimId);
+
+//   // moim 객체를 사용하여 상세 정보 표시
+//   // ...
+// };
+
+
+
+
+
+
 const MoimDetail = () => {
   const { id } = useParams(); // /board/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const [loading, setLoading] = useState(true);
@@ -23,9 +42,9 @@ const MoimDetail = () => {
         <h2>loading...</h2>
       ) : (
         <Moim
-          idx={moim.id}
+          id={moim.id}
           title={moim.title}
-          contents={moim.contents}
+          contents={moim.content}
           createdBy={moim.created}
         />
       )}
