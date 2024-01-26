@@ -22,7 +22,12 @@ function App() {
       <div id="chatting-ing">
         <ChatButton></ChatButton>
         <button onClick={() => WebSocketService.connect()}>웹소켓열기</button>
+        <button onClick={() => {
+          const tmpSocket = new WebSocket("ws://localhost:3000")
+          tmpSocket.onopen = () => console.log("연결됨")
+        }}>웹소켓열기2</button>
       </div>
+
     </div>
   );
 }
