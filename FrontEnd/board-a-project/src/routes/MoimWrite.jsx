@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Calendar from 'react-calendar';
@@ -7,13 +7,13 @@ import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 
 const initialState = {
-  user_id: '',
+  userId: 10,
   title: '',
-  contents: '',
+  content: '',
   number: 2,
-  location: '',
+  location: "서울시 강남구",
   datetime: new Date(),
-  friends: []
+  // friends: []
 };
 
 const moimReducer = (state, action) => {
@@ -36,19 +36,22 @@ const MoimWrite = () => {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState('10:00');
 
-  useEffect(() => {
-    const datetimeStr = `${moment(date).format('YYYY-MM-DD')} ${time}:00`;
-    const datetime = moment(datetimeStr, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
-  
-    dispatch({ type: 'SET_FIELD', fieldName: 'datetime', payload: datetime });
-  }, [date, time]);
-
   const onDateChange = date => {
     setDate(date);
+    dispatch({
+      type: 'SET_FIELD',
+      fieldName: 'datetime',
+      payload: moment(date).format('YYYY-MM-DD') + 'T' + time + ':05',
+    });
   };
 
   const onTimeChange = (timeValue) => {
     setTime(timeValue);
+    dispatch({
+      type: 'SET_FIELD',
+      fieldName: 'datetime',
+      payload: moment(date).format('YYYY-MM-DD') + 'T' + timeValue + ':05',
+    });
   }
 
   const onChange = (event) => {
@@ -61,11 +64,16 @@ const MoimWrite = () => {
 
   const saveMoim = async () => {
     console.log(moim)
-    await axios.post(`//localhost:8081/moim/room`, moim).then((res) => {
+    try{
+      await axios.post(`//localhost:8081/moim/room`, moim).then((res) => {
       alert('등록되었습니다.');
       navigate('/moim');
     });
+    } catch (error) {
+      console.error('모임 저장 중 에러가 발생했습니다:', error);
+    }
   };
+
 
   const backToList = () => {
     navigate('/moim');
@@ -94,7 +102,7 @@ const MoimWrite = () => {
       </div>
       <div>
         날짜:
-        <Calendar onChange={onDateChange} name="datetime" value={moim.datetime} />
+        <Calendar onChange={onDateChange} value={new Date(moim.datetime)} />
         <div className="text-gray-500 mt-4">
            {moment(moim.datetime).format("YYYY년 MM월 DD일")} 
          </div>
@@ -108,10 +116,10 @@ const MoimWrite = () => {
       <div>
         <span>내용</span>
         <textarea
-          name="contents"
+          name="content"
           cols="30"
           rows="10"
-          value={moim.contents}
+          value={moim.content}
           onChange={onChange}
         ></textarea>
       </div>

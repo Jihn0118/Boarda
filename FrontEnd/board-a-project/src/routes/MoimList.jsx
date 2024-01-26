@@ -34,7 +34,7 @@ const MoimList = () => {
   const moveToWrite = () => {
     axios.get('//localhost:8081/moim/checkroom', {
       params: {
-        num: 2
+        num: 11
       }
     })
     .then(function (response) {

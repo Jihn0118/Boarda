@@ -2,16 +2,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Moim = ({ idx, title, contents, createdBy }) => {
+const Moim = ({ id, title, contents, createdBy }) => {
   const navigate = useNavigate();
 
   const moveToUpdate = () => {
-    navigate('/update/' + idx);
+    navigate('/update/' + id);
   };
 
   const deleteMoim = async () => {
     if (window.confirm('게시글을 삭제하시겠습니까?')) {
-      await axios.delete(`//localhost:8081/moim/${idx}`).then((res) => {
+      await axios.delete(`//localhost:8081/moim/${id}`).then((res) => {
         alert('삭제되었습니다.');
         navigate('/moim');
       });
