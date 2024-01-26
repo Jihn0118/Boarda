@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, navigate } from '@reach/router';
+// import { Link, navigate } from '@reach/router';
+import { Link, useNavigate } from 'react-router-dom';
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 const MoimList = () => {
   const [moimList, setMoimList] = useState([]);
   const [location, setLocation] = useState('서울시 강남구'); // 초기값 설정
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const getMoimList = async () => {
     try {
@@ -26,7 +32,22 @@ const MoimList = () => {
   };
 
   const moveToWrite = () => {
-    navigate('/write');
+    axios.get('//localhost:8081/moim/checkroom', {
+      params: {
+        num: 2
+      }
+    })
+    .then(function (response) {
+      console.log("ㅇㅇ" + response.data);
+      if (response.data == 0) {
+        navigate('/write');
+      } else if (response.data == 1) {
+        setModalIsOpen(true);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
 
   useEffect(() => {
@@ -47,11 +68,29 @@ const MoimList = () => {
       <ul>
         {moimList.map((moim) => (
           <li key={moim.id}>
-            <Link to={`/moim/${moim.id}`}>{moim.id} {moim.title} {moim.datetime} temp/{moim.number}</Link>
-          </li>
+          <Link to={`/moim/${moim.id}`}>
+            {moim.id} {moim.title} {moim.datetime} temp/{moim.number}
+          </Link>
+        </li>
         ))}
       </ul>
       <div>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={() => setModalIsOpen(false)}
+          style={{
+            overlay: {
+              backgroundColor: 'rgba(0, 0, 0, 0.5)'
+            },
+            content: {
+              color: 'lightsteelblue'
+            }
+          }}
+        >
+          <h2>알림</h2>
+          <p>이미 참여 중인 모임이 있습니다!</p>
+          <button onClick={() => setModalIsOpen(false)}>확인</button>
+        </Modal>
         <button onClick={moveToWrite}>글쓰기</button>
       </div>
     </div>
