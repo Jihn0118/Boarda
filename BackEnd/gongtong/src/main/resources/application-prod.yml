@@ -1,7 +1,4 @@
 spring:
-  profiles:
-    active: prod
-    include: secret
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${prod_database.url}

@@ -59,6 +59,7 @@ public class MoimServiceImpl implements MoimService {
 
         Moim moim = moimRepository.getMoimById(moimId);
 
+        // TODO 이미 참여한 사람인 지 확인하는 로직 필요!!!
         if(moim == null){
             return false;
         } else if(count == moim.getNumber()) {
