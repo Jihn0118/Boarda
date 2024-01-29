@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { saveMoim } from '../api/moimAPI';
 import Calendar from 'react-calendar';
 import { TimePicker } from 'react-ios-time-picker';
 import 'react-calendar/dist/Calendar.css';
@@ -42,10 +42,10 @@ const MoimWrite = () => {
     }));
   };
 
-  const saveMoim = async () => {
+  const saveMoimData = async () => {
     console.log(moim);
     try {
-      await axios.post(`//www.boarda.site:8080/moim/room`, moim);
+      await saveMoim(moim);
       alert('등록되었습니다.');
       navigate('/moim');
     } catch (error) {
@@ -110,7 +110,7 @@ const MoimWrite = () => {
       </div>
       <br />
       <div>
-        <button onClick={saveMoim}>저장</button>
+      <button onClick={saveMoimData}>저장</button>
         <button onClick={backToList}>취소</button>
       </div>
     </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { moimListState } from '../state/moimState';
+import { joinMoim } from '../api/moimAPI';
 
 const MoimDetail = () => {
   const { id } = useParams();
@@ -13,10 +14,10 @@ const MoimDetail = () => {
     memberId: ''
 };
 
-  const joinMoim = async () => {
+  const joinMoimHandler = async () => {
     console.log(moim);
     try {
-      const response = await axios.post(`//www.boarda.site:8080/moim/join`, join);
+      const response = await joinMoim(join);
       
       if (response.status === 200) { 
         alert('등록되었습니다.');
@@ -47,7 +48,7 @@ const MoimDetail = () => {
       <p>temp/{moim.number}</p>
       <p>{moim.content}</p>
       <br />
-      <button onClick={joinMoim}>참여</button>
+      <button onClick={joinMoimHandler}>참여</button>
       <button onClick={backToList}>취소</button>
     </div>
   );
