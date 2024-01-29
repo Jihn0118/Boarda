@@ -2,20 +2,19 @@ package site.gongtong.review.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import site.gongtong.boardgame.model.BoardGame;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class Tag {
 
     @Id
+    @Column(name="tag_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

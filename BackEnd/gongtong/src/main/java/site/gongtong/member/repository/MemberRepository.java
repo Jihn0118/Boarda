@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Member;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member,Long> {
-    Member findByNum(int num);
+public interface MemberRepository extends JpaRepository<Member,Integer> {
+    Member findMemberByNum(int num);
+    Member findMemberById(String userId);
 }

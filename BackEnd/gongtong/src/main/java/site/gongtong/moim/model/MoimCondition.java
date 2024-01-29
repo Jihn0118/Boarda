@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 // 방 만들기 할 때 필요한 요소를 담은 DTO
 @Getter
 @ToString
-public class MoimConditionDto {
+public class MoimCondition {
     private int userId;     // 모임 방 만든 멤버 id
 
     private String title;   // 모임 방 제목

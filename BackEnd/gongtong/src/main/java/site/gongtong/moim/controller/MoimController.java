@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.gongtong.moim.model.JoinCondition;
 import site.gongtong.moim.model.Moim;
-import site.gongtong.moim.model.MoimConditionDto;
-import site.gongtong.moim.model.MoimJoin;
+import site.gongtong.moim.model.MoimCondition;
 import site.gongtong.moim.service.MoimService;
 
 import java.util.List;
@@ -20,11 +20,14 @@ import java.util.List;
 public class MoimController {
     private final MoimService moimService;
 
-    // 지역명 받고 해당 지역이 있는 모임 방 리스트를 리턴
-    @GetMapping("/choice")
-    public ResponseEntity<List<Moim>> getMoimList(@RequestParam(name="location") String location) {
-        log.info("초이스 들어옴!!");
-        return new ResponseEntity<List<Moim>>(moimService.getMoimList(location), HttpStatus.OK);
+    @GetMapping("/list")
+    public ResponseEntity<List<Moim>> getSortedList(@RequestParam(name="location") String location, @RequestParam(name="sort") int sorting){
+
+        log.info("리스트 정렬 들어옴!!!");
+
+        List<Moim> sortedMoimList = moimService.getSortedMoimList(location, sorting);
+
+        return new ResponseEntity<>(sortedMoimList, HttpStatus.OK);
     }
 
     @GetMapping("/deadline")
@@ -43,17 +46,17 @@ public class MoimController {
     }
 
     @PostMapping("/room")
-    public ResponseEntity<Void> createRoom(@RequestBody MoimConditionDto moimConditionDto){
+    public ResponseEntity<Void> createRoom(@RequestBody MoimCondition moimCondition){
         log.info("방 만들기");
-        log.info(moimConditionDto.toString());
-        int userNum = moimConditionDto.getUserId();
+        log.info(moimCondition.toString());
+        int userNum = moimCondition.getUserId();
 
         Moim moim = Moim.builder()
-                .title(moimConditionDto.getTitle())
-                .content(moimConditionDto.getContent())
-                .number(moimConditionDto.getNumber())
-                .location(moimConditionDto.getLocation())
-                .datetime(moimConditionDto.getDatetime())
+                .title(moimCondition.getTitle())
+                .content(moimCondition.getContent())
+                .number(moimCondition.getNumber())
+                .location(moimCondition.getLocation())
+                .datetime(moimCondition.getDatetime())
                 .status('P')
                 .build();
 
@@ -63,13 +66,16 @@ public class MoimController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Void> joinMoim(@RequestBody MoimJoin moimJoin){
+    public ResponseEntity<Boolean> joinMoim(@RequestBody JoinCondition joinCondition){
         log.info("방에 참여하기");
-        // 멤버 아이디랑 모임 아이디 받아서 
-        // 모임 멤버 객체 만들기
-        return ResponseEntity.ok().build();
+
+        boolean result = moimService.joinRoom(joinCondition.getMoimId(), joinCondition.getMemberId());
+
+        // 이미 꽉 찬 방이면 result가 false, 아니면 result true
+        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
     }
 
+    // TODO 팔로우 기능 생기면 친구 초대 기능(알림만 보내줌) 추가해야 됨.
     @GetMapping("/friend")
     public ResponseEntity<Void> inviteFriend(@RequestParam(name="my_id") int myId, @RequestParam(name="f_id") int friendId, @RequestParam(name="moim_id") int moimId){
         log.info("친구 초대하기");

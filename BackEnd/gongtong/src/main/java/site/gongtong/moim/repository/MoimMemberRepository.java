@@ -16,4 +16,5 @@ public interface MoimMemberRepository extends JpaRepository<MoimMember, Integer>
     @Query("SELECT COUNT(mm) FROM moim_member mm WHERE mm.member.num = :memberId AND mm.moim.status = 'P'")
     Integer countMoimsByMemberIdAndStatus(@Param("memberId") int memberId);
 
+    Integer countMoimMemberByMoim_Id(Integer moimId);
 }
