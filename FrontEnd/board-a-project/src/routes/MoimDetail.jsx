@@ -1,53 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Moim from '../components/Moim';
-
-
-
-// import { useSelector } from 'react-redux';
-
-// // ...
-
-// const MoimDetail = ({ moimId }) => {
-//   const moimList = useSelector(state => state.moim.moimList);
-//   const moim = moimList.find(m => m.id === moimId);
-
-//   // moim 객체를 사용하여 상세 정보 표시
-//   // ...
-// };
-
-
-
-
-
+import { useRecoilValue } from 'recoil';
+import { moimListState } from '../state/moimState';
 
 const MoimDetail = () => {
-  const { id } = useParams(); // /board/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
-  const [loading, setLoading] = useState(true);
-  const [moim, setMoim] = useState({});
-  const getMoim = async () => {
-    const resp = await (await axios.get(`//localhost:8081/moim/${id}`)).data;
-    setMoim(resp.data);
-    setLoading(false);
+  const { id } = useParams();
+  const moimId = parseInt(id, 10); // URL 파라미터는 문자열이므로 숫자로 변환
+  const moimList = useRecoilValue(moimListState);
+  const moim = moimList.find(m => m.id === moimId);
+  const join = {
+    moimId: moimId,
+    memberId: ''
+};
+
+  const joinMoim = async () => {
+    console.log(moim);
+    try {
+      const response = await axios.post(`//www.boarda.site:8080/moim/join`, join);
+      
+      if (response.status === 200) { 
+        alert('등록되었습니다.');
+        navigate('/moim');
+      } else {
+        // 서버에서 정상적인 응답을 주었지만, 요청 자체가 실패한 경우의 로직입니다.
+        console.error('이미 꽊 찬 방입니다.');
+      }
+    } catch (error) {
+      console.error('모임 저장 중 에러가 발생했습니다:', error);
+    }
   };
 
-  useEffect(() => {
-    getMoim();
-  }, []);
+
+  const backToList = () => {
+    navigate('/moim');
+  };
+
+  if (!moim) {
+    return <div>모임 정보를 찾을 수 없습니다.</div>;
+  }
 
   return (
     <div>
-      {loading ? (
-        <h2>loading...</h2>
-      ) : (
-        <Moim
-          id={moim.id}
-          title={moim.title}
-          contents={moim.content}
-          createdBy={moim.created}
-        />
-      )}
+      <h1>{moim.title}</h1>
+      <p>{moim.id}</p>
+      <p>{moim.datetime}</p>
+      <p>temp/{moim.number}</p>
+      <p>{moim.content}</p>
+      <br />
+      <button onClick={joinMoim}>참여</button>
+      <button onClick={backToList}>취소</button>
     </div>
   );
 };

@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { setMoimList } from '../actions/moim'
+import { useRecoilState } from 'recoil';
+import { moimListState, locationState } from '../state/moimState';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from "react-modal";
+import Pagination from "react-js-pagination";
+
 
 Modal.setAppElement("#root");
 
 const MoimList = () => {
-  const [moimList, setMoimList] = useState([]);
-  const [location, setLocation] = useState('서울시 강남구'); // 초기값 설정
+  const [moimList, setMoimList] = useRecoilState(moimListState);
+  const [location, setLocation] = useRecoilState(locationState);
+  const [sort, setSort] = useState('1');
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
+  const [totalItemsCount, setTotalItemsCount] = useState(0);
+  const [activePage, setActivePage] = useState(1);
+  const itemsCountPerPage = 5;
+  
+  
 
   const getMoimList = async () => {
     try {
       console.log(location);
-      console.log()
-      const resp = await axios.get(`//localhost:8081/moim/choice?location=${location}`);
-      dispatch(setMoimList(resp.data)); 
+      console.log(sort);
+
+      const resp = await axios.get(`//www.boarda.site:8080/moim/list?location=${location}&sort=${sort}`);
+      setMoimList(resp.data);
       console.log(resp.data);
       
-      const pngn = resp.data.pagination;
-      console.log(pngn);
+      // 만약 페이지네이션 정보를 상태로 관리해야 한다면, recoil 상태에 추가하세요.
     } catch (error) {
       console.error('데이터를 가져오는 중 에러 발생:', error);
     }
@@ -33,8 +41,18 @@ const MoimList = () => {
     setLocation(selectedLocation); // 햄버거 메뉴에서 선택한 값으로 location 업데이트
   };
 
+  const handleSortChange = (selectedSort) => {
+    setSort(selectedSort); // 정렬 방식 선택 시 sort 상태 업데이트
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
+
+  const currentMoimList = moimList.slice((activePage - 1) * itemsCountPerPage, activePage * itemsCountPerPage);
+
   const moveToWrite = () => {
-    axios.get('//localhost:8081/moim/checkroom', {
+    axios.get('//www.boarda.site:8080/moim/checkroom', {
       params: {
         num: 11
       }
@@ -54,11 +72,14 @@ const MoimList = () => {
 
   useEffect(() => {
     getMoimList(); // 초기 렌더링 시 API 요청
-  }, [location]); // location 값이 변경될 때마다 API 요청
+  }, [location, sort]); // location 값이 변경될 때마다 API 요청
+
+  useEffect(() => {
+    setTotalItemsCount(moimList.length);
+  }, [moimList]);
 
   return (
     <div>
-      {/* 햄버거 메뉴로 선택지 제공 */}
       <label>
         Location:
         <select value={location} onChange={(e) => handleLocationChange(e.target.value)}>
@@ -66,9 +87,18 @@ const MoimList = () => {
           <option value="서울시 마포구">마포구</option>
         </select>
       </label>
+      < br/>
+      <label>
+        정렬:
+        <select value={sort} onChange={(e) => handleSortChange(e.target.value)}>
+          <option value="1">최신순</option>
+          <option value="2">마감임박순</option>
+          <option value="3">모집일시</option>
+        </select>
+      </label>
       
       <ul>
-        {moimList.map((moim) => (
+        {currentMoimList.map((moim) => (
           <li key={moim.id}>
           <Link to={`/moim/${moim.id}`}>
             {moim.id} {moim.title} {moim.datetime} temp/{moim.number}
@@ -76,6 +106,16 @@ const MoimList = () => {
         </li>
         ))}
       </ul>
+
+      <Pagination
+        activePage={activePage}
+        itemsCountPerPage={itemsCountPerPage}
+        totalItemsCount={totalItemsCount} // 전체 아이템의 수, API 응답에서 가져올 수 있음
+        pageRangeDisplayed={5} // 한 번에 보여줄 페이지 번호의 수
+        onChange={handlePageChange}
+      />
+
+
       <div>
         <Modal
           isOpen={modalIsOpen}

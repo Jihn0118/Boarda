@@ -23,12 +23,12 @@ const MoimUpdate = () => {
   };
 
   const getMoim = async () => {
-    const resp = await (await axios.get(`//localhost:8081/moim/${id}`)).data;
+    const resp = await (await axios.get(`//www.boarda.site:8080/moim/${id}`)).data;
     setMoim(resp.data);
   };
 
   const updateMoim = async () => {
-    await axios.patch(`//localhost:8081/moim`, moim).then((res) => {
+    await axios.patch(`//www.boarda.site:8080/moim`, moim).then((res) => {
       alert('수정되었습니다.');
       navigate('/moim/' + id);
     });
