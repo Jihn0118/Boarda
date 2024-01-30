@@ -32,10 +32,10 @@ export const saveMoim = async (moim) => {
 };
 
 export const joinMoim = async (join) => {
-    console.log(moim);
+    console.log(join);
     try {
       const response = await axios.post(`//www.boarda.site:8080/moim/join`, join);
-      return response.status;
+      return response.data;
     } catch (error) {
       console.error('모임 저장 중 에러가 발생했습니다:', error);
     }
