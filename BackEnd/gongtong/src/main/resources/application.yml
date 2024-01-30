@@ -4,9 +4,9 @@ spring:
     active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${dev_database.url}
-    username: ${dev_database.username}
-    password: ${dev_database.password}
+    url: ${database.dev.url}
+    username: ${database.dev.username}
+    password: ${database.dev.password}
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
