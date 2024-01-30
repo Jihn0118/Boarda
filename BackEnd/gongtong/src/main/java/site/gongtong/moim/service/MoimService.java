@@ -12,7 +12,7 @@ public interface MoimService {
 
     Integer checkRoom(int userNum);
 
-    void createRoom(Moim moim, int userNum);
+    Integer createRoom(Moim moim, int userNum);
 
-    boolean joinRoom(int moimId, String memberId);
+    Integer joinRoom(int moimId, String memberId);
 }

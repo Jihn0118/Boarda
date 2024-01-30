@@ -25,6 +25,8 @@ public class QMoim extends EntityPathBase<Moim> {
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
+    public final StringPath leaderNickname = createString("leaderNickname");
+
     public final StringPath location = createString("location");
 
     public final NumberPath<Integer> number = createNumber("number", Integer.class);

@@ -53,7 +53,7 @@ dependencies {
 
 // QueryDsl 빌드 옵션 (선택)
 // QueryDsl 디렉토리 경로
-def querydslDir = "/generated/querydsl"
+def querydslDir = "src/main/generated"
 
 // 경로 추가 >> QueryDsl 소스 코드 컴파일 시 빌드
 sourceSets {

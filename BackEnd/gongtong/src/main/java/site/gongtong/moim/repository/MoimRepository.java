@@ -10,14 +10,4 @@ import java.util.List;
 
 @Repository
 public interface MoimRepository extends JpaRepository<Moim, Integer> {
-    //@Query("SELECT m FROM Moim m WHERE (SELECT COUNT(mm) FROM MoimMember mm WHERE mm.moim = m) = m.number - 1")
-    @Query(value = "SELECT * FROM moim m WHERE (SELECT COUNT(*) FROM moim_member mm WHERE mm.moim_id = m.id) = m.number - 1", nativeQuery = true)
-    List<Moim> getMoimsDeadLine();
-
-    Moim getMoimById(int moimId);
-
-    List<Moim> findByLocationAndStatusOrderByIdDesc(String location, Character status);
-
-    List<Moim> findByLocationAndStatusOrderByDatetime(String location, Character status);
-
 }

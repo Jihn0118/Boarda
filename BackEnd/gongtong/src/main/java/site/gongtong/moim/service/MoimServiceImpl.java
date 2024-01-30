@@ -1,11 +1,15 @@
 package site.gongtong.moim.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.MemberRepository;
 import site.gongtong.moim.model.Moim;
+import site.gongtong.moim.model.MoimDto;
 import site.gongtong.moim.model.MoimMember;
+import site.gongtong.moim.repository.MoimCustomRepository;
+import site.gongtong.moim.repository.MoimMemberCustomRepository;
 import site.gongtong.moim.repository.MoimMemberRepository;
 import site.gongtong.moim.repository.MoimRepository;
 
@@ -13,93 +17,126 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MoimServiceImpl implements MoimService {
     private final MoimRepository moimRepository;
     private final MoimMemberRepository moimMemberRepository;
+    private final MoimCustomRepository moimCustomRepository;
+    private final MoimMemberCustomRepository moimMemberCustomRepository;
     private final MemberRepository memberRepository;
 
     @Override
     public List<Moim> getDeadlineList() {
-        return moimRepository.getMoimsDeadLine();
+        return moimCustomRepository.findAllDeadLine();
     }
 
     // 모임멤버 테이블에서 내 userNum 검색해서 모임id 리스트 가져오고
     // 가져온 걸로 모임 레포 뒤져서 진행중인 모임 있으면 Integer 리턴
     @Override
     public Integer checkRoom(int userNum) {
-        return moimMemberRepository.countMoimsByMemberIdAndStatus(userNum);
+        return moimMemberCustomRepository.countMoimsByMemberIdAndStatus(userNum);
     }
 
     @Override
-    public void createRoom(Moim moim, int userNum) {
-        Moim saveMoim = moimRepository.save(moim);
-
+    public Integer createRoom(Moim moim, int userNum) {
         Member member = memberRepository.findMemberByNum(userNum);
 
-        if(saveMoim != null && member != null){
+        if(member == null){
+            return 1;
+        }
+
+        moim.setLeaderNickname(member.getNickname());
+
+        Moim saveMoim = moimRepository.save(moim);
+
+        if (saveMoim != null) {
             MoimMember saveMoimMember = MoimMember.builder()
                     .member(member)
                     .moim(saveMoim)
                     .build();
 
             moimMemberRepository.save(saveMoimMember);
+            return 0;
         } else {
             System.out.println("에러");
+            return 2;
             // exception 던져서 에외 화면 나오게?
         }
     }
 
     @Override
-    public boolean joinRoom(int moimId, String memberId) {
-        // 모임 id 가지고 카운트 세서 moim의 최대 인원과 비교해서 -1 차이면 status 바꾸고,
-        // 최대 인원과 같으면 참여 불가
-        // else 참여
-        int count = moimMemberRepository.countMoimMemberByMoim_Id(moimId);
+    public Integer joinRoom(int moimId, String memberId) {
+        int count = moimMemberCustomRepository.countMoimMemberByMoimId(moimId);
 
-        Moim moim = moimRepository.getMoimById(moimId);
+        Moim moim = moimCustomRepository.findById(moimId);
 
-        // TODO 이미 참여한 사람인 지 확인하는 로직 필요!!!
-        if(moim == null){
-            return false;
-        } else if(count == moim.getNumber()) {
-            return false;
-        } else if(count + 1 == moim.getNumber()){
+        Member addMember = memberRepository.findMemberById(memberId);
+
+        if (moim == null) {
+            return 1;
+        } else if(addMember == null){
+            return 2;
+        }
+
+        MoimMember existedMoimMember = moimMemberCustomRepository.findMoimMemberByMoimAndMember(moim, addMember);
+
+        if (count == moim.getNumber()) {
+            return 3;
+        } else if (existedMoimMember != null) {// 이미 모임에 참여한 사람인 지 확인
+            return 4;
+        } else if (count + 1 == moim.getNumber()) {
             moim.setNumber(count + 1);
             moim.setStatus('S');
             moimRepository.save(moim);
             // ToDo: 꽉 찼으니 모임 멤버 모두에게 알림 보내는 로직도 추가해야 함
         }
 
-        Member addMember = memberRepository.findMemberById(memberId);
+        MoimMember addMoimMember = MoimMember.builder()
+                .moim(moim)
+                .member(addMember)
+                .build();
 
-        if(addMember != null){
-            MoimMember addMoimMember = MoimMember.builder()
-                    .moim(moim)
-                    .member(addMember)
-                    .build();
+        moimMemberRepository.save(addMoimMember);
 
-            moimMemberRepository.save(addMoimMember);
-            return true;
-        } else {
-            return false;
-        }
+        return 0;
     }
 
     @Override
-    public List<Moim> getSortedMoimList(String location,int sorting) {
+    public List<Moim> getSortedMoimList(String location, int sorting) {
 
         List<Moim> list = new ArrayList<>();
 
         // 마감임박순 정렬
-        if(sorting == 2){           // 마감임박순 정렬
-            //list = moimRepository.
-        } else if(sorting == 3){    // 모집일시 정렬
-            list = moimRepository.findByLocationAndStatusOrderByDatetime(location, 'P');
+        if (sorting == 2) {           // 마감임박순 정렬
+            list = moimCustomRepository.getMoimWithMemberCountOrder();
+        } else if (sorting == 3) {    // 모집일시 정렬
+            list = moimCustomRepository.findByLocationAndStatusOrderByDatetime(location, 'P');
         } else {                    // 최신순 정렬
-            list = moimRepository.findByLocationAndStatusOrderByIdDesc(location, 'P');
+            list = moimCustomRepository.findByLocationAndStatusOrderByIdDesc(location, 'P');
         }
 
         return list;
+    }
+
+    public List<MoimDto> convertToMoimDto(List<Moim> moimList){
+        List<MoimDto> dtoList = new ArrayList<>();
+
+        for(int i = 0; i < moimList.size(); i++){
+            Moim moim = moimList.get(i);
+            MoimDto dto = MoimDto.builder()
+                    .moimId(moim.getId())
+                    .leaderNickname(moim.getLeaderNickname())
+                    .title(moim.getTitle())
+                    .content(moim.getContent())
+                    .number(moim.getNumber())
+                    .location(moim.getLocation())
+                    .datetime(moim.getDatetime())
+                    //  TODO 이거 어떻게 해야할 지 생각
+                    //   .currentNumber()
+                    .build();
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 }

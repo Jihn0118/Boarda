@@ -24,6 +24,9 @@ public class Moim {
     //진행 = P, 성공 = S, 실패 = F
     private Character status;       // 모임 상태
 
+    @Column(name="leader_nickname")
+    private String leaderNickname;
+
     private LocalDateTime datetime; // 모임 일시
 
     private String location;        // 모임 지역

@@ -15,7 +15,7 @@ public class Member {
     private Integer num;
 
     @Column(unique = true)
-    private String id;
+    private String id;          // email
 
     private String password;
 
