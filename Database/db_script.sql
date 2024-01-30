@@ -146,6 +146,7 @@ CREATE TABLE `alarm` (
 CREATE TABLE `moim` (
 	`id`	int	PRIMARY KEY auto_increment,
 	`status`	char(1)	NULL,
+	`leader_nickname`	varchar(20)	NULL,
 	`datetime`	datetime	NULL,
 	`location`	varchar(100)	NULL,
 	`number`	int	NULL,
