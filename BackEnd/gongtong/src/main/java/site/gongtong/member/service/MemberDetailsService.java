@@ -20,7 +20,7 @@ public class MemberDetailsService implements UserDetailsService {
     public MemberDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findById(username)
                 .orElseThrow(() -> {
-                    return new UsernameNotFoundException("해당 유저를 찾을 수 없습니다.");
+                    return new UsernameNotFoundException("Cannot find the input Member");
                 });
         return new MemberDetails(member);
     }
