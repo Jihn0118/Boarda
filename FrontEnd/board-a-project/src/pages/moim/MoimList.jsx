@@ -5,6 +5,8 @@ import { moimListState, locationState } from '../../recoil/atoms/moimState';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from "react-modal";
 import Pagination from "react-js-pagination";
+import { Outlet } from 'react-router-dom';
+
 
 
 Modal.setAppElement("#root");
@@ -79,7 +81,7 @@ const MoimList = () => {
     const data = await checkRoom(11);
     console.log("ㅇㅇ" + data);
     if (data === 0) {
-      navigate('/moim/make');
+      navigate('/moim/list/make');
     } else if (data === 1) {
       setModalIsOpen(true);
     }
@@ -150,6 +152,7 @@ const MoimList = () => {
         </Modal>
         <button onClick={moveToMake}>글쓰기</button>
       </div>
+      <Outlet></Outlet>
     </div>
   );
 };
