@@ -37,7 +37,7 @@ public class SignUpRequest { //회원가입 리퀘스트용
                 .nickname(this.nickname)
                 .birth(this.birth)
                 .gender(this.gender)
-                .profile_image(this.profile_image)
+                .profileImage(this.profile_image)
                 .build();
     }
 }

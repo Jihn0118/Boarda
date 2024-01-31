@@ -1,21 +1,27 @@
 package site.gongtong.member.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import site.gongtong.member.config.JwtTokenProvider;
 import site.gongtong.member.config.MemberDetails;
 import site.gongtong.member.dto.LoginRequest;
 import site.gongtong.member.dto.SignUpRequest;
+import site.gongtong.member.filter.LoginAuthenticationFilter;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.member.service.MemberService;
@@ -24,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @Controller
 @RequestMapping("/member")
 @Slf4j
@@ -35,6 +42,8 @@ public class MemberController {
     MemberService memberService;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/checkid")
     public ResponseEntity<String> checkId(@RequestParam String id) { //sns x
@@ -130,9 +139,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest loginRequest) { //sns x
-
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        HttpStatus status;
         ResponseEntity<Map<String, Object>> response;
 
         MemberDetails dbMember ;
@@ -166,9 +173,11 @@ public class MemberController {
         }
         else { //잘 되면 resultMap에 유저 정보 넣고
             resultMap.put("message", "로그인 성공");
-            System.out.println(dbMember.getPassword()+" : "+passwordEncoder.encode(loginRequest.getPassword()) );
             resultMap.put("dbMember", dbMember);
-              System.out.println("success login" + " : " +dbMember);
+//            resultMap.put("token", 토큰); !!!!!!!!!!!!!!!!!!!!!!!
+            //토큰 갖다 붙이기 (Username~~Token)
+
+
             response = ResponseEntity
                     .status(HttpStatus.OK)
                     .body(resultMap);
@@ -189,29 +198,4 @@ public class MemberController {
             return null;
         }
     }
-
-
-
-//    @PostMapping("/findpwd")
-//    public String findpwd(@RequestParam String id) { //sns x
-//        //있으면
-//        //임시 비번 이메일 ! 헐!
-//
-//        //없으면
-//        //invalid 쏘기
-//        return"";
-//    }
-
-//    public sendEmailWithTempPwd(){} //sns x
-
-//    @PutMapping("/modifypwd")
-//    public String modifypwd(@RequestParam String id, @RequestParam String newPassword) { //sns x
-//        //오케이
-//
-//        //기존과 동일하면
-//        //기존과 동일하면 안 됨
-//        return "";
-//    }
-
-//    public checkNewPwd() {} //sns x
 }

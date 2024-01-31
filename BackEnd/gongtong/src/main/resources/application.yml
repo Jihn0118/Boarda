@@ -16,6 +16,7 @@ spring:
       hibernate:
         format_sql: true
   security:
+    debug: true
     user:
       name: user
       password: 1234
@@ -29,9 +30,6 @@ spring:
               - email
               - profile
               -
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    cache: false
+
 server:
   port: 8081

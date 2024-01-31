@@ -43,7 +43,7 @@ public class MemberService {
         return member;
     }
 
-    public Member getLoginUserById(String id) { //인증, 인가 시 사용
+    public Member getLoginMemberById(String id) { //인증, 인가 시 사용
         if(id == null) return null; //로그아웃 상태
         Optional<Member> optionalMember = memberRepository.findById(id);
         if(optionalMember.isEmpty()) return null;

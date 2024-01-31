@@ -40,7 +40,7 @@ public class MemberDetails implements UserDetails {
     }
 
     public String getProfileImage() {
-        return member.getProfile_image();
+        return member.getProfileImage();
     }
 
     @Override

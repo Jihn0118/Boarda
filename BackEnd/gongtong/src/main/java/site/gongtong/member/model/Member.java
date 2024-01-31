@@ -28,7 +28,7 @@ public class Member {
 
     private Character gender; //'W' 또는 'M'
 
-    private String profile_image;
+    private String profileImage;
 
     //OAuth 로그인에 사용 -> 따로 만들어야 하나?/
 //    private String provider;
