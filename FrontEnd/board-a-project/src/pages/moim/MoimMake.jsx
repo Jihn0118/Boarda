@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { saveMoim } from '../api/moimAPI';
+import { saveMoim } from '../../api/moimAPI'
 import Calendar from 'react-calendar';
 import { TimePicker } from 'react-ios-time-picker';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import { useRecoilState } from 'recoil';
-import { moimState } from '../state/moimState';
-import { locationState } from '../state/moimState';
+import { moimState } from '../../recoil/atoms/moimState';
+import { locationState } from '../../recoil/atoms/moimState';
 
 
-const MoimWrite = () => {
+const MoimMake = () => {
   const navigate = useNavigate();
   const [moim, setMoim] = useRecoilState(moimState);
   const [location] = useRecoilState(locationState);
@@ -47,14 +47,14 @@ const MoimWrite = () => {
     try {
       await saveMoim(moim);
       alert('등록되었습니다.');
-      navigate('/moim');
+      navigate('/moim/list');
     } catch (error) {
       console.error('모임 저장 중 에러가 발생했습니다:', error);
     }
   };
 
   const backToList = () => {
-    navigate('/moim');
+    navigate('/moim/list');
   };
 
   useEffect(() => {
@@ -117,4 +117,4 @@ const MoimWrite = () => {
   );
 };
 
-export default MoimWrite;
+export default MoimMake;

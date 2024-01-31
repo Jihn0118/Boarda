@@ -1,20 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import Header from "./layout/Header";
-import Footer from "./layout/Footer";
-import { BrowserRouter } from "react-router-dom";
-import { RecoilRoot } from 'recoil'; // Recoil을 사용하기 위해 RecoilRoot를 import합니다.
+// import React from 'react'
+// import ReactDOM from 'react-dom/client'
+// import App from './App.jsx'
+// import Header from './components/Header.jsx';
+// import Footer from './components/Footer.jsx'
+// import { RecoilRoot } from 'recoil';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <React.StrictMode>
+//     <RecoilRoot>
+//       <Header />
+//       <App />
+//       <Footer />
+//     </RecoilRoot>
+//   </React.StrictMode>,
+// )
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import { RecoilRoot } from 'recoil';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RecoilRoot>
-      <BrowserRouter>
-        <Header />
-        <App />
-        <Footer />
-      </BrowserRouter>
+      <App />
     </RecoilRoot>
-  </React.StrictMode>
-);
+  </React.StrictMode>,
+)

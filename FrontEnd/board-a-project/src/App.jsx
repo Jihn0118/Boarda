@@ -1,21 +1,31 @@
-import { Route, Routes } from 'react-router-dom';
-import MoimList from './routes/MoimList';
-import Home from './routes/Home';
-import React from 'react';
-import MoimDetail from './routes/MoimDetail';
-import MoimWrite from './routes/MoimWrite';
-import GameList from './routes/GameList';
+import React from "react";
 
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/moim" element={<MoimList />} />
-      <Route path="/moim/:id" element={<MoimDetail />} />
-      <Route path="/write" element={<MoimWrite />} />
-      <Route path="/game" element={<GameList />} />
-    </Routes>
-  );
+import routes from "./routes/routes";
+import { RouterProvider } from "react-router-dom";
+
+export default function App() {
+  return(
+  <RouterProvider router={routes}>
+    <div>App afsdsa</div>
+  </RouterProvider>);
 }
 
-export default App;
+// import React from "react";
+// import routes from "./routes/routes";
+// import Header from './components/Header.jsx';
+// import Footer from './components/Footer.jsx';
+// import { BrowserRouter as Router } from 'react-router-dom';  // 불러오기 추가
+
+// export default function App() {
+//   return(
+//     <div>
+//       <Header />
+//       <Router>
+//         <RouterProvider routes={routes}>
+//           <div>App afsdsa</div>
+//         </RouterProvider>
+//       </Router>
+//       <Footer />
+//     </div>
+//   );
+// }

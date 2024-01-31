@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { moimListState } from '../state/moimState';
-import { joinMoim } from '../api/moimAPI';
+import { moimListState } from '../../recoil/atoms/moimState'; 
+import { joinMoim } from '../../api/moimAPI';
 
 const MoimDetail = () => {
   const { id } = useParams();
@@ -22,7 +22,7 @@ const MoimDetail = () => {
       console.log(response)
       if (response) { 
         alert('등록되었습니다.');
-        navigate('/moim');
+        navigate('/moim/list');
       } else {
         // 서버에서 정상적인 응답을 주었지만, 요청 자체가 실패한 경우의 로직입니다.
         alert('이미 꽊 찬 방입니다.')
@@ -35,7 +35,7 @@ const MoimDetail = () => {
 
 
   const backToList = () => {
-    navigate('/moim');
+    navigate('/moim/list');
   };
 
   if (!moim) {

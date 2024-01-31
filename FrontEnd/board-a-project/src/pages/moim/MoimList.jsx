@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { getMoimList, checkRoom } from '../api/moimAPI';
-import { moimListState, locationState } from '../state/moimState';
+import { getMoimList, checkRoom } from '../../api/moimAPI';
+import { moimListState, locationState } from '../../recoil/atoms/moimState';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from "react-modal";
 import Pagination from "react-js-pagination";
@@ -75,11 +75,11 @@ const MoimList = () => {
   //   });
   // };
 
-  const moveToWrite = async () => {
+  const moveToMake = async () => {
     const data = await checkRoom(11);
     console.log("ㅇㅇ" + data);
     if (data === 0) {
-      navigate('/write');
+      navigate('/moim/make');
     } else if (data === 1) {
       setModalIsOpen(true);
     }
@@ -115,7 +115,7 @@ const MoimList = () => {
       <ul>
         {currentMoimList.map((moim) => (
           <li key={moim.id}>
-          <Link to={`/moim/${moim.id}`}>
+          <Link to={`/moim/list/${moim.id}`}>
             {moim.id} {moim.title} {moim.datetime} temp/{moim.number}
           </Link>
         </li>
@@ -148,7 +148,7 @@ const MoimList = () => {
           <p>이미 참여 중인 모임이 있습니다!</p>
           <button onClick={() => setModalIsOpen(false)}>확인</button>
         </Modal>
-        <button onClick={moveToWrite}>글쓰기</button>
+        <button onClick={moveToMake}>글쓰기</button>
       </div>
     </div>
   );
