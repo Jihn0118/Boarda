@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { getMoimList, checkRoom } from '../../api/moimAPI';
 import { moimListState, locationState } from '../../recoil/atoms/moimState';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Modal from "react-modal";
+import MoimDetailModal from './MoimDetailModal';
+import MoimMakeModal from './MoimMakeModal';
 import Pagination from "react-js-pagination";
-import { Outlet } from 'react-router-dom';
-
 
 
 Modal.setAppElement("#root");
@@ -17,27 +17,16 @@ const MoimList = () => {
   const [sort, setSort] = useState('1');
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
+  const location2 = useLocation();
+
+  const [detailModalIsOpen, setDetailModalIsOpen] = useState(false);
+  const [selectedMoimId, setSelectedMoimId] = useState(null);
+
+  const [makeModalIsOpen, setMakeModalIsOpen] = useState(false);
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const itemsCountPerPage = 5;
-  
-  
-
-  // const getMoimList = async () => {
-  //   try {
-  //     console.log(location);
-  //     console.log(sort);
-
-  //     const resp = await axios.get(`//www.boarda.site:8080/moim/list?location=${location}&sort=${sort}`);
-  //     setMoimList(resp.data);
-  //     console.log(resp.data);
-      
-  //     // 만약 페이지네이션 정보를 상태로 관리해야 한다면, recoil 상태에 추가하세요.
-  //   } catch (error) {
-  //     console.error('데이터를 가져오는 중 에러 발생:', error);
-  //   }
-  // };
 
   const getMoimListData = async () => {
     const data = await getMoimList(location, sort);
@@ -52,30 +41,32 @@ const MoimList = () => {
     setSort(selectedSort); // 정렬 방식 선택 시 sort 상태 업데이트
   };
 
+  const openDetailModal = (moimId) => {
+    if (!detailModalIsOpen) {
+      setSelectedMoimId(moimId);
+      setDetailModalIsOpen(true);
+    } else {
+      console.log('Modal is already open');
+    }
+  };
+
+  const closeDetailModal = () => {
+    setDetailModalIsOpen(false);
+  };
+
+  const openMakeModal = () => {
+    setMakeModalIsOpen(true);
+  };
+
+  const closeMakeModal = () => {
+    setMakeModalIsOpen(false);
+  };
+
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
 
   const currentMoimList = moimList.slice((activePage - 1) * itemsCountPerPage, activePage * itemsCountPerPage);
-
-  // const moveToWrite = () => {
-  //   axios.get('//www.boarda.site:8080/moim/checkroom', {
-  //     params: {
-  //       num: 11
-  //     }
-  //   })
-  //   .then(function (response) {
-  //     console.log("ㅇㅇ" + response.data);
-  //     if (response.data == 0) {
-  //       navigate('/write');
-  //     } else if (response.data == 1) {
-  //       setModalIsOpen(true);
-  //     }
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-  // };
 
   const moveToMake = async () => {
     const data = await checkRoom(11);
@@ -88,8 +79,11 @@ const MoimList = () => {
   };
 
   useEffect(() => {
-    getMoimListData(); // 초기 렌더링 시 API 요청
-  }, [location, sort]); // location 값이 변경될 때마다 API 요청
+    getMoimListData();
+    if (location2.state?.updated){
+      getMoimListData(); 
+    }
+  }, [location2, location, sort]); // location 값이 변경될 때마다 API 요청
 
   useEffect(() => {
     setTotalItemsCount(moimList.length);
@@ -117,12 +111,20 @@ const MoimList = () => {
       <ul>
         {currentMoimList.map((moim) => (
           <li key={moim.id}>
-          <Link to={`/moim/list/${moim.id}`}>
-            {moim.id} {moim.title} {moim.datetime} temp/{moim.number}
-          </Link>
+          <button onClick={() => openDetailModal(moim.id)}>
+            {moim.id} {moim.title} {moim.datetime} {moim.currentNumber}/{moim.number}
+          </button>
         </li>
         ))}
       </ul>
+
+      {selectedMoimId && (
+        <MoimDetailModal
+          moimId={selectedMoimId}
+          isOpen={detailModalIsOpen}
+          onRequestClose={closeDetailModal}
+        />
+      )}
 
       <Pagination
         activePage={activePage}
@@ -150,9 +152,12 @@ const MoimList = () => {
           <p>이미 참여 중인 모임이 있습니다!</p>
           <button onClick={() => setModalIsOpen(false)}>확인</button>
         </Modal>
-        <button onClick={moveToMake}>글쓰기</button>
+        <button onClick={() => openMakeModal()}>글쓰기</button>
+        <MoimMakeModal
+        isOpen={makeModalIsOpen}
+        onRequestClose={closeMakeModal}
+        />
       </div>
-      <Outlet></Outlet>
     </div>
   );
 };
