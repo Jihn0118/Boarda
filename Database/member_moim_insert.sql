@@ -36,7 +36,7 @@ INSERT INTO `boardgame` (`title`, `min_num`, `max_num`, `time`, `age`, `difficul
 ('스플렌더', 2, 4, 30, 10, 2.3, '2014', 'splendor.jpg');
 
 # 보드게임카페 더미데이터
-INSERT INTO Cafe (brand, branch, location, contact, rate, image, latitude, longitude) VALUES
+INSERT INTO `cafe` (brand, branch, location, contact, rate, image, latitude, longitude) VALUES
 ('레드버튼', '강남점', '서울특별시 강남구 논현로 508', '02-1234-5678', 4.2, 'image1.jpg', '37.498085', '127.026939'),
 ('히어로', '서초점', '서울특별시 서초구 서초대로 396', '02-2345-6789', 4.5, 'image2.jpg', '37.487355', '127.013578'),
 ('홈즈앤루팡', '용산점', '서울특별시 용산구 이촌로 300', '02-3456-7890', 4.1, 'image3.jpg', '37.527536', '126.965918'),
