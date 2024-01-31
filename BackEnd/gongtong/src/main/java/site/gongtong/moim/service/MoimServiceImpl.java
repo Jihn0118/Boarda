@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.MemberRepository;
 import site.gongtong.moim.model.Moim;
-import site.gongtong.moim.model.MoimDto;
 import site.gongtong.moim.model.MoimMember;
 import site.gongtong.moim.repository.MoimCustomRepository;
 import site.gongtong.moim.repository.MoimMemberCustomRepository;
@@ -86,11 +85,11 @@ public class MoimServiceImpl implements MoimService {
         } else if (existedMoimMember != null) {// 이미 모임에 참여한 사람인 지 확인
             return 4;
         } else if (count + 1 == moim.getNumber()) {
-            moim.setNumber(count + 1);
             moim.setStatus('S');
-            moimRepository.save(moim);
             // ToDo: 꽉 찼으니 모임 멤버 모두에게 알림 보내는 로직도 추가해야 함
         }
+        moim.setCurrentNumber(count + 1);
+        moimRepository.save(moim);
 
         MoimMember addMoimMember = MoimMember.builder()
                 .moim(moim)
@@ -119,24 +118,4 @@ public class MoimServiceImpl implements MoimService {
         return list;
     }
 
-    public List<MoimDto> convertToMoimDto(List<Moim> moimList){
-        List<MoimDto> dtoList = new ArrayList<>();
-
-        for(int i = 0; i < moimList.size(); i++){
-            Moim moim = moimList.get(i);
-            MoimDto dto = MoimDto.builder()
-                    .moimId(moim.getId())
-                    .leaderNickname(moim.getLeaderNickname())
-                    .title(moim.getTitle())
-                    .content(moim.getContent())
-                    .number(moim.getNumber())
-                    .location(moim.getLocation())
-                    .datetime(moim.getDatetime())
-                    //  TODO 이거 어떻게 해야할 지 생각
-                    //   .currentNumber()
-                    .build();
-            dtoList.add(dto);
-        }
-        return dtoList;
-    }
 }

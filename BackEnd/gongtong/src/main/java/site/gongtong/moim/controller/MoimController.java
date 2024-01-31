@@ -62,6 +62,7 @@ public class MoimController {
                 .location(moimCondition.getLocation())
                 .datetime(moimCondition.getDatetime())
                 .status('P')
+                .currentNumber(1)
                 .build();
 
         int result = moimService.createRoom(moim, userNum);

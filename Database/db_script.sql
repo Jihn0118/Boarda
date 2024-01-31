@@ -152,7 +152,8 @@ CREATE TABLE `moim` (
 	`number`	int	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`title`	varchar(200)	NULL,
-	`content`	text	NULL
+	`content`	text	NULL,
+	`current_number`	int	NULL
 );
 
 #DROP TABLE IF EXISTS `ranking`;

@@ -31,12 +31,14 @@ public class Moim {
 
     private String location;        // 모임 지역
 
-    private Integer number;         // 모임 인원수
+    private Integer number;         // 모임 총 인원수
 
     private String title;           // 모임 제목
 
     private String content;         // 모임 본문
 
+    @Column(name="current_number")
+    private Integer currentNumber;   // 모임 현재 인원수
 }
 
 

@@ -16,6 +16,24 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+cloud:
+  aws:
+    s3:
+      bucket: gongtong-bucket
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+    credentials:
+      access-key: ${aws.credentials.accessKey}
+      secret-key: ${aws.credentials.secretKey}
+
 
 server:
   port: 8081
