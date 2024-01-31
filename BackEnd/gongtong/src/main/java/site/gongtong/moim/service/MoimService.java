@@ -1,7 +1,18 @@
 package site.gongtong.moim.service;
 
-import org.springframework.stereotype.Service;
+import site.gongtong.moim.model.Moim;
 
-@Service
-public class MoimService {
+import java.util.List;
+
+public interface MoimService {
+
+    List<Moim> getSortedMoimList(String location, int sorting);
+
+    List<Moim> getDeadlineList();
+
+    Integer checkRoom(int userNum);
+
+    Integer createRoom(Moim moim, int userNum);
+
+    Integer joinRoom(int moimId, String memberId);
 }
