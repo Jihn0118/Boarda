@@ -4,35 +4,38 @@ import MoimList from "../pages/moim/MoimList";
 import MoimMake from "../pages/moim/MoimMake";
 import MoimDetail from "../pages/moim/MoimDetail";
 import GameList from "../pages/game/GameList";
-
+import RootLayout from "../pages/rootLayout/RootLayout";
+import Thumbnail from "../pages/thumbnail/Thumbnail";
 
 const routes = createBrowserRouter([
-  { path: "", element: <MoimList></MoimList> },
-
+  { path: "", element: <Thumbnail></Thumbnail> }, // 첫 시작화면(썸네일) -> 시작하기 누르면 홈으로
   {
-    path: "/main",
-    element: <Home />,
-  },
-  {
-    path: "/moim",
-    element: <Home />,
+    path: "/",
+    element: <RootLayout />, // 헤더 껍데기
     children: [
+      { path: "home", element: <Home></Home> }, // 홈화면 (실질적인 첫 화면)
       {
-        path: "list",
-        element: <MoimList></MoimList>,
+        path: "moim", // 나중에 지도화면으로 element 바꿔야 함
+        element: <Home />,
         children: [
-          { path: "id", element: <MoimDetail></MoimDetail> },
           {
-            path: "make",
-            element: <MoimMake></MoimMake>,
+            path: "list",
+            element: <MoimList></MoimList>,
+            children: [
+              { path: ":id", element: <MoimDetail></MoimDetail> },
+              {
+                path: "make",
+                element: <MoimMake></MoimMake>,
+              },
+            ],
           },
         ],
       },
+      {
+        path: "game",
+        element: <GameList />,
+      },
     ],
-  },
-  {
-    path: "/game",
-    element: <GameList />,
   },
 ]);
 export default routes;
