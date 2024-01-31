@@ -89,7 +89,9 @@ CREATE TABLE `cafe` (
 	`location`	varchar(100)	NULL,
 	`contact`	varchar(20)	NULL,
 	`image`	text	NULL,
-	`rate`	float	NULL
+	`rate`	float	NULL,
+	`latitude`	varchar(50)	NULL,
+	`longitude`	varchar(50)	NULL
 );
 
 #DROP TABLE IF EXISTS `follow`;

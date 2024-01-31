@@ -1,7 +1,13 @@
 package site.gongtong.boardgame.service;
 
-import org.springframework.stereotype.Service;
+import site.gongtong.boardgame.model.BoardGame;
 
-@Service
-public class BoardGameService {
+import java.util.List;
+import java.util.Optional;
+
+
+public interface BoardGameService {
+    List<BoardGame> getGameList(int time, int num, String keyword);
+
+    BoardGame getGameInfo(Integer gameId);
 }
