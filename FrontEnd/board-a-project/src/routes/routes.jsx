@@ -7,6 +7,14 @@ import GameList from "../pages/game/GameList";
 import RootLayout from "../pages/rootLayout/RootLayout";
 import Thumbnail from "../pages/thumbnail/Thumbnail";
 
+// ----------------------------------------------------------------
+import Login from "../pages/user/Login";
+import Signup from "../pages/user/Signup";
+import MyPage from "../pages/mypage/MyPage";
+import Arcade from "../pages/arcade/Arcade";
+import ErrorPage from "../pages/ErrorPage";
+// ----------------------------------------------------------------
+
 const routes = createBrowserRouter([
   { path: "", element: <Thumbnail></Thumbnail> }, // 첫 시작화면(썸네일) -> 시작하기 누르면 홈으로
   {
@@ -35,7 +43,29 @@ const routes = createBrowserRouter([
         path: "game",
         element: <GameList />,
       },
+      // -----------------------------------
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
+      },
+      // mypage routes
+      {
+        path: "mypage",
+        children: [{ path: ":menu", element: <MyPage /> }],
+      },
+
+      // arcade routes
+      {
+        path: "arcade",
+        element: <Arcade />,
+      },
+      // -----------------------------------
     ],
   },
+  { path: "/*", element: <ErrorPage></ErrorPage> },
 ]);
 export default routes;
