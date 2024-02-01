@@ -15,7 +15,7 @@ import site.gongtong.moim.service.MoimService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/moim")
@@ -25,6 +25,7 @@ public class MoimController {
     //private final MoimCustomRepository moimCustomRepository;
 
     @GetMapping("/list")
+
     public ResponseEntity<List<Moim>> getSortedList(@RequestParam(name="location") String location, @RequestParam(name="sort") int sorting){
 
         log.info("리스트 정렬 들어옴!!!");

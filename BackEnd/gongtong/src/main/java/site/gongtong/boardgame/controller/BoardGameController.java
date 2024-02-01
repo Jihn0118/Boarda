@@ -11,7 +11,7 @@ import site.gongtong.boardgame.service.BoardGameService;
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://localhost:5173")
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/game")

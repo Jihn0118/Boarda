@@ -4,9 +4,9 @@ spring:
     active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${database.dev.url}
-    username: ${database.dev.username}
-    password: ${database.dev.password}
+    url: ${database.prod.url}
+    username: ${database.prod.username}
+    password: ${database.prod.password}
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -34,5 +34,7 @@ cloud:
       access-key: ${aws.credentials.accessKey}
       secret-key: ${aws.credentials.secretKey}
 
-#server:
-#  port: 8081
+server:
+  servlet:
+    context-path: /api
+  port: 8081

@@ -67,6 +67,6 @@ const routes = createBrowserRouter([
       // -----------------------------------
     ],
   },
-  { path: "/*", element: <ErrorPage></ErrorPage> },
+  // { path: "/*", element: <ErrorPage></ErrorPage> },
 ]);
 export default routes;
