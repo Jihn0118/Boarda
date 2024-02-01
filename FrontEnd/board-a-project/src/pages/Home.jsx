@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const Home = () => {
   return (
     <>
-      <div>홈 화면 입니다.</div>]
+      <div>홈 화면 입니다.</div>
       <button
         onClick={() => {
           console.log(import.meta.env.VITE_HANDSHAKE_URI);
