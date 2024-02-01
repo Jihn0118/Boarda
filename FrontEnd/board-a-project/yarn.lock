@@ -575,14 +575,14 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.15.7.tgz#78a0e98ecbd84906bf7339f780e8f41c5d505754"
   integrity sha512-AuF+Wo2Mp/edaO6vJnWjg+gj4tzEz5ChMZnAQpc22DXpSvM8ddgGcZvM7D7F99pIBoSv8ub+Iz0viL+yuGVmhg==
 
-"@mui/icons-material@^5.15.7":
+"@mui/icons-material@^5.15.6":
   version "5.15.7"
   resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.15.7.tgz#6b1cc370894f505b756fa1aa1cbd25b5890d54d5"
   integrity sha512-EDAc8TVJGIA/imAvR3u4nANl2W5h3QeHieu2gK7Ypez/nIA55p08tHjf8UrMXEpxCAvfZO6piY9S9uaxETdicA==
   dependencies:
     "@babel/runtime" "^7.23.9"
 
-"@mui/material@^5.15.7":
+"@mui/material@^5.15.6":
   version "5.15.7"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.15.7.tgz#8496d8a2b9f0409a0f82b93f819a48f6f82bc12f"
   integrity sha512-l6+AiKZH3iOJmZCnlpel8ghYQe9Lq0BEuKP8fGj3g5xz4arO9GydqYAtLPMvuHKtArj8lJGNuT2yHYxmejincA==
@@ -609,7 +609,7 @@
     "@mui/utils" "^5.15.7"
     prop-types "^15.8.1"
 
-"@mui/styled-engine-sc@^6.0.0-alpha.14":
+"@mui/styled-engine-sc@^6.0.0-alpha.13":
   version "6.0.0-alpha.14"
   resolved "https://registry.yarnpkg.com/@mui/styled-engine-sc/-/styled-engine-sc-6.0.0-alpha.14.tgz#779c86808b7643b7212b8fa1bd14d2c95fc9c1f0"
   integrity sha512-wbExDyFa5qton1KejbMzN2haVuymBt+Lhxvochv9tMw98/9qcvyML4Q84j4sJTY1F535iryGNLm5i3iFi/DYxQ==
