@@ -14,6 +14,9 @@ import Signup from "../pages/user/Signup";
 import MyPage from "../pages/mypage/MyPage";
 import Arcade from "../pages/arcade/Arcade";
 import ErrorPage from "../pages/ErrorPage";
+import Cafe from "../pages/cafe/cafe";
+import Board from "../pages/board/board";
+
 // ----------------------------------------------------------------
 
 const routes = createBrowserRouter([
@@ -22,6 +25,8 @@ const routes = createBrowserRouter([
     path: "/",
     element: <RootLayout />, // 헤더 껍데기
     children: [
+      { path: "board", element: <Board></Board> }, // 게시판
+      { path: "cafe", element: <Cafe></Cafe> }, // 매장정보
       { path: "home", element: <Home></Home> }, // 홈화면 (실질적인 첫 화면)
       {
         path: "moim", // 나중에 지도화면으로 element 바꿔야 함
