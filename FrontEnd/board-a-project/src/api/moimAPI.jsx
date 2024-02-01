@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getMoimList = async (location, sort) => {
   try {
-    const response = await axios.get(`//www.boarda.site:8080/moim/list?location=${location}&sort=${sort}`);
+    const response = await axios.get(`//www.boarda.site/api/moim/list?location=${location}&sort=${sort}`);
     console.log(response.data)
     return response.data;
   } catch (error) {
@@ -12,7 +12,7 @@ export const getMoimList = async (location, sort) => {
 
 export const checkRoom = async (num) => {
   try {
-    const response = await axios.get('//www.boarda.site:8080/moim/checkroom', {
+    const response = await axios.get('//www.boarda.site/api/moim/checkroom', {
       params: {
         num
       }
@@ -25,7 +25,7 @@ export const checkRoom = async (num) => {
 
 export const saveMoim = async (moim) => {
     try {
-        const response = await axios.post(`//www.boarda.site:8080/moim/room`, moim);
+        const response = await axios.post(`//www.boarda.site/api/moim/room`, moim);
         return response.data;
     } catch (error) {
         console.error('모임 저장 중 에러가 발생했습니다:', error);
@@ -35,7 +35,7 @@ export const saveMoim = async (moim) => {
 export const joinMoim = async (join) => {
     console.log(join);
     try {
-      const response = await axios.post(`//www.boarda.site:8080/moim/join`, join);
+      const response = await axios.post(`//www.boarda.site/api/moim/join`, join);
       return response.data;
     } catch (error) {
       console.error('모임 저장 중 에러가 발생했습니다:', error);

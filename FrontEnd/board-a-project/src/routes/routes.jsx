@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import MoimList from "../pages/moim/MoimList";
+// 라우터 일단 모달로 대체하면서 지워둠.. 칠드런에 넣을 수 있으면 넣어보기
 // import MoimMake from "../pages/moim/MoimMake";
 // import MoimDetail from "../pages/moim/MoimDetail";
 import GameList from "../pages/game/GameList";
