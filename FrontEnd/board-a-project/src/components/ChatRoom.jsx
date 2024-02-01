@@ -8,10 +8,14 @@ import socketService from "../utils/socketService";
 
 const ChatContainer = styled(Box)`
   && {
+    border-radius: 5%;
+    border-color: #d98f8f;
+    border-style: solid;
+    border-width: 0.1rem;
     height: 50vh;
-    width: 30vw;
+    width: 20vw;
     margin: auto;
-    border: 1px solid #000;
+    //border: 1px solid #000;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -29,16 +33,25 @@ const MessageList = styled(Box)`
   }
 `;
 
-const MessageInput = styled(TextField)`
-  && {
-    margin: 1rem;
-  }
+const MessageInput = styled.input`
+  border-radius: 5%;
+  border: 0.05rem solid;
+  width: 100%;
+  height: 2rem;
 `;
+
+// const MessageInput = styled(TextField)`
+//   && {
+//     margin: 1rem;
+//   }
+// `;
 
 const SendButton = styled(Button)`
   && {
     margin: 1rem;
-    width: 10%;
+    width: 5%;
+    height: 30%;
+    background-color: #d98f8f;
   }
 `;
 
@@ -56,7 +69,7 @@ export default function ChatRoom() {
           return <div>{e}</div>;
         })}
       </MessageList>
-      <Box display="flex">
+      <Box display="flex" alignItems="center">
         <MessageInput
           variant="outlined"
           fullWidth
