@@ -34,5 +34,8 @@ cloud:
       access-key: ${aws.credentials.accessKey}
       secret-key: ${aws.credentials.secretKey}
 
-#server:
-#  port: 8081
+
+server:
+  servlet:
+    context-path: /api
+  #port: 8081
