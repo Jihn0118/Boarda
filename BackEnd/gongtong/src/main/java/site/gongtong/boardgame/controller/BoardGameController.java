@@ -10,8 +10,11 @@ import site.gongtong.boardgame.service.BoardGameService;
 
 import java.util.List;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b6fa844f84bc51c74a64e1fac1a87e231b521a44
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/game")

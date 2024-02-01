@@ -15,7 +15,6 @@ import site.gongtong.moim.service.MoimService;
 
 import java.util.List;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/moim")
