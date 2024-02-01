@@ -7,7 +7,7 @@ import MyGroupHistory from "./MyGroupHistory";
 import FollowBlock from "./FollowBlock";
 import ParticipatingGroups from "./ParticipatingGroups";
 
-const Mypage = () => {
+const MyPage = () => {
   const { menu } = useParams();
 
   const renderContent = () => {
@@ -57,4 +57,4 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default MyPage;

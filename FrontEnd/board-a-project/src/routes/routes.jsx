@@ -7,6 +7,13 @@ import GameList from "../pages/game/GameList";
 import RootLayout from "../pages/rootLayout/RootLayout";
 import Thumbnail from "../pages/thumbnail/Thumbnail";
 
+// ----------------------------------------------------------------
+import Login from "../pages/user/Login";
+import Signup from "../pages/user/Signup";
+import MyPage from "../pages/mypage/MyPage";
+import Arcade from "../pages/arcade/Arcade";
+// ----------------------------------------------------------------
+
 const routes = createBrowserRouter([
   { path: "", element: <Thumbnail></Thumbnail> }, // 첫 시작화면(썸네일) -> 시작하기 누르면 홈으로
   {
