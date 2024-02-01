@@ -6,8 +6,6 @@
 
 // * send - 데이터 전송
 
-
-
 // 소켓 관련 유틸 모음
 const socketService = {
     socket: null, // 실제 소켓을 여기에 저장

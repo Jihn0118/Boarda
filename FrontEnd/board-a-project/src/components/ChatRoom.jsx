@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { prevChatMessageState, webSocket } from "../recoil/atoms/chattingAtom";
 import { sendMessage } from "../api/chattingAPI";
+import socketService from "../utils/socketService";
 
 const ChatContainer = styled(Box)`
   && {
@@ -45,7 +46,7 @@ export default function ChatRoom() {
   // 이전까지 있었던 채팅 기록을 가져옴 - 배열
   // 채팅창에 반복문으로 쭉 뿌려주기
   const prevMessages = useRecoilValue(prevChatMessageState);
-  const socket = useRecoilValue(webSocket);
+  const socket = socketService.socket;
   let nowMessage = null;
 
   return (
