@@ -17,6 +17,7 @@ export const moimState = atom({
     title: '',
     content: '',
     number: 2,
+    currntNumber: 0,
     location: "",
     datetime: new Date(),
     // friends: [],

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
 import { saveMoim } from '../../api/moimAPI'
 import Calendar from 'react-calendar';
 import { TimePicker } from 'react-ios-time-picker';
@@ -10,13 +11,15 @@ import { moimState } from '../../recoil/atoms/moimState';
 import { locationState } from '../../recoil/atoms/moimState';
 
 
-const MoimMake = () => {
+const MoimMakeModal = ({ isOpen, onRequestClose }) => {
   const navigate = useNavigate();
   const [moim, setMoim] = useRecoilState(moimState);
   const [location] = useRecoilState(locationState);
 
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState('10:00');
+
+  const [isCalendarVisible, setCalendarVisible] = useState(false);
 
   const onDateChange = date => {
     setDate(date);
@@ -42,12 +45,16 @@ const MoimMake = () => {
     }));
   };
 
+  const toggleCalendar = () => {
+    setCalendarVisible(!isCalendarVisible);
+  };
+
   const saveMoimData = async () => {
     console.log(moim);
     try {
       await saveMoim(moim);
       alert('등록되었습니다.');
-      navigate('/moim/list');
+      navigate('/moim/list', { state: { updated: true } });
     } catch (error) {
       console.error('모임 저장 중 에러가 발생했습니다:', error);
     }
@@ -65,12 +72,12 @@ const MoimMake = () => {
   }, [location, setMoim]);
 
   return (
-    <div>
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+      <div>
       <div>
         <span>제목</span>
         <input type="text" name="title" value={moim.title} onChange={onChange} />
       </div>
-      <br />
       <div>
         <label>
         인원:
@@ -85,12 +92,18 @@ const MoimMake = () => {
         </select>
       </label>
       </div>
+
       <div>
-        날짜:
-        <Calendar onChange={onDateChange} value={new Date(moim.datetime)} />
+        <button onClick={toggleCalendar}>달력 보기</button>
         <div className="text-gray-500 mt-4">
-           {moment(moim.datetime).format("YYYY년 MM월 DD일")} 
-         </div>
+          {moment(moim.datetime).format("YYYY년 MM월 DD일")} 
+        </div>
+        {isCalendarVisible && (
+          <div>
+            <Calendar onChange={onDateChange} value={new Date(moim.datetime)} />
+            
+          </div>
+        )}
       </div>
       <div>
         시간:
@@ -110,11 +123,12 @@ const MoimMake = () => {
       </div>
       <br />
       <div>
-      <button onClick={saveMoimData}>저장</button>
-        <button onClick={backToList}>취소</button>
+        <input  onClick={saveMoimData} type="button">저장</input>
+        <input type="button" onClick={backToList}>취소</input>
       </div>
     </div>
+    </Modal>
   );
 };
 
-export default MoimMake;
+export default MoimMakeModal;

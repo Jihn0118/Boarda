@@ -3,6 +3,7 @@ import axios from 'axios';
 export const getMoimList = async (location, sort) => {
   try {
     const response = await axios.get(`//www.boarda.site:8080/moim/list?location=${location}&sort=${sort}`);
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error('데이터를 가져오는 중 에러 발생:', error);
