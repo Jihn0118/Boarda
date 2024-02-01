@@ -1,6 +1,6 @@
 import axios from "axios";
 const DEV = "http://localhost:8081/api/";
-const HOST = "https://www.boarda.site:8080/api/";
+const HOST = "https://www.boarda.site/api/";
 
 const api = axios.create({
   baseURL: HOST,
