@@ -1,11 +1,12 @@
 spring:
   profiles:
     include: secret
+    active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${dev_database.url}
-    username: ${dev_database.username}
-    password: ${dev_database.password}
+    url: ${database.dev.url}
+    username: ${database.dev.username}
+    password: ${database.dev.password}
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -15,5 +16,23 @@ spring:
     properties:
       hibernate:
         format_sql: true
-server:
-  port: 8081
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+cloud:
+  aws:
+    s3:
+      bucket: gongtong-bucket
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+    credentials:
+      access-key: ${aws.credentials.accessKey}
+      secret-key: ${aws.credentials.secretKey}
+
+#server:
+#  port: 8081

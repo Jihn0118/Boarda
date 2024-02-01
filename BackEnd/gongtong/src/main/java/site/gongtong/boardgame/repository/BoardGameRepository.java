@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import site.gongtong.boardgame.model.BoardGame;
 
 @Repository
-public interface BoardGameRepository extends JpaRepository<BoardGame, Long> {
+public interface BoardGameRepository extends JpaRepository<BoardGame, Integer> {
 }
