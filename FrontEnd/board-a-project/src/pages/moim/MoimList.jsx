@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { getMoimList, checkRoom } from '../../api/moimAPI';
 import { moimListState, locationState } from '../../recoil/atoms/moimState';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import Modal from "react-modal";
 import MoimDetailModal from './MoimDetailModal';
 import MoimMakeModal from './MoimMakeModal';
@@ -11,12 +12,23 @@ import Pagination from "react-js-pagination";
 
 Modal.setAppElement("#root");
 
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: #3498db;
+
+  &:hover {
+    background-color: #2980b9;
+  }
+`;
+
 const MoimList = () => {
   const [moimList, setMoimList] = useRecoilState(moimListState);
   const [location, setLocation] = useRecoilState(locationState);
   const [sort, setSort] = useState('1');
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const navigate = useNavigate();
   const location2 = useLocation();
 
   const [detailModalIsOpen, setDetailModalIsOpen] = useState(false);
@@ -54,9 +66,16 @@ const MoimList = () => {
     setDetailModalIsOpen(false);
   };
 
-  const openMakeModal = () => {
-    setMakeModalIsOpen(true);
+  const openMakeModal = async () => {
+    const data = await checkRoom(11);
+    console.log("ㅇㅇ" + data);
+    if (data === 0) {
+      setMakeModalIsOpen(true);
+    } else if (data === 1) {
+      setModalIsOpen(true);
+    }
   };
+
 
   const closeMakeModal = () => {
     setMakeModalIsOpen(false);
@@ -68,15 +87,7 @@ const MoimList = () => {
 
   const currentMoimList = moimList.slice((activePage - 1) * itemsCountPerPage, activePage * itemsCountPerPage);
 
-  const moveToMake = async () => {
-    const data = await checkRoom(11);
-    console.log("ㅇㅇ" + data);
-    if (data === 0) {
-      navigate('/moim/list/make');
-    } else if (data === 1) {
-      setModalIsOpen(true);
-    }
-  };
+  
 
   useEffect(() => {
     getMoimListData();
@@ -150,9 +161,9 @@ const MoimList = () => {
         >
           <h2>알림</h2>
           <p>이미 참여 중인 모임이 있습니다!</p>
-          <button onClick={() => setModalIsOpen(false)}>확인</button>
+          <StyledButton onClick={() => setModalIsOpen(false)}>확인</StyledButton>
         </Modal>
-        <button onClick={() => openMakeModal()}>글쓰기</button>
+        <StyledButton onClick={() => openMakeModal()}>글쓰기</StyledButton>
         <MoimMakeModal
         isOpen={makeModalIsOpen}
         onRequestClose={closeMakeModal}

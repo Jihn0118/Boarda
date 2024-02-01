@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { saveMoim } from '../../api/moimAPI'
 import Calendar from 'react-calendar';
-import { TimePicker } from 'react-ios-time-picker';
+import { TimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import { useRecoilState } from 'recoil';
@@ -29,11 +31,22 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
     }));
   };
 
+  // const onTimeChange = timeValue => {
+  //   setTime(timeValue);
+  //   setMoim(prevMoim => ({
+  //     ...prevMoim,
+  //     datetime: moment(date).format('YYYY-MM-DD') + 'T' + timeValue + ':05',
+  //   }));
+  // };
+
   const onTimeChange = timeValue => {
-    setTime(timeValue);
+    const newDate = new Date();
+    newDate.setHours(timeValue.getHours());
+    newDate.setMinutes(timeValue.getMinutes());
+    setDate(newDate);
     setMoim(prevMoim => ({
       ...prevMoim,
-      datetime: moment(date).format('YYYY-MM-DD') + 'T' + timeValue + ':05',
+      datetime: moment(newDate).format('YYYY-MM-DDTHH:mm:ss'),
     }));
   };
 
@@ -55,6 +68,7 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
       await saveMoim(moim);
       alert('등록되었습니다.');
       navigate('/moim/list', { state: { updated: true } });
+      onRequestClose();
     } catch (error) {
       console.error('모임 저장 중 에러가 발생했습니다:', error);
     }
@@ -62,6 +76,7 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
 
   const backToList = () => {
     navigate('/moim/list');
+    onRequestClose();
   };
 
   useEffect(() => {
@@ -72,6 +87,7 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
   }, [location, setMoim]);
 
   return (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <div>
       <div>
@@ -107,7 +123,14 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
       </div>
       <div>
         시간:
-        <TimePicker onChange={onTimeChange} value={time} />
+        <TimePicker
+          autoOk
+          ampm={false}
+          variant="inline"
+          value={date}
+          onChange={onTimeChange}
+          style={{ width: '100%' }}
+        />
       </div>
 
       <br />
@@ -128,6 +151,7 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
       </div>
     </div>
     </Modal>
+    </MuiPickersUtilsProvider>
   );
 };
 
