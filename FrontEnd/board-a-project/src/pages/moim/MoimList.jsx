@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Modal from "react-modal";
 import MoimDetailModal from './MoimDetailModal';
 import MoimMakeModal from './MoimMakeModal';
-import Pagination from "react-js-pagination";
+import Pagination from '@material-ui/lab/Pagination';
 
 
 Modal.setAppElement("#root");
@@ -38,7 +38,7 @@ const MoimList = () => {
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  const itemsCountPerPage = 5;
+  const itemsCountPerPage = 2;
 
   const getMoimListData = async () => {
     const data = await getMoimList(location, sort);
@@ -81,9 +81,14 @@ const MoimList = () => {
     setMakeModalIsOpen(false);
   };
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = async (event, pageNumber) => {
     setActivePage(pageNumber);
   };
+  // const handlePageChange = (pageNumber) => {
+  //   setActivePage(pageNumber);
+  // };
+
+
 
   const currentMoimList = moimList.slice((activePage - 1) * itemsCountPerPage, activePage * itemsCountPerPage);
 
@@ -119,7 +124,7 @@ const MoimList = () => {
         </select>
       </label>
       
-      <ul>
+      <ul style={{ listStyleType: 'none' }} >
         {currentMoimList.map((moim) => (
           <li key={moim.id}>
           <button onClick={() => openDetailModal(moim.id)}>
@@ -137,13 +142,21 @@ const MoimList = () => {
         />
       )}
 
+
+        {/* <Pagination
+          activePage={activePage}
+          itemsCountPerPage={itemsCountPerPage}
+          totalItemsCount={totalItemsCount} // 전체 아이템의 수, API 응답에서 가져올 수 있음
+          pageRangeDisplayed={5} // 한 번에 보여줄 페이지 번호의 수
+          onChange={handlePageChange}
+        /> */}
       <Pagination
-        activePage={activePage}
-        itemsCountPerPage={itemsCountPerPage}
-        totalItemsCount={totalItemsCount} // 전체 아이템의 수, API 응답에서 가져올 수 있음
-        pageRangeDisplayed={5} // 한 번에 보여줄 페이지 번호의 수
+        count={Math.ceil(totalItemsCount / itemsCountPerPage)}
+        page={activePage}
         onChange={handlePageChange}
       />
+     
+     
 
 
       <div>
