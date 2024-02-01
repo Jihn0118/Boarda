@@ -25,9 +25,9 @@ const Login = () => {
       password: Password,
     };
     // 백으로 보낼 axios 코드 필요
-    const request = axios.post("http://localhost:5000/api/login", body)
-      .then(response => response.data)
-      .catch(error => console.log(error));
+    // const request = axios.post("http://localhost:5000/api/login", body)
+    //   .then(response => response.data)
+    //   .catch(error => console.log(error));
   };
 
   // SSO 로그인
