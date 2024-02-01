@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+// "//www.boarda.site/api/moim/checkroom"
+// "//70.12.246.57:8081/api/moim/checkroom"
+
 export const getMoimList = async (location, sort) => {
   try {
-    const response = await axios.get(`//www.boarda.site/api/moim/list?location=${location}&sort=${sort}`);
+    const response = await axios.get(`//70.12.246.57:8081/api/moim/list?location=${location}&sort=${sort}`);
     console.log(response.data)
     return response.data;
   } catch (error) {
