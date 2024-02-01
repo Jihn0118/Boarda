@@ -56,7 +56,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
 //                                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                                .requestMatchers("/member/**").permitAll()
+                                .requestMatchers("/member/**", "/mypage/**").permitAll()
 //                                .requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN") //행동에 대해서도 권한설정 가능
 //                                .requestMatchers("/mem/**").authenticated()
                                 .anyRequest().authenticated()

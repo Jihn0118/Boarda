@@ -39,6 +39,9 @@ public class MemberDetails implements UserDetails {
         return member.getGender();
     }
 
+    //글ㄹ 불러올 때 필요
+    public Integer getNum() { return member.getNum(); }
+
     public String getProfileImage() {
         return member.getProfileImage();
     }
