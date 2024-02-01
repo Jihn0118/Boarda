@@ -2,22 +2,27 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 const StartButton = styled(Link)`
-  color: red;
-  text-decoration: none;
-  background-color: skyblue;
-  border-radius: 30%;
-  width: 5rem;
-  height: 3rem;
-  position: fixed;
-  right: 8rem;
-  bottom: 10rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
+  && {
+    color: #BF1111;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #F2F2F2;
+    border-radius: 7%;
+    width: 10rem;
+    height: 4rem;
+    position: fixed;
+    right: 8rem;
+    bottom: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 80%;
+  }
 `;
 const StartDiv = styled.div`
-  background-image: url("src/assets/images/ThumbnailImage.jpg");
+  background-image: url("src/assets/images/ThumbnailImage.png");
+  background-size: cover;
   width: 100vw;
   height: 100vh;
 `;
