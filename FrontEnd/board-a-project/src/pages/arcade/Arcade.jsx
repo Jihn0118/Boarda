@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link, Route, useParams } from "react-router-dom";
 import axios from "axios";
 
-const Rest_api_key_kakao = 'b4ec8b14bab859d5b3e6789c5103b72b' // git 올릴때 없앨것!!
+const { kakao } = window;
+
+const Rest_api_key_kakao = import.meta.env.VITE_KAKAO_API_KEY
 
 // 백에서 가져온 데이터로 변경해야함!!!
 const positions = [

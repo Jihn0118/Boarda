@@ -13,6 +13,7 @@ import Login from "../pages/user/Login";
 import Signup from "../pages/user/Signup";
 import MyPage from "../pages/mypage/MyPage";
 import Arcade from "../pages/arcade/Arcade";
+import ErrorPage from "../pages/ErrorPage";
 // ----------------------------------------------------------------
 
 const routes = createBrowserRouter([
@@ -44,29 +45,28 @@ const routes = createBrowserRouter([
         element: <GameList />,
       },
       // -----------------------------------
-      { 
-        path: "login", 
-        element: <Login />
+      {
+        path: "login",
+        element: <Login />,
       },
-      { 
-        path: "signup", 
-        element: <Signup />
+      {
+        path: "signup",
+        element: <Signup />,
       },
       // mypage routes
-      { 
-        path: "mypage", 
-        children: [
-          {path: ":menu", element: <MyPage />}
-        ]
+      {
+        path: "mypage",
+        children: [{ path: ":menu", element: <MyPage /> }],
       },
-    
+
       // arcade routes
       {
         path: "arcade",
-        element: <Arcade />
+        element: <Arcade />,
       },
       // -----------------------------------
     ],
   },
+  { path: "/*", element: <ErrorPage></ErrorPage> },
 ]);
 export default routes;
