@@ -8,10 +8,14 @@ import socketService from "../utils/socketService";
 
 const ChatContainer = styled(Box)`
   && {
+    border-radius: 5%;
+    border-color: #d98f8f;
+    border-style: solid;
+    border-width: 0.1rem;
     height: 50vh;
     width: 30vw;
     margin: auto;
-    border: 1px solid #000;
+    //border: 1px solid #000;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -38,7 +42,8 @@ const MessageInput = styled(TextField)`
 const SendButton = styled(Button)`
   && {
     margin: 1rem;
-    width: 10%;
+    width: 5%;
+    height: 30%;
   }
 `;
 
@@ -60,6 +65,8 @@ export default function ChatRoom() {
         <MessageInput
           variant="outlined"
           fullWidth
+          sx={{ width: '21100px', height: '50px' }}
+          
           placeholder="메시지를 입력하세요."
           onChange={(e) => {
             nowMessage = e.target.value;
