@@ -1,5 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { prevChatMessageState, webSocket } from "../recoil/atoms/chattingAtom";
+import socketService from "../utils/socketService";
 
 export function connectSocket() {
   const [socket, setSocket] = useRecoilState(webSocket);
