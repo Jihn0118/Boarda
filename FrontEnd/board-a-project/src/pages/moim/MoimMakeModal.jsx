@@ -123,8 +123,8 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
       </div>
       <br />
       <div>
-        <input  onClick={saveMoimData} type="button">저장</input>
-        <input type="button" onClick={backToList}>취소</input>
+        <button onClick={saveMoimData}>저장</button>
+        <button onClick={backToList}>취소</button>
       </div>
     </div>
     </Modal>
