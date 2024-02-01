@@ -39,28 +39,30 @@ const Arcade = () => {
       location: Location,
     };
 
-    const request_MapInfo = () => {
-      axios({
-        method: "get",
-        url: "https://dapi.kakao.com/v2/local/search/keyword.json",
-        headers: {
-          "Authorization": `KakaoAK ${Rest_api_key_kakao}`,
-        },
-        params: {
-          "query" : "강남역 레드버튼",
-          "category_group_code" : "CE7", // category_group_code는 카페
-          "page": 1, // page는 최대 3, 응답의 response.Meta['is_end']로 마지막 페이지인지 요청하고 다음 페이지 요청 필요 or response.Meta['pagable_count']로...
-        }
-      })
-      .then((response) => {
-        console.log(response.data);
-        // category_name == "가정,생활 > 여가시설 > 보드카페 > {브랜드이름}" 으로 보드게임카페인지 그냥 카페인지 확인 가능한데 굳이?
-        // address_name or road_address(주소), phone(번호), place_name(지점명), place_url(이미지 받을 수 있는 주소)
-        // x(LNG), y(LAT) 
-      })
-      .catch((error) => console.log(error));
-    }
-    return request_MapInfo();
+    // const request_MapInfo = () => {
+    //   axios({
+    //     method: "get",
+    //     url: "https://dapi.kakao.com/v2/local/search/keyword.json",
+    //     headers: {
+    //       "Authorization": `KakaoAK ${Rest_api_key_kakao}`,
+    //     },
+    //     params: {
+    //       "query" : "강남역 레드버튼",
+    //       "category_group_code" : "CE7", // category_group_code는 카페
+    //       "page": 1, // page는 최대 3, 응답의 response.Meta['is_end']로 마지막 페이지인지 요청하고 다음 페이지 요청 필요 or response.Meta['pagable_count']로...
+    //     }
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     // category_name == "가정,생활 > 여가시설 > 보드카페 > {브랜드이름}" 으로 보드게임카페인지 그냥 카페인지 확인 가능한데 굳이?
+    //     // address_name or road_address(주소), phone(번호), place_name(지점명), place_url(이미지 받을 수 있는 주소)
+    //     // x(LNG), y(LAT) 
+    //   })
+    //   .catch((error) => console.log(error));
+    // }
+    // return request_MapInfo();
+
+    
   };
 
   const renderContent = () => {
