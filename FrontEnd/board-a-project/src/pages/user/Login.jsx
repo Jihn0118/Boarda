@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import { ssoLogin } from "../../api/userAPI";
 
 const Login = () => {
   // 기본 로그인
@@ -30,10 +31,10 @@ const Login = () => {
   };
 
   // SSO 로그인
-  const Rest_api_key_kakao = "b4ec8b14bab859d5b3e6789c5103b72b"; //REST API KEY for Kakao
-  const GOOGLE_CLIENT_ID =
-    "134380099254-jr83bp4ihmc6omh4fpcr0gh08ltfrmcv.apps.googleusercontent.com"; //Client ID for Google
-  const NAVER_CLIENT_ID = "jAGmd6IHSiQiCmC22ZWe"; //Client ID for Naver
+  const Rest_api_key_kakao = import.meta.env.VITE_KAKAO_API_KEY; //REST API KEY for Kakao
+  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID; //Client ID for Google
+  const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID; //Client ID for Naver
+
   const redirect_uri = "http://localhost:5173/auth"; //Redirect URI 페이지 SSO 사이트별로 만들어야함
 
   // oauth 요청 URL
@@ -75,9 +76,9 @@ const Login = () => {
       <div>또는</div>
       <div>
         <>
-          <button onClick={handleKaKaoLogin}>카카오 로그인</button>
-          <button onClick={handleGoogleLogin}>구글 로그인</button>
-          <button onClick={handleNaverLogin}>네이버 로그인</button>
+          <button onClick={()=>ssoLogin('kakao')}>카카오 로그인</button>
+          <button onClick={()=>ssoLogin('google')}>구글 로그인</button>
+          <button onClick={()=>ssoLogin('naver')}>네이버 로그인</button>
         </>
       </div>
 
