@@ -34,7 +34,6 @@ cloud:
       access-key: ${aws.credentials.accessKey}
       secret-key: ${aws.credentials.secretKey}
 
-
 server:
   servlet:
     context-path: /api

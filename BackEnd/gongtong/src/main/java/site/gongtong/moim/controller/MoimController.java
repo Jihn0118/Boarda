@@ -15,7 +15,6 @@ import site.gongtong.moim.service.MoimService;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "http://www.boarda.site:3000")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/moim")

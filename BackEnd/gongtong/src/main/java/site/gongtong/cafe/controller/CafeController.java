@@ -10,7 +10,6 @@ import site.gongtong.cafe.service.CafeService;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/cafe")
