@@ -2,6 +2,7 @@ package site.gongtong.moim.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -36,6 +37,9 @@ public class Moim {
     private String title;           // 모임 제목
 
     private String content;         // 모임 본문
+
+    @CreatedDate
+    private LocalDateTime createAt;
 
     @Column(name="current_number")
     private Integer currentNumber;   // 모임 현재 인원수
