@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ssoLogin } from "../../api/userAPI";
+import { useRecoilState } from 'recoil'
+import { loginUserState } from "../../recoil/atoms/UserState";
+
+
 
 const Login = () => {
   // 기본 로그인
+  const navigate = useNavigate();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
@@ -25,36 +32,12 @@ const Login = () => {
       password: Password,
     };
     // 백으로 보낼 axios 코드 필요
-    // const request = axios.post("http://localhost:5000/api/login", body)
-    //   .then(response => response.data)
-    //   .catch(error => console.log(error));
-  };
-
-  // SSO 로그인
-  const Rest_api_key_kakao = import.meta.env.VITE_KAKAO_API_KEY; //REST API KEY for Kakao
-  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID; //Client ID for Google
-  const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID; //Client ID for Naver
-
-  const redirect_uri = "http://localhost:5173/auth"; //Redirect URI 페이지 SSO 사이트별로 만들어야함
-
-  // oauth 요청 URL
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key_kakao}&redirect_uri=${redirect_uri}&response_type=code`;
-  const googleURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirect_uri}&response_type=code&scope=openid email`;
-  const naverURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=1234&redirect_uri=${redirect_uri}`;
-  const handleKaKaoLogin = () => {
-    window.location.href = kakaoURL;
-  };
-  const handleGoogleLogin = () => {
-    window.location.href = googleURL;
-  };
-  const handleNaverLogin = () => {
-    window.location.href = naverURL;
-  };
-
-
-  const onSignupButtonClick = () => {
-    // '/signup'으로 내비게이션을 수행
-    navigate('/signup');
+    // ssoLogin(body)
+    // sessionStorage에 저장 일단은 로그인 됐다고 가정
+    sessionStorage.setItem("loginUser", Email);
+    setLoginUser(Email)
+    //로그인이 되었다면 home 화면으로 이동
+    navigate(`/home`)
   };
   
   return (
