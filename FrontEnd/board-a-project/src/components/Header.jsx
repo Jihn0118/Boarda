@@ -39,7 +39,7 @@ export default function Header() {
       <HeaderLogo></HeaderLogo>
       <div>
         <Link to="/home">홈</Link>
-        <Link to="/moim/list">모임</Link>
+        <Link to="/moim/">모임</Link>
         <Link to="/game">게임</Link>
         <Link to="/cafe">매장</Link>
         <Link to="/board">게시판</Link>
