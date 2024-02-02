@@ -11,7 +11,7 @@ const StartButton = styled(Link)`
     border-radius: 7%;
     width: 10rem;
     height: 4rem;
-    position: fixed;
+    position: absolute;
     right: 8rem;
     bottom: 5rem;
     display: flex;

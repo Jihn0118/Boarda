@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 // StyledHeader 컴포넌트 생성
 const StyledHeader = styled.header`
-  background-color: #D98F8F; /* 배경색 설정 */
+  background-color: #d98f8f; /* 배경색 설정 */
   padding: 10px 20px; /* 내부 여백 설정 */
   display: flex;
   justify-content: space-between;
@@ -26,9 +26,10 @@ const StyledHeader = styled.header`
   }
 `;
 const HeaderLogo = styled.div`
+ // flex: 1 0 auto;
   background-image: url("src/assets/images/boardaLogo.png");
   background-size: cover;
-  width: 10vw;
+  width: 11vw;
   height: 5vh;
 `;
 

@@ -14,8 +14,8 @@ import Signup from "../pages/user/Signup";
 import MyPage from "../pages/mypage/MyPage";
 import Arcade from "../pages/arcade/Arcade";
 import ErrorPage from "../pages/ErrorPage";
-import Board from "../pages/board/Board";
-import Cafe from "../pages/cafe/Cafe";
+import Board from "../pages/board/board";
+import Cafe from "../pages/cafe/cafe";
 
 // ----------------------------------------------------------------
 
