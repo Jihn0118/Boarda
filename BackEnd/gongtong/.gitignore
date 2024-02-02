@@ -210,4 +210,4 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,java,intellij+all,gradleUser\
 /src/main/resources/application-secret.yml
-/src/main/generated/
+
