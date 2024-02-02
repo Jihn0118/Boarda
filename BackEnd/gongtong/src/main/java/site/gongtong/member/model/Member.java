@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,5 +34,15 @@ public class Member {
     //OAuth 로그인에 사용 -> 따로 만들어야 하나?/
 //    private String provider;
 //    private String providerId;
+
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
+    }
+    public void changeProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+    public void changePassword(String password) {
+        this.password = password;
+    }
 
 }

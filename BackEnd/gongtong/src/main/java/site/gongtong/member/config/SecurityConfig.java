@@ -59,7 +59,7 @@ public class SecurityConfig {
                                 .requestMatchers("/member/**", "/mypage/**").permitAll()
 //                                .requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN") //행동에 대해서도 권한설정 가능
 //                                .requestMatchers("/mem/**").authenticated()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 //필터 관련 (addFilter, header)
                 .addFilterAt(
