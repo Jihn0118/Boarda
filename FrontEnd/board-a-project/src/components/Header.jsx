@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
 
+// 헤더 - mui paper로 다시 작업중입니다.
+
 // StyledHeader 컴포넌트 생성
 const StyledHeader = styled.header`
   background-color: #d98f8f; /* 배경색 설정 */
@@ -26,12 +28,29 @@ const StyledHeader = styled.header`
   }
 `;
 const HeaderLogo = styled.div`
- // flex: 1 0 auto;
+  // flex: 1 0 auto;
   background-image: url("src/assets/images/boardaLogo.png");
   background-size: cover;
   width: 11vw;
   height: 5vh;
 `;
+
+// 로그인 상태일 때 보이는 부분 - 마이페이지로, 로그아웃 버튼
+const LoginUserDiv = (
+  <div>
+    <p>${localStorage.getItem("userName")}님 환영합니다</p>
+    <Link to="/myPage">마이페이지</Link>
+    <button
+      onClick={() => {
+        sessionStorage.clear;
+        localStorage.removeItem("jwt");
+        window.location.href = "/home";
+      }}
+    >
+      로그아웃
+    </button>
+  </div>
+);
 
 // 유저 로그인 여부 확인 로직 바꿔야합니다 일단 지금은 세션 확인해보는거로
 export default function Header() {
@@ -49,8 +68,9 @@ export default function Header() {
         {!sessionStorage.getItem("loginUser") && (
           <Link to="/login">로그인</Link>
         )}
-        {!!sessionStorage.getItem("loginUser") && <button>로그아웃</button>}
+        {!!sessionStorage.getItem("loginUser") && LoginUserDiv}
       </div>
+      <Link to="/myPage">마이페이지개발중</Link>
     </StyledHeader>
   );
 }

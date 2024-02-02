@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 const StartButton = styled(Link)`
   && {
-    color: #BF1111;
+    color: #bf1111;
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
     border-radius: 7%;
     width: 10rem;
     height: 4rem;

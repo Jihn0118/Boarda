@@ -11,11 +11,11 @@ import Thumbnail from "../pages/thumbnail/Thumbnail";
 // ----------------------------------------------------------------
 import Login from "../pages/user/Login";
 import Signup from "../pages/user/Signup";
-import MyPage from "../pages/mypage/MyPage";
 import Arcade from "../pages/arcade/Arcade";
 import ErrorPage from "../pages/ErrorPage";
 import Board from "../pages/board/board";
 import Cafe from "../pages/cafe/cafe";
+import MyPage from "../pages/mypage/MyPage";
 
 // ----------------------------------------------------------------
 
@@ -25,6 +25,7 @@ const routes = createBrowserRouter([
     path: "/",
     element: <RootLayout />, // 헤더 껍데기
     children: [
+      { path: "/myPage", element: <MyPage></MyPage> }, // 마이페이지
       { path: "board", element: <Board></Board> }, // 게시판
       { path: "cafe", element: <Cafe></Cafe> }, // 매장정보
       { path: "home", element: <Home></Home> }, // 홈화면 (실질적인 첫 화면)
@@ -57,11 +58,6 @@ const routes = createBrowserRouter([
       {
         path: "signup",
         element: <Signup />,
-      },
-      // mypage routes
-      {
-        path: "mypage",
-        children: [{ path: ":menu", element: <MyPage /> }],
       },
 
       // arcade routes
