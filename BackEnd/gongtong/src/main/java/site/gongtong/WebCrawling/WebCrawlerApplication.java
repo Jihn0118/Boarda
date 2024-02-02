@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,16 +18,15 @@ import java.util.concurrent.TimeUnit;
 public class WebCrawlerApplication {
 
     //서버 DB
-    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://gongtongdb.c342maaso33l.ap-northeast-2.rds.amazonaws.com:3306/boarda?serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
-    static final String USERNAME = "admin";
-    static final String PASSWORD = "ssafy106";
+    @Value("${spring.datasource.driver-class-name}")
+    static String JDBC_DRIVER;
+    @Value("${spring.datasource.url}")
+    static String DB_URL;
+    @Value("${spring.datasource.username}")
+    static String USERNAME;
+    @Value("${spring.datasource.password}")
+    static String PASSWORD;
 
-    //로컬 db(확인용)
-//    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-//    static final String DB_URL = "jdbc:mysql://localhost:3306/gongtongPJT?serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
-//    static final String USERNAME = "root";
-//    static final String PASSWORD = "1234";
 
     public static void main(String[] args) {
         SpringApplication.run(WebCrawlerApplication.class, args);
