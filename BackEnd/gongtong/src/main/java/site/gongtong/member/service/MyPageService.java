@@ -14,4 +14,7 @@ public interface MyPageService {
 
     Long modifyProfile(EditProfileDto editProfileDto);
 
+    int setPwd(String id, String newEncodedPwd);
+
+    int deleteMember(String id);
 }

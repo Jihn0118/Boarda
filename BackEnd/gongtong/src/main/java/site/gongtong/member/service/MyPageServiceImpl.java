@@ -46,6 +46,22 @@ public class MyPageServiceImpl implements MyPageService {
         return myPageCustomRepository.modifyProfile(member);
     }
 
+    @Override
+    public int setPwd(String id, String newEncodedPwd) {
+        //1. id로 해당 유저 찾기
+        Member member = myPageCustomRepository.findById(id);
+            //예외처리 - id에 해당하는 member가 없으면 킬
+        if(member == null) return 0; // 0: 못찾겠다...
+
+        //2. id에 해당하는 비번 바꾸기...
+        return myPageCustomRepository.modifyPwd(id, newEncodedPwd);
+    }
+
+    @Override
+    public int deleteMember(String id) { //회원 탈퇴
+        return myPageCustomRepository.delete(id);
+    }
+
 
     //엔터티 -> dto 전환
 //    public EditProfileDto entityToDto(Member member) {
@@ -85,14 +101,4 @@ public class MyPageServiceImpl implements MyPageService {
         return member;
     }
 
-//    @PersistenceContext
-//    private EntityManager entityManager;
-//
-//    public void updateAndFlush(Member member) {
-//        // 엔티티를 업데이트
-//        entityManager.merge(member);
-//
-//        // 변경사항을 데이터베이스에 동기화 (flush)
-//        entityManager.flush();
-//    }
 }

@@ -5,16 +5,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import site.gongtong.member.config.MemberDetails;
 import site.gongtong.member.dto.EditProfileDto;
+import site.gongtong.member.dto.PasswordChangeDto;
 import site.gongtong.member.dto.ReviewDto;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.member.service.MyPageService;
 import site.gongtong.review.model.Review;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -28,6 +32,8 @@ public class MyPageController {
     MemberDetailsService memberDetailsService;
     @Autowired
     MyPageService myPageService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     /*무조건 보여주기
         //{닉네임, 프사}
@@ -140,28 +146,109 @@ public class MyPageController {
 
     }
 
-//    @PutMapping("/changeImage")
-//    public ResponseEntity<String> modifyProfile2(@RequestParam(name = "id") String id,
-//                                                @RequestBody EditProfileDto editProfileDto) {
-//
-//        log.info("profile modify page!!");
-//
-//        if(editProfileDto.getProfileImage().equals("")){
-//            return new ResponseEntity<>("no ProfileImage data to be changed", HttpStatus.BAD_REQUEST); //
-//        }
-//
-//        try {
-//            //사진 업로드 구현해서 적용 필요
-//
-//            Member newProfile = myPageService.updateImage(id, editProfileDto);
-//            System.out.println(newProfile);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//        return new ResponseEntity<>("ProfileImage changed!", HttpStatus.OK);
-//    }
-//
-    //패스워드 바꾸기0000000000..........................
+    //비번 찾기
+    @PostMapping("/forgetpwd")
+    public ResponseEntity<Integer> forgetPwd(@RequestParam(name = "id") String id) {
+        //1. 임시 비번 만들기
+            //1-랜덤 문자열 생성
+        String newRawPwd = getRandomPwd(10);
+//          System.out.println("tmp rawPwd: "+newRawPwd);
+            //2-위의 문자열 bcrypt로 암호화하기
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        String newEncodedPwd = encoder.encode(newRawPwd); //암호화된 문자열
+//          System.out.println("tmp encodedPwd: "+newEncodedPwd);
+
+        //2. db에 비번 바꾸기
+        try {
+            if (myPageService.setPwd(id, newEncodedPwd) > 0) { //성공!
+                //비번바꾸기 성공하면 1!
+                return new ResponseEntity<>(1, HttpStatus.OK);
+            } else { //실패ㅠ = 0
+                //모종의 이유로 실패 - 디비는 갔다 옴
+                return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage()); //뭐가 잘못된 건지 찎어보기
+            //내부 이유로 실패 - 2
+            return new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //랜덤 문자 만들기
+    public String getRandomPwd(int length) {
+        char[] rndAllCharacters = new char[]{
+                //number
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                //uppercase
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                //lowercase
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                //special symbols
+                '@', '$', '!', '%', '*', '?', '&'
+        };
+        SecureRandom random = new SecureRandom();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int rndAllCharactersLength = rndAllCharacters.length;
+        for (int i = 0; i < length; i++) {
+            stringBuilder.append(rndAllCharacters[random.nextInt(rndAllCharactersLength)]);
+        }
+
+        return stringBuilder.toString();
+    }
+
+
+    //비번 변경
+    @PutMapping("/modifypwd")
+    public ResponseEntity<Integer> modifyPwd(@RequestBody PasswordChangeDto passwordChangeDto) {
+        //1. 입력된 id 기반으로 해당 유저 entity 찾기
+        Member member;
+        try {
+            member = myPageService.findById(passwordChangeDto.getId());
+            if(member == null)
+                return new ResponseEntity<>(0, HttpStatus.NOT_FOUND); // id에 해당하는 유저 없음
+
+            //2. member의 비번 - 입력된 현재비번 동일성 여부
+            if( !passwordEncoder.matches(passwordChangeDto.getCurPwd(), member.getPassword()) )
+                return new ResponseEntity<>(2, HttpStatus.UNAUTHORIZED); // 현재 비밀번호 불일치 시 땡~!!
+
+            //3. db에 새로운 비밀번호 encode해서 대체하기
+            String newPwd = passwordChangeDto.getNewRawPwd();
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
+            String newEncodedPwd = encoder.encode(newPwd);
+            try {
+                if (myPageService.setPwd(passwordChangeDto.getId(), newEncodedPwd) > 0) {
+                    return new ResponseEntity<>(1, HttpStatus.OK); //성공
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage()); //뭐가 잘못된 건지 찍어보기
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(3, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(3, HttpStatus.INTERNAL_SERVER_ERROR); // 모종의 이유로 실패
+    }
+
+    //회원 탈퇴
+    @DeleteMapping("/profile")
+    public ResponseEntity<Integer> deleteMember(@RequestParam String id) {
+        Member member;
+        try {
+            member = myPageService.findById(id);
+            if( myPageService.deleteMember(id) > 0) return new ResponseEntity<>(1, HttpStatus.OK); //탈퇴 완료
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR); //탈퇴 실패
+    }
+
+    //팔로우 하기
+    @PostMapping("/follow")
+    public ResponseEntity<Integer> registFollow(@RequestParam String id)
+
 }
 

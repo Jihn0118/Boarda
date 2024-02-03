@@ -16,5 +16,7 @@ public interface MyPageCustomRepository {
 
     Long modifyProfile(Member member);
 
-//    Member setNickname(String id, String nickname);
+    int modifyPwd(String id, String newEncodedPwd);
+
+    int delete(String id);
 }

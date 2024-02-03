@@ -53,12 +53,33 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     @Override
     public Long modifyProfile(Member inputMember) {
         //성공이면 1 반환, 실패면 0 반환
-        QMember qMember = QMember.member;
+        QMember member = QMember.member;
         return jpaQueryFactory
-                .update(qMember)
-                .set(qMember.nickname, inputMember.getNickname())
-                .set(qMember.profileImage, inputMember.getProfileImage())
-                .where(qMember.id.eq(inputMember.getId())) //id로 해당 유저만 변경하기
+                .update(member)
+                .set(member.nickname, inputMember.getNickname())
+                .set(member.profileImage, inputMember.getProfileImage())
+                .where(member.id.eq(inputMember.getId())) //id로 해당 유저만 변경하기
+                .execute();
+    }
+
+    @Override
+    public int modifyPwd(String id, String newEncodedPwd) {
+        //성공이면 1 반환, 실패면 0 반환
+        QMember member = QMember.member;
+        return (int) jpaQueryFactory
+                .update(member)
+                .set(member.password, newEncodedPwd)
+                .where(member.id.eq(id)) //id로 해당 유저만 변경하기
+                .execute();
+    }
+
+    @Override
+    public int delete(String id) {
+        QMember member = QMember.member;
+
+        return (int) jpaQueryFactory
+                .delete(member)
+                .where(member.id.eq(id))
                 .execute();
     }
 
