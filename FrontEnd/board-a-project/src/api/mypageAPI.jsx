@@ -36,6 +36,22 @@ export default myPageAPI = {
             data: user
         });
 
-    }
+    },
+
+    // 팔로우 하기 post인데 쿼리스트링으로 ->
+    // follow?id=what2@w.com&nickname=박소영&flag=F
+    userMakeFollow(userId, followNickname,flag) {
+        return api({
+            method: 'post',
+            url: `${END_POINT}/modifypwd`,
+            params: {
+                id: userId,
+                nickname: followNickname,
+                flag: flag
+            }
+        });
+
+    },
+
 
 }

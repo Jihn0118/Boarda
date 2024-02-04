@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loginUserState } from "../recoil/atoms/UserState";
 
 // 헤더 - mui paper로 다시 작업중입니다.
 
@@ -36,21 +38,29 @@ const HeaderLogo = styled.div`
 `;
 
 // 로그인 상태일 때 보이는 부분 - 마이페이지로, 로그아웃 버튼
-const LoginUserDiv = (
-  <div>
-    <p>${localStorage.getItem("userName")}님 환영합니다</p>
-    <Link to="/myPage">마이페이지</Link>
-    <button
-      onClick={() => {
-        sessionStorage.clear;
-        localStorage.removeItem("jwt");
-        window.location.href = "/home";
-      }}
-    >
-      로그아웃
-    </button>
-  </div>
-);
+// 헤더에서만 쓰이는 컴포넌트
+function LoginUserDiv() {
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+
+  return (
+    <div>
+      <p>{loginUser.nickname}님 환영합니다</p>
+      <Link to="/myPage">마이페이지</Link>
+      <button
+        onClick={() => {
+          // 로그아웃 수행시
+          sessionStorage.clear; // 세션스토리지 비우기
+          setLoginUser({}); // 로그인 유저 빈객체로 바꾸기
+          localStorage.removeItem("jwt");
+          alert("로그아웃 되었습니다.");
+          window.location.href = "/home";
+        }}
+      >
+        로그아웃
+      </button>
+    </div>
+  );
+}
 
 // 유저 로그인 여부 확인 로직 바꿔야합니다 일단 지금은 세션 확인해보는거로
 export default function Header() {

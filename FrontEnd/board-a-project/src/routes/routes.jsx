@@ -25,7 +25,7 @@ const routes = createBrowserRouter([
     path: "/",
     element: <RootLayout />, // 헤더 껍데기
     children: [
-      { path: "/myPage", element: <MyPage></MyPage> }, // 마이페이지
+      { path: "/myPage/:userId", element: <MyPage></MyPage> }, // 마이페이지
       { path: "board", element: <Board></Board> }, // 게시판
       { path: "cafe", element: <Cafe></Cafe> }, // 매장정보
       { path: "home", element: <Home></Home> }, // 홈화면 (실질적인 첫 화면)
