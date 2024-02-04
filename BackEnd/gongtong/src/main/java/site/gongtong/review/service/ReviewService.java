@@ -11,7 +11,7 @@ public interface ReviewService {
 
     List<Review> getReviews(int userNum);
 
-    Long deleteReview(int reviewId);
+    Long deleteReview(int reviewId, int userNum);
 
-    void createReview(ReviewDto reviewDto);
+    Integer createReview(ReviewDto reviewDto);
 }

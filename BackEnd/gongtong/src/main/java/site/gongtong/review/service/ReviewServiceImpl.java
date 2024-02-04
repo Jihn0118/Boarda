@@ -46,12 +46,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public Long deleteReview(int reviewId) {
-        return reviewCustomRepository.deleteReview(reviewId);
+    public Long deleteReview(int reviewId, int userNum) {
+        return reviewCustomRepository.deleteReview(reviewId, userNum);
     }
 
     @Override
-    public void createReview(ReviewDto reviewDto) {
+    public Integer createReview(ReviewDto reviewDto) {
         // TODO 보드게임 리스트도 받아서 같이 저장해줘야 함
         Moim moim = moimRepository.findById(reviewDto.getMoimId());
         Cafe cafe = cafeCustomRepository.findById(reviewDto.getCafeId());
@@ -63,8 +63,16 @@ public class ReviewServiceImpl implements ReviewService {
                 .moim(moim)
                 .member(member)
                 .cafe(cafe)
+                .isRemoved(false)
+                .status('Y')
                 .build();
 
-        reviewRepository.save(review);
+        Review resultReview = reviewRepository.save(review);
+
+        if (resultReview == null) {
+            return 0;       // error
+        }
+
+        return 1;
     }
 }

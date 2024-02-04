@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name="moim")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -39,7 +39,7 @@ public class Moim {
     private String content;         // 모임 본문
 
     @CreatedDate
-    private LocalDateTime createAt;
+    private LocalDateTime createAt; // TODO createdAt으로 바꿔야함
 
     @Column(name="current_number")
     private Integer currentNumber;   // 모임 현재 인원수

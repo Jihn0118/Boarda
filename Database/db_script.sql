@@ -97,9 +97,9 @@ CREATE TABLE `cafe` (
 #DROP TABLE IF EXISTS `follow`;
 
 CREATE TABLE `follow` (
-	`id`	int	PRIMARY KEY auto_increment,
-	`follower`	varchar(20)	NOT NULL,
-	`following`	varchar(20)	NOT NULL,
+	`id`	int	NOT NULL,
+	`follower`	int	NOT NULL,
+	`following`	int	NOT NULL,
 	`flag`	char(1)	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP
 );
@@ -168,6 +168,20 @@ CREATE TABLE `ranking` (
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`cafe_id`	int	NOT NULL,
 	`game_id`	int	NOT NULL
+);
+
+ALTER TABLE `follow` ADD CONSTRAINT `FK_Member_TO_Follow_1` FOREIGN KEY (
+	`following`
+)
+REFERENCES `member` (
+	`num`
+);
+
+ALTER TABLE `follow` ADD CONSTRAINT `FK_Member_TO_Follow_2` FOREIGN KEY (
+	`follower`
+)
+REFERENCES `member` (
+	`num`
 );
 
 ALTER TABLE `chatting` ADD CONSTRAINT `FK_ChattingRoom_TO_Chatting_1` FOREIGN KEY (
