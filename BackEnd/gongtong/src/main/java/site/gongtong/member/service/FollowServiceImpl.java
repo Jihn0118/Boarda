@@ -25,4 +25,14 @@ public class FollowServiceImpl implements FollowService {
         return followRepository.existRelation(followerNum, followingNum);
     }
 
+    @Override
+    public Follow findBy2Nums(int myNum, int yourNum) {
+        return followRepository.findBy2Nums(myNum, yourNum);
+    }
+
+    @Override
+    public void deleteFollow(Follow wannaDeleteFollow) {
+        followRepository.delete(wannaDeleteFollow);
+    }
+
 }

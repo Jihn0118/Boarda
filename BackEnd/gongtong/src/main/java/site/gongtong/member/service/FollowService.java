@@ -8,4 +8,7 @@ public interface FollowService {
 
     int existRelation(int followerNum, int followingNum);
 
+    Follow findBy2Nums(int myNum, int yourNum);
+
+    void deleteFollow(Follow wannaDeleteFollow);
 }

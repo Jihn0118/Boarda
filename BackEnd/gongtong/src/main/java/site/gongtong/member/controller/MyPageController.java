@@ -253,14 +253,14 @@ public class MyPageController {
 
     //팔로우 하기
     @PostMapping("/follow")
-    public ResponseEntity<Integer> registFollow(@RequestParam(name = "id") String myId,
+    public ResponseEntity<Integer> registFollow (@RequestParam(name = "id") String myId,
                                                 @RequestParam(name = "nickname") String yourNickname,
                                                 @RequestParam(name = "flag") char flag) {
         Member memMe;
         Member memYou;
         try {
             //1. 아이디, 닉네임 기반 멤버 찾아오기
-            memMe = myPageService.findById(myId);
+            memMe = myPageService.findById(myId); //-> 여기가 팔로워
             memYou = myPageService.findByNickname(yourNickname);
             if(memMe==null || memYou==null) {
 //                log.info("follow; null Object input error!");
@@ -273,7 +273,7 @@ public class MyPageController {
 
             //2. id 뽑아서, 디비에 관계 저장
                 //이미 있는 관계는 패스
-            if( followService.existRelation(memMe.getNum(), memYou.getNum()) > 0 ) {
+            if( followService.existRelation(memMe.getNum(), memYou.getNum()) > 0 ) { //팔로워 팔로잉
 //                log.info("follow; Already existed relationship!");
                 return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //이미 있는 관계가 또 들어오면 무시
             }
@@ -287,6 +287,22 @@ public class MyPageController {
         }
 //        log.info("follow making; GOODDDD!");
         return new ResponseEntity<>(1, HttpStatus.OK); //성공!
+    }
+    //팔로우 취소하기
+    @DeleteMapping("/follow") //흑흑...
+    public ResponseEntity<Integer> deleteFollow (@RequestParam (name = "id") String followId,
+                                                 @RequestParam (name = "myNum") int myNum) {
+        int yourNum = myPageService.idToNum(followId);
+//        System.out.println("yourNum: "+yourNum);
+        Follow wannaDeleteFollow = followService.findBy2Nums(myNum, yourNum); //팔로워 팔로잉
+        if (wannaDeleteFollow == null) {
+            log.info("follow delete: there's no relation~!");
+            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR); //그런 팔로우 관계는 없다
+        }
+
+        followService.deleteFollow(wannaDeleteFollow);
+        log.info("follow Delete: successful~!");
+        return new ResponseEntity<>(1, HttpStatus.OK); //팔로우 끊기 완료
     }
 
 }

@@ -44,4 +44,5 @@ public class Follow {
         this.flag = flag;
         this.following = following;
     }
+
 }

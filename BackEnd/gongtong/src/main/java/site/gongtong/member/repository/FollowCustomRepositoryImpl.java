@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.QFollow;
 
 @Repository
@@ -27,5 +28,15 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository {
                 .where(follow.follower.num.eq(followerNum)
                         .and(follow.following.num.eq(followingNum)))
                 .fetchCount();
+    }
+
+    @Override
+    public Follow findBy2Nums(int myNum, int yourNum) {
+        QFollow follow = QFollow.follow;
+
+        return jpaQueryFactory
+                .selectFrom(follow)
+                .where(follow.follower.num.eq(myNum).and(follow.following.num.eq(yourNum)))
+                .fetchOne();
     }
 }
