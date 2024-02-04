@@ -116,6 +116,7 @@ CREATE TABLE `moim_member` (
 
 CREATE TABLE `review` (
 	`id`	int	PRIMARY KEY auto_increment,
+	`is_removed`	tinyint	NULL,
 	`content`	text	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`rate`	float	NULL,
