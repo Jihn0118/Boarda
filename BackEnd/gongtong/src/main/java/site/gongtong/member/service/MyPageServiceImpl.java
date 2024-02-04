@@ -4,8 +4,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.dto.EditProfileDto;
+import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
+import site.gongtong.member.repository.FollowRepository;
 import site.gongtong.member.repository.MyPageCustomRepository;
+import site.gongtong.member.repository.MyPageRepository;
 import site.gongtong.review.model.Review;
 
 import java.util.List;
@@ -14,16 +17,16 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class MyPageServiceImpl implements MyPageService {
-    private final MyPageCustomRepository myPageCustomRepository;
+    private final MyPageRepository myPageRepository;
 
     @Override
     public int idToNum(String id) {
-        return myPageCustomRepository.MemberidToNum(id);
+        return myPageRepository.MemberidToNum(id);
     }
 
     @Override
     public List<Review> getReviewListByNum(int num) {
-        return myPageCustomRepository.findAllReviews(num);
+        return myPageRepository.findAllReviews(num);
     }
 
 //    @Override
@@ -33,7 +36,12 @@ public class MyPageServiceImpl implements MyPageService {
 
     @Override
     public Member findById(String id) {
-        return myPageCustomRepository.findById(id);
+        return myPageRepository.findById(id);
+    }
+
+    @Override
+    public Member findByNickname(String nickname) {
+        return myPageRepository.findByNickname(nickname);
     }
 
     @Override
@@ -41,27 +49,26 @@ public class MyPageServiceImpl implements MyPageService {
         // 여기서 dto -> 멤버
         Member member = dtoToEntity(editProfileDto);
 
-        System.out.println("member: "+member.toString());
-        System.out.println("editDto: "+editProfileDto);
-        return myPageCustomRepository.modifyProfile(member);
+//        System.out.println("member: "+member.toString());
+//        System.out.println("editDto: "+editProfileDto);
+        return myPageRepository.modifyProfile(member);
     }
 
     @Override
     public int setPwd(String id, String newEncodedPwd) {
         //1. id로 해당 유저 찾기
-        Member member = myPageCustomRepository.findById(id);
+        Member member = myPageRepository.findById(id);
             //예외처리 - id에 해당하는 member가 없으면 킬
         if(member == null) return 0; // 0: 못찾겠다...
 
         //2. id에 해당하는 비번 바꾸기...
-        return myPageCustomRepository.modifyPwd(id, newEncodedPwd);
+        return myPageRepository.modifyPwd(id, newEncodedPwd);
     }
 
     @Override
     public int deleteMember(String id) { //회원 탈퇴
-        return myPageCustomRepository.delete(id);
+        return myPageRepository.delete(id);
     }
-
 
     //엔터티 -> dto 전환
 //    public EditProfileDto entityToDto(Member member) {

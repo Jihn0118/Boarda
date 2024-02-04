@@ -3,6 +3,7 @@ package site.gongtong.member.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +14,9 @@ import site.gongtong.member.config.MemberDetails;
 import site.gongtong.member.dto.EditProfileDto;
 import site.gongtong.member.dto.PasswordChangeDto;
 import site.gongtong.member.dto.ReviewDto;
+import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
+import site.gongtong.member.service.FollowService;
 import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.member.service.MyPageService;
 import site.gongtong.review.model.Review;
@@ -32,6 +35,8 @@ public class MyPageController {
     MemberDetailsService memberDetailsService;
     @Autowired
     MyPageService myPageService;
+    @Autowired
+    FollowService followService;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -248,7 +253,41 @@ public class MyPageController {
 
     //팔로우 하기
     @PostMapping("/follow")
-    public ResponseEntity<Integer> registFollow(@RequestParam String id)
+    public ResponseEntity<Integer> registFollow(@RequestParam(name = "id") String myId,
+                                                @RequestParam(name = "nickname") String yourNickname,
+                                                @RequestParam(name = "flag") char flag) {
+        Member memMe;
+        Member memYou;
+        try {
+            //1. 아이디, 닉네임 기반 멤버 찾아오기
+            memMe = myPageService.findById(myId);
+            memYou = myPageService.findByNickname(yourNickname);
+            if(memMe==null || memYou==null) {
+//                log.info("follow; null Object input error!");
+                return new ResponseEntity<>(0, HttpStatus.NOT_FOUND); //해당 유저 찾을 수 없으면 안 됨
+            }
+            if(memMe==memYou) {
+//                log.info("follow; same Object cannot have relationship!");
+                return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //팔로우==팔로잉은 안 됨
+            }
+
+            //2. id 뽑아서, 디비에 관계 저장
+                //이미 있는 관계는 패스
+            if( followService.existRelation(memMe.getNum(), memYou.getNum()) > 0 ) {
+//                log.info("follow; Already existed relationship!");
+                return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //이미 있는 관계가 또 들어오면 무시
+            }
+                //이미 있는 관계가 아니면 수행하기
+            Follow newRelation = followService.save(memMe, flag, memYou);
+            if (newRelation == null) new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR); //객체 안 만들어짐
+            
+        } catch (Exception e) {
+            e.printStackTrace(); //예상치 못한 다중 테이블 참조 오류를 발생
+            return new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+//        log.info("follow making; GOODDDD!");
+        return new ResponseEntity<>(1, HttpStatus.OK); //성공!
+    }
 
 }
 

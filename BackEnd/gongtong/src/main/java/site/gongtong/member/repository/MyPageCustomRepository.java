@@ -1,7 +1,7 @@
 package site.gongtong.member.repository;
 
 
-import site.gongtong.member.dto.EditProfileDto;
+import org.springframework.data.jpa.repository.JpaRepository;
 import site.gongtong.member.model.Member;
 import site.gongtong.review.model.Review;
 
@@ -14,9 +14,12 @@ public interface MyPageCustomRepository {
 
     Member findById(String id);
 
+    Member findByNickname(String nickname);
+
     Long modifyProfile(Member member);
 
     int modifyPwd(String id, String newEncodedPwd);
 
     int delete(String id);
+
 }

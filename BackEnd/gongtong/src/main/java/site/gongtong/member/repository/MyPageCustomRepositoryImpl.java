@@ -1,12 +1,12 @@
 package site.gongtong.member.repository;
 
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import site.gongtong.member.dto.EditProfileDto;
 import site.gongtong.member.model.Member;
+import site.gongtong.member.model.QFollow;
 import site.gongtong.member.model.QMember;
 import site.gongtong.review.model.QReview;
 import site.gongtong.review.model.Review;
@@ -14,10 +14,15 @@ import site.gongtong.review.model.Review;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
 
-    private final JPAQueryFactory jpaQueryFactory;
+    private JPAQueryFactory jpaQueryFactory;
+
+    @Autowired
+    public MyPageCustomRepositoryImpl(EntityManager entityManager) {
+        this.jpaQueryFactory = new JPAQueryFactory(entityManager);
+    }
 
     @Override
     public int MemberidToNum(String user_id) {
@@ -47,6 +52,16 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
         return jpaQueryFactory
                 .selectFrom(member)
                 .where(member.id.eq(id))
+                .fetchOne();
+    }
+
+    @Override
+    public Member findByNickname(String nickname) {
+        QMember member = QMember.member;
+
+        return jpaQueryFactory
+                .selectFrom(member)
+                .where(member.nickname.eq(nickname))
                 .fetchOne();
     }
 
@@ -93,54 +108,6 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
 //                .set(member.profileImage, editProfileDto.getProfileImage())
 //                .where(member.id.eq(editProfileDto.getId()))
 //                .execute();
-//    }
-
-//    @Override
-//    public Member setPassword(String id, String password) {
-//        QMember member = QMember.member;
-//
-//        jpaQueryFactory
-//                .update(member)
-//                .set(member.password, password)
-//                .where(member.id.eq(id))
-//                .execute();
-//
-//        return jpaQueryFactory
-//                .selectFrom(member)
-//                .where(member.id.eq(id))
-//                .fetchOne();
-//    }
-
-//    @Override
-//    public Member setProfileImage(String id, String profileImage) {
-//        QMember member = QMember.member;
-//
-//        jpaQueryFactory
-//                .update(member)
-//                .set(member.profileImage, profileImage)
-//                .where(member.id.eq(id))
-//                .execute();
-//
-//        return jpaQueryFactory
-//                .selectFrom(member)
-//                .where(member.id.eq(id))
-//                .fetchOne();
-//    }
-
-//    @Override
-//    public Member setNickname(String id, String nickname) {
-//        QMember member = QMember.member;
-//
-//        jpaQueryFactory
-//                .update(member)
-//                .set(member.nickname, nickname)
-//                .where(member.id.eq(id))
-//                .execute();
-//
-//        return jpaQueryFactory
-//                .selectFrom(member)
-//                .where(member.id.eq(id))
-//                .fetchOne();
 //    }
 
 }
