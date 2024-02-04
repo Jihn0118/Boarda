@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react'
 
-const FollowBlock = () => {
+export default function FollowBlock() {
   return (
-    <div>
-      <p>나의 팔로우/차단입니다.</p>
-    </div>
-  );
-};
-
-export default FollowBlock;
+    <div>FollowBlock</div>
+  )
+}

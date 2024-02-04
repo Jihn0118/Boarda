@@ -16,6 +16,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Board from "../pages/board/board";
 import Cafe from "../pages/cafe/cafe";
 import MyPage from "../pages/mypage/MyPage";
+import FollowBlock from "../pages/mypage/FollowBlock";
 
 // ----------------------------------------------------------------
 
@@ -25,7 +26,16 @@ const routes = createBrowserRouter([
     path: "/",
     element: <RootLayout />, // 헤더 껍데기
     children: [
-      { path: "/myPage/:userId", element: <MyPage></MyPage> }, // 마이페이지
+      {
+        path: "/myPage/:userId",
+        element: <MyPage></MyPage>,
+        children: [
+          {
+            path: "follow",
+            element: <FollowBlock />, // 마이페이지 내 팔로우 목록
+          },
+        ],
+      }, // 마이페이지
       { path: "board", element: <Board></Board> }, // 게시판
       { path: "cafe", element: <Cafe></Cafe> }, // 매장정보
       { path: "home", element: <Home></Home> }, // 홈화면 (실질적인 첫 화면)

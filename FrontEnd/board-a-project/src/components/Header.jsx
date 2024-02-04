@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/UserState";
 
 // 헤더 - mui paper로 다시 작업중입니다.
@@ -43,7 +43,7 @@ function LoginUserDiv() {
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
 
   return (
-    <div>
+    <>
       <p>{loginUser.nickname}님 환영합니다</p>
       <Link to="/myPage">마이페이지</Link>
       <button
@@ -58,12 +58,14 @@ function LoginUserDiv() {
       >
         로그아웃
       </button>
-    </div>
+    </>
   );
 }
 
 // 유저 로그인 여부 확인 로직 바꿔야합니다 일단 지금은 세션 확인해보는거로
 export default function Header() {
+  const loginUser = useRecoilValue(loginUserState);
+
   return (
     <StyledHeader>
       <HeaderLogo></HeaderLogo>
@@ -75,12 +77,10 @@ export default function Header() {
         <Link to="/board">게시판</Link>
       </div>
       <div>
-        {!sessionStorage.getItem("loginUser") && (
-          <Link to="/login">로그인</Link>
-        )}
-        {!!sessionStorage.getItem("loginUser") && LoginUserDiv}
+        {!loginUser.id && <Link to="/login">로그인</Link>}
+        {loginUser.id && LoginUserDiv}
       </div>
-      <Link to="/myPage">마이페이지개발중</Link>
+      <Link to="/myPage/ㅁㄴㄹㅇ">마이페이지개발중</Link>
     </StyledHeader>
   );
 }
