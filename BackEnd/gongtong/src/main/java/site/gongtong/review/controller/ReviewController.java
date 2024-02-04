@@ -19,6 +19,7 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
 
+    //TODO 보드게임 리스트도 가져와야 하나?
     @GetMapping("/cafelist")
     public ResponseEntity<List<Cafe>> getCafeList(){
         log.info("카페 리스트 들어옴!!!");
@@ -36,16 +37,18 @@ public class ReviewController {
     }
 
     @PostMapping("/regist")
-    public ResponseEntity<Void> createReview(@RequestBody ReviewDto reviewDto){
+    public ResponseEntity<Integer> createReview(@RequestBody ReviewDto reviewDto){
         log.info("리뷰 등록 들어옴!!!");
-        reviewService.createReview(reviewDto);
-        return ResponseEntity.ok().build();
+
+        int result = reviewService.createReview(reviewDto);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/delete")
-    public ResponseEntity<Long> deleteReview(@RequestParam(name="reviewId") int reviewId){
+    public ResponseEntity<Long> deleteReview(@RequestParam(name="reviewId") int reviewId, @RequestParam(name="userNum") int userNum){
         log.info("리뷰 삭제 들어옴!!!");
-        Long deletedReviewNum = reviewService.deleteReview(reviewId);
+        Long deletedReviewNum = reviewService.deleteReview(reviewId, userNum);
 
         return new ResponseEntity<>(deletedReviewNum, HttpStatus.OK);
     }

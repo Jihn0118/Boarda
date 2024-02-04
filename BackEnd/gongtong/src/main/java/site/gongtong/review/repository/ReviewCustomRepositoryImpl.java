@@ -22,13 +22,15 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository{
     }
 
     @Override
-    public Long deleteReview(int reviewId) {
+    public Long deleteReview(int reviewId, int userNum) {
         QReview removedReview = QReview.review;
 
         return jpaQueryFactory
                 .update(removedReview)
                 .set(removedReview.isRemoved, true)
-                .where(removedReview.id.eq(reviewId))
+                .where(removedReview.member.num.eq(userNum),
+                        removedReview.id.eq(reviewId),
+                        removedReview.isRemoved.eq(false))
                 .execute();
     }
 }
