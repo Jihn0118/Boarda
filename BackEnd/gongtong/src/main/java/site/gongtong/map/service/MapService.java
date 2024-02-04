@@ -23,13 +23,7 @@ public class MapService {
             for (int page = 1; page <= 3; page++) {
                 List<MapDto> cafes = apiService.getCafeData(brand, page);
                 for (MapDto mapDto : cafes) {
-                    CafeMap cafeMap = new CafeMap();
-                    cafeMap.setAddressName(mapDto.getAddress_name());
-                    cafeMap.setPhone(mapDto.getPhone());
-                    cafeMap.setPlaceName(mapDto.getPlace_name());
-                    cafeMap.setPlaceUrl(mapDto.getPlace_url());
-                    cafeMap.setX(mapDto.getX());
-                    cafeMap.setY(mapDto.getY());
+                    CafeMap cafeMap = CafeMap.fromMapDto(mapDto);
                     mapRepository.save(cafeMap);
                 }
             }

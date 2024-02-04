@@ -35,9 +35,9 @@ public class CafeMap {
 
     private String image;       // 카페 이미지
 
-    // MapDto로부터 Cafe 객체를 생성하는 메소드
-    public static Cafe fromMapDto(MapDto mapDto) {
-        return Cafe.builder()
+    // MapDto로부터 CafeMap 객체를 생성하는 메소드
+    public static CafeMap fromMapDto(MapDto mapDto) {
+        return CafeMap.builder()
                 .brand(mapDto.getBrand())
                 .branch(mapDto.getBranch())
                 .location(mapDto.getAddress_name())
