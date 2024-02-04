@@ -1,14 +1,41 @@
-import axios from 'axios'
+import api from "./api";
 
-export const user_info = async(user_id) => {
-    try {
-        const response = await axios.get(`//http://localhost:8081/mypage/profile`,{ // ${END_POINT}/member/login
+
+const END_POINT = 'mypage';
+
+
+export default myPageAPI = {
+    // 회원탈퇴 -> profile?id={id}로만 보내기
+    userWithdraw(userId) {
+        return api({
+            method: 'delete',
+            url: `${END_POINT}/profile`,
             params: {
-                id : user_id,
+                id: userId
             }
         });
-        return response.data;
-    } catch (error) {
-        console.error('로그인 중 에러가 발생했습니다:', error);
+    },
+    // 비밀번호 찾기 -> forgetpwd?id=a@a.com
+    userFindPwd(userId) {
+        return api({
+            method: 'post',
+            url: `${END_POINT}/forgetpwd`,
+            params: {
+                id: userId
+            }
+        });
+
+    },
+
+    // 비밀번호 변경 put -> modifypwd -> body에 유저 정보 다 담아서 주기
+    // 이 메서드 파라미터는 유저 객체
+    userChangePwd(user) {
+        return api({
+            method: 'put',
+            url: `${END_POINT}/modifypwd`,
+            data: user
+        });
+
     }
+
 }
