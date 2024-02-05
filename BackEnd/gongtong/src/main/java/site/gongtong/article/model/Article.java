@@ -7,6 +7,6 @@ import jakarta.persistence.Id;
 public class Article {
 
     @Id
-    private Long id;
+    private Integer id;
 
 }
