@@ -1,5 +1,6 @@
 package site.gongtong.member.controller;
 
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import site.gongtong.member.config.MemberDetails;
 import site.gongtong.member.dto.EditProfileDto;
+import site.gongtong.member.dto.FollowListDto;
 import site.gongtong.member.dto.PasswordChangeDto;
 import site.gongtong.member.dto.ReviewDto;
 import site.gongtong.member.model.Follow;
@@ -39,15 +41,6 @@ public class MyPageController {
     FollowService followService;
     @Autowired
     PasswordEncoder passwordEncoder;
-
-    /*무조건 보여주기
-        //{닉네임, 프사}
-        //작성 피드들
-
-        //본인일 때
-        //{아이디, 비밀번호, 닉네임, 생일, 성별, 프사}
-        //작성 피드들
-        //팔로우 목록*/
 
     @GetMapping("/profile") //토큰으로 본인인지 확인 필요
     public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id) {
@@ -305,5 +298,43 @@ public class MyPageController {
         return new ResponseEntity<>(1, HttpStatus.OK); //팔로우 끊기 완료
     }
 
+    //팔로우&차단 목록
+    @GetMapping("/follow")
+    public ResponseEntity<List<FollowListDto>> getFollowList (@RequestParam (name = "id") String id) {
+        int userNum = -1;
+
+        try {
+            userNum = myPageService.idToNum(id);
+              System.out.println("idTONum: "+ userNum);
+
+        } catch (Exception e) {
+            log.info("No user~~!!");
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED); // 존재x 유저
+        }
+        
+        List<Tuple> followList = null;
+        List<FollowListDto> followListDto = new ArrayList<>();
+
+        try {
+            followList = followService.getFollowList(userNum);
+            for(Tuple t : followList) {
+                Member member = t.get(0, Member.class);
+                Follow follow = t.get(1, Follow.class);
+
+                // Member와 flag를 사용하여 FollowListDto 객체를 생성
+                FollowListDto dto = new FollowListDto(member, follow);
+
+                // 생성한 dto를 리스트에 추가
+                followListDto.add(dto);
+
+            }
+            return new ResponseEntity<>(followListDto, HttpStatus.OK); // 성공
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // 어떤이유
+        }
+    }
+
+    //
 }
 
