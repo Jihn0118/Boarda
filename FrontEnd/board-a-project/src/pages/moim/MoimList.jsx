@@ -42,8 +42,14 @@ const MoimList = () => {
   const [activePage, setActivePage] = useState(1);
   const itemsCountPerPage = 2;
 
-  const getMoimListData = async () => {
-    const data = await getMoimList(location, sort);
+  // const getMoimListData = async () => {
+  //   const data = await getMoimList(location, sort);
+  //   setMoimList(data);
+  // };
+
+  const getMoimListData = async (selectedLocation) => {
+    const locationToUse = selectedLocation ? selectedLocation : location;
+    const data = await getMoimList(locationToUse, sort);
     setMoimList(data);
   };
 
@@ -117,6 +123,7 @@ const MoimList = () => {
               onChange={(e) => handleLocationChange(e.target.value)}
               className="ml-2 p-1 border rounded"
             >
+              <option value="">선택없음</option>
               <option value="서울시 강남구">강남구</option>
               <option value="서울시 마포구">마포구</option>
             </select>
