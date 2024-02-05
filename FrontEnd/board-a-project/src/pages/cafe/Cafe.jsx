@@ -8,9 +8,6 @@ import { cafeListState } from "../../recoil/atoms/cafeState";
 
 const Rest_api_key_kakao = import.meta.env.VITE_KAKAO_API_KEY;
 
-// 백에서 가져온 데이터로 변경해야함!!!
-
-
 // 마커 이미지 주소(추후 디자인 변경 필요)
 const imageSrc =
   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
@@ -19,6 +16,11 @@ export default function Cafe() {
   const [Location, setLocation] = useState("");
   const [Brand, setBrand] = useState("");
   const [positions, setCafeList] = useRecoilState(cafeListState);
+
+  useEffect(() => {
+    // 컴포넌트가 처음 마운트될 때 초기화
+    setCafeList([]);
+  }, []);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -67,7 +69,10 @@ export default function Cafe() {
             title: positions[i].title,
             image: markerImage,
           });
-          const temp_point = new kakao.maps.LatLng(positions[i].latlng.Ma, positions[i].latlng.La)
+          const temp_point = new kakao.maps.LatLng(
+            positions[i].latlng.Ma,
+            positions[i].latlng.La
+          );
           bounds.extend(temp_point);
         }
         map.setBounds(bounds);

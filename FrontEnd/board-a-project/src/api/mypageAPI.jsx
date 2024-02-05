@@ -1,8 +1,9 @@
 import axios from 'axios'
+import api from "./api";
 
 export const user_info = async(user_id) => {
     try {
-        const response = await axios.get(`//http://localhost:8081/mypage/profile`,{ // ${END_POINT}/member/login
+        const response = await api.get(`${END_POINT}/mypage/profile`,{ // ${END_POINT}/member/login
             params: {
                 id : user_id,
             }
