@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+def queryDslVersion = '5.0.0'
+
+group = 'site'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // queryDSL
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+    implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+    // QueryDsl 쿼리 타입 생성 (QClass 생성 시 @Entity 탐색)
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
+    // java.lang.NoClassDefFoundError:javax/persistence/Entity 에러 방지
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    // AWS S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    // Selenium
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+
+
+}
+
+// QueryDsl 빌드 옵션 (선택)
+// QueryDsl 디렉토리 경로
+def querydslDir = "src/main/generated"
+
+// 경로 추가 >> QueryDsl 소스 코드 컴파일 시 빌드
+sourceSets {
+    main.java.srcDirs += [ querydslDir ]
+}
+
+// 컴파일 설정(AnnotationProcessor가 생성하는 소스코드를 해당 경로로 설정)
+tasks.withType(JavaCompile).configureEach {
+    it.options.annotationProcessorGeneratedSourcesDirectory(file(querydslDir))
+}
+
+// clean실행 시 마지막 작업으로 디렉토리(QClass) 삭제 >> 충돌 방지
+clean.doLast {
+    file(querydslDir).deleteDir()
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
