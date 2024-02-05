@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import site.gongtong.cafe.model.Cafe;
 import site.gongtong.review.model.Review;
 import site.gongtong.review.model.ReviewDto;
@@ -37,10 +38,12 @@ public class ReviewController {
     }
 
     @PostMapping("/regist")
-    public ResponseEntity<Integer> createReview(@RequestBody ReviewDto reviewDto){
+    //public ResponseEntity<Integer> createReview(@RequestBody ReviewDto reviewDto){
+    public ResponseEntity<Integer> createReview(@RequestPart(name="review") ReviewDto reviewDto,
+                                                @RequestPart(name="images")List<MultipartFile> files){
         log.info("리뷰 등록 들어옴!!!");
 
-        int result = reviewService.createReview(reviewDto);
+        int result = reviewService.createReview(reviewDto, files);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
