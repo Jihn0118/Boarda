@@ -6,6 +6,8 @@ const { kakao } = window;
 import { useRecoilState } from "recoil";
 import { cafeListState } from "../../recoil/atoms/cafeState";
 
+import { getCafeList } from "../../api/cafeAPI";
+
 const Rest_api_key_kakao = import.meta.env.VITE_KAKAO_API_KEY;
 
 // 마커 이미지 주소(추후 디자인 변경 필요)
@@ -22,27 +24,14 @@ export default function Cafe() {
     setCafeList([]);
   }, []);
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log("Location: ", Location);
-    console.log("Brand: ", Brand);
 
-    const filter = {
-      brand: Brand,
-      location: Location,
-    };
-
+    const temp = await getCafeList(Location, Brand);
     // 백에 filter로 해당하는 매장 LAT_LNG 값들 리스트 가져온다. 일단은 demo용 데이터 position 사용
-    setCafeList([
-      {
-        title: "레드버튼 강남점",
-        latlng: new kakao.maps.LatLng(37.501931286572834, 127.0264523435014),
-      },
-      {
-        title: "레드버튼 강남2호점",
-        latlng: new kakao.maps.LatLng(37.4998154950733, 127.027458092239),
-      },
-    ]);
+    setCafeList(temp);
+    
+    console.log(positions)
   };
 
   const renderContent = () => {
@@ -53,7 +42,7 @@ export default function Cafe() {
         level: 3,
       };
       const map = new kakao.maps.Map(container, options);
-
+      console.log(positions)
       if (positions.length > 0) {
         let bounds = new kakao.maps.LatLngBounds();
         const imageSize = new window.kakao.maps.Size(24, 35);
@@ -91,13 +80,15 @@ export default function Cafe() {
               value={Location}
               onChange={(e) => setLocation(e.target.value)}
             >
-              <option value="서울시 강남구">강남구</option>
-              <option value="서울시 마포구">마포구</option>
+              <option value="">상관없음</option>
+              <option value="강남구">강남구</option>
+              <option value="마포구">마포구</option>
             </select>
           </label>
           <label>
             브랜드 :
             <select value={Brand} onChange={(e) => setBrand(e.target.value)}>
+              <option value="">상관없음</option>
               <option value="레드버튼">레드버튼</option>
               <option value="홈즈앤 루팡">홈즈앤 루팡</option>
               <option value="히어로 보드게임카페">히어로 보드게임카페</option>

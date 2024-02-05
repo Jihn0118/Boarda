@@ -1,5 +1,6 @@
 import api from "./api";
 
+const END_POINT = 'member';
 // --- 자체 로그인 -------------------------------
 export const login = async(user_info) => {
     try {

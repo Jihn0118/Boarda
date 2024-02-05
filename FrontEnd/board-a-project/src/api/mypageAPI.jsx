@@ -1,9 +1,10 @@
 import axios from 'axios'
 import api from "./api";
 
+const END_POINT = 'mypage'
 export const user_info = async(user_id) => {
     try {
-        const response = await api.get(`${END_POINT}/mypage/profile`,{ // ${END_POINT}/member/login
+        const response = await api.get(`${END_POINT}/profile`,{ // ${END_POINT}/member/login
             params: {
                 id : user_id,
             }
