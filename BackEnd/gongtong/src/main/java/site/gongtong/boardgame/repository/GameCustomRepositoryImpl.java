@@ -20,12 +20,17 @@ public class GameCustomRepositoryImpl implements GameCustomRepository{
 
         BooleanBuilder builder = new BooleanBuilder();
 
-        if (time > 0) {
-            builder.and(boardgame.playTime.eq(time));
+        // -15 ~ 그 값,  90분이 넘어간다 => 90분 부터 다
+        if (0 < time && time <= 90) {
+            builder.and(boardgame.playTime.loe(time).and(boardgame.playTime.goe(time - 14)));
+        } else if(time > 90){
+            builder.and(boardgame.playTime.goe(91));
         }
 
-        if (num > 0) {
+        if (num > 0 && num <=8) {
             builder.and(boardgame.minNum.loe(num).and(boardgame.maxNum.goe(num)));
+        } else if(num > 8){
+            builder.and(boardgame.minNum.goe(num));
         }
 
         if (!keyword.isEmpty()) {
