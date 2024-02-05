@@ -80,7 +80,7 @@ export default function Header() {
         {!loginUser.id && <Link to="/login">로그인</Link>}
         {loginUser.id && LoginUserDiv}
       </div>
-          <Link to="/myPage/ㅁㄴㄹㅇ">마이페이지개발중</Link>
+          <Link to="/my-page/2">마이페이지개발중</Link>
     </StyledHeader>
   );
 }

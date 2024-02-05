@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import myPageAPI from "./../../api/mypageAPI";
 import { useParams } from "react-router-dom";
+import reviewAPI from "../../api/reviewAPI";
 
 export default function Feed() {
   const [feeds, setFeeds] = useState([]); // 피드 정보 백에서 받아와서 뿌리기
@@ -13,7 +13,9 @@ export default function Feed() {
     // 비동기로 받아오고 랜더링할 것
     const fetchData = async () => {
       try {
-        const res = await myPageAPI.getUserFeeds(params.userId);
+        const res = await reviewAPI.getMyReview(params.userId);
+        console.log(res)
+        console.log(123);
         setFeeds(res.data);
       } catch (err) {
         console.log("피드 받아오기 실패");

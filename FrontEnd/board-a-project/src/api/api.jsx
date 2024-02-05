@@ -3,7 +3,7 @@ const DEV = "http://localhost:8081/api/";
 const HOST = "https://www.boarda.site/api/";
 
 const api = axios.create({
-  baseURL: DEV,
+  baseURL: HOST,
 });
 // 요청 인터셉터
 api.interceptors.request.use(
@@ -28,12 +28,12 @@ api.interceptors.response.use(
     // console.log(response);
     return response;
   },
-  function (error) {
-    // console.log(error);
-    if (error.response.status === 404 || error.response.status === 429) {
-      window.location.href = "/error";
-    }
-    return Promise.reject(error);
-  }
+  // function (error) {
+  //   // console.log(error);
+  //   if (error.response.status === 404 || error.response.status === 429) {
+  //     window.location.href = "/error";
+  //   }
+  //   return Promise.reject(error);
+  // }
 );
 export default api;

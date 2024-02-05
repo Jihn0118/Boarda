@@ -43,6 +43,7 @@ const reviewAPI = {
   registMyReview(formData) {
     return api({
       method: "post",
+      url: `${END_POINT}/regist`,
       headers: {
         "Content-Type": "multipart/form-data",
       }, // 멀티파트 헤더 추가

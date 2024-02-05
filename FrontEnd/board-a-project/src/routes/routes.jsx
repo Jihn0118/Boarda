@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import MoimList from "../pages/moim/MoimList";
+
 // 라우터 일단 모달로 대체하면서 지워둠.. 칠드런에 넣을 수 있으면 넣어보기
 // import MoimMake from "../pages/moim/MoimMake";
 // import MoimDetail from "../pages/moim/MoimDetail";
@@ -17,9 +18,12 @@ import Board from "../pages/board/board";
 import Cafe from "../pages/cafe/cafe";
 import MyPage from "../pages/mypage/MyPage";
 import FollowBlock from "../pages/mypage/FollowBlock";
-import Feed from "../pages/mypage/Feed";
 import MyPosts from "../pages/mypage/MyPosts";
-
+import MoimMap from "../pages/moim/Moimmap";
+import UserInfo from "../pages/mypage/UserInfo";
+import GroupHistory from "../pages/mypage/GroupHistory";
+import GroupNow from "../pages/mypage/GroupNow";
+import Feed from "../pages/mypage/Feed";
 
 
 // ----------------------------------------------------------------
@@ -31,9 +35,25 @@ const routes = createBrowserRouter([
     element: <RootLayout />, // 헤더 껍데기
     children: [
       {
-        path: "/myPage/:userId",
+        path: "my-page/:userId",
         element: <MyPage></MyPage>,
+
         children: [
+          {
+            path: "group-now",
+            element: <GroupNow />, // 마이페이지 내 참여중인그룹
+          },
+
+          {
+            path: "group-history",
+            element: <GroupHistory />, // 마이페이지 내 그룹이력
+          },
+
+          {
+            path: "userinfo",
+            element: <UserInfo />, // 마이페이지 내 회원정보수정
+          },
+
           {
             path: "follow",
             element: <FollowBlock />, // 마이페이지 내 팔로우 목록

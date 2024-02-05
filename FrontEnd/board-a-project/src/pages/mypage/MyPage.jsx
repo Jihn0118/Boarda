@@ -10,6 +10,7 @@ import { loginUserState } from "../../recoil/atoms/UserState";
 import mypageAPI from "../../api/mypageAPI";
 import MypageHeader from "../../components/MypageHeader";
 import { Outlet } from "react-router-dom";
+import MyModal from "./Mymodal";
 
 // 마이페이지 -> 로그인 한 유저가 접근하면 내 마이페이지로
 // 타인 프로필을 클릭했으면 타인 피드로
@@ -66,15 +67,36 @@ export default function MyPage() {
       }}
       orientation="vertical"
     >
-      <StyledTab label={`${loginUser.nickname}님의 피드`} value={1}></StyledTab>
+      <StyledTab
+        label={`${loginUser.nickname}님의 피드`}
+        value={1}
+        onClick={() => navigate("feed")}
+      ></StyledTab>
       <StyledTab
         label={`${loginUser.nickname}님의 작성글`}
         value={2}
+        onClick={() => navigate("mypost")}
       ></StyledTab>
-      <StyledTab label="회원정보 수정" value={3}></StyledTab>
-      <StyledTab label="내 그룹이력" value={4}></StyledTab>
-      <StyledTab label="팔로우/차단" value={5}></StyledTab>
-      <StyledTab label="참여중인 그룹" value={6}></StyledTab>
+      <StyledTab
+        label="회원정보 수정"
+        value={3}
+        onClick={() => navigate("userinfo")}
+      ></StyledTab>
+      <StyledTab
+        label="내 그룹이력"
+        value={4}
+        onClick={() => navigate("group-history")}
+      ></StyledTab>
+      <StyledTab
+        label="팔로우/차단"
+        value={5}
+        onClick={() => navigate("follow")}
+      ></StyledTab>
+      <StyledTab
+        label="참여중인 그룹"
+        value={6}
+        onClick={() => navigate("group-now")}
+      ></StyledTab>
     </StyledTabs>
   );
 
@@ -88,12 +110,12 @@ export default function MyPage() {
     >
       <StyledTab
         onClick={() => navigate("feed")}
-        label={`${params.nickname}의 피드`}
+        label={`${params.userId}의 피드`}
         value={1}
       ></StyledTab>
       <StyledTab
         onClick={() => navigate("mypost")}
-        label={`${params.nickname}의 작성글`}
+        label={`${params.userId}의 작성글`}
         value={2}
       ></StyledTab>
     </StyledTabs>
@@ -105,9 +127,15 @@ export default function MyPage() {
 
       {/* 로그인 유저와 같으면 본인 마이페이지로 아니면 다른사람페이지 */}
       <div>
-        <button bg-yellow-400>asd</button>
         {isLoginUser && loginUserMypage}
         {!isLoginUser && otherUserMypage}
+
+        {/* <div>
+          아래 작업용
+          {loginUserMypage}
+        </div> */}
+
+        <MyModal></MyModal>
         <Outlet></Outlet>
       </div>
     </>
