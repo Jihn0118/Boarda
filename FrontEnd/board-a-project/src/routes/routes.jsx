@@ -53,7 +53,7 @@ const routes = createBrowserRouter([
       { path: "home", element: <Home></Home> }, // 홈화면 (실질적인 첫 화면)
       {
         path: "moim", // 나중에 지도화면으로 element 바꿔야 함
-        element: <Home />,
+        element: <MoimMap />,
         children: [
           {
             path: "list",
