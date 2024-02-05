@@ -72,12 +72,10 @@ CREATE TABLE `message` (
 
 CREATE TABLE `image` (
 	`id`	int	PRIMARY KEY auto_increment,
-	`name`	varchar(50)	NULL,
-	`path`	varchar(100)	NULL,
-	`type`	varchar(10)	NULL,
+	`name`	text	NOT NULL,
 	`flag`	char(1)	NULL,
-	`article_id`	int	NOT NULL,
-	`review_id`	int	NOT NULL
+	`article_id`	int,
+	`review_id`	int
 );
 
 #DROP TABLE IF EXISTS `cafe`;
@@ -223,5 +221,19 @@ ALTER TABLE `moim_member` ADD CONSTRAINT `FK_Moim_TO_MoimMember_1` FOREIGN KEY (
 	`moim_id`
 )
 REFERENCES `moim` (
+	`id`
+);
+
+ALTER TABLE `image` ADD CONSTRAINT `FK_Review_TO_Image_1` FOREIGN KEY (
+	`review_id`
+)
+REFERENCES `review` (
+	`id`
+);
+
+ALTER TABLE `image` ADD CONSTRAINT `FK_Article_TO_Image_1` FOREIGN KEY (
+	`article_id`
+)
+REFERENCES `article` (
 	`id`
 );
