@@ -1,4 +1,4 @@
-package site.gongtong.WebCrawling;
+package WebCrawling;
 
 
 import org.openqa.selenium.By;
@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class WebCrawlerApplication {
 
     //서버 DB
+    //서버 DB
     @Value("${spring.datasource.driver-class-name}")
     static String JDBC_DRIVER;
     @Value("${spring.datasource.url}")
@@ -26,7 +27,6 @@ public class WebCrawlerApplication {
     static String USERNAME;
     @Value("${spring.datasource.password}")
     static String PASSWORD;
-
 
     public static void main(String[] args) {
         SpringApplication.run(WebCrawlerApplication.class, args);
@@ -51,11 +51,11 @@ public class WebCrawlerApplication {
             String sql = "INSERT INTO boardgame (title, min_num, max_num, time, year, age, difficulty, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
 
-            for (int page = 11; page <= 178; page++) {
+            for (int page = 65; page <= 178; page++) {
                 driver.get("https://boardlife.co.kr/rank.php?pg=" + page);
 
                 // 웹페이지 로딩 기다리는 시간 설정
-                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 
                 // 게임 리스트에서 각 게임의 상세 페이지로 이동하는 코드
                 List<WebElement> games = driver.findElements(By.cssSelector(".game-rank-div >  a"));
