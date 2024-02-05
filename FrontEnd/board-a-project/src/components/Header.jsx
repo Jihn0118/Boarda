@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from 'recoil';
+import { loginUserState } from '../recoil/atoms/UserState';
 
 // StyledHeader 컴포넌트 생성
 const StyledHeader = styled.header`
@@ -34,21 +36,33 @@ const HeaderLogo = styled.div`
 
 // 유저 로그인 여부 확인 로직 바꿔야합니다 일단 지금은 세션 확인해보는거로
 export default function Header() {
+
+  // --- 일단은 recoil사용함 ---
+  // window.location.reload();로 새로고침하는게 더 나을것같아서 수정 예정
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+  const logout = () => {
+    sessionStorage.removeItem("loginUser")
+    setLoginUser(null);
+  }
+
   return (
     <StyledHeader>
       <HeaderLogo></HeaderLogo>
       <div>
         <Link to="/home">홈</Link>
-        <Link to="/moim/list">모임</Link>
+        <Link to="/moim/">모임</Link>
         <Link to="/game">게임</Link>
         <Link to="/cafe">매장</Link>
         <Link to="/board">게시판</Link>
       </div>
       <div>
-        {!sessionStorage.getItem("loginUser") && (
+        {!loginUser && (
           <Link to="/login">로그인</Link>
         )}
-        {!!sessionStorage.getItem("loginUser") && <button>로그아웃</button>}
+        {!!loginUser && <button onClick={()=>logout()}>로그아웃</button>}
+        {!!loginUser && (
+          <Link to={`/mypage/${loginUser}`}>{loginUser}님의 마이페이지</Link>
+        )}
       </div>
     </StyledHeader>
   );

@@ -7,7 +7,7 @@ export const moimListState = atom({
 
 export const locationState = atom({
   key: 'locationState',
-  default: '서울시 강남구', // 초기값
+  default: '', // 초기값
 });
 
 export const moimState = atom({

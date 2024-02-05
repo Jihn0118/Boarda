@@ -10,7 +10,6 @@ import { user_info } from '../../api/mypageAPI'
 
 const MyPage = () => {
   const { menu } = useParams();
-  console.log('뭣');
   console.log(user_info('su@su.com'));
 
   const renderContent = () => {
