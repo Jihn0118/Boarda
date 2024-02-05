@@ -17,6 +17,10 @@ import Board from "../pages/board/board";
 import Cafe from "../pages/cafe/cafe";
 import MyPage from "../pages/mypage/MyPage";
 import FollowBlock from "../pages/mypage/FollowBlock";
+import Feed from "../pages/mypage/Feed";
+import MyPosts from "../pages/mypage/MyPosts";
+
+
 
 // ----------------------------------------------------------------
 
@@ -33,6 +37,14 @@ const routes = createBrowserRouter([
           {
             path: "follow",
             element: <FollowBlock />, // 마이페이지 내 팔로우 목록
+          },
+          {
+            path: "feed",
+            element: <Feed />, // 마이페이지 내 피드
+          },
+          {
+            path: "mypost",
+            element: <MyPosts />, // 마이페이지 내 작성글
           },
         ],
       }, // 마이페이지

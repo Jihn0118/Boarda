@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { loginUserState } from "../../recoil/atoms/UserState";
 import mypageAPI from "../../api/mypageAPI";
 import MypageHeader from "../../components/MypageHeader";
+import { Outlet } from "react-router-dom";
 
 // 마이페이지 -> 로그인 한 유저가 접근하면 내 마이페이지로
 // 타인 프로필을 클릭했으면 타인 피드로
@@ -85,8 +86,16 @@ export default function MyPage() {
       }}
       orientation="vertical"
     >
-      <StyledTab label={`${params.nickname}의 피드`} value={1}></StyledTab>
-      <StyledTab label={`${params.nickname}의 작성글`} value={2}></StyledTab>
+      <StyledTab
+        onClick={() => navigate("feed")}
+        label={`${params.nickname}의 피드`}
+        value={1}
+      ></StyledTab>
+      <StyledTab
+        onClick={() => navigate("mypost")}
+        label={`${params.nickname}의 작성글`}
+        value={2}
+      ></StyledTab>
     </StyledTabs>
   );
 
@@ -95,8 +104,12 @@ export default function MyPage() {
       <MypageHeader></MypageHeader>
 
       {/* 로그인 유저와 같으면 본인 마이페이지로 아니면 다른사람페이지 */}
-      {isLoginUser && loginUserMypage}
-      {!isLoginUser && otherUserMypage}
+      <div>
+        <button bg-yellow-400>asd</button>
+        {isLoginUser && loginUserMypage}
+        {!isLoginUser && otherUserMypage}
+        <Outlet></Outlet>
+      </div>
     </>
   );
 }

@@ -3,6 +3,18 @@ import api from "./api";
 const END_POINT = "mypage";
 
 const myPageAPI = {
+  // 피드목록 요청 -> 해당 유저가 작성한 피드 리스트 리턴
+  // get, /profile?id=userId
+  getUserFeeds(userId) {
+    return api({
+      method: "get",
+      url: `${END_POINT}/profile`,
+      params: {
+        id: userId,
+      },
+    });
+  },
+
   // 회원탈퇴 -> profile?id={id}로만 보내기
   userWithdraw(userId) {
     return api({
