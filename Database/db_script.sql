@@ -72,12 +72,10 @@ CREATE TABLE `message` (
 
 CREATE TABLE `image` (
 	`id`	int	PRIMARY KEY auto_increment,
-	`name`	varchar(50)	NULL,
-	`path`	varchar(100)	NULL,
-	`type`	varchar(10)	NULL,
+	`name`	text	NOT NULL,
 	`flag`	char(1)	NULL,
-	`article_id`	int	NOT NULL,
-	`review_id`	int	NOT NULL
+	`article_id`	int,
+	`review_id`	int
 );
 
 #DROP TABLE IF EXISTS `cafe`;
@@ -97,9 +95,9 @@ CREATE TABLE `cafe` (
 #DROP TABLE IF EXISTS `follow`;
 
 CREATE TABLE `follow` (
-	`id`	int	PRIMARY KEY auto_increment,
-	`follower`	varchar(20)	NOT NULL,
-	`following`	varchar(20)	NOT NULL,
+	`id`	int	NOT NULL,
+	`follower`	int	NOT NULL,
+	`following`	int	NOT NULL,
 	`flag`	char(1)	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP
 );
@@ -116,6 +114,7 @@ CREATE TABLE `moim_member` (
 
 CREATE TABLE `review` (
 	`id`	int	PRIMARY KEY auto_increment,
+	`is_removed`	tinyint	NULL,
 	`content`	text	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`rate`	float	NULL,
@@ -169,6 +168,20 @@ CREATE TABLE `ranking` (
 	`game_id`	int	NOT NULL
 );
 
+ALTER TABLE `follow` ADD CONSTRAINT `FK_Member_TO_Follow_1` FOREIGN KEY (
+	`following`
+)
+REFERENCES `member` (
+	`num`
+);
+
+ALTER TABLE `follow` ADD CONSTRAINT `FK_Member_TO_Follow_2` FOREIGN KEY (
+	`follower`
+)
+REFERENCES `member` (
+	`num`
+);
+
 ALTER TABLE `chatting` ADD CONSTRAINT `FK_ChattingRoom_TO_Chatting_1` FOREIGN KEY (
 	`room_id`
 )
@@ -208,5 +221,19 @@ ALTER TABLE `moim_member` ADD CONSTRAINT `FK_Moim_TO_MoimMember_1` FOREIGN KEY (
 	`moim_id`
 )
 REFERENCES `moim` (
+	`id`
+);
+
+ALTER TABLE `image` ADD CONSTRAINT `FK_Review_TO_Image_1` FOREIGN KEY (
+	`review_id`
+)
+REFERENCES `review` (
+	`id`
+);
+
+ALTER TABLE `image` ADD CONSTRAINT `FK_Article_TO_Image_1` FOREIGN KEY (
+	`article_id`
+)
+REFERENCES `article` (
 	`id`
 );

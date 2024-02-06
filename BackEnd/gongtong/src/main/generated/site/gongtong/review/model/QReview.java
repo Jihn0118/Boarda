@@ -26,7 +26,11 @@ public class QReview extends EntityPathBase<Review> {
 
     public final StringPath content = createString("content");
 
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final BooleanPath isRemoved = createBoolean("isRemoved");
 
     public final site.gongtong.member.model.QMember member;
 

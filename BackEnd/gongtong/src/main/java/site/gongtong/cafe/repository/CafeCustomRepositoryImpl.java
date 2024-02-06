@@ -44,4 +44,13 @@ public class CafeCustomRepositoryImpl implements CafeCustomRepository{
                 .where(cafe.id.eq(cafeId))
                 .fetchOne();
     }
+
+    @Override
+    public Cafe findById(int cafeId) {
+        QCafe qCafe = QCafe.cafe;
+
+        return jpaQueryFactory.selectFrom(qCafe)
+                .where(qCafe.id.eq(cafeId))
+                .fetchOne();
+    }
 }
