@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { getGameList } from '../../api/gameAPI';
-import Pagination from '@material-ui/lab/Pagination';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { gameListState } from '../../recoil/atoms/GameState';
+import React, { useEffect, useState } from "react";
+import { getGameList } from "../../api/gameAPI";
+import Pagination from "@material-ui/lab/Pagination";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { gameListState } from "../../recoil/atoms/gameState";
 
-import { CardGalaxy } from '../../mui-treasury/card-galaxy/CardGalaxy';
-
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import { CardGalaxy } from "../../mui-treasury/card-galaxy/CardGalaxy";
+import Grid from "@material-ui/core/Grid";
 
 const GameList = () => {
   const [gameList, setGameList] = useRecoilState(gameListState);
@@ -25,7 +19,10 @@ const GameList = () => {
   const [activePage, setActivePage] = useState(1);
   const itemsCountPerPage = 8;
 
-  const currentGameList = gameList.slice((activePage - 1) * itemsCountPerPage, activePage * itemsCountPerPage);
+  const currentGameList = gameList.slice(
+    (activePage - 1) * itemsCountPerPage,
+    activePage * itemsCountPerPage
+  );
 
   const handlePageChange = async (event, pageNumber) => {
     setActivePage(pageNumber);
@@ -49,20 +46,20 @@ const GameList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getGameList(time, num, keyword);  
-      setGameList(data); 
+      const data = await getGameList(time, num, keyword);
+      setGameList(data);
     };
 
-    fetchData();  // 함수를 호출하여 데이터를 가져옵니다.
-  }, [time, num, keyword]);  // 빈 배열을 넣어 컴포넌트가 마운트 될 때만 실행하게 합니다.
+    fetchData(); // 함수를 호출하여 데이터를 가져옵니다.
+  }, [time, num, keyword]); // 빈 배열을 넣어 컴포넌트가 마운트 될 때만 실행하게 합니다.
 
   return (
     <div>
       <div>
         <label>
           Time:
-          <select 
-            value={time} 
+          <select
+            value={time}
             onChange={(e) => handleTimeChange(e.target.value)}
             className="ml-2 p-1 border rounded"
           >
@@ -79,8 +76,8 @@ const GameList = () => {
 
         <label>
           Num:
-          <select 
-            value={num} 
+          <select
+            value={num}
             onChange={(e) => handleNumChange(e.target.value)}
             className="ml-2 p-1 border rounded"
           >
@@ -99,17 +96,16 @@ const GameList = () => {
 
         <label>
           Keyword:
-          <input 
+          <input
             value={keyword}
             onChange={(e) => handleKeywordChange(e.target.value)}
             className="ml-2 p-1 border rounded"
           />
         </label>
-
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Grid container spacing={3} style={{ maxWidth: '80%' }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Grid container spacing={3} style={{ maxWidth: "80%" }}>
           {currentGameList.map((game) => (
             <Grid item xs={12} sm={6} md={3} key={game.id}>
               <CardGalaxy
@@ -122,8 +118,6 @@ const GameList = () => {
           ))}
         </Grid>
       </div>
-
-
 
       <div className="flex justify-center">
         <Pagination
