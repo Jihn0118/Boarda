@@ -70,18 +70,6 @@ public class MyPageServiceImpl implements MyPageService {
         return myPageRepository.delete(id);
     }
 
-    //엔터티 -> dto 전환
-//    public EditProfileDto entityToDto(Member member) {
-//        EditProfileDto editProfileDto = new EditProfileDto();
-//        editProfileDto.setId(member.getId());
-//        editProfileDto.setProfileImage(member.getProfileImage());
-//        editProfileDto.setNickname(member.getNickname());
-//        editProfileDto.setNum(member.getNum());
-////        editProfileDto.setPassword(member.getPassword());
-//
-//        return editProfileDto;
-//    }
-
     //dt0o->entity
     public Member dtoToEntity(EditProfileDto editProfileDto) {
 

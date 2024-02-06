@@ -3,7 +3,6 @@ package site.gongtong.member.service;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
@@ -15,7 +14,6 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class FollowServiceImpl implements FollowService {
-    @Autowired
     private final FollowRepository followRepository;
 
     @Override

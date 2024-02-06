@@ -3,7 +3,6 @@ package site.gongtong.member.controller;
 import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,15 +31,10 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class MyPageController {
-
-    @Autowired
-    MemberDetailsService memberDetailsService;
-    @Autowired
-    MyPageService myPageService;
-    @Autowired
-    FollowService followService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final MemberDetailsService memberDetailsService;
+    private final MyPageService myPageService;
+    private final FollowService followService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/profile") //토큰으로 본인인지 확인 필요
     public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id) {
@@ -74,9 +68,6 @@ public class MyPageController {
                     reviewDto.setReviews(reviews);
                 }
 
-//                response = ResponseEntity
-//                        .status(HttpStatus.OK)
-//                        .body(resultMap);
             }
         } catch (Exception e) { //로그인 멤버 찾아오다가 오류
             e.printStackTrace();

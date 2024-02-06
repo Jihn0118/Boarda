@@ -1,8 +1,6 @@
 package site.gongtong.member.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import site.gongtong.member.config.MemberDetails;
 
@@ -12,9 +10,9 @@ import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.MemberRepository;
 
 @Service
+@RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
-    @Autowired
-    MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public MemberDetails loadUserByUsername(String username) throws UsernameNotFoundException {

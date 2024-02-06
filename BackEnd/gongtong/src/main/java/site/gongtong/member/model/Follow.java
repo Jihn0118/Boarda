@@ -22,13 +22,11 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne//(targetEntity = Member.class)
-//    @JoinColumn(name = "follower_num", referencedColumnName = "num")
+    @ManyToOne
     @JoinColumn(name = "follower")
     private Member follower; //나를 좋아하는 사람들
 
-    @ManyToOne//(targetEntity = Member.class)
-//    @JoinColumn(name = "following_num", referencedColumnName = "num")
+    @ManyToOne
     @JoinColumn(name = "following")
     private Member following; //내가 좋아하는 사람들
 

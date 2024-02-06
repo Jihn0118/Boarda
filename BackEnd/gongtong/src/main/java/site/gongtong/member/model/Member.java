@@ -37,14 +37,14 @@ public class Member {
 //    private String provider;
 //    private String providerId;
 
-    public void changeNickname(String nickname) {
-        this.nickname = nickname;
-    }
-    public void changeProfileImage(String profileImage) {
-        this.profileImage = profileImage;
-    }
-    public void changePassword(String password) {
-        this.password = password;
-    }
+//    public void changeNickname(String nickname) {
+//        this.nickname = nickname;
+//    }
+//    public void changeProfileImage(String profileImage) {
+//        this.profileImage = profileImage;
+//    }
+//    public void changePassword(String password) {
+//        this.password = password;
+//    }
 
 }

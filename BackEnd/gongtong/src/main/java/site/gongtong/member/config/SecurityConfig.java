@@ -38,7 +38,6 @@ public class SecurityConfig {
 
     
     boolean securityDebug;
-//    private final JwtTokenProvider jwtTokenProvider;
     @Bean
     SecurityFilterChain configure(HttpSecurity http) throws Exception{
 
@@ -48,81 +47,21 @@ public class SecurityConfig {
         http.authenticationManager(authenticationManager);
 
         http
-//                .csrf((csrfConfigurer) ->
-//                        csrfConfigurer.disable()
-//                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(authorize -> authorize
-////                                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-//                                .requestMatchers("/member/**", "/mypage/**").permitAll()
-////                                .requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN") //행동에 대해서도 권한설정 가능
-////                                .requestMatchers("/mem/**").authenticated()
-//                                .anyRequest().permitAll()
-//                )
-                //필터 관련 (addFilter, header)
                 .addFilterAt(
                         this.abstractAuthenticationProcessingFilter(authenticationManager),
                         UsernamePasswordAuthenticationFilter.class //이 필터 있는 자리에 추가
                 );
-//                .headers(
-//                        headersConfig -> headersConfig
-//                                .frameOptions(
-//                                        HeadersConfigurer.FrameOptionsConfig::sameOrigin //같은 베이스는 허용
-//                                )
-//                                .contentSecurityPolicy(
-//                                        policyConfig -> policyConfig
-//                                                .policyDirectives(
-//                                                        "script-src 'self'; " //스크립트는 동일한 출처에서만 로딩 가능
-//                                                        + "img-src 'self'; " //이미지는 동일한 출처에서만 로딩 가능
-//                                                        + "font-src 'self' data:; " //폰트는 동일한 출처 및 data: 프로토콜에서 로딩 가능
-//                                                        + "default-src 'self'; " //그 외 자원은 동일한 출처에서만 로딩 가능
-//                                                        + "frame-src 'self'" //프레임은 동일한 출처에서만 로딩 가능
-//                                                )
-//                                )
-//                );
-//                .formLogin(login -> login
-//                        .usernameParameter("id")
-//                        .passwordParameter("password")
-//                        .loginPage("/login").permitAll()
-//                        .defaultSuccessUrl("/main") //항상 리다이렉트 수행
-//                        .failureUrl("/member/login")
-//                                .disable()
-//                )
-//                .rememberMe(Customizer.withDefaults())
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout").permitAll()
-//                        .logoutSuccessUrl("/")
-//                        .invalidateHttpSession(true)
-//                        .deleteCookies("JSESSIONID")
-//                        .permitAll()
-//                )
-//                .sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .logout(Customizer.withDefaults());
-//                .exceptionHandling() //예외 처리2
-//                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/member/login")) //1. 로그인 아닌 사용자가 보호된 리소스에 액세스하려고 할 때 -> 로그인 페이지로 이동
-//                .accessDeniedHandler(new AccessDeniedHandlerImpl()); //2. 권한 없음 -> 화이트라벨
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-//                        UsernamePasswordAuthenticationFilter.class);
-//                // JwtAuthenticationFilter를 UsernamePasswordAuthenticationfilter 전에 넣기
+
         return http.build();
 
 
-//                //oauth로그인
-//                .and()
-//                .oauth2Login()
-//                    .loginPage("/")
-//                    .defaultSuccessUrl("/")
-//                    .userInfoEndpoint()
-//                        .userService(principalOauth2UserService)
-//        ;
     }
 
     //필터 관련 (로그인 처리 제일 전면부)
     private AbstractAuthenticationProcessingFilter abstractAuthenticationProcessingFilter(final AuthenticationManager authenticationManager) {
         return new LoginAuthenticationFilter(
-//                "/member/login",
                 "/login",
                 authenticationManager
         );

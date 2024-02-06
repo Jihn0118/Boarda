@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,14 +35,10 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class MemberController {
-    @Autowired
-    MemberDetailsService memberDetailsService;
-    @Autowired
-    MemberService memberService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
-//    @Autowired
-//    JwtTokenProvider jwtTokenProvider;
+    private final MemberDetailsService memberDetailsService;
+    private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
+//    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/checkid")
     public ResponseEntity<String> checkId(@RequestParam String id) { //sns x
@@ -86,10 +81,10 @@ public class MemberController {
 
     }
 
-    @GetMapping("/login")
-    public String login(){ return "login"; }
-    @GetMapping("/main")
-    public String main(){  return "main"; }
+//    @GetMapping("/login")
+//    public String login(){ return "login"; }
+//    @GetMapping("/main")
+//    public String main(){  return "main"; }
 
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest signUpRequest, BindingResult bindingResult, Model model) { //sns x
