@@ -2,7 +2,7 @@ package site.gongtong.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import site.gongtong.member.config.MemberDetails;
+import site.gongtong.member.dto.MemberDetails;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

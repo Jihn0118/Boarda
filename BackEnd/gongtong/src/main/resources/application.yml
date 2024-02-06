@@ -17,9 +17,6 @@ spring:
         format_sql: true
   security:
     debug: true
-    user:
-      name: user
-      password: 1234
 
 server:
   port: 8081

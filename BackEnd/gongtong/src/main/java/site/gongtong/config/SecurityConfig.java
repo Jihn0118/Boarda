@@ -1,4 +1,4 @@
-package site.gongtong.member.config;
+package site.gongtong.config;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;

@@ -1,9 +1,7 @@
 package site.gongtong.member.repository;
 
 import com.querydsl.core.Tuple;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Follow;

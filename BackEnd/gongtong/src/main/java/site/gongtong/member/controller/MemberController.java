@@ -1,36 +1,27 @@
 package site.gongtong.member.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 //import site.gongtong.member.config.JwtTokenProvider;
-import site.gongtong.member.config.MemberDetails;
+import site.gongtong.member.dto.MemberDetails;
 import site.gongtong.member.dto.LoginRequest;
 import site.gongtong.member.dto.SignUpRequest;
-import site.gongtong.member.filter.LoginAuthenticationFilter;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.member.service.MemberService;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:5173")
-@Controller
+@RestController
 @RequestMapping("/member")
 @Slf4j
 @RequiredArgsConstructor
@@ -53,7 +44,7 @@ public class MemberController {
         }
         else { //사용 가능 아이디
             response = ResponseEntity
-                    .status(HttpStatus.ACCEPTED)
+                        .status(HttpStatus.ACCEPTED)
                     .body("사용 가능한 아이디입니다");
         }
 
@@ -81,13 +72,8 @@ public class MemberController {
 
     }
 
-//    @GetMapping("/login")
-//    public String login(){ return "login"; }
-//    @GetMapping("/main")
-//    public String main(){  return "main"; }
-
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest signUpRequest, BindingResult bindingResult, Model model) { //sns x
+    public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest signUpRequest) { //sns x
 
         Member savedMember = null;
         ResponseEntity<String> response = null;
@@ -106,15 +92,7 @@ public class MemberController {
                     .body("사용할 수 없는 닉네임입니다");
             return response;
         }
-        // 3 password와 passwordCheck가 같은지 체크
-        if(!signUpRequest.getPassword().equals(signUpRequest.getPasswordCheck())) { //다르면 걍 리턴
-            response = ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body("비밀번호와 비밀번호 확인이 일치하지 않습니다");
-            return response;
-        }
 
-        
         //위의 내용 거치고 옴
         try {
             savedMember = memberService.signup(signUpRequest); //내용 db에 세이브 (서비스 단에서 비번 인코딩함)
@@ -182,15 +160,4 @@ public class MemberController {
         return response;
     }
 
-    @RequestMapping("/")
-    public MemberDetails getMemberDetailsAfterLogin(Authentication authentication) {
-        //로그인한 사용자의 정보와 권한을 얻기 위한 것 (user인지 admin인지 등을 알기 위해...)
-        /* findById 만 사용해서 구현할 수 있을까 (Option<> 리턴) */
-        MemberDetails member = memberDetailsService.loadUserByUsername(authentication.getName());
-        if(member != null) {
-            return member;
-        } else {
-            return null;
-        }
-    }
 }

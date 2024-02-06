@@ -3,14 +3,13 @@ package site.gongtong.member.controller;
 import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import site.gongtong.member.config.MemberDetails;
+import site.gongtong.member.dto.MemberDetails;
 import site.gongtong.member.dto.EditProfileDto;
 import site.gongtong.member.dto.FollowListDto;
 import site.gongtong.member.dto.PasswordChangeDto;
@@ -25,8 +24,7 @@ import site.gongtong.review.model.Review;
 import java.security.SecureRandom;
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:5173")
-@Controller
+@RestController
 @RequestMapping("/mypage")
 @Slf4j
 @RequiredArgsConstructor
@@ -40,9 +38,6 @@ public class MyPageController {
     public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id) {
 
         log.info("mypage enter reque!!");
-
-//        Map<String, Object> resultMap = new HashMap<String, Object>();
-//        ResponseEntity<Map<String, Object>> response = null;
 
         MemberDetails dbMember = null;
         ReviewDto reviewDto = new ReviewDto();
@@ -95,7 +90,6 @@ public class MyPageController {
         return showMember;
     }
 
-
     @PutMapping("/profile")
     public ResponseEntity<String> modifyProfile(@RequestParam(name = "id") String id,
                                                 @RequestBody EditProfileDto editProfileDto) {
@@ -126,7 +120,7 @@ public class MyPageController {
             if(myPageService.modifyProfile(editProfileDto) > 0) {
                 return new ResponseEntity<> ("프로필 수정 성공 -db확인", HttpStatus.OK);
             } else {
-                return new ResponseEntity<> ("프로필 수정 안 됨 - 내용이 같음", HttpStatus.OK);
+                return new ResponseEntity<> ("프로필 수정 안 됨 - 내용이 같음", HttpStatus.CONFLICT);
             }
         } catch (Exception e) {
 //            resultMap.put("message", e.getMessage());
@@ -141,7 +135,7 @@ public class MyPageController {
         //1. 임시 비번 만들기
             //1-랜덤 문자열 생성
         String newRawPwd = getRandomPwd(10);
-//          System.out.println("tmp rawPwd: "+newRawPwd);
+          System.out.println("tmp rawPwd: "+newRawPwd);
             //2-위의 문자열 bcrypt로 암호화하기
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String newEncodedPwd = encoder.encode(newRawPwd); //암호화된 문자열
@@ -186,7 +180,6 @@ public class MyPageController {
 
         return stringBuilder.toString();
     }
-
 
     //비번 변경
     @PutMapping("/modifypwd")

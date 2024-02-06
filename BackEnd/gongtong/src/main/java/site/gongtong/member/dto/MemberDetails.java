@@ -1,4 +1,4 @@
-package site.gongtong.member.config;
+package site.gongtong.member.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

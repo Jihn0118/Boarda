@@ -14,8 +14,7 @@ public class SignUpRequest { //회원가입 리퀘스트용
     private String id;
 
     @NotNull(message = "사용할 비밀번호를 입력해 주세요.")
-    private String password;
-    private String passwordCheck;
+    private String password; //비밀번호 확인은 프론트에서 함
 
     @NotNull(message = "사용할 닉네임을 입력해 주세요.")
     private String nickname;

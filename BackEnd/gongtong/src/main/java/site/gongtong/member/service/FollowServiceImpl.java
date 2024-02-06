@@ -18,7 +18,12 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public Follow save(Member memMe, char flag, Member memYou) {
-        return followRepository.save(new Follow(memMe, flag, memYou));
+        Follow follow = Follow.builder()
+                .flag(flag)
+                .following(memYou)
+                .follower(memMe)
+                .build();
+        return followRepository.save(follow);
     }
 
     @Override
