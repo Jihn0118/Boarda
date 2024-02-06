@@ -38,6 +38,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	//jwt 관련
+//	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+//	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+//	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
 	// queryDSL
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
@@ -55,6 +60,30 @@ dependencies {
 	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 
 
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+
+
+}
+
+// QueryDsl 빌드 옵션 (선택)
+// QueryDsl 디렉토리 경로
+def querydslDir = "src/main/generated"
+
+// 경로 추가 >> QueryDsl 소스 코드 컴파일 시 빌드
+sourceSets {
+	main.java.srcDirs += [ querydslDir ]
+}
+
+// 컴파일 설정(AnnotationProcessor가 생성하는 소스코드를 해당 경로로 설정)
+tasks.withType(JavaCompile).configureEach {
+	it.options.annotationProcessorGeneratedSourcesDirectory(file(querydslDir))
+}
+
+// clean실행 시 마지막 작업으로 디렉토리(QClass) 삭제 >> 충돌 방지
+clean.doLast {
+	file(querydslDir).deleteDir()
 }
 
 // QueryDsl 빌드 옵션 (선택)
