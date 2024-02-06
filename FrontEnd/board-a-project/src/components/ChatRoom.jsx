@@ -8,10 +8,11 @@ import socketService from "../utils/socketService";
 
 const ChatContainer = styled(Box)`
   && {
+    box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem #d98f8f;
     border-radius: 5%;
     border-color: #d98f8f;
     border-style: solid;
-    border-width: 0.1rem;
+    border-width: 0.3rem;
     height: 50vh;
     width: 20vw;
     margin: auto;
