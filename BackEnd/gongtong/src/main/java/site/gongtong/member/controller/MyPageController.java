@@ -42,15 +42,6 @@ public class MyPageController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    /*무조건 보여주기
-        //{닉네임, 프사}
-        //작성 피드들
-
-        //본인일 때
-        //{아이디, 비밀번호, 닉네임, 생일, 성별, 프사}
-        //작성 피드들
-        //팔로우 목록*/
-
     @GetMapping("/profile") //토큰으로 본인인지 확인 필요
     public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id) {
 
@@ -314,7 +305,9 @@ public class MyPageController {
 
         try {
             userNum = myPageService.idToNum(id);
+
             System.out.println("idTONum: "+ userNum);
+
 
         } catch (Exception e) {
             log.info("No user~~!!");

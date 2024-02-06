@@ -16,4 +16,5 @@ public interface FollowService {
     void deleteFollow(Follow wannaDeleteFollow);
 
     List<Tuple> getFollowList(int myNum);
+
 }

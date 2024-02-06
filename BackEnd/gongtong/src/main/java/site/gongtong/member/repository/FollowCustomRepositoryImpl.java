@@ -4,7 +4,6 @@ import com.querydsl.core.Tuple;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Follow;
@@ -21,7 +20,6 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository {
     public FollowCustomRepositoryImpl(EntityManager entityManager) {
         this.jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
-
 
     @Override
     public int existRelation(int followerNum, int followingNum) {
@@ -51,6 +49,7 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository {
         QFollow follow = QFollow.follow;
 
         return jpaQueryFactory
+
                 .select(member, follow)
                 .from(member)
                 .innerJoin(follow)

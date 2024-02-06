@@ -80,7 +80,7 @@ public class SecurityConfig {
                                                         + "frame-src 'self'" //프레임은 동일한 출처에서만 로딩 가능
                                                 )
                                 )
-                )
+                );
 //                .formLogin(login -> login
 //                        .usernameParameter("id")
 //                        .passwordParameter("password")
