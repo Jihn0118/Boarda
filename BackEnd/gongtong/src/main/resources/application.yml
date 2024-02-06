@@ -20,16 +20,6 @@ spring:
     user:
       name: user
       password: 1234
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 407638040455-10t9rfhuq6e1sqaupq67u9psjm3v8s4c.apps.googleusercontent.com
-            client-secret: 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
-            scope:
-              - email
-              - profile
-              -
 
 server:
   port: 8081

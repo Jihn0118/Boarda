@@ -64,23 +64,23 @@ public class SecurityConfig {
                 .addFilterAt(
                         this.abstractAuthenticationProcessingFilter(authenticationManager),
                         UsernamePasswordAuthenticationFilter.class //이 필터 있는 자리에 추가
-                )
-                .headers(
-                        headersConfig -> headersConfig
-                                .frameOptions(
-                                        HeadersConfigurer.FrameOptionsConfig::sameOrigin //같은 베이스는 허용
-                                )
-                                .contentSecurityPolicy(
-                                        policyConfig -> policyConfig
-                                                .policyDirectives(
-                                                        "script-src 'self'; " //스크립트는 동일한 출처에서만 로딩 가능
-                                                        + "img-src 'self'; " //이미지는 동일한 출처에서만 로딩 가능
-                                                        + "font-src 'self' data:; " //폰트는 동일한 출처 및 data: 프로토콜에서 로딩 가능
-                                                        + "default-src 'self'; " //그 외 자원은 동일한 출처에서만 로딩 가능
-                                                        + "frame-src 'self'" //프레임은 동일한 출처에서만 로딩 가능
-                                                )
-                                )
                 );
+//                .headers(
+//                        headersConfig -> headersConfig
+//                                .frameOptions(
+//                                        HeadersConfigurer.FrameOptionsConfig::sameOrigin //같은 베이스는 허용
+//                                )
+//                                .contentSecurityPolicy(
+//                                        policyConfig -> policyConfig
+//                                                .policyDirectives(
+//                                                        "script-src 'self'; " //스크립트는 동일한 출처에서만 로딩 가능
+//                                                        + "img-src 'self'; " //이미지는 동일한 출처에서만 로딩 가능
+//                                                        + "font-src 'self' data:; " //폰트는 동일한 출처 및 data: 프로토콜에서 로딩 가능
+//                                                        + "default-src 'self'; " //그 외 자원은 동일한 출처에서만 로딩 가능
+//                                                        + "frame-src 'self'" //프레임은 동일한 출처에서만 로딩 가능
+//                                                )
+//                                )
+//                );
 //                .formLogin(login -> login
 //                        .usernameParameter("id")
 //                        .passwordParameter("password")
