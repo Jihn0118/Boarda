@@ -24,7 +24,7 @@ import UserInfo from "../pages/mypage/UserInfo";
 import GroupHistory from "../pages/mypage/GroupHistory";
 import GroupNow from "../pages/mypage/GroupNow";
 import Feed from "../pages/mypage/Feed";
-
+import FeedDetail from "../pages/mypage/FeedDetail";
 
 // ----------------------------------------------------------------
 
@@ -61,6 +61,12 @@ const routes = createBrowserRouter([
           {
             path: "feed",
             element: <Feed />, // 마이페이지 내 피드
+            children: [
+              {
+                path: ":feedId",
+                element: <FeedDetail></FeedDetail>, // 피드 이미지 누르면 피드 상세 페이지
+              },
+            ],
           },
           {
             path: "mypost",
