@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,32 +18,49 @@ public class QReview extends EntityPathBase<Review> {
 
     private static final long serialVersionUID = -329841631L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QReview review = new QReview("review");
 
-    public final NumberPath<Integer> cafeId = createNumber("cafeId", Integer.class);
+    public final site.gongtong.cafe.model.QCafe cafe;
 
     public final StringPath content = createString("content");
 
-    public final DateTimePath<java.time.LocalDateTime> created_at = createDateTime("created_at", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
-    public final NumberPath<Integer> memberId = createNumber("memberId", Integer.class);
+    public final BooleanPath isRemoved = createBoolean("isRemoved");
 
-    public final NumberPath<Integer> moimId = createNumber("moimId", Integer.class);
+    public final site.gongtong.member.model.QMember member;
+
+    public final site.gongtong.moim.model.QMoim moim;
 
     public final NumberPath<Float> rate = createNumber("rate", Float.class);
 
+    public final ComparablePath<Character> status = createComparable("status", Character.class);
+
     public QReview(String variable) {
-        super(Review.class, forVariable(variable));
+        this(Review.class, forVariable(variable), INITS);
     }
 
     public QReview(Path<? extends Review> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QReview(PathMetadata metadata) {
-        super(Review.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QReview(PathMetadata metadata, PathInits inits) {
+        this(Review.class, metadata, inits);
+    }
+
+    public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.cafe = inits.isInitialized("cafe") ? new site.gongtong.cafe.model.QCafe(forProperty("cafe")) : null;
+        this.member = inits.isInitialized("member") ? new site.gongtong.member.model.QMember(forProperty("member")) : null;
+        this.moim = inits.isInitialized("moim") ? new site.gongtong.moim.model.QMoim(forProperty("moim")) : null;
     }
 
 }

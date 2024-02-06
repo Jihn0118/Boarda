@@ -2,10 +2,20 @@ package site.gongtong.review.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import site.gongtong.cafe.model.Cafe;
+import site.gongtong.member.model.Member;
+import site.gongtong.moim.model.Moim;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @Setter
@@ -19,20 +29,27 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name="is_removed")
+    private Boolean isRemoved;
+
+    private Character status;
+
     private String content;
 
-    private LocalDateTime created_at;
+    private Float rate;
 
-    private float rate;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-    @Column(name="member_id")
-    private Integer memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Column(name="cafe_id")
-    private Integer cafeId;
+    @ManyToOne
+    @JoinColumn(name = "moim_id")
+    private Moim moim;
 
-
-    @Column(name="moim_id")
-    private Integer moimId;
-
+    @ManyToOne
+    @JoinColumn(name="cafe_id")
+    private Cafe cafe;
 }

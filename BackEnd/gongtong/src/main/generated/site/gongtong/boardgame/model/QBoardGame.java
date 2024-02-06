@@ -19,7 +19,23 @@ public class QBoardGame extends EntityPathBase<BoardGame> {
 
     public static final QBoardGame boardGame = new QBoardGame("boardGame");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final NumberPath<Integer> age = createNumber("age", Integer.class);
+
+    public final NumberPath<Float> difficulty = createNumber("difficulty", Float.class);
+
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final StringPath image = createString("image");
+
+    public final NumberPath<Integer> maxNum = createNumber("maxNum", Integer.class);
+
+    public final NumberPath<Integer> minNum = createNumber("minNum", Integer.class);
+
+    public final NumberPath<Integer> playTime = createNumber("playTime", Integer.class);
+
+    public final StringPath title = createString("title");
+
+    public final ComparablePath<java.time.Year> year = createComparable("year", java.time.Year.class);
 
     public QBoardGame(String variable) {
         super(BoardGame.class, forVariable(variable));
