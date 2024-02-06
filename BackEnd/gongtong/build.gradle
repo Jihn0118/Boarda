@@ -50,7 +50,8 @@ dependencies {
 	// AWS S3
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
-	// Selenium
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
 	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 
 
