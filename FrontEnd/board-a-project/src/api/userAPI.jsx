@@ -1,11 +1,10 @@
 import api from "./api";
 
-
-
+const END_POINT = 'member';
 // --- 자체 로그인 -------------------------------
 export const login = async(user_info) => {
     try {
-        const response = await axios.post(`//www.boarda.site:8080/member/login`,{ // ${END_POINT}/member/login
+        const response = await axios.post(`${END_POINT}/member/login`,{ // ${END_POINT}/member/login
             params: {
                 id : user_info.id,
                 password : user_info.pw
@@ -23,7 +22,7 @@ const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY; //REST API KEY for Kak
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID; //Client ID for Google
 const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID; //Client ID for Naver
 
-const redirect_uri = "http://localhost:3000/auth"; // ${END_POINT}/auth
+const redirect_uri = `https://www.boarda.site/auth`; // ${END_POINT}/auth
 
 // oauth 요청 URL
 const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${redirect_uri}&response_type=code`;
@@ -55,7 +54,7 @@ export const ssoLogin = (site) => {
 // 이메일(아이디) 중복 체크
 export const isEmailUnique = async(Email) => {
     try {
-        const response = await axios.get(`//www.boarda.site:8080/member/checkid`,{ // ${END_POINT}/member/checkid
+        const response = await axios.get(`${END_POINT}/member/checkid`,{ // ${END_POINT}/member/checkid
             params: {
                 id : Email,
             }
@@ -68,7 +67,7 @@ export const isEmailUnique = async(Email) => {
 // 닉네임 중복 체크
 export const isNicknameUnique = async(nickname) => {
     try {
-        const response = await axios.get(`//www.boarda.site:8080/member/checknickname`,{ // ${END_POINT}/member/checknickname
+        const response = await axios.get(`${END_POINT}/member/checknickname`,{ // ${END_POINT}/member/checknickname
             params: {
                 nickname : nickname,
             }
@@ -82,7 +81,7 @@ export const isNicknameUnique = async(nickname) => {
 // 회원가입
 export const signup = async(user_info) => {
     try {
-        const response = await axios.post(`//www.boarda.site:8080/member/signup`,{ // ${END_POINT}/member/signup
+        const response = await axios.post(`${END_POINT}/member/signup`,{ // ${END_POINT}/member/signup
             params: {
                 id : user_info.id,
                 password : user_info.pw,
@@ -115,7 +114,7 @@ export const signup = async(user_info) => {
 // --- 비밀번호 변경 -------------------------------
 export const changePW = async(user_info) => {
     try {
-        const response = await axios.put(`//www.boarda.site:8080/member/modifypwd`,{ // ${END_POINT}/member/modifypwd
+        const response = await axios.put(`${END_POINT}/member/modifypwd`,{ // ${END_POINT}/member/modifypwd
             params: {
                 id : user_info.id,
                 password : user_info.pw
