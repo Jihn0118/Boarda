@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { loginUserState } from "../../recoil/atoms/UserState";
+import { loginUserState } from "../../recoil/atoms/userState";
 
 export default function UserInfo() {
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);

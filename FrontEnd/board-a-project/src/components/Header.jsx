@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { loginUserState } from "../recoil/atoms/UserState";
+import { loginUserState } from "../recoil/atoms/userState";
 
 // 헤더 - mui paper로 다시 작업중입니다.
 
