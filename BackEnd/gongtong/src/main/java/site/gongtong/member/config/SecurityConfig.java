@@ -38,7 +38,7 @@ public class SecurityConfig {
 
     
     boolean securityDebug;
-    private final JwtTokenProvider jwtTokenProvider;
+//    private final JwtTokenProvider jwtTokenProvider;
     @Bean
     SecurityFilterChain configure(HttpSecurity http) throws Exception{
 
@@ -53,13 +53,13 @@ public class SecurityConfig {
 //                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> authorize
-//                                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                                .requestMatchers("/member/**", "/mypage/**").permitAll()
-//                                .requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN") //행동에 대해서도 권한설정 가능
-//                                .requestMatchers("/mem/**").authenticated()
-                                .anyRequest().permitAll()
-                )
+//                .authorizeHttpRequests(authorize -> authorize
+////                                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+//                                .requestMatchers("/member/**", "/mypage/**").permitAll()
+////                                .requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN") //행동에 대해서도 권한설정 가능
+////                                .requestMatchers("/mem/**").authenticated()
+//                                .anyRequest().permitAll()
+//                )
                 //필터 관련 (addFilter, header)
                 .addFilterAt(
                         this.abstractAuthenticationProcessingFilter(authenticationManager),
@@ -81,14 +81,14 @@ public class SecurityConfig {
                                                 )
                                 )
                 )
-                .formLogin(login -> login
-                        .usernameParameter("id")
-                        .passwordParameter("password")
-                        .loginPage("/login").permitAll()
-                        .defaultSuccessUrl("/main") //항상 리다이렉트 수행
-                        .failureUrl("/member/login")
-                                .disable()
-                )
+//                .formLogin(login -> login
+//                        .usernameParameter("id")
+//                        .passwordParameter("password")
+//                        .loginPage("/login").permitAll()
+//                        .defaultSuccessUrl("/main") //항상 리다이렉트 수행
+//                        .failureUrl("/member/login")
+//                                .disable()
+//                )
 //                .rememberMe(Customizer.withDefaults())
 //                .logout(logout -> logout
 //                        .logoutUrl("/logout").permitAll()
@@ -100,9 +100,9 @@ public class SecurityConfig {
 //                .sessionManagement(session -> session
 //                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //                .logout(Customizer.withDefaults());
-                .exceptionHandling() //예외 처리2
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/member/login")) //1. 로그인 아닌 사용자가 보호된 리소스에 액세스하려고 할 때 -> 로그인 페이지로 이동
-                .accessDeniedHandler(new AccessDeniedHandlerImpl()); //2. 권한 없음 -> 화이트라벨
+//                .exceptionHandling() //예외 처리2
+//                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/member/login")) //1. 로그인 아닌 사용자가 보호된 리소스에 액세스하려고 할 때 -> 로그인 페이지로 이동
+//                .accessDeniedHandler(new AccessDeniedHandlerImpl()); //2. 권한 없음 -> 화이트라벨
 //                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
 //                        UsernamePasswordAuthenticationFilter.class);
 //                // JwtAuthenticationFilter를 UsernamePasswordAuthenticationfilter 전에 넣기

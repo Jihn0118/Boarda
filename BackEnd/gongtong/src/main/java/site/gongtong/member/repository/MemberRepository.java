@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member,Integer> {
+public interface MemberRepository extends JpaRepository<Member,Integer>, MemberCustomRepository {
     //34강
     Optional<Member> findById(String id); //아이디 찾기(자동)
 //    List<Member> findByIds(String id); //아이디 찾기2

@@ -81,17 +81,6 @@ public class MyPageServiceImpl implements MyPageService {
 //
 //        return editProfileDto;
 //    }
-//
-//    @PersistenceContext
-//    private EntityManager entityManager;
-//
-//    public void updateAndFlush(Member member) {
-//        // 엔티티를 업데이트
-//        entityManager.merge(member);
-//
-//        // 변경사항을 데이터베이스에 동기화 (flush)
-//        entityManager.flush();
-//    }
 
     //dt0o->entity
     public Member dtoToEntity(EditProfileDto editProfileDto) {

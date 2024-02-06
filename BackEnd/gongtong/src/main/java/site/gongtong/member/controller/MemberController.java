@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import site.gongtong.member.config.JwtTokenProvider;
+//import site.gongtong.member.config.JwtTokenProvider;
 import site.gongtong.member.config.MemberDetails;
 import site.gongtong.member.dto.LoginRequest;
 import site.gongtong.member.dto.SignUpRequest;
@@ -42,8 +42,8 @@ public class MemberController {
     MemberService memberService;
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
+//    @Autowired
+//    JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/checkid")
     public ResponseEntity<String> checkId(@RequestParam String id) { //sns x

@@ -1,5 +1,6 @@
 package site.gongtong.member.service;
 
+import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.FollowRepository;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -33,6 +36,11 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public void deleteFollow(Follow wannaDeleteFollow) {
         followRepository.delete(wannaDeleteFollow);
+    }
+
+    @Override
+    public List<Tuple> getFollowList(int myNum) {
+        return followRepository.findAllByNum(myNum);
     }
 
 }
