@@ -16,5 +16,6 @@ export const loginUserState = atom({
     profileImage: '',
     jwt: '',
     refresh: '',
+    userNum: '',
   }
 });

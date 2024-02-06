@@ -10,7 +10,7 @@ import { loginUserState } from "../../recoil/atoms/UserState";
 import mypageAPI from "../../api/mypageAPI";
 import MypageHeader from "../../components/MypageHeader";
 import { Outlet } from "react-router-dom";
-import MyModal from "./Mymodal";
+import ReviewRegistModal from "./ReviewRegistModal";
 
 // 마이페이지 -> 로그인 한 유저가 접근하면 내 마이페이지로
 // 타인 프로필을 클릭했으면 타인 피드로
@@ -126,16 +126,15 @@ export default function MyPage() {
       <MypageHeader></MypageHeader>
 
       {/* 로그인 유저와 같으면 본인 마이페이지로 아니면 다른사람페이지 */}
-      <div>
-        {isLoginUser && loginUserMypage}
-        {!isLoginUser && otherUserMypage}
+      <div className="flex">
+        {/* {isLoginUser && loginUserMypage}
+        {!isLoginUser && otherUserMypage} */}
 
-        {/* <div>
-          아래 작업용
-          {loginUserMypage}
-        </div> */}
+        
+        {/* 작업용 */}
+        {loginUserMypage}
 
-        <MyModal></MyModal>
+        <ReviewRegistModal></ReviewRegistModal>
         <Outlet></Outlet>
       </div>
     </>

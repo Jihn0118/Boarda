@@ -8,6 +8,7 @@ const MypageDiv = styled.div`
   opacity: 30%;
   margin: auto;
   margin-top: 3rem;
+  margin-bottom: 3rem;
   border-radius: 5%;
   font-size: 3rem;
   text-align: center;
