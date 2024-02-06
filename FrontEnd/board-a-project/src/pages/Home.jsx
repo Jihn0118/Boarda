@@ -6,7 +6,6 @@ const Home = () => {
     <>
       <div>홈 화면 입니다.</div>
       <Outlet></Outlet>
-
     </>
   );
 };
