@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import myPageAPI from "../../api/mypageAPI";
 import { useRecoilValue } from "recoil";
-import { loginUserState } from "../../recoil/atoms/UserState";
+import { loginUserState } from "../../recoil/atoms/userState";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";

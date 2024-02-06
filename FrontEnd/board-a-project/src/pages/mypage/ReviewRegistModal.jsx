@@ -3,7 +3,7 @@ import { Modal, TextField, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import reviewAPI from "../../api/reviewAPI";
 import { useRecoilValue } from "recoil";
-import { loginUserState } from "../../recoil/atoms/UserState";
+import { loginUserState } from "../../recoil/atoms/userState";
 
 
 function ReviewRegistModal() {

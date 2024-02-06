@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import myPageAPI from "../../api/mypageAPI";
-import { loginUserState } from "../../recoil/atoms/UserState";
+import { loginUserState } from "../../recoil/atoms/userState";
 
 export default function FollowBlock() {
   const loginUser = useRecoilValue(loginUserState);

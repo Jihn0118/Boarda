@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { loginUserState } from "../../recoil/atoms/UserState";
+import { loginUserState } from "../../recoil/atoms/userState";
 import mypageAPI from "../../api/mypageAPI";
 import MypageHeader from "../../components/MypageHeader";
 import { Outlet } from "react-router-dom";
