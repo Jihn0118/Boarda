@@ -45,15 +45,38 @@ const MoimDetailModal = ({ moimId, isOpen, onRequestClose }) => {
   }
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <h1>{moim.title}</h1>
-      <p>{moim.id}</p>
-      <p>{moim.datetime}</p>
-      <p>{moim.currentNumber}/{moim.number}</p>
-      <p>{moim.content}</p>
-      <br />
-      <button onClick={joinMoimHandler}>참여</button>
-      <button onClick={onRequestClose}>취소</button>
+    // <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+    //   <h1>{moim.title}</h1>
+    //   <p>{moim.id}</p>
+    //   <p>{moim.datetime}</p>
+    //   <p>{moim.currentNumber}/{moim.number}</p>
+    //   <p>{moim.content}</p>
+    //   <br />
+    //   <button onClick={joinMoimHandler}>참여</button>
+    //   <button onClick={onRequestClose}>취소</button>
+    // </Modal>
+
+    // <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="fixed inset-0 flex items-center justify-center z-50">
+    //   <div className="bg-white p-4 rounded w-1/2 h-1/2">
+    //     <h1 className="text-2xl font-bold mb-4">{moim.title}</h1>
+    //     <p className="text-sm mb-1">{moim.id}</p>
+    //     <p className="text-sm mb-1">{moim.datetime}</p>
+    //     <p className="text-sm mb-1">{moim.currentNumber}/{moim.number}</p>
+    //     <p className="text-sm mb-4">{moim.content}</p>
+    //     <button onClick={joinMoimHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">참여</button>
+    //     <button onClick={onRequestClose} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">취소</button>
+    //   </div>
+    // </Modal>
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-xl w-2/3 h-2/3">
+        <h1 className="text-2xl font-bold mb-4 text-gray-700">{moim.title}</h1>
+        <p className="text-sm mb-1 text-gray-500">{moim.id}</p>
+        <p className="text-sm mb-1 text-gray-500">{moim.datetime}</p>
+        <p className="text-sm mb-1 text-gray-500">{moim.currentNumber}/{moim.number}</p>
+        <p className="text-sm mb-4 text-gray-500">{moim.content}</p>
+        <button onClick={joinMoimHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">참여</button>
+        <button onClick={onRequestClose} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">취소</button>
+      </div>
     </Modal>
   );
 };

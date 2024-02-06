@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const userState = atom({
-    key: 'userState',
-    default: [],
+export const loginUserState = atom({
+    key: 'loginUserState',
+    default: sessionStorage.getItem("loginUser") || null, 
 })

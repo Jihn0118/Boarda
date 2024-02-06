@@ -6,9 +6,11 @@ import UserInfoChange from "./UserInfoChange";
 import MyGroupHistory from "./MyGroupHistory";
 import FollowBlock from "./FollowBlock";
 import ParticipatingGroups from "./ParticipatingGroups";
+import { user_info } from '../../api/mypageAPI'
 
 const MyPage = () => {
   const { menu } = useParams();
+  console.log(user_info('su@su.com'));
 
   const renderContent = () => {
     switch (menu) {

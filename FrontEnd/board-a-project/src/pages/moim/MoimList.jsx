@@ -2,21 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { getMoimList, checkRoom } from '../../api/moimAPI';
 import { moimListState, locationState } from '../../recoil/atoms/moimState';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import Modal from "react-modal";
 import MoimDetailModal from './MoimDetailModal';
 import MoimMakeModal from './MoimMakeModal';
-import Pagination from "react-js-pagination";
-
+import Pagination from '@material-ui/lab/Pagination';
+// import './Moim.css';
 
 Modal.setAppElement("#root");
+
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: #3498db;
+
+  &:hover {
+    background-color: #2980b9;
+  }
+`;
+
+
 
 const MoimList = () => {
   const [moimList, setMoimList] = useRecoilState(moimListState);
   const [location, setLocation] = useRecoilState(locationState);
   const [sort, setSort] = useState('1');
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const navigate = useNavigate();
   const location2 = useLocation();
 
   const [detailModalIsOpen, setDetailModalIsOpen] = useState(false);
@@ -26,10 +40,16 @@ const MoimList = () => {
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  const itemsCountPerPage = 5;
+  const itemsCountPerPage = 2;
 
-  const getMoimListData = async () => {
-    const data = await getMoimList(location, sort);
+  // const getMoimListData = async () => {
+  //   const data = await getMoimList(location, sort);
+  //   setMoimList(data);
+  // };
+
+  const getMoimListData = async (selectedLocation) => {
+    const locationToUse = selectedLocation ? selectedLocation : location;
+    const data = await getMoimList(locationToUse, sort);
     setMoimList(data);
   };
 
@@ -54,29 +74,29 @@ const MoimList = () => {
     setDetailModalIsOpen(false);
   };
 
-  const openMakeModal = () => {
-    setMakeModalIsOpen(true);
+  const openMakeModal = async () => {
+    const data = await checkRoom(11);
+    console.log("ㅇㅇ" + data);
+    if (data === 0) {
+      setMakeModalIsOpen(true);
+    } else if (data === 1) {
+      setModalIsOpen(true);
+    }
   };
+
 
   const closeMakeModal = () => {
     setMakeModalIsOpen(false);
   };
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = async (event, pageNumber) => {
     setActivePage(pageNumber);
   };
 
+
   const currentMoimList = moimList.slice((activePage - 1) * itemsCountPerPage, activePage * itemsCountPerPage);
 
-  const moveToMake = async () => {
-    const data = await checkRoom(11);
-    console.log("ㅇㅇ" + data);
-    if (data === 0) {
-      navigate('/moim/list/make');
-    } else if (data === 1) {
-      setModalIsOpen(true);
-    }
-  };
+  
 
   useEffect(() => {
     getMoimListData();
@@ -89,34 +109,50 @@ const MoimList = () => {
     setTotalItemsCount(moimList.length);
   }, [moimList]);
 
+
+  
+  
   return (
-    <div>
-      <label>
-        Location:
-        <select value={location} onChange={(e) => handleLocationChange(e.target.value)}>
-          <option value="서울시 강남구">강남구</option>
-          <option value="서울시 마포구">마포구</option>
-        </select>
-      </label>
-      < br/>
-      <label>
-        정렬:
-        <select value={sort} onChange={(e) => handleSortChange(e.target.value)}>
-          <option value="1">최신순</option>
-          <option value="2">마감임박순</option>
-          <option value="3">모집일시</option>
-        </select>
-      </label>
-      
-      <ul>
-        {currentMoimList.map((moim) => (
-          <li key={moim.id}>
-          <button onClick={() => openDetailModal(moim.id)}>
-            {moim.id} {moim.title} {moim.datetime} {moim.currentNumber}/{moim.number}
-          </button>
-        </li>
-        ))}
-      </ul>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-3/4 p-4 bg-white rounded shadow">
+        <div className="flex justify-between mb-4">
+          <label>
+            Location:
+            <select 
+              value={location} 
+              onChange={(e) => handleLocationChange(e.target.value)}
+              className="ml-2 p-1 border rounded"
+            >
+              <option value="">선택없음</option>
+              <option value="서울시 강남구">강남구</option>
+              <option value="서울시 마포구">마포구</option>
+            </select>
+          </label>
+          <label>
+            정렬:
+            <select 
+              value={sort} 
+              onChange={(e) => handleSortChange(e.target.value)}
+              className="ml-2 p-1 border rounded"
+            >
+              <option value="1">최신순</option>
+              <option value="2">마감임박순</option>
+              <option value="3">모집일시</option>
+            </select>
+          </label>
+        </div>
+        <ul className="space-y-2">
+          {currentMoimList.map((moim) => (
+            <li key={moim.id} className="border p-2 rounded">
+              <button 
+                onClick={() => openDetailModal(moim.id)}
+                className="text-blue-500 hover:underline"
+              >
+                {moim.id} {moim.title} {moim.datetime} {moim.currentNumber}/{moim.number}
+              </button>
+            </li>
+          ))}
+        </ul>
 
       {selectedMoimId && (
         <MoimDetailModal
@@ -126,14 +162,13 @@ const MoimList = () => {
         />
       )}
 
-      <Pagination
-        activePage={activePage}
-        itemsCountPerPage={itemsCountPerPage}
-        totalItemsCount={totalItemsCount} // 전체 아이템의 수, API 응답에서 가져올 수 있음
-        pageRangeDisplayed={5} // 한 번에 보여줄 페이지 번호의 수
-        onChange={handlePageChange}
-      />
-
+      <div className="flex justify-center">
+        <Pagination
+          count={Math.ceil(totalItemsCount / itemsCountPerPage)}
+          page={activePage}
+          onChange={handlePageChange}
+        />
+      </div>
 
       <div>
         <Modal
@@ -150,16 +185,20 @@ const MoimList = () => {
         >
           <h2>알림</h2>
           <p>이미 참여 중인 모임이 있습니다!</p>
-          <button onClick={() => setModalIsOpen(false)}>확인</button>
+          <StyledButton onClick={() => setModalIsOpen(false)}>확인</StyledButton>
         </Modal>
-        <button onClick={() => openMakeModal()}>글쓰기</button>
+        <div className="flex justify-end">
+          <StyledButton onClick={() => openMakeModal()}>글쓰기</StyledButton>
+        </div>
         <MoimMakeModal
         isOpen={makeModalIsOpen}
         onRequestClose={closeMakeModal}
         />
       </div>
     </div>
+    </div>
   );
 };
+
 
 export default MoimList;

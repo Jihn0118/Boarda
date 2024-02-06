@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { saveMoim } from '../../api/moimAPI'
 import Calendar from 'react-calendar';
-import { TimePicker } from 'react-ios-time-picker';
+import { TimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import { useRecoilState } from 'recoil';
@@ -29,11 +31,22 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
     }));
   };
 
+  // const onTimeChange = timeValue => {
+  //   setTime(timeValue);
+  //   setMoim(prevMoim => ({
+  //     ...prevMoim,
+  //     datetime: moment(date).format('YYYY-MM-DD') + 'T' + timeValue + ':05',
+  //   }));
+  // };
+
   const onTimeChange = timeValue => {
-    setTime(timeValue);
+    const newDate = new Date();
+    newDate.setHours(timeValue.getHours());
+    newDate.setMinutes(timeValue.getMinutes());
+    setDate(newDate);
     setMoim(prevMoim => ({
       ...prevMoim,
-      datetime: moment(date).format('YYYY-MM-DD') + 'T' + timeValue + ':05',
+      datetime: moment(newDate).format('YYYY-MM-DDTHH:mm:ss'),
     }));
   };
 
@@ -55,6 +68,7 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
       await saveMoim(moim);
       alert('등록되었습니다.');
       navigate('/moim/list', { state: { updated: true } });
+      onRequestClose();
     } catch (error) {
       console.error('모임 저장 중 에러가 발생했습니다:', error);
     }
@@ -62,6 +76,7 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
 
   const backToList = () => {
     navigate('/moim/list');
+    onRequestClose();
   };
 
   useEffect(() => {
@@ -72,26 +87,27 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
   }, [location, setMoim]);
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <div>
-      <div>
-        <span>제목</span>
-        <input type="text" name="title" value={moim.title} onChange={onChange} />
-      </div>
-      <div>
-        <label>
-        인원:
-        <select value={moim.number} name="number" onChange={onChange}>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-        </select>
-      </label>
-      </div>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-xl w-2/3 h-1/1">
+        <div className="flex items-center space-x-2">
+          <span className="font-bold text-lg">제목</span>
+          <input type="text" name="title" value={moim.title} onChange={onChange} className="border rounded py-2 px-4" />
+        </div>
+        <div className="flex items-center space-x-2">
+          <label className="font-bold text-lg">
+            인원:
+            <select value={moim.number} name="number" onChange={onChange} className="ml-2 border rounded py-1">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </label>
+        </div>
 
       <div>
         <button onClick={toggleCalendar}>달력 보기</button>
@@ -107,7 +123,14 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
       </div>
       <div>
         시간:
-        <TimePicker onChange={onTimeChange} value={time} />
+        <TimePicker
+          autoOk
+          ampm={false}
+          variant="inline"
+          value={date}
+          onChange={onTimeChange}
+          style={{ width: '100%' }}
+        />
       </div>
 
       <br />
@@ -122,12 +145,13 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
         ></textarea>
       </div>
       <br />
-      <div>
-        <button onClick={saveMoimData}>저장</button>
-        <button onClick={backToList}>취소</button>
+      <div className="flex items-center space-x-2">
+        <button onClick={saveMoimData} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">저장</button>
+        <button onClick={backToList} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">취소</button>
       </div>
     </div>
     </Modal>
+    </MuiPickersUtilsProvider>
   );
 };
 

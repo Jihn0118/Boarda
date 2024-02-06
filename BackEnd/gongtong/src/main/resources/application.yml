@@ -20,11 +20,16 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+      enabled: true
 
 cloud:
   aws:
     s3:
       bucket: gongtong-bucket
+      folder:
+        memberFolder: member/
+        reviewFolder: review/
+        articleFolder: article/
     region:
       static: ap-northeast-2
       auto: false
@@ -37,4 +42,3 @@ cloud:
 server:
   servlet:
     context-path: /api
-  #port: 8081
