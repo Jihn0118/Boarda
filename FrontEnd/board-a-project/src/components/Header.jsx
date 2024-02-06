@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from 'recoil';
-import { loginUserState } from '../recoil/atoms/UserState';
+import { loginUserState } from '../recoil/atoms/';
 
 // StyledHeader 컴포넌트 생성
 const StyledHeader = styled.header`
