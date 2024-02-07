@@ -11,9 +11,13 @@ public interface MoimCustomRepository {
     //getMoimsDeadLine() 메서드임
     List<Moim> findAllDeadLine();
 
-    List<Moim> findByLocationAndStatusOrderByIdDesc(String location, Character status);
+    List<Moim> findByLocationAndStatusOrderByIdDesc(String location);
 
-    List<Moim> findByLocationAndStatusOrderByDatetime(String location, Character status);
+    List<Moim> findByLocationAndStatusOrderByDatetime(String location);
 
-    List<Moim> getMoimWithMemberCountOrder();
+    List<Moim> findByLocationAndStatusOrderByCount(String location);
+
+    List<Moim> findMoimListByMemberNum(int userNum);
+
+    Moim findMoimByMemberNum(int userNum);
 }
