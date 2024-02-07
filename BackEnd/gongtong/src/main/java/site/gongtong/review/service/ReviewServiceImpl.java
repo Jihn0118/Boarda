@@ -11,6 +11,7 @@ import site.gongtong.cafe.model.Cafe;
 import site.gongtong.cafe.repository.CafeCustomRepository;
 import site.gongtong.cafe.repository.CafeRepository;
 import site.gongtong.member.model.Member;
+import site.gongtong.member.repository.MemberCustomRepository;
 import site.gongtong.member.repository.MemberRepository;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.repository.MoimCustomRepository;
@@ -35,7 +36,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewCustomRepository reviewCustomRepository;
     private final BoardGameRepository boardGameRepository;
     private final MoimCustomRepository moimRepository;
-    private final MemberRepository memberRepository;
+    private final MemberCustomRepository memberCustomRepository;
     private final FileService fileService;
     private final ImageRepository imageRepository;
 
@@ -61,7 +62,7 @@ public class ReviewServiceImpl implements ReviewService {
         // TODO 보드게임 리스트도 받아서 같이 저장해줘야 함
         Moim moim = moimRepository.findById(reviewDto.getMoimId());
         Cafe cafe = cafeCustomRepository.findById(reviewDto.getCafeId());
-        Member member = memberRepository.findMemberByNum(reviewDto.getUserNum());
+        Member member = memberCustomRepository.findMemberByNum(reviewDto.getUserNum());
 
         Review review = Review.builder()
                 .content(reviewDto.getContent())

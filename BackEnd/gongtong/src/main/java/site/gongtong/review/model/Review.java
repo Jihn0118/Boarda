@@ -10,12 +10,6 @@ import site.gongtong.moim.model.Moim;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @Setter

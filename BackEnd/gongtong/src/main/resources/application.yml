@@ -1,7 +1,6 @@
 spring:
   profiles:
     include: secret
-    active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${database.prod.url}
@@ -42,3 +41,4 @@ cloud:
 server:
   servlet:
     context-path: /api
+  #port: 8081

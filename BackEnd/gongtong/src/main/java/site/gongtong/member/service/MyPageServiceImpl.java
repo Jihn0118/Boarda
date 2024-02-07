@@ -20,13 +20,8 @@ public class MyPageServiceImpl implements MyPageService {
     private final MyPageRepository myPageRepository;
 
     @Override
-    public int idToNum(String id) {
+    public Integer idToNum(String id) {
         return myPageRepository.MemberidToNum(id);
-    }
-
-    @Override
-    public List<Review> getReviewListByNum(int num) {
-        return myPageRepository.findAllReviews(num);
     }
 
 //    @Override
@@ -55,7 +50,7 @@ public class MyPageServiceImpl implements MyPageService {
     }
 
     @Override
-    public int setPwd(String id, String newEncodedPwd) {
+    public Integer setPwd(String id, String newEncodedPwd) {
         //1. id로 해당 유저 찾기
         Member member = myPageRepository.findById(id);
             //예외처리 - id에 해당하는 member가 없으면 킬
@@ -66,7 +61,7 @@ public class MyPageServiceImpl implements MyPageService {
     }
 
     @Override
-    public int deleteMember(String id) { //회원 탈퇴
+    public Integer deleteMember(String id) { //회원 탈퇴
         return myPageRepository.delete(id);
     }
 
