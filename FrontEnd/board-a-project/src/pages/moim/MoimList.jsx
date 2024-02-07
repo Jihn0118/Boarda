@@ -8,7 +8,6 @@ import Modal from "react-modal";
 import MoimDetailModal from './MoimDetailModal';
 import MoimMakeModal from './MoimMakeModal';
 import Pagination from '@material-ui/lab/Pagination';
-// import './Moim.css';
 
 Modal.setAppElement("#root");
 

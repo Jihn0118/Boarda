@@ -3,7 +3,7 @@ import {Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ssoLogin } from "../../api/userAPI";
 import { useRecoilState } from 'recoil'
-import { loginUserState } from "../../recoil/atoms/UserState";
+import { loginUserState } from "../../recoil/atoms/userState";
 
 
 

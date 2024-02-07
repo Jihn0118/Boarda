@@ -38,6 +38,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	//jwt 관련
+//	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+//	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+//	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
 	// queryDSL
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
@@ -49,6 +54,11 @@ dependencies {
 
 	// AWS S3
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+
 
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
 

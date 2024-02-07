@@ -1,12 +1,14 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Link } from "react-router-dom";
-import { useRecoilState } from 'recoil';
-import { loginUserState } from '../recoil/atoms/UserState';
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { loginUserState } from "../recoil/atoms/userState";
+
+// 헤더 - mui paper로 다시 작업중입니다.
 
 // StyledHeader 컴포넌트 생성
 const StyledHeader = styled.header`
-  background-color: #D98F8F; /* 배경색 설정 */
+  background-color: #d98f8f; /* 배경색 설정 */
   padding: 10px 20px; /* 내부 여백 설정 */
   display: flex;
   justify-content: space-between;
@@ -28,26 +30,53 @@ const StyledHeader = styled.header`
   }
 `;
 const HeaderLogo = styled.div`
+  // flex: 1 0 auto;
   background-image: url("src/assets/images/boardaLogo.png");
   background-size: cover;
-  width: 10vw;
+  width: 11vw;
   height: 5vh;
+  &:hover {
+    cursor: pointer;
+  }
 `;
+
+// 로그인 상태일 때 보이는 부분 - 마이페이지로, 로그아웃 버튼
+// 헤더에서만 쓰이는 컴포넌트
+function LoginUserDiv() {
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+
+  return (
+    <>
+      <p>{loginUser.nickname}님 환영합니다</p>
+      <Link to="/myPage">마이페이지</Link>
+      <button
+        onClick={() => {
+          // 로그아웃 수행시
+          sessionStorage.clear; // 세션스토리지 비우기
+          setLoginUser({}); // 로그인 유저 빈객체로 바꾸기
+          localStorage.removeItem("jwt");
+          alert("로그아웃 되었습니다.");
+          window.location.href = "/home";
+        }}
+      >
+        로그아웃
+      </button>
+    </>
+  );
+}
 
 // 유저 로그인 여부 확인 로직 바꿔야합니다 일단 지금은 세션 확인해보는거로
 export default function Header() {
-
-  // --- 일단은 recoil사용함 ---
-  // window.location.reload();로 새로고침하는게 더 나을것같아서 수정 예정
-  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
-  const logout = () => {
-    sessionStorage.removeItem("loginUser")
-    setLoginUser(null);
-  }
+  const loginUser = useRecoilValue(loginUserState);
+  const navigate = useNavigate();
 
   return (
     <StyledHeader>
-      <HeaderLogo></HeaderLogo>
+      <HeaderLogo
+        onClick={() => {
+          navigate("/home");
+        }}
+      ></HeaderLogo>
       <div>
         <Link to="/home">홈</Link>
         <Link to="/moim/">모임</Link>
@@ -56,14 +85,10 @@ export default function Header() {
         <Link to="/board">게시판</Link>
       </div>
       <div>
-        {!loginUser && (
-          <Link to="/login">로그인</Link>
-        )}
-        {!!loginUser && <button onClick={()=>logout()}>로그아웃</button>}
-        {!!loginUser && (
-          <Link to={`/mypage/${loginUser}`}>{loginUser}님의 마이페이지</Link>
-        )}
+        {!loginUser.id && <Link to="/login">로그인</Link>}
+        {loginUser.id && LoginUserDiv}
       </div>
+      <Link to="/my-page/2">마이페이지개발중</Link>
     </StyledHeader>
   );
 }
