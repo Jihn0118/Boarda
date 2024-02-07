@@ -1,9 +1,9 @@
-FROM node:20
+FROM node:20 as builder
 
 WORKDIR /app 
 
 COPY package*.json ./ 
-copy yarn.lock ./ 
+COPY yarn.lock ./ 
 
 RUN yarn 
 
@@ -11,6 +11,19 @@ COPY . ./
 
 RUN yarn build 
 
-EXPOSE 3000 
+FROM nginx:latest
 
-CMD ["yarn", "dev" ]
+RUN mkdir /app
+
+WORKDIR /app
+
+
+COPY  --from=builder /app/dist /app/dist
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY ./default.conf /etc/nginx/conf.d
+
+EXPOSE 3000
+
+CMD ["nginx", "-g", "daemon off;"]

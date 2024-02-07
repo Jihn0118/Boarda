@@ -30,6 +30,8 @@ public class QReview extends EntityPathBase<Review> {
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
+    public final ListPath<site.gongtong.Image.model.Image, site.gongtong.Image.model.QImage> images = this.<site.gongtong.Image.model.Image, site.gongtong.Image.model.QImage>createList("images", site.gongtong.Image.model.Image.class, site.gongtong.Image.model.QImage.class, PathInits.DIRECT2);
+
     public final BooleanPath isRemoved = createBoolean("isRemoved");
 
     public final site.gongtong.member.model.QMember member;

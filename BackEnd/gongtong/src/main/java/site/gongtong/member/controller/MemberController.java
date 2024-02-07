@@ -5,12 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-//import site.gongtong.member.config.JwtTokenProvider;
 import site.gongtong.member.dto.MemberDetails;
 import site.gongtong.member.dto.LoginRequest;
 import site.gongtong.member.dto.SignUpRequest;
@@ -36,7 +32,7 @@ public class MemberController {
         //아이디 중복 체크 수행
         //- id리턴 (-> 이 아이디로 생성 불가)
         //- "can"
-        ResponseEntity<String> response = null;
+        ResponseEntity<String> response;
         if(!memberService.canUseId(id)){ //사용 불가 아이디
             response = ResponseEntity
                     .status(HttpStatus.CONFLICT)
@@ -75,7 +71,7 @@ public class MemberController {
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest signUpRequest) { //sns x
 
-        Member savedMember = null;
+        Member savedMember;
         ResponseEntity<String> response = null;
         
         // 1 id 중복체크

@@ -12,9 +12,12 @@ export default defineConfig({
   server: {
     port: 3000,
     host: "0.0.0.0",
-    hmr: !isProd
+    hmr: !isProd,
   },
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
+  },
+  preview: {
+    port: 3000,
   },
 });
