@@ -95,7 +95,7 @@ CREATE TABLE `cafe` (
 #DROP TABLE IF EXISTS `follow`;
 
 CREATE TABLE `follow` (
-	`id`	int	NOT NULL,
+	`id`	int	PRIMARY KEY auto_increment,
 	`follower`	int	NOT NULL,
 	`following`	int	NOT NULL,
 	`flag`	char(1)	NULL,
