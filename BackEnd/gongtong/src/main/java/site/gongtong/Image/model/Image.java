@@ -1,5 +1,6 @@
 package site.gongtong.Image.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,10 +28,12 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "article_id")
+    @JsonIgnore // 양방향 참조 JSON 직렬화 과정에서 무한 순환 참조 발생 방지
     private Article article;
 
     @ManyToOne
     @JoinColumn(name = "review_id")
+    @JsonIgnore // 양방향 참조 JSON 직렬화 과정에서 무한 순환 참조 발생 방지
     private Review review;
 
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.gongtong.boardgame.model.BoardGame;
+import site.gongtong.boardgame.model.BoardGameDetailDto;
 import site.gongtong.boardgame.service.BoardGameService;
 
 import java.util.List;
@@ -27,18 +28,11 @@ public class BoardGameController {
         return new ResponseEntity<>(gameList, HttpStatus.OK);
     }
 
-
-    //TODO 나중에 리뷰 기능 만들면 리뷰 리스트도 담아서 DTO 만들어서 줘야 됨
-    // BoardGame, List<Review>
-    
-    //TODO 2번째 할 일, 
-    // GameCustomRepositoryImpl의 예외처리해야됨
-    // throw new EntityNotFoundException("Game not found with id: " + gameId);
     @GetMapping("/detail")
-    public ResponseEntity<BoardGame> getGameInfo(@RequestParam(name="game_id", defaultValue = "0") Integer gameId) {
+    public ResponseEntity<BoardGameDetailDto> getGameInfo(@RequestParam(name="game_id", defaultValue = "0") Integer gameId) {
         log.info("보드게임 상세정보 들어옴!");
 
-        BoardGame game = gameService.getGameInfo(gameId);
+        BoardGameDetailDto game = gameService.getGameInfo(gameId);
 
         if(game != null){
             return new ResponseEntity<>(game, HttpStatus.OK);
