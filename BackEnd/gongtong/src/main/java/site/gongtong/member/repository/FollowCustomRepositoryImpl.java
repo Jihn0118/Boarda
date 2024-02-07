@@ -43,7 +43,6 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository {
         QFollow follow = QFollow.follow;
 
         return jpaQueryFactory
-
                 .select(member, follow)
                 .from(member)
                 .innerJoin(follow)

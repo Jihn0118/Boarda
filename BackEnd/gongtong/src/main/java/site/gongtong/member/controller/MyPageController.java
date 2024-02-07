@@ -20,6 +20,7 @@ import site.gongtong.member.service.FollowService;
 import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.member.service.MyPageService;
 import site.gongtong.review.model.Review;
+import site.gongtong.review.service.ReviewService;
 
 import java.security.SecureRandom;
 import java.util.*;
@@ -30,6 +31,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MyPageController {
     private final MemberDetailsService memberDetailsService;
+    private final ReviewService reviewService;
     private final MyPageService myPageService;
     private final FollowService followService;
     private final PasswordEncoder passwordEncoder;
@@ -51,7 +53,7 @@ public class MyPageController {
                 reviewDto.setMember(mapToMember(dbMember));
 
                 //리스트 뽑기
-                reviews = myPageService.getReviewListByNum(myPageService.idToNum(id));
+                reviews = reviewService.getReviews(myPageService.idToNum(id));
 
                 for(int i = 0; i< reviews.size(); i++){
                     log.info(reviews.get(i).toString());
@@ -240,22 +242,23 @@ public class MyPageController {
             memMe = myPageService.findById(myId); //-> 여기가 팔로워
             memYou = myPageService.findByNickname(yourNickname);
             if(memMe==null || memYou==null) {
-//                log.info("follow; null Object input error!");
+                log.info("follow; null Object input error!");
                 return new ResponseEntity<>(0, HttpStatus.NOT_FOUND); //해당 유저 찾을 수 없으면 안 됨
             }
             if(memMe==memYou) {
-//                log.info("follow; same Object cannot have relationship!");
+                log.info("follow; same Object cannot have relationship!");
                 return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //팔로우==팔로잉은 안 됨
             }
 
             //2. id 뽑아서, 디비에 관계 저장
                 //이미 있는 관계는 패스
             if( followService.existRelation(memMe.getNum(), memYou.getNum()) > 0 ) { //팔로워 팔로잉
-//                log.info("follow; Already existed relationship!");
+                log.info("follow; Already existed relationship!");
                 return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //이미 있는 관계가 또 들어오면 무시
             }
                 //이미 있는 관계가 아니면 수행하기
             Follow newRelation = followService.save(memMe, flag, memYou);
+
             if (newRelation == null) new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR); //객체 안 만들어짐
             
         } catch (Exception e) {

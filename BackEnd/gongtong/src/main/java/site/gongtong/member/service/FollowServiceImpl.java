@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
+import site.gongtong.member.repository.FollowCustomRepository;
 import site.gongtong.member.repository.FollowRepository;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
+    private final FollowCustomRepository followCustomRepository;
 
     @Override
     public Follow save(Member memMe, char flag, Member memYou) {
@@ -27,13 +29,13 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public int existRelation(int followerNum, int followingNum) {
-        return followRepository.existRelation(followerNum, followingNum);
+    public Integer existRelation(int followerNum, int followingNum) {
+        return followCustomRepository.existRelation(followerNum, followingNum);
     }
 
     @Override
     public Follow findBy2Nums(int myNum, int yourNum) {
-        return followRepository.findBy2Nums(myNum, yourNum);
+        return followCustomRepository.findBy2Nums(myNum, yourNum);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class FollowServiceImpl implements FollowService {
     @Override
 
     public List<Tuple> getFollowList(int myNum) {
-        return followRepository.findAllByNum(myNum);
+        return followCustomRepository.findAllByNum(myNum);
 
     }
 

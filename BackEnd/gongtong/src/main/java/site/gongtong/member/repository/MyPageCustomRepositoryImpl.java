@@ -18,7 +18,7 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public int MemberidToNum(String user_id) {
+    public Integer MemberidToNum(String user_id) {
         QMember member = QMember.member;
 
         return jpaQueryFactory
@@ -26,16 +26,6 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
                 .from(member)
                 .where(member.id.eq(user_id))
                 .fetchOne();
-    }
-
-    @Override
-    public List<Review> findAllReviews(int user_num) {
-        QReview review = QReview.review;
-
-        return jpaQueryFactory
-                .selectFrom(review)
-                .where(review.memberId.eq(user_num))
-                .fetch();
     }
 
     @Override
@@ -71,7 +61,7 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     }
 
     @Override
-    public int modifyPwd(String id, String newEncodedPwd) {
+    public Integer modifyPwd(String id, String newEncodedPwd) {
         //성공이면 1 반환, 실패면 0 반환
         QMember member = QMember.member;
         return (int) jpaQueryFactory
@@ -82,7 +72,7 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     }
 
     @Override
-    public int delete(String id) {
+    public Integer delete(String id) {
         QMember member = QMember.member;
 
         return (int) jpaQueryFactory

@@ -9,7 +9,7 @@ import java.util.List;
 public interface FollowService {
     Follow save(Member memMe, char flag, Member memYou);
 
-    int existRelation(int followerNum, int followingNum);
+    Integer existRelation(int followerNum, int followingNum);
 
     Follow findBy2Nums(int myNum, int yourNum);
 
