@@ -3,6 +3,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/userState";
+import boardaLogo from "../assets/images/boardaLogo.png"
 
 // 헤더 - mui paper로 다시 작업중입니다.
 
@@ -31,7 +32,7 @@ const StyledHeader = styled.header`
 `;
 const HeaderLogo = styled.div`
   // flex: 1 0 auto;
-  background-image: url("src/assets/images/boardaLogo.png");
+  background-image: url(${boardaLogo});
   background-size: cover;
   width: 11vw;
   height: 5vh;

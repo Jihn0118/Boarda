@@ -13,14 +13,13 @@ RUN yarn build
 
 FROM nginx:latest
 
-RUN mkdir -p /app/dist
-RUN mkdir -p /app/src/assets/images
+RUN mkdir /app
 
 WORKDIR /app
 
 
-COPY --from=builder /app/dist /app/dist
-COPY ./src/assets/images ./src/assets/images
+COPY  --from=builder /app/dist /app/dist
+
 RUN rm /etc/nginx/conf.d/default.conf
 
 COPY ./default.conf /etc/nginx/conf.d
