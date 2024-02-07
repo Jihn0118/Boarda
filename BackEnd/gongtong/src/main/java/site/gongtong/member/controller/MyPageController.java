@@ -262,14 +262,14 @@ public class MyPageController {
             if (newRelation == null) new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR); //객체 안 만들어짐
             
         } catch (Exception e) {
-            e.printStackTrace(); //예상치 못한 다중 테이블 참조 오류를 발생
+            e.printStackTrace(); // 예상치 못한 다중 테이블 참조 오류를 발생
             return new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 //        log.info("follow making; GOODDDD!");
         return new ResponseEntity<>(1, HttpStatus.OK); //성공!
     }
     //팔로우 취소하기
-    @DeleteMapping("/follow") //흑흑...
+    @DeleteMapping("/follow")
     public ResponseEntity<Integer> deleteFollow (@RequestParam (name = "id") String followId,
                                                  @RequestParam (name = "myNum") int myNum) {
         int yourNum = myPageService.idToNum(followId);
@@ -292,9 +292,6 @@ public class MyPageController {
 
         try {
             userNum = myPageService.idToNum(id);
-
-            System.out.println("idTONum: "+ userNum);
-
 
         } catch (Exception e) {
             log.info("No user~~!!");
@@ -319,7 +316,6 @@ public class MyPageController {
             }
             return new ResponseEntity<>(followListDto, HttpStatus.OK); // 성공
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // 어떤이유
         }
     }

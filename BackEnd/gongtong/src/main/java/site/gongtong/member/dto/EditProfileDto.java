@@ -22,7 +22,6 @@ public class EditProfileDto { //프론트에서 리드온리 처리할 거~
     public EditProfileDto(Member member) {
        this.num = member.getNum();
        this.id = member.getId();
-//       this.password = member.getPassword();
        this.nickname = member.getNickname();
        this.birth = member.getBirth();
        this.gender = member.getGender();
