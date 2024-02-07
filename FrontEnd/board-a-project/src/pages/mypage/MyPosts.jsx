@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react'
 
-const MyPosts = () => {
+export default function MyPosts() {
   return (
-    <div>
-      <p>나의 작성글입니다.</p>
-    </div>
-  );
-};
-
-export default MyPosts;
+    <div>MyPosts</div>
+  )
+}

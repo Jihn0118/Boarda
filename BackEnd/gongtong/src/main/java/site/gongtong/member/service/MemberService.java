@@ -1,10 +1,17 @@
 package site.gongtong.member.service;
 
-import jakarta.persistence.Id;
-import org.springframework.stereotype.Service;
+import site.gongtong.member.dto.SignUpRequest;
+import site.gongtong.member.model.Member;
 
-@Service
-public class MemberService {
-    @Id
-    private Long id;
+public interface MemberService {
+    Boolean canUseId(String id);
+
+    Boolean canUseNickname(String nickname);
+
+    Member signup(SignUpRequest req);
+
+    Member login(String id, String password);
+
+    Member getLoginMemberById(String id);
+
 }

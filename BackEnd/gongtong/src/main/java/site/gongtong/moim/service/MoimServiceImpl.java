@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Member;
+import site.gongtong.member.repository.MemberCustomRepository;
 import site.gongtong.member.repository.MemberRepository;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.MoimMember;
@@ -24,6 +25,7 @@ public class MoimServiceImpl implements MoimService {
     private final MoimCustomRepository moimCustomRepository;
     private final MoimMemberCustomRepository moimMemberCustomRepository;
     private final MemberRepository memberRepository;
+    private final MemberCustomRepository memberCustomRepository;
 
     @Override
     public List<Moim> getDeadlineList() {
@@ -39,7 +41,7 @@ public class MoimServiceImpl implements MoimService {
 
     @Override
     public Integer createRoom(Moim moim, int userNum) {
-        Member member = memberRepository.findMemberByNum(userNum);
+        Member member = memberCustomRepository.findMemberByNum(userNum);
 
         if(member == null){
             return 1;
@@ -70,7 +72,7 @@ public class MoimServiceImpl implements MoimService {
 
         Moim moim = moimCustomRepository.findById(moimId);
 
-        Member addMember = memberRepository.findMemberById(memberId);
+        Member addMember = memberCustomRepository.findById(memberId);
 
         if (moim == null) {
             return 1;

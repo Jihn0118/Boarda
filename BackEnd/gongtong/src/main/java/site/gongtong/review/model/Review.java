@@ -13,13 +13,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 @EntityListeners(AuditingEntityListener.class)
-@Entity
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
