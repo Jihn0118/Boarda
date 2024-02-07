@@ -1,11 +1,15 @@
 package site.gongtong.cafe.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import site.gongtong.Image.model.QImage;
 import site.gongtong.cafe.model.Cafe;
 import site.gongtong.cafe.model.QCafe;
+import site.gongtong.review.model.ImageReviewDto;
+import site.gongtong.review.model.QReview;
 
 import java.util.List;
 
@@ -36,13 +40,17 @@ public class CafeCustomRepositoryImpl implements CafeCustomRepository{
     }
 
     @Override
-    public Cafe findCafeDetail(Integer cafeId) {
-        QCafe cafe = QCafe.cafe;
-
+    public List<ImageReviewDto> getImagesAndReviewIdsByCafeId(Integer cafeId) {
+        QImage image = QImage.image;
+        QReview qReview = QReview.review;
+        QCafe qCafe = QCafe.cafe;
         return jpaQueryFactory
-                .selectFrom(cafe)
-                .where(cafe.id.eq(cafeId))
-                .fetchOne();
+                .select(Projections.constructor(ImageReviewDto.class, image, qReview))
+                .from(qReview)
+                .join(qReview.images, image)
+                .join(qReview.cafe, qCafe)
+                .where(qCafe.id.eq(cafeId))
+                .fetch();
     }
 
     @Override

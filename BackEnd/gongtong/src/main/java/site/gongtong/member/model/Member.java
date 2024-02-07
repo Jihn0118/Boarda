@@ -1,5 +1,6 @@
 package site.gongtong.member.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class Member {
     @Column(unique = true)
     private String id;          // email
 
+    @JsonIgnore
     private String password;
 
     @Column(unique = true)

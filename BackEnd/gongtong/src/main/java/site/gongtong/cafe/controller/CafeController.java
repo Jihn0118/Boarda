@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.gongtong.cafe.model.Cafe;
+import site.gongtong.cafe.model.CafeDetailDto;
 import site.gongtong.cafe.service.CafeService;
 
 import java.util.List;
@@ -27,13 +28,13 @@ public class CafeController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity<Cafe> getCafeInfo(@RequestParam(name="cafe_id", defaultValue = "0") Integer cafeId) {
+    public ResponseEntity<CafeDetailDto> getCafeInfo(@RequestParam(name="cafe_id", defaultValue = "0") Integer cafeId) {
         log.info("보드게임 상세정보 들어옴!");
 
-        Cafe cafe = cafeService.getCafeInfo(cafeId);
+        CafeDetailDto cafeDetailDto = cafeService.getCafeInfo(cafeId);
 
-        if(cafe != null){
-            return new ResponseEntity<>(cafe, HttpStatus.OK);
+        if(cafeDetailDto != null){
+            return new ResponseEntity<>(cafeDetailDto, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }

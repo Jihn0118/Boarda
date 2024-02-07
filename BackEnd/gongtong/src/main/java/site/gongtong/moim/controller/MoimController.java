@@ -5,12 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import site.gongtong.member.model.Member;
 import site.gongtong.moim.model.JoinCondition;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.MoimCondition;
-import site.gongtong.moim.repository.MoimCustomRepository;
-import site.gongtong.moim.repository.MoimMemberCustomRepository;
 import site.gongtong.moim.service.MoimService;
 
 import java.util.List;
@@ -21,7 +18,6 @@ import java.util.List;
 @Slf4j
 public class MoimController {
     private final MoimService moimService;
-    //private final MoimCustomRepository moimCustomRepository;
 
     @GetMapping("/list")
 
@@ -87,10 +83,4 @@ public class MoimController {
         // 내 아이디랑 친구 아이디 받아서 내 모임에 친구 추가하기
         return ResponseEntity.ok().build();
     }
-
-//    //API 테스트용
-//    @GetMapping("/test")
-//    public ResponseEntity<List<Moim>> test(){
-//        return new ResponseEntity<>(moimCustomRepository.getMoimWithMemberCountOrder(), HttpStatus.OK);
-//    }
 }
