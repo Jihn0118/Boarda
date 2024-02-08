@@ -3,6 +3,7 @@ package site.gongtong.map.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpEntity;
@@ -46,7 +47,8 @@ import java.util.stream.Collectors;
 public class MapApiService {
 
     private final RestTemplate restTemplate;
-    private final String API_KEY = "b4ec8b14bab859d5b3e6789c5103b72b"; // 카카오 API 키 입력해주기~
+    @Value("${kakao.api_key}")
+    private String API_KEY; // 카카오 API 키 불러오기
 
     public MapApiService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
