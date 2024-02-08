@@ -1,18 +1,11 @@
 package site.gongtong.map.service;
 
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import site.gongtong.cafe.model.Cafe;
-import site.gongtong.cafe.repository.CafeRepository;
 import site.gongtong.map.model.CafeMap;
 import site.gongtong.map.model.MapDto;
 import site.gongtong.map.repository.MapRepository;
-import site.gongtong.map.service.MapApiService;
 
 import java.util.List;
 
@@ -51,7 +44,6 @@ public class MapService {
             }
         }
     }
-
 
 
 }
