@@ -24,7 +24,8 @@ public class MapDto {
     public String getBranch() {
         // 브랜드와 지점명이 공백으로 구분된다고 가정하고 구현.
         // 실제 데이터에 맞게 수정해야 함.
-        return place_name.split(" ")[1];
+        return place_name;
     }
 }
+
 

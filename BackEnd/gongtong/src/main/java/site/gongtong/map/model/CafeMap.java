@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 import site.gongtong.cafe.model.Cafe;
 
-@Entity
+@Entity(name = "cafe")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,20 +19,13 @@ public class CafeMap {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String brand;       // 레드버튼, 히어로, 홈즈앤루팡
-
-    private String branch;      // 강남점, **점, ...
-
+    private String brand;       // 브랜드 이름
+    private String branch;      // 지점 이름
     private String location;    // 카페 주소
-
     private String contact;     // 전화번호
-
     private Float rate;         // 평점
-
     private String latitude;    // 위도
-
     private String longitude;   // 경도
-
     private String image;       // 카페 이미지
 
     // MapDto로부터 CafeMap 객체를 생성하는 메소드
@@ -47,5 +40,6 @@ public class CafeMap {
                 .image(mapDto.getPlace_url())
                 .build();
     }
+
 }
 
