@@ -108,8 +108,9 @@ const MoimList = () => {
     setTotalItemsCount(moimList.length);
   }, [moimList]);
 
-
-  
+  useEffect(() => {
+    window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }, [location2]); 
   
   return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">

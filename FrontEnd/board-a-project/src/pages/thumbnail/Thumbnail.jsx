@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import thumbnailImage from "../../assets/images/thumbnailImage.png";
+
 const StartButton = styled(Link)`
   && {
     color: #bf1111;
@@ -21,7 +23,7 @@ const StartButton = styled(Link)`
   }
 `;
 const StartDiv = styled.div`
-  background-image: url("src/assets/images/ThumbnailImage.png");
+  background-image: url(${thumbnailImage});
   background-size: cover;
   width: 100vw;
   height: 100vh;

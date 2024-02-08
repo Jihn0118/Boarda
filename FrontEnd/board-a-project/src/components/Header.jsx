@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/userState";
+import boardaLogo from "../assets/images/boardaLogo.png"
 
 // 헤더 - mui paper로 다시 작업중입니다.
 
@@ -31,10 +32,13 @@ const StyledHeader = styled.header`
 `;
 const HeaderLogo = styled.div`
   // flex: 1 0 auto;
-  background-image: url("src/assets/images/boardaLogo.png");
+  background-image: url(${boardaLogo});
   background-size: cover;
   width: 11vw;
   height: 5vh;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 // 로그인 상태일 때 보이는 부분 - 마이페이지로, 로그아웃 버튼
@@ -65,10 +69,15 @@ function LoginUserDiv() {
 // 유저 로그인 여부 확인 로직 바꿔야합니다 일단 지금은 세션 확인해보는거로
 export default function Header() {
   const loginUser = useRecoilValue(loginUserState);
+  const navigate = useNavigate();
 
   return (
     <StyledHeader>
-      <HeaderLogo></HeaderLogo>
+      <HeaderLogo
+        onClick={() => {
+          navigate("/home");
+        }}
+      ></HeaderLogo>
       <div>
         <Link to="/home">홈</Link>
         <Link to="/moim/">모임</Link>
@@ -80,7 +89,7 @@ export default function Header() {
         {!loginUser.id && <Link to="/login">로그인</Link>}
         {loginUser.id && LoginUserDiv}
       </div>
-          <Link to="/my-page/2">마이페이지개발중</Link>
+      <Link to="/my-page/2">마이페이지개발중</Link>
     </StyledHeader>
   );
 }

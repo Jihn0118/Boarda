@@ -41,29 +41,28 @@ public class MoimCustomRepositoryImpl implements MoimCustomRepository {
     }
 
     @Override
-    public List<Moim> findByLocationAndStatusOrderByIdDesc(String location, Character status) {
+    public List<Moim> findByLocationAndStatusOrderByIdDesc(String location) {
         QMoim moim = QMoim.moim;
 
         return jpaQueryFactory
                 .selectFrom(moim)
-                .where(moim.location.eq(location), moim.status.eq(status))
+                .where(moim.location.eq(location), moim.status.eq('P'))
                 .orderBy(moim.id.desc())
                 .fetch();
     }
 
     @Override
-    public List<Moim> findByLocationAndStatusOrderByDatetime(String location, Character status) {
+    public List<Moim> findByLocationAndStatusOrderByDatetime(String location) {
         QMoim moim = QMoim.moim;
 
         return jpaQueryFactory
                 .selectFrom(moim)
-                .where(moim.location.eq(location), moim.status.eq(status))
+                .where(moim.location.eq(location), moim.status.eq('P'))
                 .orderBy(moim.datetime.asc())
                 .fetch();
     }
 
-    @Override
-    public List<Moim> getMoimWithMemberCountOrder() {
+    public List<Moim> findByLocationAndStatusOrderByCount(String location){
         QMoim moim = QMoim.moim;
         QMoimMember moimMember = QMoimMember.moimMember;
 
@@ -77,9 +76,38 @@ public class MoimCustomRepositoryImpl implements MoimCustomRepository {
                 .selectFrom(moim)
                 .where(
                         moim.number.subtract(memberCount).goe(1),
-                        moim.status.eq('P')
+                        moim.status.eq('P'),
+                        moim.location.eq(location)
                 )
                 .orderBy(moim.number.subtract(memberCount).asc())
                 .fetch();
+    }
+
+    @Override
+    public List<Moim> findMoimListByMemberNum(int userNum) {
+        QMoim moim2 = QMoim.moim;
+        QMoimMember moimMember2 = QMoimMember.moimMember;
+
+        return jpaQueryFactory
+                .selectFrom(moim2)
+                .join(moimMember2)
+                .on(moim2.id.eq(moimMember2.moim.id))
+                .where(moimMember2.member.num.eq(userNum))
+                .orderBy(moim2.datetime.desc())
+                .fetch();
+    }
+
+    @Override
+    public Moim findMoimByMemberNum(int userNum) {
+        QMoim qMoim = QMoim.moim;
+        QMoimMember qMoimMember = QMoimMember.moimMember;
+
+        return jpaQueryFactory.selectFrom(qMoimMember)
+                .join(qMoimMember.moim, qMoim)
+                .where(qMoimMember.member.num.eq(userNum)
+                        .and(qMoim.status.eq('P')))
+                .orderBy(qMoim.createAt.desc())
+                .fetchFirst()
+                .getMoim();
     }
 }

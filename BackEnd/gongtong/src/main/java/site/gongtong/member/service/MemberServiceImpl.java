@@ -16,14 +16,19 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-    MemberRepository memberRepository;
-    PasswordEncoder encoder;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder encoder;
 
-    public boolean canUseId(String id) {
-        return !memberRepository.existsById(id);
+    public Boolean canUseId(String id) {
+        Boolean result = memberRepository.existsById(id);
+        if(!result){
+            return true;
+        }
+
+        return false;
     }
 
-    public boolean canUseNickname(String nickname) {
+    public Boolean canUseNickname(String nickname) {
         return !memberRepository.existsByNickname(nickname);
     }
 

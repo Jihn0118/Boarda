@@ -72,8 +72,6 @@ export default function ChatRoom() {
       </MessageList>
       <Box display="flex" alignItems="center">
         <MessageInput
-          variant="outlined"
-          fullWidth
           placeholder="메시지를 입력하세요."
           onChange={(e) => {
             nowMessage = e.target.value;

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import site.gongtong.Image.service.ImageService;
 import site.gongtong.s3.FileFolder;
 import site.gongtong.s3.FileService;
 
@@ -20,7 +19,6 @@ import java.util.List;
 @RequestMapping("/image")
 @RequiredArgsConstructor
 public class ImageController {
-    private final ImageService imageService;
     private final FileService fileService;
 
     @PostMapping("/upload")

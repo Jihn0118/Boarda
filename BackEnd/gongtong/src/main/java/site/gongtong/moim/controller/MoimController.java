@@ -5,12 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import site.gongtong.member.model.Member;
 import site.gongtong.moim.model.JoinCondition;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.MoimCondition;
-import site.gongtong.moim.repository.MoimCustomRepository;
-import site.gongtong.moim.repository.MoimMemberCustomRepository;
 import site.gongtong.moim.service.MoimService;
 
 import java.util.List;
@@ -21,12 +18,9 @@ import java.util.List;
 @Slf4j
 public class MoimController {
     private final MoimService moimService;
-    //private final MoimCustomRepository moimCustomRepository;
 
     @GetMapping("/list")
-
     public ResponseEntity<List<Moim>> getSortedList(@RequestParam(name="location") String location, @RequestParam(name="sort") int sorting){
-
         log.info("리스트 정렬 들어옴!!!");
 
         List<Moim> sortedMoimList = moimService.getSortedMoimList(location, sorting);
@@ -88,9 +82,19 @@ public class MoimController {
         return ResponseEntity.ok().build();
     }
 
-//    //API 테스트용
-//    @GetMapping("/test")
-//    public ResponseEntity<List<Moim>> test(){
-//        return new ResponseEntity<>(moimCustomRepository.getMoimWithMemberCountOrder(), HttpStatus.OK);
-//    }
+    @GetMapping("/mymoimlist")
+    public ResponseEntity<List<Moim>> getMyMoimList(@RequestParam(name="user_num") int userNum){
+        log.info("내 모임 이력 리스트 출력!!");
+        List<Moim> myMoimList = moimService.getMyMoimList(userNum);
+
+        return new ResponseEntity<>(myMoimList, HttpStatus.OK);
+    }
+
+    @GetMapping("/mymoim")
+    public ResponseEntity<Moim> getMyMoim(@RequestParam(name="user_num") int userNum){
+        log.info("현재 내가 참여중인 모임 들어옴!!!");
+        Moim myMoim = moimService.getMyMoim(userNum);
+
+        return new ResponseEntity<>(myMoim, HttpStatus.OK);
+    }
 }

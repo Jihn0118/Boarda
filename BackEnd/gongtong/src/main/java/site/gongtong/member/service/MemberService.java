@@ -4,9 +4,9 @@ import site.gongtong.member.dto.SignUpRequest;
 import site.gongtong.member.model.Member;
 
 public interface MemberService {
-    boolean canUseId(String id);
+    Boolean canUseId(String id);
 
-    boolean canUseNickname(String nickname);
+    Boolean canUseNickname(String nickname);
 
     Member signup(SignUpRequest req);
 

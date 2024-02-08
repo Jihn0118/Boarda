@@ -8,9 +8,7 @@ import site.gongtong.review.model.Review;
 import java.util.List;
 
 public interface MyPageCustomRepository {
-    int MemberidToNum(String user_id);
-
-    List<Review> findAllReviews(int user_num);
+    Integer MemberidToNum(String user_id);
 
     Member findById(String id);
 
@@ -18,8 +16,8 @@ public interface MyPageCustomRepository {
 
     Long modifyProfile(Member member);
 
-    int modifyPwd(String id, String newEncodedPwd);
+    Integer modifyPwd(String id, String newEncodedPwd);
 
-    int delete(String id);
+    Integer delete(String id);
 
 }
