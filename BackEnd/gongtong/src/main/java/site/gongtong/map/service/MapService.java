@@ -1,5 +1,6 @@
 package site.gongtong.map.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import site.gongtong.map.model.CafeMap;
@@ -43,11 +44,12 @@ public class MapService {
         this.apiService = apiService;
     }
 
+    @Transactional  // 트랜잭션 관리
     public void getCafeDataAndSave() {
         for (String brand : brands) {
             Pair<List<MapDto>, Integer> response = apiService.getCafeData(brand, 1);
             int total_count = response.getSecond();
-            int total_page = (total_count + 14) / 15; // 카카오 API는 한 페이지에 최대 15개의 결과를 반환합니다.
+            int total_page = (total_count + 14) / 15; // 카카오 API는 한 페이지에 최대 15개의 결과를 반환
 
             for (int page = 1; page <= total_page; page++) {
                 List<MapDto> cafes = apiService.getCafeData(brand, page).getFirst();
@@ -59,6 +61,8 @@ public class MapService {
                     CafeMap savedCafeMap = mapRepository.findByBrandAndBranch(cafeMap.getBrand(), cafeMap.getBranch());
                     if (savedCafeMap == null) {
                         System.out.println("Failed to save: " + cafeMap.getBrand() + " " + cafeMap.getBranch());
+                    }else{
+                        System.out.println("잘 들어가는 중~~!!");
                     }
                 }
             }

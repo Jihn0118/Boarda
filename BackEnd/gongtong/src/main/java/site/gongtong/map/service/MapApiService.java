@@ -54,6 +54,10 @@ public class MapApiService {
         String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query=서울+" + brand + "&category_group_code=CE7&page=" + page;
 
         ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
+
+        // API 응답 로그 출력
+        System.out.println("API Response: " + response.getBody());
+
         List<MapDto> cafes = (List<MapDto>) response.getBody().get("documents");
 
         Map<String, Object> responseMeta = (Map<String, Object>) response.getBody().get("meta");
