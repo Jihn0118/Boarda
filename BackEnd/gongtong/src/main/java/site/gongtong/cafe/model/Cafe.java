@@ -2,6 +2,8 @@ package site.gongtong.cafe.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import site.gongtong.map.model.CafeMap;
+import site.gongtong.map.model.MapDto;
 
 @Entity
 @Getter
@@ -30,4 +32,5 @@ public class Cafe {
     private String longitude;   // 경도
 
     private String image;       // 카페 이미지
+
 }
