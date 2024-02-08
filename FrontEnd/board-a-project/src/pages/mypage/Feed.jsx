@@ -2,6 +2,17 @@ import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import reviewAPI from "../../api/reviewAPI";
+import styled from "@emotion/styled";
+
+
+
+const FeedItem = styled.img`
+&:hover {
+  cursor: pointer;
+}
+
+`
+
 
 export default function Feed() {
   const [feeds, setFeeds] = useState([]); // 피드 정보 백에서 받아와서 뿌리기
@@ -37,7 +48,7 @@ export default function Feed() {
   const [feedDetailInfo, setFeedDetailInfo] = useState({});
   const navigate = useNavigate();
 
-  console.log(feeds);
+  // console.log(feeds);
 
   return (
     <>
@@ -47,7 +58,7 @@ export default function Feed() {
             if (e.images.length !== 0) {
               return (
                 <Grid item xs={3} key={e.id}>
-                  <img
+                  <FeedItem
                     src={import.meta.env.VITE_S3_BASE + e.images[0].name}
                     alt="피드이미지"
                     onClick={() => {
@@ -64,7 +75,7 @@ export default function Feed() {
           })}
         </Grid>
       )}
-      {showDetail && <Outlet info={feedDetailInfo} />}
+      {showDetail && <Outlet context={feedDetailInfo} />}
     </>
   );
 }
