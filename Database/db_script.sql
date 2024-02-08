@@ -7,9 +7,9 @@ use boarda;
 CREATE TABLE `member` (
 	`num`	int	PRIMARY KEY auto_increment,
 	`id`	varchar(50)	UNIQUE,
-	`password`	varchar(200)	NULL,
+	`password`	varchar(200) NOT NULL,
 	`nickname`	varchar(20)	UNIQUE,
-	`birth`	varchar(20)	NULL,
+	`birth`	varchar(20) NULL,
 	`gender`	char(1)	NULL,
 	`profile_image`	text	NULL
 );
@@ -136,6 +136,7 @@ CREATE TABLE `tag` (
 
 CREATE TABLE `alarm` (
 	`id`	int	PRIMARY KEY auto_increment,
+	`link` VARCHAR(255) NULL,
 	`content`	text	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
 	`read_at`	tinyint	NULL,
@@ -147,7 +148,7 @@ CREATE TABLE `alarm` (
 CREATE TABLE `moim` (
 	`id`	int	PRIMARY KEY auto_increment,
 	`status`	char(1)	NULL,
-	`leader_nickname`	varchar(20)	NULL,
+	`leader_nickname`	varchar(20)	NOT NULL,
 	`datetime`	datetime	NULL,
 	`location`	varchar(100)	NULL,
 	`number`	int	NULL,
