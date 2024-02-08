@@ -35,6 +35,7 @@ const GameDetail = () => {
             {gameDetail ? (
                 <>
                   <CardBlog
+                    year = {gameDetail.year}
                     title = {gameDetail.title}
                     imageUrl = {gameDetail.image}
                     feed = {feedList}

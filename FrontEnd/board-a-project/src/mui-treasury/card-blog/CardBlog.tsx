@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Info, InfoEyebrow, InfoSubtitle, InfoTitle } from "../info-basic";
 
-export function CardBlog({title, imageUrl, feed}) {
+export function CardBlog({ year, title, imageUrl, feed }) {
   const imageList = feed.slice(0, 5);
   console.log(imageList);
   return (
@@ -22,7 +22,7 @@ export function CardBlog({title, imageUrl, feed}) {
         overflow: "initial",
         background: "#ffffff",
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "row",
         alignItems: "center",
         paddingBottom: theme.spacing(2),
         [theme.breakpoints.up("md")]: {
@@ -31,95 +31,112 @@ export function CardBlog({title, imageUrl, feed}) {
         },
       })}
     >
-      <CardMedia
-        image={imageUrl}
-        sx={(theme) => ({
-          width: "88%",
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginTop: theme.spacing(-3),
-          height: 0,
-          paddingBottom: "48%",
-          borderRadius: theme.spacing(2),
-          backgroundColor: "#fff",
-          position: "relative",
-          [theme.breakpoints.up("md")]: {
-            width: "100%",
-            marginLeft: theme.spacing(-3),
-            marginTop: 0,
-            transform: "translateX(-8px)",
-          },
-          "&:after": {
-            content: '" "',
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            // backgroundImage: "linear-gradient(147deg, #fe8a39 0%, #fd3838 74%)",
-            borderRadius: theme.spacing(2), // 16
-            opacity: 0.5,
-          },
-        })}
-      />
-      <CardContent>
-        <Info
-          useStyles={(theme) => {
-            const family =
-              "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif";
-            return {
-              eyebrow: {
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                fontSize: 12,
-                marginBottom: "0.875em",
-                display: "inline-block",
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <CardMedia
+            image={imageUrl}
+            sx={(theme) => ({
+              width: 200, // 여기를 수정하세요. 원하는 너비 값으로
+              height: 200,
+
+              // width: "88%",
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: theme.spacing(-3),
+              // height: 0,
+              // paddingBottom: "48%",
+              paddingBottom: "0%",
+              borderRadius: theme.spacing(2),
+              backgroundColor: "#fff",
+              position: "relative",
+              [theme.breakpoints.up("md")]: {
+                // width: "100%",
+                width: 400,
+                marginLeft: theme.spacing(-3),
+                marginTop: 0,
+                transform: "translateX(-8px)",
               },
-              title: {
-                fontSize: 20,
-                fontWeight: "bold",
-                marginBottom: "0.35em",
-                fontFamily: family,
+              "&:after": {
+                content: '" "',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                // backgroundImage: "linear-gradient(147deg, #fe8a39 0%, #fd3838 74%)",
+                borderRadius: theme.spacing(2), // 16
+                opacity: 0.5,
               },
-              subtitle: {
-                marginBottom: theme.spacing(2),
-                fontSize: "0.8rem",
-                letterSpacing: "0.00938em",
-                fontFamily: family,
-              },
-            };
-          }}
-        >
-          <InfoEyebrow>28 MAR 2019</InfoEyebrow>
-          <InfoTitle>{title}</InfoTitle>
-          <InfoSubtitle>
-            Git is a distributed version control system. Every dev has a working
-            copy of the code and...
-          </InfoSubtitle>
-        </Info>
-        <Button
-          sx={{
-            backgroundImage: "linear-gradient(147deg, #fe8a39 0%, #fd3838 74%)",
-            boxShadow: "0px 4px 32px rgba(252, 56, 56, 0.4)",
-            borderRadius: 100,
-            paddingLeft: 3,
-            paddingRight: 3,
-            color: "#ffffff",
-          }}
-        >
-          Read more
-        </Button>
-        <Box sx={{ display: 'flex', overflow: 'auto', pt: 2 }}>
+            })}
+          />
+
+          <CardContent>
+            <Info
+              useStyles={(theme) => {
+                const family =
+                  "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif";
+                return {
+                  eyebrow: {
+                    textTransform: "uppercase",
+                    letterSpacing: "1px",
+                    fontSize: 12,
+                    marginBottom: "0.875em",
+                    display: "inline-block",
+                  },
+                  title: {
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    marginBottom: "0.35em",
+                    fontFamily: family,
+                  },
+                  subtitle: {
+                    marginBottom: theme.spacing(2),
+                    fontSize: "0.8rem",
+                    letterSpacing: "0.00938em",
+                    fontFamily: family,
+                  },
+                };
+              }}
+            >
+              <InfoEyebrow>출시일: {year}</InfoEyebrow>
+              <InfoTitle>{title}</InfoTitle>
+              <InfoSubtitle>
+                Git is a distributed version control system. Every dev has a
+                working copy of the code and...
+              </InfoSubtitle>
+            </Info>
+            <Button
+              sx={{
+                backgroundImage:
+                  "linear-gradient(147deg, #fe8a39 0%, #fd3838 74%)",
+                boxShadow: "0px 4px 32px rgba(252, 56, 56, 0.4)",
+                borderRadius: 100,
+                paddingLeft: 3,
+                paddingRight: 3,
+                color: "#ffffff",
+              }}
+            >
+              Read more
+            </Button>
+          </CardContent>
+        </div>
+        <Box sx={{ display: "flex", overflow: "auto", pt: 2 }}>
           {imageList.map((image, index) => (
             <img
               key={index}
               src={import.meta.env.VITE_S3_BASE + image}
               alt={`review image ${index + 1}`}
-              style={{ width: '60px', height: '60px', marginRight: '10px' }}
+              style={{ width: "120px", height: "120px", marginRight: "10px" }}
             />
           ))}
         </Box>
-      </CardContent>
+      </div>
     </Card>
   );
 }
