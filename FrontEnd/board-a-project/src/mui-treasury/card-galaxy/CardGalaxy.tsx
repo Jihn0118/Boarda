@@ -81,7 +81,7 @@ export function CardGalaxy({ title, subtitle, imageUrl, onClick }) {
       <StyledCardMedia image={imageUrl} />
       <Content>
         <Info useStyles={useStyles}>
-          <InfoEyebrow>Boarda</InfoEyebrow>
+          {/* <InfoEyebrow>Boarda</InfoEyebrow> */}
           <InfoTitle>{title}</InfoTitle>
           <InfoSubtitle>{subtitle}</InfoSubtitle>
         </Info>
