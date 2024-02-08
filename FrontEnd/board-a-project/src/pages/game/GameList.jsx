@@ -6,6 +6,9 @@ import { useRecoilState } from "recoil";
 import { gameListState } from "../../recoil/atoms/gameState";
 
 import { CardGalaxy } from "../../mui-treasury/card-galaxy/CardGalaxy";
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import AccessibilityIcon from '@mui/icons-material/Accessibility';
+import SearchIcon from '@mui/icons-material/Search';
 import Grid from "@material-ui/core/Grid";
 
 const GameList = () => {
@@ -55,53 +58,68 @@ const GameList = () => {
 
   return (
     <div>
-      <div>
-        <label>
-          Time:
-          <select
-            value={time}
-            onChange={(e) => handleTimeChange(e.target.value)}
-            className="ml-2 p-1 border rounded"
-          >
-            <option value="0">전체</option>
-            <option value="15">0 ~ 15 분</option>
-            <option value="30">16 ~ 30 분</option>
-            <option value="45">31 ~ 45 분</option>
-            <option value="60">46 ~ 60 분</option>
-            <option value="75">61 ~ 75 분</option>
-            <option value="90">76 ~ 90 분</option>
-            <option value="105">91 분 이상</option>
-          </select>
-        </label>
+      <div className="mt-4">
+        <div className="flex justify-between mx-auto mb-4" style={{ maxWidth: '1100px' }}>
+          <label class="relative block flex-grow mr-2 text-center" style={{ flex: '0.3' }}>
+            <span class="sr-only">Time:</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+              <AccessAlarmIcon style={{ color: '#718096' }} />
+            </span>
+            <select
+              value={time}
+              onChange={(e) => handleTimeChange(e.target.value)}
+              class="placeholder:italic placeholder:text-slate-400 block w-full bg-white border border-slate-300 rounded-md py-2 pl-10 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+            >
+              <option value="0">전체</option>
+              <option value="15">0 ~ 15 분</option>
+              <option value="30">16 ~ 30 분</option>
+              <option value="45">31 ~ 45 분</option>
+              <option value="60">46 ~ 60 분</option>
+              <option value="75">61 ~ 75 분</option>
+              <option value="90">76 ~ 90 분</option>
+              <option value="105">91 분 이상</option>
+            </select>
+          </label>
 
-        <label>
-          Num:
-          <select
-            value={num}
-            onChange={(e) => handleNumChange(e.target.value)}
-            className="ml-2 p-1 border rounded"
-          >
-            <option value="0">전체</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9 이상</option>
-          </select>
-        </label>
+          <label class="relative block flex-grow mr-2 text-center" style={{ flex: '0.3' }}>
+            <span class="sr-only">Num:</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+              <AccessibilityIcon style={{ color: '#718096' }} />
+            </span>
+            <select
+              value={num}
+              onChange={(e) => handleNumChange(e.target.value)}
+              class="placeholder:italic placeholder:text-slate-400 block w-full bg-white border border-slate-300 rounded-md py-2 pl-10 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+            >
+              <option value="0">전체</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9 이상</option>
+            </select>
+          </label>
 
-        <label>
-          Keyword:
-          <input
-            value={keyword}
-            onChange={(e) => handleKeywordChange(e.target.value)}
-            className="ml-2 p-1 border rounded"
-          />
-        </label>
+          <label class="relative block flex-grow" style={{ flex: '1.4' }}>
+            <span class="sr-only">Keyword:</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+              <SearchIcon style={{ color: '#718096' }} />
+            </span>
+            <input 
+              value={keyword}
+              onChange={(e) => handleKeywordChange(e.target.value)}
+              class="placeholder:italic placeholder:text-slate-400 block w-full bg-white border border-slate-300 rounded-md py-2 pl-10 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" 
+              placeholder="Search for anything..." 
+              type="text" 
+              name="search"
+            />
+          </label>
+        </div>
+
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -119,7 +137,7 @@ const GameList = () => {
         </Grid>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-4">
         <Pagination
           count={Math.ceil(totalItemsCount / itemsCountPerPage)}
           page={activePage}
