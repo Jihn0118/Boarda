@@ -1,14 +1,14 @@
 package site.gongtong.map.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import site.gongtong.map.model.CafeMap;
+import site.gongtong.cafe.model.Cafe;
 
 import java.util.List;
 
 
-public interface MapRepository extends JpaRepository<CafeMap, Long> {
-    List<CafeMap> findByLocationContaining(String location);
-    List<CafeMap> findByLocationContainingAndBrand(String location, String brand);
+public interface MapRepository extends JpaRepository<Cafe, Long> {
+    List<Cafe> findByLocationContaining(String location);
+    List<Cafe> findByLocationContainingAndBrand(String location, String brand);
 
     boolean existsByBranch(String branch);
 };

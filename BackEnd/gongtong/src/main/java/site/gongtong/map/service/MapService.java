@@ -3,7 +3,7 @@ package site.gongtong.map.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import site.gongtong.map.model.CafeMap;
+import site.gongtong.cafe.model.Cafe;
 import site.gongtong.map.model.MapDto;
 import site.gongtong.map.repository.MapRepository;
 
@@ -34,7 +34,7 @@ public class MapService {
                             continue;
                         }
 
-                        CafeMap cafeMap = CafeMap.fromMapDto(mapDto);
+                        Cafe cafeMap = Cafe.fromMapDto(mapDto);
                         mapRepository.save(cafeMap);
                         logger.info("Saved data: " + cafeMap);
                     }

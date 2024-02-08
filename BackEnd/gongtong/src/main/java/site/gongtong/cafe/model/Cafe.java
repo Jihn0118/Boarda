@@ -2,7 +2,6 @@ package site.gongtong.cafe.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import site.gongtong.map.model.CafeMap;
 import site.gongtong.map.model.MapDto;
 
 @Entity
@@ -32,5 +31,18 @@ public class Cafe {
     private String longitude;   // 경도
 
     private String image;       // 카페 이미지
+
+    // MapDto로부터 CafeMap 객체를 생성하는 메소드
+    public static Cafe fromMapDto(MapDto mapDto) {
+        return Cafe.builder()
+                .brand(mapDto.getBrand())
+                .branch(mapDto.getBranch())
+                .location(mapDto.getAddress_name())
+                .contact(mapDto.getPhone())
+                .latitude(mapDto.getY())
+                .longitude(mapDto.getX())
+                .image(mapDto.getPlace_url())
+                .build();
+    }
 
 }
