@@ -82,8 +82,8 @@ CREATE TABLE `image` (
 
 CREATE TABLE `cafe` (
 	`id`	int	PRIMARY KEY auto_increment,
-	`brand`	varchar(10)	NULL,
-	`branch`	varchar(10)	NULL,
+	`brand`	VARCHAR(30)	NULL,
+	`branch`	VARCHAR(30)	NULL,
 	`location`	varchar(100)	NULL,
 	`contact`	varchar(20)	NULL,
 	`image`	text	NULL,
@@ -139,7 +139,7 @@ CREATE TABLE `alarm` (
 	`link` VARCHAR(255) NULL,
 	`content`	text	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
-	`read_at`	tinyint	NULL,
+	`read_at`	timestamp,
 	`member_num`	int	NOT NULL
 );
 

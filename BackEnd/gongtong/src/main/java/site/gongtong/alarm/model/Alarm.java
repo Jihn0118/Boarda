@@ -22,6 +22,8 @@ public class Alarm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String link;
+
     private String content;
 
     @CreatedDate
