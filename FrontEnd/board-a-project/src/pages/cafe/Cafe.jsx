@@ -99,7 +99,7 @@ export default function Cafe() {
               value={Location}
               onChange={(e) => setLocation(e.target.value)}
             >
-              <option value="">상관없음</option>
+              <option value="">전체</option>
               <option value="강남구">강남구</option>
               <option value="마포구">마포구</option>
             </select>
@@ -107,7 +107,7 @@ export default function Cafe() {
           <label>
             브랜드 :
             <select value={Brand} onChange={(e) => setBrand(e.target.value)}>
-              <option value="">상관없음</option>
+              <option value="">전체</option>
               <option value="레드버튼">레드버튼</option>
               <option value="홈즈앤루팡">홈즈앤 루팡</option>
               <option value="히어로">히어로 보드게임카페</option>
