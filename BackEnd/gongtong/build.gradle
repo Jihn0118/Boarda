@@ -64,7 +64,6 @@ dependencies {
 
 	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 
-	//JSON객체 만들기
 	implementation 'org.json:json:+'
 
 

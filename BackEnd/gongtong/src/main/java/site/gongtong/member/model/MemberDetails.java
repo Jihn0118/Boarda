@@ -8,9 +8,9 @@ import java.util.Collection;
 
 public class MemberDetails implements UserDetails {
 
-    private MemberDto member;
+    private Member member;
 
-    public MemberDetails(MemberDto member) {
+    public MemberDetails(Member member) {
         this.member = member;
     }
 

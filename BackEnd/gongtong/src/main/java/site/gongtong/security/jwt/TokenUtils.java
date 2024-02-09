@@ -47,6 +47,7 @@ public class TokenUtils {
     }
 
     /**
+     * -
      * 멤버 정보를 기반으로 '클래임을 생성해주는 메서드'
      * @param memberDto
      * @return Map<String, Object>
@@ -55,9 +56,6 @@ public class TokenUtils {
         // 공개 클래임에 멤버의 닉네임과 아이디(이메일)을 설정해서 정보를 조회
         Map<String, Object> claims = new HashMap<>();
 
-        log.info("loginId : " + memberDto.getId());
-        log.info("username : " + memberDto.getNickname());
-
         claims.put(LOGIN_ID, memberDto.getId());
         claims.put(NICKNAME,memberDto.getNickname());
 
@@ -65,6 +63,7 @@ public class TokenUtils {
     }
 
     /**
+     * -
      * 사용된 암호 알고리즘, 토큰 타입 기반 'JWT의 헤더값을 생성'
      */
     private static Map<String, Object> createHeader() {
@@ -101,6 +100,7 @@ public class TokenUtils {
     }
 
     /**
+     * -
      * 토큰의 만료 기간 지정 함수 : 24시간
      * @return Date
      */

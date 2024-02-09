@@ -10,7 +10,6 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import javax.naming.AuthenticationException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;

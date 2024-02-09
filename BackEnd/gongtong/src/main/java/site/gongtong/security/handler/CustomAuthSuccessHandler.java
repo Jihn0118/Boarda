@@ -12,10 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import site.gongtong.member.model.MemberDto;
-import site.gongtong.member.model.constant.SecurityMemberDetailsDto;
+//import site.gongtong.member.model.SecurityMemberDetailsDto;
 import site.gongtong.security.jwt.TokenUtils;
 
-import java.awt.image.TileObserver;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -36,7 +35,8 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         log.info("3.CustomLoginSuccessHandler");
 
         // 1. 사용자와 관련된 정보를 모두 조회
-        MemberDto memberDto = ((SecurityMemberDetailsDto) authentication.getPrincipal()).getMemberDto();
+//        MemberDto memberDto = ((SecurityMemberDetailsDto) authentication.getPrincipal()).getMemberDto();
+        MemberDto memberDto = (MemberDto) authentication.getPrincipal();
 
         // 2. 조회한 데이터를 JsonObject 형태로 파싱
         ObjectMapper objectMapper = new ObjectMapper();
@@ -56,7 +56,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
 
         //JWT 토큰 생성
         String token = TokenUtils.generateJwtToken(memberDto);
-        jsonObject.put("token", token);
+        jsonObject.put("token", token); //성공
 
         //쿠키에 JWT 토큰 저장
         Cookie jwtCookie = new Cookie("jwt", token);

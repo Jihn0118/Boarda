@@ -12,8 +12,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import site.gongtong.member.model.MemberDetails;
+import site.gongtong.member.service.MemberDetailsService;
+import site.gongtong.security.secumodel.secuMemberDetails;
 import site.gongtong.security.jwt.TokenUtils;
-import site.gongtong.security.service.MemberDetialsService;
+//import site.gongtong.security.service.secuMemberDetialsService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -28,7 +30,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    private final MemberDetialsService memberDetialsService;
+//    private final secuMemberDetialsService  memberDetailsService;
+    private final MemberDetailsService memberDetailsService;
 
     @Override
     protected void doFilterInternal(
@@ -40,7 +43,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         //1. 토큰이 필요하지 않은 api url에 대해 배열로 구성 ==> 추후 수정
         List<String> list = Arrays.asList(
                 "/member/login",
-                "member/signup"
+                "/member/signup",
+                "/api/member/login",
+                "/api/member/signup"
         );
 
         //2. 위의 list에 있는(토큰 필요x) api url의 경우 => 로직 처리없이 다음 필터로 이동
@@ -57,10 +62,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         // [STEP.1] Client에서 API를 요청할때 쿠키를 확인
         Cookie[] cookies = request.getCookies();
         String token = null;
+//        System.out.println("cookie cooks:::::");
+//        System.out.println(Arrays.toString(cookies));
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if("jwt".equals(cookie.getName())) { //쿠키 돌다가 토큰 정보가 jwt인 거 찾으면
                     token = cookie.getValue(); //토큰 정보 뽑기
+                    System.out.println("Here is JwtAuthorizationFilter: "+token);
                     break;
                 }
             }
@@ -78,7 +86,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                     // [STEP.2-4] 사용자 아이디가 존재하는지에 대한 여부 체크
                     if(id != null && !id.equalsIgnoreCase("")) {
-                        MemberDetails memberDetails = memberDetialsService.loadUserByUsername(id);
+                        MemberDetails memberDetails = memberDetailsService.loadUserByUsername(id);
+//                        secuMemberDetails memberDetails = secuMemberDetialsService.loadUserByUsername(id);
                         // 전체 정보(패스워드 제외), 패스워드, 권한 리스트 => 토큰으로 뽑기
                         UsernamePasswordAuthenticationToken authentication
                                 = new UsernamePasswordAuthenticationToken(memberDetails, null, memberDetails.getAuthorities());

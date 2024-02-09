@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.model.MemberDto;
 import site.gongtong.member.model.constant.RoleType;
-import site.gongtong.member.model.constant.SecurityMemberDetailsDto;
+//import site.gongtong.member.model.SecurityMemberDetailsDto;
 import site.gongtong.member.repository.MemberRepository;
 
 import java.util.Collections;
@@ -28,7 +28,8 @@ public class CustomMemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-    public SecurityMemberDetailsDto loadUserByUsername(String id) throws UsernameNotFoundException {
+//    public SecurityMemberDetailsDto loadUserByUsername(String id) throws UsernameNotFoundException {
+    public MemberDto loadUserByUsername(String id) throws UsernameNotFoundException {
         //1. memberRepository사용 : id로 유저 정보 받아오기
         Member infoById = memberRepository.findById(id)
                 .orElseThrow(
@@ -39,12 +40,13 @@ public class CustomMemberDetailsService implements UserDetailsService {
         MemberDto memberDto = entityToDto(infoById);
 
         //3. 사용자 정보를 기반으로 SecurityUserDetailsDto 객체를 생성
-        return new SecurityMemberDetailsDto(
-                memberDto,
-                Collections.singleton(new SimpleGrantedAuthority(
-                        memberDto.getRoleType().toString()
-                ))
-        );
+//        return new MemberDto(
+//                memberDto,
+//                Collections.singleton(new SimpleGrantedAuthority(
+//                        memberDto.getRoleType().toString()
+//                ))
+//        );
+        return memberDto;
     }
 
     //엔터티 -> dto 전환
