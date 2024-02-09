@@ -83,8 +83,9 @@ public class TokenUtils {
         try {
             Claims claims = getClaimsFromToken(token);
 
-            log.info("expireTime : " + claims.getExpiration());
-            log.info("id : " + claims.getId());
+
+            log.info("expireTime : " + claims.getExpiration());//ok
+            log.info("id : " + claims.getSubject()); //오ㅙ null
 
             return true; //유효한 토큰 - 만료 시간, 사용자 아이디 로그
         } catch (ExpiredJwtException expiredJwtException) { //유효하지 않은 토큰 - 기간 만료
@@ -128,6 +129,6 @@ public class TokenUtils {
      */
     public static String getUserIdFromToken(String token) { //외부로 가지고 나갈 수 있게 public
         Claims claims = getClaimsFromToken(token);
-        return claims.getId().toString();
+        return claims.getSubject().toString();
     }
 }

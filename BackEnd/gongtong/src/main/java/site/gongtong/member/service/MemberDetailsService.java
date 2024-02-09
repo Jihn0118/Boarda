@@ -14,6 +14,10 @@ public class MemberDetailsService implements UserDetailsService {
     @Autowired
     MemberRepository memberRepository;
 
+    public MemberDetailsService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
     @Override
     public MemberDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findById(username)

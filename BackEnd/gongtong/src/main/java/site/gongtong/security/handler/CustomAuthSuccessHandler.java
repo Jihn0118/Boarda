@@ -61,7 +61,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         //쿠키에 JWT 토큰 저장
         Cookie jwtCookie = new Cookie("jwt", token);
         jwtCookie.setHttpOnly(true); //JavaScript에서 쿠키에 접근할 수 없도록 설정
-        jwtCookie.setPath("/"); //모든 경로에서 쿠케에 대한 접근 가능하도록 설정
+        jwtCookie.setPath("/"); //모ㄴ든 경로에서 쿠케에 대한 접근 가능하도록 설정
         response.addCookie(jwtCookie); //응답에 쿠키 추가
 
         //4. 구성한 응답값을 전달

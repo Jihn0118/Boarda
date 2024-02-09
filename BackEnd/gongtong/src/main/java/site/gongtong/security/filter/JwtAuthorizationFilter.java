@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,10 +29,15 @@ import java.util.List;
  */
 
 @Slf4j
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 //    private final secuMemberDetialsService  memberDetailsService;
-    private final MemberDetailsService memberDetailsService;
+    @Autowired
+    private MemberDetailsService memberDetailsService;
+
+    public JwtAuthorizationFilter(MemberDetailsService memberDetailsService) {
+        this.memberDetailsService = memberDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(
@@ -68,7 +74,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             for (Cookie cookie : cookies) {
                 if("jwt".equals(cookie.getName())) { //쿠키 돌다가 토큰 정보가 jwt인 거 찾으면
                     token = cookie.getValue(); //토큰 정보 뽑기
-                    System.out.println("Here is JwtAuthorizationFilter: "+token);
+//                    System.out.println("Here is JwtAuthorizationFilter: "+token);
                     break;
                 }
             }
