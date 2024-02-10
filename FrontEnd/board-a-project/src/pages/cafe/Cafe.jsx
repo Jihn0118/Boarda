@@ -74,7 +74,7 @@ export default function Cafe() {
           {!!positions &&
             positions.map((data, idx) => (
               <li key={idx}>
-                <div style={{border: "1px solid black"}}>
+                <div style={{ border: "1px solid black" }}>
                   <div>
                     {data.brand} {data.branch}
                   </div>
@@ -91,32 +91,42 @@ export default function Cafe() {
 
   return (
     <div>
-      <div>
-        <form onSubmit={onSubmitHandler}>
-          <label>
-            지역 :
-            <select
-              value={Location}
-              onChange={(e) => setLocation(e.target.value)}
-            >
-              <option value="">전체</option>
-              <option value="강남구">강남구</option>
-              <option value="마포구">마포구</option>
-            </select>
-          </label>
-          <label>
-            브랜드 :
-            <select value={Brand} onChange={(e) => setBrand(e.target.value)}>
-              <option value="">전체</option>
-              <option value="레드버튼">레드버튼</option>
-              <option value="홈즈앤루팡">홈즈앤 루팡</option>
-              <option value="히어로">히어로 보드게임카페</option>
-            </select>
-          </label>
-          <button>검색</button>
-        </form>
+      <div className="mt-4">
+        <div
+          className="flex flex-col justify-start items-center mx-auto mb-4"
+          style={{ maxWidth: "1100px" }}
+        >
+          <div class="py-5">
+            <form onSubmit={onSubmitHandler}>
+              <label>
+                지역 :
+                <select
+                  value={Location}
+                  onChange={(e) => setLocation(e.target.value)}
+                >
+                  <option value="">전체</option>
+                  <option value="강남구">강남구</option>
+                  <option value="마포구">마포구</option>
+                </select>
+              </label>
+              <label>
+                브랜드 :
+                <select
+                  value={Brand}
+                  onChange={(e) => setBrand(e.target.value)}
+                >
+                  <option value="">전체</option>
+                  <option value="레드버튼">레드버튼</option>
+                  <option value="홈즈앤루팡">홈즈앤 루팡</option>
+                  <option value="히어로">히어로 보드게임카페</option>
+                </select>
+              </label>
+              <button>검색</button>
+            </form>
+          </div>
+          <div>{renderContent()}</div>
+        </div>
       </div>
-      <div>{renderContent()}</div>
     </div>
   );
 }
