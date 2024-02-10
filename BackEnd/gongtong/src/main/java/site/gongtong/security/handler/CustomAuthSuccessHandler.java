@@ -71,6 +71,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         try (PrintWriter printWriter = response.getWriter()) {
             printWriter.print(jsonObject); // 최종 저장된 '사용자 정보', '사이트 정보'를 Front에 저장
             printWriter.flush();
+            printWriter.close();
         }
     }
 }

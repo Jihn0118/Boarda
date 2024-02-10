@@ -44,24 +44,18 @@ public class MyPageController {
     public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id,
                                                  HttpServletRequest request) {
 
-        String jwt = fetchToken(request);
-        if(isSameId(jwt, id)) System.out.println("same id ");
-
-        log.info("mypage enter reque!!");
-
-//        Map<String, Object> resultMap = new HashMap<String, Object>();
-//        ResponseEntity<Map<String, Object>> response = null;
-
         MemberDetails dbMember = null;
         ReviewDto reviewDto = new ReviewDto();
+
         //리뷰 리스트
-        List<Review> reviews = new ArrayList<>();
+        List<Review> reviews = null;
+
         try {
             dbMember = memberDetailsService.loadUserByUsername(id);
             // 정상 처리
             if(dbMember != null) {
                 //멤버 프로필 내용 넣기
-                reviewDto.setMember(mapToMember(dbMember));
+                reviewDto.setMember(mapToMember(dbMember, isSameId(fetchToken(request), id)));
 
                 //리스트 뽑기
                 reviews = myPageService.getReviewListByNum(myPageService.idToNum(id));
@@ -69,39 +63,27 @@ public class MyPageController {
                 for(int i = 0; i< reviews.size(); i++){
                     log.info(reviews.get(i).toString());
                 }
-                if(reviews == null || reviews.size() == 0) {
-                    return new ResponseEntity<ReviewDto>(reviewDto, HttpStatus.OK);
-                } else {
-                    System.out.println("size>??? "+reviews.size());
-                    reviewDto.setReviews(reviews);
-                }
-
-//                response = ResponseEntity
-//                        .status(HttpStatus.OK)
-//                        .body(resultMap);
             }
         } catch (Exception e) { //로그인 멤버 찾아오다가 오류
             e.printStackTrace();
-//            resultMap.put("message", e.getMessage());
             return new ResponseEntity<ReviewDto>((ReviewDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
         return new ResponseEntity<ReviewDto>(reviewDto, HttpStatus.OK);
     }
 
-    public static Member mapToMember(MemberDetails dbMember) {
+    public static Member mapToMember(MemberDetails dbMember, boolean issameId) {
         Member showMember = new Member();
         showMember.setNickname(dbMember.getNickname());
         showMember.setProfileImage(dbMember.getProfileImage());
         showMember.setNum(dbMember.getNum()); // 마이페이지에는 안 나오게 하면 됨.
 
 
-        if(true) { //토큰으로 사용자 인증 후 넣을지 말지 저장
+        if(issameId) { //나==id 일 때만
             showMember.setId(dbMember.getUsername());
             showMember.setBirth(dbMember.getBirth());
             showMember.setGender(dbMember.getGender());
-        }
+        } 
 
         return showMember;
     }
