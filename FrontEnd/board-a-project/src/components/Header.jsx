@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/userState";
 import boardaLogo from "../assets/images/boardaLogo.png"
+import Alarm from "./alarm/Alarm";
+
 
 // 헤더 - mui paper로 다시 작업중입니다.
 
@@ -49,7 +51,8 @@ function LoginUserDiv() {
   return (
     <>
       <p>{loginUser.nickname}님 환영합니다</p>
-      <Link to="/myPage">마이페이지</Link>
+      <Alarm></Alarm>
+      <Link to={`/myPage/${loginUser.id}`}>마이페이지</Link>
       <button
         onClick={() => {
           // 로그아웃 수행시
