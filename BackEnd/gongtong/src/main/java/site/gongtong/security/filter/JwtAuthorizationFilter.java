@@ -50,8 +50,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         List<String> list = Arrays.asList(
                 "/member/login",
                 "/member/signup",
+                "/mypage/forgetpwd",
                 "/api/member/login",
-                "/api/member/signup"
+                "/api/member/signup",
+                "/api/mypage/forgetpwd"
         );
 
         //2. 위의 list에 있는(토큰 필요x) api url의 경우 => 로직 처리없이 다음 필터로 이동

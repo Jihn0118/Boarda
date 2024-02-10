@@ -41,7 +41,11 @@ public class MyPageController {
     private final MemberService memberService;
 
     @GetMapping("/profile") //토큰으로 본인인지 확인 필요 -> 프론트?
-    public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id) {
+    public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id,
+                                                 HttpServletRequest request) {
+
+        String jwt = fetchToken(request);
+        if(isSameId(jwt, id)) System.out.println("same id ");
 
         log.info("mypage enter reque!!");
 
@@ -103,41 +107,47 @@ public class MyPageController {
     }
 
 
-    @PutMapping("/profile")//ㅌㅋ
+    @PutMapping("/profile")
     public ResponseEntity<String> modifyProfile(@RequestParam(name = "id") String id,
-                                                @RequestBody EditProfileDto editProfileDto) {
-
-        log.info("profile modify start!!");
-
-        //read only는 원래 값 그대로 넣기 (id기반으로 Member 찾아서 넣기)
-        Member member = myPageService.findById(id);
-        editProfileDto.setNum(member.getNum());
-        editProfileDto.setId(member.getId());
-        editProfileDto.setBirth(member.getBirth());
-        editProfileDto.setGender(member.getGender());
-
-        //프사, 닉변은 빈값 아니면 하기. (비번은 따로)
-        if(editProfileDto.getProfileImage().equals("")) {
-            editProfileDto.setProfileImage(member.getProfileImage());
-        } else {
-            editProfileDto.setProfileImage(editProfileDto.getProfileImage());
+                                                @RequestBody EditProfileDto editProfileDto,
+                                                HttpServletRequest request) {
+        //본인 아니면 리턴
+        if(!isSameId(fetchToken(request), id)) {
+            return new ResponseEntity<>("권한 없음", HttpStatus.UNAUTHORIZED);
         }
-        if(editProfileDto.getNickname().equals("")) {
-            editProfileDto.setNickname(member.getNickname());
-        } else {
-            editProfileDto.setNickname(editProfileDto.getNickname());
-        }
-        // ㄴ editDto완성
+        else {
+            log.info("profile modify start!!");
 
-        try {
-            if(myPageService.modifyProfile(editProfileDto) > 0) {
-                return new ResponseEntity<> ("프로필 수정 성공 -db확인", HttpStatus.OK);
+            //read only는 원래 값 그대로 넣기 (id기반으로 Member 찾아서 넣기)
+            Member member = myPageService.findById(id);
+            editProfileDto.setNum(member.getNum());
+            editProfileDto.setId(member.getId());
+            editProfileDto.setBirth(member.getBirth());
+            editProfileDto.setGender(member.getGender());
+
+            //프사, 닉변은 빈값 아니면 하기. (비번은 따로)
+            if (editProfileDto.getProfileImage().equals("")) {
+                editProfileDto.setProfileImage(member.getProfileImage());
             } else {
-                return new ResponseEntity<> ("프로필 수정 안 됨 - 내용이 같음", HttpStatus.OK);
+                editProfileDto.setProfileImage(editProfileDto.getProfileImage());
             }
-        } catch (Exception e) {
+            if (editProfileDto.getNickname().equals("")) {
+                editProfileDto.setNickname(member.getNickname());
+            } else {
+                editProfileDto.setNickname(editProfileDto.getNickname());
+            }
+            // ㄴ editDto완성
+
+            try {
+                if (myPageService.modifyProfile(editProfileDto) > 0) {
+                    return new ResponseEntity<>("프로필 수정 성공 -db확인", HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>("프로필 수정 안 됨 - 내용이 같음", HttpStatus.OK);
+                }
+            } catch (Exception e) {
 //            resultMap.put("message", e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 
     }
@@ -148,7 +158,7 @@ public class MyPageController {
         //1. 임시 비번 만들기
         //1-랜덤 문자열 생성
         String newRawPwd = getRandomPwd(10);
-//          System.out.println("tmp rawPwd: "+newRawPwd);
+          System.out.println("tmp rawPwd: "+newRawPwd);
         //2-위의 문자열 bcrypt로 암호화하기
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String newEncodedPwd = encoder.encode(newRawPwd); //암호화된 문자열
@@ -325,15 +335,13 @@ public class MyPageController {
     }
 
     //팔로우&차단 목록
-    @GetMapping("/follow") //ㅌㅋ
-    public ResponseEntity<List<FollowListDto>> getFollowList (@RequestParam (name = "id") String id) {
+    @GetMapping("/follow")
+    public ResponseEntity<List<FollowListDto>> getFollowList (HttpServletRequest request) {
+        String id = TokenUtils.getUserIdFromToken(fetchToken(request));
         int userNum = -1;
 
         try {
             userNum = myPageService.idToNum(id);
-
-            System.out.println("idTONum: "+ userNum);
-
 
         } catch (Exception e) {
             log.info("No user~~!!");
