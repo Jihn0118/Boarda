@@ -42,12 +42,12 @@ const Home = () => {
       <div>
         <Carousel>
           <img
-            src="src/assets/images/Carousel01.png" // src import로 바꾸기
+            src={import.meta.env.VITE_S3_BASE + "Carousel01.png"} // src import로 바꾸기
             alt="image 1"
             className="h-full w-full object-cover"
           />
           <img
-            src="src/assets/images/Carousel02.png"
+            src={import.meta.env.VITE_S3_BASE + "Carousel02.png"}
             alt="image 2"
             className="h-full w-full object-cover"
           />
@@ -65,7 +65,9 @@ const Home = () => {
                   {rankData &&
                     rankData.map((data, idx) => (
                       <li key={idx}>
-                        <span>{idx+1}. {data}</span>
+                        <span>
+                          {idx + 1}. {data}
+                        </span>
                       </li>
                     ))}
                 </ol>
@@ -79,7 +81,9 @@ const Home = () => {
                   {rankData &&
                     rankData.map((data, idx) => (
                       <li key={idx}>
-                        <span>{idx+1}. {data}</span>
+                        <span>
+                          {idx + 1}. {data}
+                        </span>
                       </li>
                     ))}
                 </ol>
@@ -93,7 +97,9 @@ const Home = () => {
                   {rankData &&
                     rankData.map((data, idx) => (
                       <li key={idx}>
-                        <span>{idx+1}. {data}</span>
+                        <span>
+                          {idx + 1}. {data}
+                        </span>
                       </li>
                     ))}
                 </ol>
