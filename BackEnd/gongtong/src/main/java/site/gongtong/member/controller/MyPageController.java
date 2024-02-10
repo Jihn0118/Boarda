@@ -1,6 +1,9 @@
 package site.gongtong.member.controller;
 
 import com.querydsl.core.Tuple;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +23,10 @@ import site.gongtong.member.model.Member;
 import site.gongtong.member.model.MemberDetails;
 import site.gongtong.member.service.FollowService;
 import site.gongtong.member.service.MemberDetailsService;
+import site.gongtong.member.service.MemberService;
 import site.gongtong.member.service.MyPageService;
 import site.gongtong.review.model.Review;
+import site.gongtong.security.jwt.TokenUtils;
 
 import java.security.SecureRandom;
 import java.util.*;
@@ -31,14 +36,12 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MyPageController {
 
-    @Autowired
-    MemberDetailsService memberDetailsService;
-    @Autowired
-    MyPageService myPageService;
-    @Autowired
-    FollowService followService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final MemberDetailsService memberDetailsService;
+    private final MyPageService myPageService;
+    private final FollowService followService;
+    private final PasswordEncoder passwordEncoder;
+    private final MemberController memberController;
+    private final MemberService memberService;
 
     @GetMapping("/profile") //토큰으로 본인인지 확인 필요
     public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id) {
@@ -103,7 +106,7 @@ public class MyPageController {
     }
 
 
-    @PutMapping("/profile")
+    @PutMapping("/profile")//ㅌㅋ
     public ResponseEntity<String> modifyProfile(@RequestParam(name = "id") String id,
                                                 @RequestBody EditProfileDto editProfileDto) {
 
@@ -196,7 +199,7 @@ public class MyPageController {
 
 
     //비번 변경
-    @PutMapping("/modifypwd")
+    @PutMapping("/modifypwd") //ㅌㅋ
     public ResponseEntity<Integer> modifyPwd(@RequestBody PasswordChangeDto passwordChangeDto) {
         //1. 입력된 id 기반으로 해당 유저 entity 찾기
         Member member;
@@ -230,20 +233,52 @@ public class MyPageController {
 
     //회원 탈퇴
     @DeleteMapping("/profile")
-    public ResponseEntity<Integer> deleteMember(@RequestParam String id) {
-        Member member;
+    public ResponseEntity<Integer> deleteMember(@RequestParam String id,
+                                                HttpServletRequest request,
+                                                HttpServletResponse response) {
+        // JWT 추출
+        Cookie[] cookies = request.getCookies();
+        String jwt = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("jwt")) {
+                    jwt = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        // JWT 검증 및 클레임에서 현재 로그인한 사용자의 ID 추출
+        String loggedInUserId = TokenUtils.getUserIdFromToken(jwt);
+
+        // 현재 로그인한 사용자의 ID와 요청된 회원 ID가 일치하는지 확인
+        if (!id.equals(loggedInUserId)) {
+            log.info("id and loggedInUserId is not same");
+            return new ResponseEntity<>(0, HttpStatus.UNAUTHORIZED); // 권한 없음 에러 반환
+        }
+
         try {
-            member = myPageService.findById(id);
-            if( myPageService.deleteMember(id) > 0) return new ResponseEntity<>(1, HttpStatus.OK); //탈퇴 완료
+            // 회원 정보 삭제
+            int num = myPageService.idToNum(id);
+            memberService.deleteMember(num);
+
+            // 로그아웃 처리
+            memberController.logout(id, request, response);
+
+            // 회원탈퇴 성공 응답 반환
+            log.info("good");
+            return new ResponseEntity<>(1, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            // 회원탈퇴 처리 중 오류 발생 시 에러 응답 반환
+            log.info("i dont know what it is eroor");
             return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR); //탈퇴 실패
+
     }
 
     //팔로우 하기
-    @PostMapping("/follow")
+    @PostMapping("/follow") //ㅌㅋ
     public ResponseEntity<Integer> registFollow (@RequestParam(name = "id") String myId,
                                                  @RequestParam(name = "nickname") String yourNickname,
                                                  @RequestParam(name = "flag") char flag) {
@@ -280,7 +315,7 @@ public class MyPageController {
         return new ResponseEntity<>(1, HttpStatus.OK); //성공!
     }
     //팔로우 취소하기
-    @DeleteMapping("/follow") //흑흑...
+    @DeleteMapping("/follow") //ㅌㅋ
     public ResponseEntity<Integer> deleteFollow (@RequestParam (name = "id") String followId,
                                                  @RequestParam (name = "myNum") int myNum) {
         int yourNum = myPageService.idToNum(followId);
@@ -297,7 +332,7 @@ public class MyPageController {
     }
 
     //팔로우&차단 목록
-    @GetMapping("/follow")
+    @GetMapping("/follow") //ㅌㅋ
     public ResponseEntity<List<FollowListDto>> getFollowList (@RequestParam (name = "id") String id) {
         int userNum = -1;
 
@@ -336,5 +371,6 @@ public class MyPageController {
     }
 
     //
+
 }
 

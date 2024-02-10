@@ -197,35 +197,7 @@ public class MemberController {
         }
     }
 
-//    @PostMapping("/logout")
-//    public ResponseEntity<Integer> logout(@RequestParam String id, HttpServletRequest request) {
-//
-//        String authorizationHeader = request.getHeader("Authorization");
-//
-//        if (authorizationHeader == null ) {
-//            log.info("토큰 없음");
-//            return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //토큰 없음
-//        }
-//
-//
-//        if (getUserIdFromToken()) {
-//            // 클라이언트에게 로그인이 필요하다는 메시지를 반환
-//            Map<String, Object> response = new HashMap<>();
-//            response.put("message", "로그인이 필요합니다.");
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-//        }
-//
-//        // JWT 토큰을 저장하는 쿠키의 값을 삭제
-//        Cookie jwtCookie = new Cookie("jwt", null); //쿠키 값 없애기
-//        jwtCookie.setMaxAge(0); //쿠키의 유효 기간을 0으로 설정
-//
-//        // 클라이언트에게 로그아웃이 성공적으로 처리되었음을 알리는 응답 반환
-//
-//        response.put("message", "로그아웃이 성공적으로 처리되었습니다.");
-//        return ResponseEntity.ok().body(response);
-//    }
-
-    @PostMapping("/logout")
+    @PostMapping("/logout") //반환이 이상함;;;
     public ResponseEntity<?> logout(@RequestParam String id, HttpServletRequest request, HttpServletResponse response) {
 
         Cookie[] cookies = request.getCookies();
@@ -240,6 +212,7 @@ public class MemberController {
             }
         }
 
+        //1이 반환 안 되면 틀린 요청.... (기본적으로 다 OK가 반환됨)
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 

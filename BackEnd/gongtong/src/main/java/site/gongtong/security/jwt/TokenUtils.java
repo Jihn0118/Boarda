@@ -85,7 +85,7 @@ public class TokenUtils {
 
 
             log.info("expireTime : " + claims.getExpiration());//ok
-            log.info("id : " + claims.getSubject()); //오ㅙ null
+            log.info("id : " + claims.getSubject());
 
             return true; //유효한 토큰 - 만료 시간, 사용자 아이디 로그
         } catch (ExpiredJwtException expiredJwtException) { //유효하지 않은 토큰 - 기간 만료

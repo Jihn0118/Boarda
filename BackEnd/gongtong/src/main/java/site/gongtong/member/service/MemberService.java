@@ -56,4 +56,8 @@ public class MemberService {
         return MemberDto.of(member);
 
     }
+
+    public void deleteMember(Integer num) {
+        memberRepository.deleteById(num);
+    }
 }
