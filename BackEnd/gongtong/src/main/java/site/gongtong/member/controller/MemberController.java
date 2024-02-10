@@ -125,7 +125,7 @@ public class MemberController {
         return response;
     }
 
-    @PostMapping("/login") //토큰 생성까지
+    @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(HttpServletRequest httprequest,
                                                      HttpServletResponse httpresponse,
                                                     Authentication authentication,
@@ -185,35 +185,57 @@ public class MemberController {
         return response;
     }
 
-    @RequestMapping("/")
-    public MemberDetails getMemberDetailsAfterLogin(Authentication authentication) {
-        //로그인한 사용자의 정보와 권한을 얻기 위한 것 (user인지 admin인지 등을 알기 위해...)
-        /* findById 만 사용해서 구현할 수 있을까 (Option<> 리턴) */
-        MemberDetails member = memberDetailsService.loadUserByUsername(authentication.getName());
-        if(member != null) {
-            return member;
-        } else {
-            return null;
-        }
-    }
+//    @RequestMapping("/")
+//    public MemberDetails getMemberDetailsAfterLogin(Authentication authentication) {
+//        //로그인한 사용자의 정보와 권한을 얻기 위한 것 (user인지 admin인지 등을 알기 위해...)
+//        /* findById 만 사용해서 구현할 수 있을까 (Option<> 리턴) */
+//        MemberDetails member = memberDetailsService.loadUserByUsername(authentication.getName());
+//        if(member != null) {
+//            return member;
+//        } else {
+//            return null;
+//        }
+//    }
 
-    @PostMapping("/logout") //반환이 이상함;;;
-    public ResponseEntity<?> logout(@RequestParam String id, HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
 
         Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("jwt")) { // JWT 쿠키를 찾으면
-                    cookie.setMaxAge(0); // 쿠키 만료시간을 0으로 설정하여 삭제
-                    cookie.setPath("/"); // 쿠키의 유효 경로 설정
-                    response.addCookie(cookie); // 응답에 쿠키 추가하여 클라이언트에 전송
-                    break;
-                }
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("jwt")) { // JWT 쿠키를 찾으면
+                 cookie.setMaxAge(0); // 쿠키 만료시간을 0으로 설정하여 삭제
+                 cookie.setPath("/"); // 쿠키의 유효 경로 설정
+                 response.addCookie(cookie); // 응답에 쿠키 추가하여 클라이언트에 전송
+                 break;
             }
         }
 
         //1이 반환 안 되면 틀린 요청.... (기본적으로 다 OK가 반환됨)
         return new ResponseEntity<>(1, HttpStatus.OK);
+    }
+
+    //쿠키에서 JWT 추츨하기
+    public String fetchToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String jwt = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("jwt")) {
+                    jwt = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        return jwt;
+    }
+
+    //JWT에서 추출한 id값과 파라미터로 들어온 id값이 같은지 확인
+    public boolean isSameId(String jwt, String id) {
+        // JWT 검증 및 클레임에서 현재 로그인한 사용자의 ID 추출
+        String loggedInUserId = TokenUtils.getUserIdFromToken(jwt);
+        return id.equals(loggedInUserId);
     }
 
 }

@@ -6,13 +6,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import site.gongtong.member.dto.EditProfileDto;
 import site.gongtong.member.dto.FollowListDto;
@@ -43,7 +40,7 @@ public class MyPageController {
     private final MemberController memberController;
     private final MemberService memberService;
 
-    @GetMapping("/profile") //토큰으로 본인인지 확인 필요
+    @GetMapping("/profile") //토큰으로 본인인지 확인 필요 -> 프론트?
     public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id) {
 
         log.info("mypage enter reque!!");
@@ -199,8 +196,14 @@ public class MyPageController {
 
 
     //비번 변경
-    @PutMapping("/modifypwd") //ㅌㅋ
-    public ResponseEntity<Integer> modifyPwd(@RequestBody PasswordChangeDto passwordChangeDto) {
+    @PutMapping("/modifypwd")
+    public ResponseEntity<Integer> modifyPwd(@RequestBody PasswordChangeDto passwordChangeDto,
+                                             HttpServletRequest request) {
+        //토큰에서 추출한 아이디와 dto의 아이디가 같은지 확인, 다르면 return
+        if(!isSameId(fetchToken(request), passwordChangeDto.getId())){
+            return new ResponseEntity<>(-1, HttpStatus.UNAUTHORIZED);
+        }
+
         //1. 입력된 id 기반으로 해당 유저 entity 찾기
         Member member;
         try {
@@ -236,24 +239,9 @@ public class MyPageController {
     public ResponseEntity<Integer> deleteMember(@RequestParam String id,
                                                 HttpServletRequest request,
                                                 HttpServletResponse response) {
-        // JWT 추출
-        Cookie[] cookies = request.getCookies();
-        String jwt = null;
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("jwt")) {
-                    jwt = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        // JWT 검증 및 클레임에서 현재 로그인한 사용자의 ID 추출
-        String loggedInUserId = TokenUtils.getUserIdFromToken(jwt);
-
-        // 현재 로그인한 사용자의 ID와 요청된 회원 ID가 일치하는지 확인
-        if (!id.equals(loggedInUserId)) {
+        String jwt = fetchToken(request);
+        if (!isSameId(jwt, id)) {
             log.info("id and loggedInUserId is not same");
             return new ResponseEntity<>(0, HttpStatus.UNAUTHORIZED); // 권한 없음 에러 반환
         }
@@ -264,7 +252,7 @@ public class MyPageController {
             memberService.deleteMember(num);
 
             // 로그아웃 처리
-            memberController.logout(id, request, response);
+            memberController.logout(request, response);
 
             // 회원탈퇴 성공 응답 반환
             log.info("good");
@@ -278,12 +266,15 @@ public class MyPageController {
     }
 
     //팔로우 하기
-    @PostMapping("/follow") //ㅌㅋ
-    public ResponseEntity<Integer> registFollow (@RequestParam(name = "id") String myId,
-                                                 @RequestParam(name = "nickname") String yourNickname,
-                                                 @RequestParam(name = "flag") char flag) {
+    @PostMapping("/follow")
+    public ResponseEntity<Integer> registFollow (@RequestParam(name = "nickname") String yourNickname,
+                                                 @RequestParam(name = "flag") char flag,
+                                                 HttpServletRequest request) {
         Member memMe;
         Member memYou;
+        String jwt = fetchToken(request);
+        String myId = TokenUtils.getUserIdFromToken(jwt);
+
         try {
             //1. 아이디, 닉네임 기반 멤버 찾아오기
             memMe = myPageService.findById(myId); //-> 여기가 팔로워
@@ -315,11 +306,13 @@ public class MyPageController {
         return new ResponseEntity<>(1, HttpStatus.OK); //성공!
     }
     //팔로우 취소하기
-    @DeleteMapping("/follow") //ㅌㅋ
+    @DeleteMapping("/follow")
     public ResponseEntity<Integer> deleteFollow (@RequestParam (name = "id") String followId,
-                                                 @RequestParam (name = "myNum") int myNum) {
+                                                 HttpServletRequest request) {
+
+        int myNum = myPageService.idToNum(TokenUtils.getUserIdFromToken(fetchToken(request)));
         int yourNum = myPageService.idToNum(followId);
-//        System.out.println("yourNum: "+yourNum);
+
         Follow wannaDeleteFollow = followService.findBy2Nums(myNum, yourNum); //팔로워 팔로잉
         if (wannaDeleteFollow == null) {
             log.info("follow delete: there's no relation~!");
@@ -370,7 +363,28 @@ public class MyPageController {
         }
     }
 
-    //
+    //쿠키에서 JWT 추츨하기
+    public String fetchToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String jwt = null;
 
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("jwt")) {
+                    jwt = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        return jwt;
+    }
+
+    //JWT에서 추출한 id값과 파라미터로 들어온 id값이 같은지 확인
+    public boolean isSameId(String jwt, String id) {
+        // JWT 검증 및 클레임에서 현재 로그인한 사용자의 ID 추출
+        String loggedInUserId = TokenUtils.getUserIdFromToken(jwt);
+        return id.equals(loggedInUserId);
+    }
 }
 
