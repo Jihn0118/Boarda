@@ -15,6 +15,7 @@ public class RankingService {
     private final TagRepository tagRepository;
 
     // 게임 랭킹 정보를 저장할 List
+    @Getter
     private List<GameRanking> gameRanking;
     // 카페 랭킹 정보를 저장할 List
     @Getter
@@ -32,7 +33,4 @@ public class RankingService {
         cafeRanking = tagRepository.findCafeRanking(PageRequest.of(0, 10));
     }
 
-    public List<GameRanking> getGameRanking() {
-        return gameRanking;
-    }
 }

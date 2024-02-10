@@ -3,7 +3,7 @@ package site.gongtong.cafe.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "cafe")
 @Getter
 @Setter
 @NoArgsConstructor

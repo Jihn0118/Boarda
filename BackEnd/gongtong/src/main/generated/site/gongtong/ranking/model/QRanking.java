@@ -22,7 +22,7 @@ public class QRanking extends EntityPathBase<Ranking> {
 
     public static final QRanking ranking = new QRanking("ranking");
 
-    public final NumberPath<Integer> cafeId = createNumber("cafeId", Integer.class);
+    public final NumberPath<Long> cafeId = createNumber("cafeId", Long.class);
 
     public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
