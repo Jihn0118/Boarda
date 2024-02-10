@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableJpaAuditing
-public class GongtongApplication {
+public class GongtongApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(GongtongApplication.class, args);

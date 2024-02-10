@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { Carousel } from "@material-tailwind/react";
+
 const { kakao } = window;
 
 const Home = () => {
-  const rankData = [
-    "알케미스트",
-    "다빈치코드",
-    "블루마블",
-    "블리츠",
-    "크랭크",
-  ];
+  const rankData = ["알케미스트", "다빈치코드", "블루마블", "블리츠", "크랭크"];
   const endSoon = [
     {
       title: "레드버튼 강남점",
@@ -30,41 +26,88 @@ const Home = () => {
       const container = document.getElementById("map");
       const options = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 9,
+        level: 10,
         disableDoubleClickZoom: true,
         draggable: false,
       };
       const map = new kakao.maps.Map(container, options);
       map.setZoomable(false);
-
     }, []);
-    return <div id="map" style={{ width: "500px", height: "400px" }}></div>;
+    return <div id="map" style={{ width: "400px", height: "300px" }}></div>;
   };
 
   return (
     <>
-      <div>홈 화면 입니다.</div>
       <Outlet></Outlet>
-      <div>캐러셀</div>
-
       <div>
-        {/* 랭킹 */}
-        <h2>종합 랭킹</h2>
-        <div>
-          <ol>
-            {rankData &&
-              rankData.map((data, idx) => (
-                <li key={idx}>
-                  <span>{ data }</span>
-                </li>
-              ))}
-          </ol>
-        </div>
+        <Carousel>
+          <img
+            src="src/assets/images/Carousel01.png" // src import로 바꾸기
+            alt="image 1"
+            className="h-full w-full object-cover"
+          />
+          <img
+            src="src/assets/images/Carousel02.png"
+            alt="image 2"
+            className="h-full w-full object-cover"
+          />
+        </Carousel>
       </div>
+      <div class="container mx-auto flex py-10">
+        <div className="w-2/3 px-4">
+          <h1 class="text-2xl font-bold ...">인기 순위</h1>
 
-      <div>
-        {/* 지도 */}
-        {renderMap()}
+          <div class="container flex justify-between py-5">
+            <div>
+              <h2 class="text-xl text-center ...">전체</h2>
+              <div class="py-10">
+                <ol>
+                  {rankData &&
+                    rankData.map((data, idx) => (
+                      <li key={idx}>
+                        <span>{idx+1}. {data}</span>
+                      </li>
+                    ))}
+                </ol>
+              </div>
+            </div>
+
+            <div>
+              <h2 class="text-xl text-center...">남성 | 여성</h2>
+              <div class="py-10">
+                <ol>
+                  {rankData &&
+                    rankData.map((data, idx) => (
+                      <li key={idx}>
+                        <span>{idx+1}. {data}</span>
+                      </li>
+                    ))}
+                </ol>
+              </div>
+            </div>
+
+            <div>
+              <h2 class="text-xl ...">10대 | 20대 | 30대↑</h2>
+              <div class="py-10">
+                <ol>
+                  {rankData &&
+                    rankData.map((data, idx) => (
+                      <li key={idx}>
+                        <span>{idx+1}. {data}</span>
+                      </li>
+                    ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-1/3 px-4">
+          <h1 class="text-2xl font-bold ...">마감 임박</h1>
+          <div class="container flex justify-center py-5">
+            <div>{renderMap()}</div>
+          </div>
+        </div>
       </div>
     </>
   );
