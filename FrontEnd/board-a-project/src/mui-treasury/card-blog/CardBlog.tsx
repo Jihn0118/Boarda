@@ -6,12 +6,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Info, InfoEyebrow, InfoSubtitle, InfoTitle } from "../info-basic";
 
-export function CardBlog({ year, title, imageUrl, feed }) {
+export function CardBlog({ title, minNum, maxNum, playTime, difficulty, year, age, imageUrl, feed }) {
   const imageList = feed.slice(0, 5);
   console.log(imageList);
   return (
     <Card
       sx={(theme) => ({
+        // width: 1000,
         margin: "auto",
         borderRadius: theme.spacing(2), // 16px
         transition: "0.3s",
@@ -104,13 +105,21 @@ export function CardBlog({ year, title, imageUrl, feed }) {
                 };
               }}
             >
-              <InfoEyebrow>출시일: {year}</InfoEyebrow>
+              <InfoEyebrow >출시일: {year}</InfoEyebrow>
               <InfoTitle>{title}</InfoTitle>
+              <div style={{borderBottom: "1px solid black", margin: "10px 0"}}></div>
               <InfoSubtitle>
+                인원수: {minNum} ~ {maxNum} 명 <br/>
+                플레이: {playTime} 분 <br/>
+                난이도: {difficulty} 점 <br/>
+                출시일: {year} 년 <br/>
+                연령: {age} 세 이상<br/>
                 Git is a distributed version control system. Every dev has a
                 working copy of the code and...
               </InfoSubtitle>
             </Info>
+            <div style={{ textAlign: "right" }}>
+
             <Button
               sx={{
                 backgroundImage:
@@ -122,8 +131,9 @@ export function CardBlog({ year, title, imageUrl, feed }) {
                 color: "#ffffff",
               }}
             >
-              Read more
+              보유 매장
             </Button>
+            </div>
           </CardContent>
         </div>
         <Box sx={{ display: "flex", overflow: "auto", pt: 2 }}>
