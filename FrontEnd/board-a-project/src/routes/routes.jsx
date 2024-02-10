@@ -6,7 +6,7 @@ import MoimList from "../pages/moim/MoimList";
 // import MoimMake from "../pages/moim/MoimMake";
 // import MoimDetail from "../pages/moim/MoimDetail";
 import GameList from "../pages/game/GameList";
-import GameDetail from "../pages/game/GameDetail";
+// import GameDetail from "../pages/game/GameDetail";
 import RootLayout from "../pages/rootLayout/RootLayout";
 import Thumbnail from "../pages/thumbnail/Thumbnail";
 
@@ -99,10 +99,10 @@ const routes = createBrowserRouter([
         path: "game",
         element: <GameList />,
       },
-      {
-        path: "game/:gameId",
-        element: <GameDetail />,
-      },
+      // {
+      //   path: "game/:gameId",
+      //   element: <GameDetail />,
+      // },
       // -----------------------------------
       {
         path: "login",
