@@ -95,7 +95,7 @@ public class SecurityConfig {
      * @throws Exception 설정 중 발생할 수 있는 예외
      */
 
-    @Bean //이거 사용~!!
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            CustomAuthenticationFilter customAuthenticationFilter,
                                            JwtAuthorizationFilter jwtAuthorizationFilter //헤더의 JWT 토큰을 추출하고 검증
@@ -103,7 +103,6 @@ public class SecurityConfig {
         log.debug("[+] WebSecurityConfig Start !!! ");
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-//                .cors(AbstractHttpConfigurer::disable) //둘 중 하나
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .formLogin(AbstractHttpConfigurer::disable)
                 //이후에 허용할 페이지, 막을 페이지 나누기

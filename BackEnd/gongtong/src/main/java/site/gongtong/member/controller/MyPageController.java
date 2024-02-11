@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import site.gongtong.member.dto.EditProfileDto;
 import site.gongtong.member.dto.FollowListDto;
 import site.gongtong.member.dto.PasswordChangeDto;
-import site.gongtong.member.dto.ReviewDto;
+import site.gongtong.member.dto.ProfileDto;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.model.MemberDetails;
@@ -41,11 +41,11 @@ public class MyPageController {
     private final MemberService memberService;
 
     @GetMapping("/profile") //토큰으로 본인인지 확인 필요 -> 프론트?
-    public ResponseEntity<ReviewDto> viewProfile(@RequestParam(value = "id") String id,
-                                                 HttpServletRequest request) {
+    public ResponseEntity<ProfileDto> viewProfile(@RequestParam(value = "id") String id,
+                                                  HttpServletRequest request) {
 
         MemberDetails dbMember = null;
-        ReviewDto reviewDto = new ReviewDto();
+        ProfileDto profileDto = new ProfileDto();
 
         //리뷰 리스트
         List<Review> reviews;
@@ -55,7 +55,7 @@ public class MyPageController {
             // 정상 처리
             if(dbMember != null) {
                 //멤버 프로필 내용 넣기
-                reviewDto.setMember(mapToMember(dbMember, isSameId(fetchToken(request), id)));
+                profileDto.setMember(mapToMember(dbMember, isSameId(fetchToken(request), id)));
 
                 //리스트 뽑기
                 reviews = myPageService.getReviewListByNum(myPageService.idToNum(id));
@@ -65,14 +65,14 @@ public class MyPageController {
                     log.info(reviews.get(i).toString());
                 }
 
-                reviewDto.setReviews(reviews);
+                profileDto.setReviews(reviews);
             }
         } catch (Exception e) { //로그인 멤버 찾아오다가 오류
             e.printStackTrace();
-            return new ResponseEntity<>((ReviewDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>((ProfileDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<>(reviewDto, HttpStatus.OK);
+        return new ResponseEntity<>(profileDto, HttpStatus.OK);
     }
 
     public static Member mapToMember(MemberDetails dbMember, boolean issameId) {

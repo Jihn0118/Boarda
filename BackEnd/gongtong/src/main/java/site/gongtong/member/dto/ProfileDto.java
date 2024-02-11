@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ReviewDto {
+public class ProfileDto {
     Member member;
     List<Review> reviews;
 }
