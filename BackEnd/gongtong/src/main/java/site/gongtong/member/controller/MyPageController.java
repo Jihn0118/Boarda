@@ -22,6 +22,9 @@ import site.gongtong.member.service.FollowService;
 import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.member.service.MemberService;
 import site.gongtong.member.service.MyPageService;
+import site.gongtong.moim.model.Moim;
+import site.gongtong.moim.repository.MoimRepository;
+import site.gongtong.moim.service.MoimService;
 import site.gongtong.review.model.Review;
 import site.gongtong.security.jwt.TokenUtils;
 
@@ -39,16 +42,18 @@ public class MyPageController {
     private final PasswordEncoder passwordEncoder;
     private final MemberController memberController;
     private final MemberService memberService;
+    private final MoimService moimService;
 
     @GetMapping("/profile") //토큰으로 본인인지 확인 필요 -> 프론트?
     public ResponseEntity<ProfileDto> viewProfile(@RequestParam(value = "id") String id,
                                                   HttpServletRequest request) {
 
         MemberDetails dbMember = null;
-        ProfileDto profileDto = new ProfileDto();
 
-        //리뷰 리스트
-        List<Review> reviews;
+        ProfileDto profileDto = new ProfileDto();
+        List<Review> reviews; //리뷰 리스트
+
+        List<Moim> dbMoims ;
 
         try {
             dbMember = memberDetailsService.loadUserByUsername(id);
@@ -60,12 +65,23 @@ public class MyPageController {
                 //리스트 뽑기
                 reviews = myPageService.getReviewListByNum(myPageService.idToNum(id));
 
-
                 for(int i = 0; i< reviews.size(); i++){
                     log.info(reviews.get(i).toString());
                 }
-
                 profileDto.setReviews(reviews);
+
+                dbMoims = moimService.getMyMoimList(myPageService.idToNum(id));
+                profileDto.setMoimList(dbMoims);
+//                if(dbMoim!=null){
+//                    profileDto.setMoim(dbMoim);
+//                }
+                Moim dbMoim = null;
+                if(dbMoims.size() >= 1) {
+                    dbMoim = dbMoims.get(0);
+                    profileDto.setMoim(dbMoim);
+                } else {
+                    profileDto.setMoim(dbMoim);
+                }
             }
         } catch (Exception e) { //로그인 멤버 찾아오다가 오류
             e.printStackTrace();
