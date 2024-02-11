@@ -29,10 +29,6 @@ public class MemberDto implements UserDetails {
     private String profileImage;
     private RoleType roleType; //USER 혹은 GUEST
 
-//    public static MemberDto of(String id) {
-//        return new MemberDto(null, id, null, null, null, null, null, null);
-//    }
-
     public static MemberDto of(Member member) {
         return MemberDto.builder()
                 .num(member.getNum())

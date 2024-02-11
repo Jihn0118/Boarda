@@ -29,11 +29,6 @@ public class MyPageServiceImpl implements MyPageService {
         return myPageRepository.findAllReviews(num);
     }
 
-//    @Override
-//    public Member updateNickname(String id, EditProfileDto editProfileDto) {
-//        return myPageCustomRepository.setNickname(id, editProfileDto.getNickname());
-//    }
-
     @Override
     public Member findById(String id) {
         return myPageRepository.findById(id);
@@ -49,8 +44,6 @@ public class MyPageServiceImpl implements MyPageService {
         // 여기서 dto -> 멤버
         Member member = dtoToEntity(editProfileDto);
 
-//        System.out.println("member: "+member.toString());
-//        System.out.println("editDto: "+editProfileDto);
         return myPageRepository.modifyProfile(member);
     }
 
@@ -58,8 +51,8 @@ public class MyPageServiceImpl implements MyPageService {
     public int setPwd(String id, String newEncodedPwd) {
         //1. id로 해당 유저 찾기
         Member member = myPageRepository.findById(id);
-        //예외처리 - id에 해당하는 member가 없으면 킬
-        if(member == null) return 0; // 0: 못찾겠다...
+        //예외처리 - id에 해당하는 member가 없으면 0리턴
+        if(member == null) return 0; 
 
         //2. id에 해당하는 비번 바꾸기...
         return myPageRepository.modifyPwd(id, newEncodedPwd);
@@ -70,19 +63,7 @@ public class MyPageServiceImpl implements MyPageService {
         return myPageRepository.delete(id);
     }
 
-    //엔터티 -> dto 전환
-//    public EditProfileDto entityToDto(Member member) {
-//        EditProfileDto editProfileDto = new EditProfileDto();
-//        editProfileDto.setId(member.getId());
-//        editProfileDto.setProfileImage(member.getProfileImage());
-//        editProfileDto.setNickname(member.getNickname());
-//        editProfileDto.setNum(member.getNum());
-////        editProfileDto.setPassword(member.getPassword());
-//
-//        return editProfileDto;
-//    }
-
-    //dt0o->entity
+    //dto -> entity 전환
     public Member dtoToEntity(EditProfileDto editProfileDto) {
 
         Member member = Member.builder()

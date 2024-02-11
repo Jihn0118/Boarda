@@ -40,15 +40,12 @@ public class MemberController {
     private final CustomAuthSuccessHandler customAuthSuccessHandler;
 
     @GetMapping("/checkid")
-    public ResponseEntity<String> checkId(@RequestParam String id) { //sns x
-        //아이디 중복 체크 수행
-        //- id리턴 (-> 이 아이디로 생성 불가)
-        //- "can"
-        ResponseEntity<String> response = null;
+    public ResponseEntity<String> checkId(@RequestParam String id) {
+        ResponseEntity<String> response ;
         if(!memberService.canUseId(id)){ //사용 불가 아이디
             response = ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(id); //이 내용은 사용자에게 숨기기?
+                    .body(id);
         }
         else { //사용 가능 아이디
             response = ResponseEntity
@@ -60,15 +57,12 @@ public class MemberController {
     }
 
     @GetMapping("/checknickname")
-    public ResponseEntity<String> checkNickname(@RequestParam String nickname) { //sns x
-        //아이디 중복 체크 수행
-        //- id리턴 (-> 이 아이디로 생성 불가)
-        //- "can"
-        ResponseEntity<String> response = null;
+    public ResponseEntity<String> checkNickname(@RequestParam String nickname) {
+        ResponseEntity<String> response ;
         if(!memberService.canUseNickname(nickname)){ //사용 불가 닉네임
             response = ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(nickname); //이 내용은 사용자에게 숨기기?
+                    .body(nickname);
         }
         else { //사용 가능 닉네임
             response = ResponseEntity
@@ -84,7 +78,7 @@ public class MemberController {
     public ResponseEntity<String> signUp(@RequestPart(name = "signupValue") SignUpRequest signUpRequest,
                                          @RequestPart(name = "image", required = false) MultipartFile file) {
 
-        Member savedMember = null;
+        Member savedMember ;
         ResponseEntity<String> response = null;
 
         // 1 id 중복체크
@@ -124,7 +118,7 @@ public class MemberController {
     public ResponseEntity<Map<String, Object>> login(HttpServletRequest httprequest,
                                                      HttpServletResponse httpresponse,
                                                     Authentication authentication,
-                                            @RequestBody LoginRequest loginRequest) { //sns x
+                                            @RequestBody LoginRequest loginRequest) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         ResponseEntity<Map<String, Object>> response;
 
@@ -180,57 +174,21 @@ public class MemberController {
         return response;
     }
 
-//    @RequestMapping("/")
-//    public MemberDetails getMemberDetailsAfterLogin(Authentication authentication) {
-//        //로그인한 사용자의 정보와 권한을 얻기 위한 것 (user인지 admin인지 등을 알기 위해...)
-//        /* findById 만 사용해서 구현할 수 있을까 (Option<> 리턴) */
-//        MemberDetails member = memberDetailsService.loadUserByUsername(authentication.getName());
-//        if(member != null) {
-//            return member;
-//        } else {
-//            return null;
-//        }
-//    }
-
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
 
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("jwt")) { // JWT 쿠키를 찾으면
-                 cookie.setMaxAge(0); // 쿠키 만료시간을 0으로 설정하여 삭제
-                 cookie.setPath("/"); // 쿠키의 유효 경로 설정
-                 response.addCookie(cookie); // 응답에 쿠키 추가하여 클라이언트에 전송
+            if (cookie.getName().equals("jwt")) {   // JWT 쿠키를 찾으면
+                 cookie.setMaxAge(0);               // 쿠키 만료시간을 0으로 설정하여 삭제
+                 cookie.setPath("/");               // 쿠키의 유효 경로 설정
+                 response.addCookie(cookie);        // 응답에 쿠키 추가하여 클라이언트에 전송
                  break;
             }
         }
 
-        //1이 반환 안 되면 틀린 요청.... (기본적으로 다 OK가 반환됨)
+        //1이 반환 안 되면 틀린 요청 (기본적으로 다 OK가 반환됨)
         return new ResponseEntity<>(1, HttpStatus.OK);
-    }
-
-    //쿠키에서 JWT 추츨하기
-    public String fetchToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        String jwt = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("jwt")) {
-                    jwt = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        return jwt;
-    }
-
-    //JWT에서 추출한 id값과 파라미터로 들어온 id값이 같은지 확인
-    public boolean isSameId(String jwt, String id) {
-        // JWT 검증 및 클레임에서 현재 로그인한 사용자의 ID 추출
-        String loggedInUserId = TokenUtils.getUserIdFromToken(jwt);
-        return id.equals(loggedInUserId);
     }
 
 }

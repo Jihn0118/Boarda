@@ -38,7 +38,6 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-
     public List<Tuple> getFollowList(int myNum) {
         return followRepository.findAllByNum(myNum);
 

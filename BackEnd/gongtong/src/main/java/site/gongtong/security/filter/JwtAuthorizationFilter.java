@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import site.gongtong.member.model.MemberDetails;
 import site.gongtong.member.service.MemberDetailsService;
-import site.gongtong.security.secumodel.secuMemberDetails;
 import site.gongtong.security.jwt.TokenUtils;
 //import site.gongtong.security.service.secuMemberDetialsService;
 
@@ -29,9 +28,8 @@ import java.util.List;
  */
 
 @Slf4j
-//@RequiredArgsConstructor
+//@RequiredArgsConstructor //이미 있는 생성자
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-//    private final secuMemberDetialsService  memberDetailsService;
     @Autowired
     private MemberDetailsService memberDetailsService;
 
@@ -51,9 +49,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 "/member/login",
                 "/member/signup",
                 "/mypage/forgetpwd",
+                "/mypage/profile",
                 "/api/member/login",
                 "/api/member/signup",
-                "/api/mypage/forgetpwd"
+                "/api/mypage/forgetpwd",
+                "/api/mypage/profile"
         );
 
         //2. 위의 list에 있는(토큰 필요x) api url의 경우 => 로직 처리없이 다음 필터로 이동
@@ -70,13 +70,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         // [STEP.1] Client에서 API를 요청할때 쿠키를 확인
         Cookie[] cookies = request.getCookies();
         String token = null;
-//        System.out.println("cookie cooks:::::");
-//        System.out.println(Arrays.toString(cookies));
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if("jwt".equals(cookie.getName())) { //쿠키 돌다가 토큰 정보가 jwt인 거 찾으면
                     token = cookie.getValue(); //토큰 정보 뽑기
-//                    System.out.println("Here is JwtAuthorizationFilter: "+token);
                     break;
                 }
             }
@@ -90,12 +87,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 if (TokenUtils.isValidToken(token)) {
                     // [STEP.2-3] 토큰 기반으로 사용자 아이디를 반환받기
                     String id = TokenUtils.getUserIdFromToken(token);
-                    log.debug("[+] loginId Check: " + id);
 
                     // [STEP.2-4] 사용자 아이디가 존재하는지에 대한 여부 체크
                     if(id != null && !id.equalsIgnoreCase("")) {
                         MemberDetails memberDetails = memberDetailsService.loadUserByUsername(id);
-//                        secuMemberDetails memberDetails = secuMemberDetialsService.loadUserByUsername(id);
                         // 전체 정보(패스워드 제외), 패스워드, 권한 리스트 => 토큰으로 뽑기
                         UsernamePasswordAuthenticationToken authentication
                                 = new UsernamePasswordAuthenticationToken(memberDetails, null, memberDetails.getAuthorities());

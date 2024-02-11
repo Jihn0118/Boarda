@@ -71,16 +71,14 @@ public class MyPageController {
                 profileDto.setReviews(reviews);
 
                 dbMoims = moimService.getMyMoimList(myPageService.idToNum(id));
-                profileDto.setMoimList(dbMoims);
-//                if(dbMoim!=null){
-//                    profileDto.setMoim(dbMoim);
-//                }
+                profileDto.setMoimList(dbMoims); //모임 리스트 넣기
+
                 Moim dbMoim = null;
                 if(dbMoims.size() >= 1) {
                     dbMoim = dbMoims.get(0);
                     profileDto.setMoim(dbMoim);
                 } else {
-                    profileDto.setMoim(dbMoim);
+                    profileDto.setMoim(dbMoim); //현재 진행 중인 모임이 없으면 null
                 }
             }
         } catch (Exception e) { //로그인 멤버 찾아오다가 오류
@@ -291,18 +289,15 @@ public class MyPageController {
             memMe = myPageService.findById(myId); //-> 여기가 팔로워
             memYou = myPageService.findByNickname(yourNickname);
             if(memMe==null || memYou==null) {
-//                log.info("follow; null Object input error!");
                 return new ResponseEntity<>(0, HttpStatus.NOT_FOUND); //해당 유저 찾을 수 없으면 안 됨
             }
             if(memMe==memYou) {
-//                log.info("follow; same Object cannot have relationship!");
                 return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //팔로우==팔로잉은 안 됨
             }
 
             //2. id 뽑아서, 디비에 관계 저장
             //이미 있는 관계는 패스
             if( followService.existRelation(memMe.getNum(), memYou.getNum()) > 0 ) { //팔로워 팔로잉
-//                log.info("follow; Already existed relationship!");
                 return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //이미 있는 관계가 또 들어오면 무시
             }
             //이미 있는 관계가 아니면 수행하기
@@ -313,7 +308,6 @@ public class MyPageController {
             e.printStackTrace(); //예상치 못한 다중 테이블 참조 오류를 발생
             return new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-//        log.info("follow making; GOODDDD!");
         return new ResponseEntity<>(1, HttpStatus.OK); //성공!
     }
     //팔로우 취소하기

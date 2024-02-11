@@ -48,7 +48,6 @@ public class MemberServiceImpl implements MemberService {
 
         Member resultMember = memberRepository.save(signupMember);
 
-//        Member member = memberRepository.save(req.toEntity(encoder.encode(req.getPassword())));
         return resultMember;
     }
 
@@ -59,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         Member member = optionalMember.get();
-        if(!member.getPassword().equals(password)) { //인코딩된 패스워드로 비교하지 않아도 돠는 거냐?
+        if(!member.getPassword().equals(password)) {
             return null;
         }
 

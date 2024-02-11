@@ -13,10 +13,10 @@ import site.gongtong.review.model.Review;
 import java.util.List;
 
 @Repository
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
 
-    private JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Autowired
     public MyPageCustomRepositoryImpl(EntityManager entityManager) {
