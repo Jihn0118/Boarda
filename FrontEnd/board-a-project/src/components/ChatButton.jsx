@@ -12,6 +12,7 @@ const StyledChattingButton = styled(Chat)`
     bottom: 1rem;
     width: 2rem;
     height: 2rem;
+    z-index: 2;
   }
 `;
 
