@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/userState";
 import boardaLogo from "../assets/images/boardaLogo.png"
-import Alarm from "./alarm/Alarm";
+import Alarm from "./Alarm"
 
 
 // 헤더 - mui paper로 다시 작업중입니다.
