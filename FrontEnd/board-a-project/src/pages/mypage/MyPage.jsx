@@ -12,6 +12,7 @@ import MypageHeader from "../../components/MypageHeader";
 import { Outlet } from "react-router-dom";
 import ReviewRegistModal from "./ReviewRegistModal";
 
+
 // 마이페이지 -> 로그인 한 유저가 접근하면 내 마이페이지로
 // 타인 프로필을 클릭했으면 타인 피드로
 // :userId 파라미터 이용해서 판단할 것

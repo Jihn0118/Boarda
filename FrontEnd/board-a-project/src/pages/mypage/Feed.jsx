@@ -4,15 +4,11 @@ import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import reviewAPI from "../../api/reviewAPI";
 import styled from "@emotion/styled";
 
-
-
 const FeedItem = styled.img`
-&:hover {
-  cursor: pointer;
-}
-
-`
-
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default function Feed() {
   const [feeds, setFeeds] = useState([]); // 피드 정보 백에서 받아와서 뿌리기
@@ -36,6 +32,7 @@ export default function Feed() {
       }
     };
     fetchData();
+    // 피드상세 -> 뒤로가기로 나온 경우
     if (location.pathname.endsWith("d")) {
       setShowDetail(false);
     }
@@ -50,6 +47,11 @@ export default function Feed() {
 
   // console.log(feeds);
 
+  // 피드 상세
+  const Detail = styled(Outlet)`
+    text-align: center;
+    margin: auto;
+  `;
   return (
     <>
       {!showDetail && (
@@ -75,7 +77,7 @@ export default function Feed() {
           })}
         </Grid>
       )}
-      {showDetail && <Outlet context={feedDetailInfo} />}
+      {showDetail && <Detail context={feedDetailInfo} />}
     </>
   );
 }
