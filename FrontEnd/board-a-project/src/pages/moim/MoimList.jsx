@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Modal from "react-modal";
 import MoimDetailModal from './MoimDetailModal';
 import MoimMakeModal from './MoimMakeModal';
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from "@mui/material/Pagination";
 
 Modal.setAppElement("#root");
 
@@ -40,11 +40,6 @@ const MoimList = () => {
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const itemsCountPerPage = 2;
-
-  // const getMoimListData = async () => {
-  //   const data = await getMoimList(location, sort);
-  //   setMoimList(data);
-  // };
 
   const getMoimListData = async (selectedLocation) => {
     const locationToUse = selectedLocation ? selectedLocation : location;
@@ -95,8 +90,6 @@ const MoimList = () => {
 
   const currentMoimList = moimList.slice((activePage - 1) * itemsCountPerPage, activePage * itemsCountPerPage);
 
-  
-
   useEffect(() => {
     getMoimListData();
     if (location2.state?.updated){
@@ -108,8 +101,9 @@ const MoimList = () => {
     setTotalItemsCount(moimList.length);
   }, [moimList]);
 
-
-  
+  useEffect(() => {
+    window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }, [location2]); 
   
   return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
