@@ -10,7 +10,6 @@ import site.gongtong.member.model.Member;
 import site.gongtong.moim.model.Moim;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 @EntityListeners(AuditingEntityListener.class)
 public class Review {
     @Id
@@ -51,5 +49,5 @@ public class Review {
     private Cafe cafe;
 
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
-    private List<Image> images = new ArrayList<>();
+    private List<Image> images;
 }

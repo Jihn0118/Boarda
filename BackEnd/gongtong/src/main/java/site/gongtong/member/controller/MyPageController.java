@@ -48,7 +48,7 @@ public class MyPageController {
         ReviewDto reviewDto = new ReviewDto();
 
         //리뷰 리스트
-        List<Review> reviews = null;
+        List<Review> reviews;
 
         try {
             dbMember = memberDetailsService.loadUserByUsername(id);
@@ -60,16 +60,19 @@ public class MyPageController {
                 //리스트 뽑기
                 reviews = myPageService.getReviewListByNum(myPageService.idToNum(id));
 
+
                 for(int i = 0; i< reviews.size(); i++){
                     log.info(reviews.get(i).toString());
                 }
+
+                reviewDto.setReviews(reviews);
             }
         } catch (Exception e) { //로그인 멤버 찾아오다가 오류
             e.printStackTrace();
-            return new ResponseEntity<ReviewDto>((ReviewDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>((ReviewDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<ReviewDto>(reviewDto, HttpStatus.OK);
+        return new ResponseEntity<>(reviewDto, HttpStatus.OK);
     }
 
     public static Member mapToMember(MemberDetails dbMember, boolean issameId) {

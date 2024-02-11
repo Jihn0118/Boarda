@@ -38,9 +38,12 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     public List<Review> findAllReviews(int user_num) {
         QReview review = QReview.review;
 
+        System.out.println("repo usernum: "+ user_num);
+
         return jpaQueryFactory
                 .selectFrom(review)
-                .where(review.id.eq(user_num))
+                .where(review.member.num.eq(user_num)
+                        .and(review.isRemoved.eq(false)))
                 .fetch();
     }
 

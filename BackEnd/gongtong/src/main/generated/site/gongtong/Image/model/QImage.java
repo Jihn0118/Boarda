@@ -28,6 +28,8 @@ public class QImage extends EntityPathBase<Image> {
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
+    public final site.gongtong.member.model.QMember member;
+
     public final StringPath name = createString("name");
 
     public final site.gongtong.review.model.QReview review;
@@ -51,6 +53,7 @@ public class QImage extends EntityPathBase<Image> {
     public QImage(Class<? extends Image> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.article = inits.isInitialized("article") ? new site.gongtong.article.model.QArticle(forProperty("article")) : null;
+        this.member = inits.isInitialized("member") ? new site.gongtong.member.model.QMember(forProperty("member")) : null;
         this.review = inits.isInitialized("review") ? new site.gongtong.review.model.QReview(forProperty("review"), inits.get("review")) : null;
     }
 

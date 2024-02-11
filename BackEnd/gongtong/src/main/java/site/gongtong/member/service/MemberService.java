@@ -4,18 +4,26 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import site.gongtong.Image.model.Image;
+import site.gongtong.Image.repository.ImageRepository;
 import site.gongtong.member.dto.SignUpRequest;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.model.MemberDto;
 import site.gongtong.member.repository.MemberRepository;
+import site.gongtong.s3.FileFolder;
+import site.gongtong.s3.FileService;
+
 
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class MemberService {
-    MemberRepository memberRepository;
-    PasswordEncoder encoder;
+    private final MemberRepository memberRepository;
+    private final ImageRepository imageRepository;
+    private final PasswordEncoder encoder;
+    private final FileService fileService;
 
     public boolean canUseId(String id) {
         return !memberRepository.existsById(id);
@@ -25,9 +33,23 @@ public class MemberService {
         return !memberRepository.existsByNickname(nickname);
     }
 
-    public Member signup(SignUpRequest req) {
-        Member member = memberRepository.save(req.toEntity(encoder.encode(req.getPassword())));
-        return member;
+    public Member signup(SignUpRequest req, MultipartFile file) {
+
+        String str = fileService.uploadFile(file, FileFolder.MEMBER_IMAGES);
+
+        Member signupMember = Member.builder()
+                .id(req.getId())
+                .password(encoder.encode(req.getPassword()))
+                .nickname(req.getNickname())
+                .birth(req.getBirth())
+                .gender(req.getGender())
+                .profileImage(str)
+                .build();
+
+        Member resultMember = memberRepository.save(signupMember);
+
+//        Member member = memberRepository.save(req.toEntity(encoder.encode(req.getPassword())));
+        return resultMember;
     }
 
     public Member login(String id, String password) {

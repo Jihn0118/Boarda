@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import site.gongtong.member.dto.LoginRequest;
 import site.gongtong.member.dto.SignUpRequest;
 import site.gongtong.member.model.Member;
@@ -80,7 +81,8 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest signUpRequest) { //sns x
+    public ResponseEntity<String> signUp(@RequestPart(name = "signupValue") SignUpRequest signUpRequest,
+                                         @RequestPart(name = "image", required = false) MultipartFile file) {
 
         Member savedMember = null;
         ResponseEntity<String> response = null;
@@ -99,18 +101,11 @@ public class MemberController {
                     .body("사용할 수 없는 닉네임입니다");
             return response;
         }
-        // 3 password와 passwordCheck가 같은지 체크
-        if(!signUpRequest.getPassword().equals(signUpRequest.getPasswordCheck())) { //다르면 걍 리턴
-            response = ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body("비밀번호와 비밀번호 확인이 일치하지 않습니다");
-            return response;
-        }
-
 
         //위의 내용 거치고 옴
         try {
-            savedMember = memberService.signup(signUpRequest); //내용 db에 세이브 (서비스 단에서 비번 인코딩함)
+            //내용 db에 세이브 (서비스 단에서 비번 인코딩함)
+            savedMember = memberService.signup(signUpRequest, file);
 
             if (savedMember.getNum() > 0) {
                 response = ResponseEntity

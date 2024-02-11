@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import site.gongtong.article.model.Article;
+import site.gongtong.member.model.Member;
 import site.gongtong.review.model.Review;
 
 @Entity
@@ -22,7 +23,7 @@ public class Image {
 
     private String name;
 
-    private Character flag;     // R 리뷰, A 게시글
+    private Character flag;     // R 리뷰, A 게시글, P 프사
 
     @ManyToOne
     @JoinColumn(name = "article_id")
@@ -33,5 +34,10 @@ public class Image {
     @JoinColumn(name = "review_id")
     @JsonIgnore // 양방향 참조 JSON 직렬화 과정에서 무한 순환 참조 발생 방지
     private Review review;
+
+    @OneToOne
+    @JoinColumn(name = "member_num")
+    @JsonIgnore // 양방향 참조 JSON 직렬화 과정에서 무한 순환 참조 발생 방지
+    private Member member;
 
 }

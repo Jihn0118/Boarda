@@ -2,6 +2,7 @@ package site.gongtong.member.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import site.gongtong.Image.model.Image;
 
 @Entity
 @Getter
@@ -28,7 +29,7 @@ public class Member {
 
     private Character gender; //'W' 또는 'M'
 
-    private String profileImage;
+    private String profileImage; //주소값
 
 
 }

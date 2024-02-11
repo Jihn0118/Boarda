@@ -142,7 +142,6 @@ public class SecurityConfig {
     ) {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager);
         // "/user/login" 엔드포인트로 들어오는 요청을 CustomAuthenticationFilter에서 처리하도록 지정한다.
-//        customAuthenticationFilter.setFilterProcessesUrl("/user/login"); //폼 로그인 안 씀
         customAuthenticationFilter.setAuthenticationSuccessHandler((AuthenticationSuccessHandler) customAuthSuccessHandler);    // '인증' 성공 시 해당 핸들러로 처리를 전가한다.
         customAuthenticationFilter.setAuthenticationFailureHandler((AuthenticationFailureHandler) customAuthFailureHandler);    // '인증' 실패 시 해당 핸들러로 처리를 전가한다.
         customAuthenticationFilter.afterPropertiesSet();
@@ -166,7 +165,6 @@ public class SecurityConfig {
      */
     @Bean
     public CustomAuthenticationProvider customAuthenticationProvider(MemberDetailsService memberDetailsService) {
-//        return new CustomAuthenticationProvider(memberDetailsService);
         return new CustomAuthenticationProvider(null);
     }
 
@@ -196,7 +194,6 @@ public class SecurityConfig {
      */
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter(CustomMemberDetailsService memberDetailsService) {
-//        return new JwtAuthorizationFilter(memberDetailsService);
         return new JwtAuthorizationFilter(null);
     }
 
@@ -219,64 +216,6 @@ public class SecurityConfig {
         );
     }
 
-
-//    boolean securityDebug;
-//    //    private final JwtTokenProvider jwtTokenProvider;
-//    @Bean
-//    SecurityFilterChain configure(HttpSecurity http) throws Exception{
-//
-//        //필터 관련
-//        AuthenticationManagerBuilder shareObject = http.getSharedObject(AuthenticationManagerBuilder.class); //생성된 토큰으로 인증 task 담당하는 곳 - 경비원 건설업자?
-//        AuthenticationManager authenticationManager = shareObject.build(); //'사용자 인증 처리'하는 객체가 생성되어 반환 - 경비원 고용
-//        http.authenticationManager(authenticationManager);
-//
-//        http
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .formLogin(AbstractHttpConfigurer::disable)
-//                //삭제x -> 권한에 따라 들어갈 수 있는 페이지, 못 들어가는 페이지 구분
-////                .authorizeHttpRequests(authorize -> authorize
-//////                                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-////                                .requestMatchers("/member/**", "/mypage/**").permitAll()
-//////                                .requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN") //행동에 대해서도 권한설정 가능
-//////                                .requestMatchers("/mem/**").authenticated()
-////                                .anyRequest().permitAll()
-////                )
-//                //필터 관련 (addFilter, header)
-//                .addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.Class)
-//                .addFilterAt(
-//                        this.abstractAuthenticationProcessingFilter(authenticationManager),
-//                        UsernamePasswordAuthenticationFilter.class //이 필터 있는 자리에 추가
-//                )
-//                .headers(
-//                        headersConfig -> headersConfig
-//                                .frameOptions(
-//                                        HeadersConfigurer.FrameOptionsConfig::sameOrigin //같은 베이스는 허용
-//                                )
-//                                .contentSecurityPolicy(
-//                                        policyConfig -> policyConfig
-//                                                .policyDirectives(
-//                                                        "script-src 'self'; " //스크립트는 동일한 출처에서만 로딩 가능
-//                                                                + "img-src 'self'; " //이미지는 동일한 출처에서만 로딩 가능
-//                                                                + "font-src 'self' data:; " //폰트는 동일한 출처 및 data: 프로토콜에서 로딩 가능
-//                                                                + "default-src 'self'; " //그 외 자원은 동일한 출처에서만 로딩 가능
-//                                                                + "frame-src 'self'" //프레임은 동일한 출처에서만 로딩 가능
-//                                                )
-//                                )
-//                );
-//                .sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-////                // JwtAuthenticationFilter를 UsernamePasswordAuthenticationfilter 전에 넣기
-//        return http.build();
-//    }
-//
-//    //필터 관련 (로그인 처리 제일 전면부)
-//    private AbstractAuthenticationProcessingFilter abstractAuthenticationProcessingFilter(final AuthenticationManager authenticationManager) {
-//        return new LoginAuthenticationFilter(
-////                "/member/login",
-//                "/login",
-//                authenticationManager
-//        );
-//    }
 
     @Bean
     PasswordEncoder passwordEncoder() {

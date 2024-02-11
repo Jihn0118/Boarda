@@ -15,7 +15,7 @@ public class SignUpRequest { //회원가입 리퀘스트용
 
     @NotNull(message = "사용할 비밀번호를 입력해 주세요.")
     private String password;
-    private String passwordCheck;
+//    private String passwordCheck;
 
     @NotNull(message = "사용할 닉네임을 입력해 주세요.")
     private String nickname;
@@ -26,17 +26,6 @@ public class SignUpRequest { //회원가입 리퀘스트용
     @NotNull(message = "성별을 입력해 주세요.")
     private Character gender;
 
-    private String profile_image;
+//    private String profile_image;
 
-    //비밀번호 암호화
-    public Member toEntity(String encodedPassword) {
-        return Member.builder()
-                .id(this.id)
-                .password(encodedPassword)
-                .nickname(this.nickname)
-                .birth(this.birth)
-                .gender(this.gender)
-                .profileImage(this.profile_image)
-                .build();
-    }
 }
