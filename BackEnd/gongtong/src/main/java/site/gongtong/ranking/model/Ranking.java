@@ -45,11 +45,11 @@ public class Ranking {
     @JoinColumn(name="tag_id")
     private Tag tag;
 
-//    @ManyToOne
-//    @JoinColumn(name = "cafe_id")
-//    private Cafe cafe;
+    @ManyToOne
+    @JoinColumn(name = "cafe_id")
+    private Cafe cafe;
 
-    @Column(name = "cafe_id")
-    private Long cafeId;
+//    @Column(name = "cafe_id")
+//    private Long cafeId;
 
 }

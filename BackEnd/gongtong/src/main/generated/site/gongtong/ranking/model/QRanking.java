@@ -22,7 +22,7 @@ public class QRanking extends EntityPathBase<Ranking> {
 
     public static final QRanking ranking = new QRanking("ranking");
 
-    public final NumberPath<Long> cafeId = createNumber("cafeId", Long.class);
+    public final site.gongtong.cafe.model.QCafe cafe;
 
     public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
@@ -56,6 +56,7 @@ public class QRanking extends EntityPathBase<Ranking> {
 
     public QRanking(Class<? extends Ranking> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.cafe = inits.isInitialized("cafe") ? new site.gongtong.cafe.model.QCafe(forProperty("cafe")) : null;
         this.game = inits.isInitialized("game") ? new site.gongtong.boardgame.model.QBoardGame(forProperty("game")) : null;
         this.review = inits.isInitialized("review") ? new site.gongtong.review.model.QReview(forProperty("review"), inits.get("review")) : null;
         this.tag = inits.isInitialized("tag") ? new site.gongtong.review.model.QTag(forProperty("tag"), inits.get("tag")) : null;
