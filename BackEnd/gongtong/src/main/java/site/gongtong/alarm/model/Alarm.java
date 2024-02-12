@@ -29,8 +29,7 @@ public class Alarm {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    private LocalDateTime readAt;
+    private Boolean isRead;
 
     @ManyToOne
     @JoinColumn(name = "member_num")

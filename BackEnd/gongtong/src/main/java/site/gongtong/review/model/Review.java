@@ -19,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 @EntityListeners(AuditingEntityListener.class)
 public class Review {
     @Id
@@ -51,5 +50,5 @@ public class Review {
     private Cafe cafe;
 
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
-    private List<Image> images = new ArrayList<>();
+    private List<Image> images;
 }

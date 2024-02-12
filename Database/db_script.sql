@@ -16,15 +16,15 @@ CREATE TABLE `member` (
 
 #DROP TABLE IF EXISTS `article`;
 
-CREATE TABLE `article` (
-	`id`	int	PRIMARY KEY auto_increment,
-	`type`	tinyint	NULL,
-	`title`	varchar(45)	NULL,
-	`content`	text	NULL,
-	`created_at`	timestamp DEFAULT CURRENT_TIMESTAMP ,
-	`status`	char(1)	NULL,
-	`member_id`	int	NOT NULL
-);
+-- CREATE TABLE `article` (
+-- 	`id`	int	PRIMARY KEY auto_increment,
+-- 	`type`	tinyint	NULL,
+-- 	`title`	varchar(45)	NULL,
+-- 	`content`	text	NULL,
+-- 	`created_at`	timestamp DEFAULT CURRENT_TIMESTAMP ,
+-- 	`status`	char(1)	NULL,
+-- 	`member_id`	int	NOT NULL
+-- );
 
 #DROP TABLE IF EXISTS `boardgame`;
 
@@ -139,7 +139,7 @@ CREATE TABLE `alarm` (
 	`link` VARCHAR(255) NULL,
 	`content`	text	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
-	`read_at`	timestamp,
+	`is_read`	tinyint NOT NULL,
 	`member_num`	int	NOT NULL
 );
 

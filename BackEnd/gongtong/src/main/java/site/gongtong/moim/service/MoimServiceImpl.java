@@ -3,9 +3,12 @@ package site.gongtong.moim.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import site.gongtong.alarm.model.Alarm;
+import site.gongtong.alarm.repository.AlarmCustomRepository;
+import site.gongtong.alarm.repository.AlarmRepository;
+import site.gongtong.alarm.service.AlarmService;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.MemberCustomRepository;
-import site.gongtong.member.repository.MemberRepository;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.MoimMember;
 import site.gongtong.moim.repository.MoimCustomRepository;
@@ -24,16 +27,15 @@ public class MoimServiceImpl implements MoimService {
     private final MoimMemberRepository moimMemberRepository;
     private final MoimCustomRepository moimCustomRepository;
     private final MoimMemberCustomRepository moimMemberCustomRepository;
-    private final MemberRepository memberRepository;
     private final MemberCustomRepository memberCustomRepository;
+    private final AlarmRepository alarmRepository;
+    private final AlarmService alarmService;
 
     @Override
     public List<Moim> getDeadlineList() {
         return moimCustomRepository.findAllDeadLine();
     }
 
-    // 모임멤버 테이블에서 내 userNum 검색해서 모임id 리스트 가져오고
-    // 가져온 걸로 모임 레포 뒤져서 진행중인 모임 있으면 Integer 리턴
     @Override
     public Integer checkRoom(int userNum) {
         return moimMemberCustomRepository.countMoimsByMemberIdAndStatus(userNum);
@@ -58,16 +60,27 @@ public class MoimServiceImpl implements MoimService {
                     .build();
 
             moimMemberRepository.save(saveMoimMember);
+
+            Alarm alarm = Alarm.builder()
+                    .link("방금 만든 방의 상세 페이지 화면 링크")
+                    .member(member)
+                    .isRead(false)
+                    .content("모임 방 생성 완료!")
+                    .build();
+
+            alarmRepository.save(alarm);
+
             return 0;
         } else {
             System.out.println("에러");
             return 2;
-            // exception 던져서 에외 화면 나오게?
         }
     }
 
     @Override
     public Integer joinRoom(int moimId, String memberId) {
+        boolean isFull = false;
+
         int count = moimMemberCustomRepository.countMoimMemberByMoimId(moimId);
 
         Moim moim = moimCustomRepository.findById(moimId);
@@ -88,7 +101,7 @@ public class MoimServiceImpl implements MoimService {
             return 4;
         } else if (count + 1 == moim.getNumber()) {
             moim.setStatus('S');
-            // ToDo: 꽉 찼으니 모임 멤버 모두에게 알림 보내는 로직도 추가해야 함
+            isFull = true;
         }
         moim.setCurrentNumber(count + 1);
         moimRepository.save(moim);
@@ -100,13 +113,36 @@ public class MoimServiceImpl implements MoimService {
 
         moimMemberRepository.save(addMoimMember);
 
+        if(isFull){     // 모임이 꽉 찼으니 모임 멤버들에게 알림 생성
+            List<MoimMember> moimMemberList = moimMemberCustomRepository.findMoimMembersByMoim(moim);
+            List<Alarm> alarms = new ArrayList<>();
+
+            moimMemberList.add(addMoimMember);
+
+            for (MoimMember mm: moimMemberList) {
+                Member member = mm.getMember();
+
+                Alarm addAlarm = Alarm.builder()
+                        .link("다 모인 방의 상세 페이지 화면 링크")
+                        .member(member)
+                        .isRead(false)
+                        .content("참여중인 보드게임에 사람들이 다 모였어요!")
+                        .build();
+
+                alarms.add(addAlarm);
+
+                // SSE 알림
+                alarmService.alarmMessage(member.getNum());
+            }
+            alarmRepository.saveAll(alarms);
+        }
         return 0;
     }
 
     @Override
     public List<Moim> getSortedMoimList(String location, int sorting) {
 
-        List<Moim> list = new ArrayList<>();
+        List<Moim> list;
 
         // 마감임박순 정렬
         if (sorting == 2) {           // 마감임박순 정렬

@@ -21,7 +21,7 @@ public class QMoim extends EntityPathBase<Moim> {
 
     public final StringPath content = createString("content");
 
-    public final DateTimePath<java.time.LocalDateTime> createAt = createDateTime("createAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
     public final NumberPath<Integer> currentNumber = createNumber("currentNumber", Integer.class);
 

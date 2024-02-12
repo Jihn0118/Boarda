@@ -62,7 +62,7 @@ public class MoimController {
                 .build();
 
         int result = moimService.createRoom(moim, userNum);
-        // 모임 컨디션 객체를 열어서 user_num 이랑 모임 정보를 가지고 모임방 만들고, 모임멤버 만들어서 연결
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
