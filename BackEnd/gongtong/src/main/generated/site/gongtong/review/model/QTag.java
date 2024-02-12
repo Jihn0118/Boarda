@@ -22,6 +22,8 @@ public class QTag extends EntityPathBase<Tag> {
 
     public static final QTag tag = new QTag("tag");
 
+    public final site.gongtong.cafe.model.QCafe cafe;
+
     public final site.gongtong.boardgame.model.QBoardGame game;
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -46,6 +48,7 @@ public class QTag extends EntityPathBase<Tag> {
 
     public QTag(Class<? extends Tag> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.cafe = inits.isInitialized("cafe") ? new site.gongtong.cafe.model.QCafe(forProperty("cafe")) : null;
         this.game = inits.isInitialized("game") ? new site.gongtong.boardgame.model.QBoardGame(forProperty("game")) : null;
         this.review = inits.isInitialized("review") ? new QReview(forProperty("review"), inits.get("review")) : null;
     }

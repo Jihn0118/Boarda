@@ -1,22 +1,25 @@
-package site.gongtong.cafe.model;
+package site.gongtong.map.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
-import site.gongtong.map.model.MapDto;
+import site.gongtong.cafe.model.Cafe;
 
-@Entity(name = "cafe")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Cafe {
+public class CafeMap {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String brand;       //레드버튼, 히어로, 홈즈앤루팡
+    private String brand;       // 레드버튼, 히어로, 홈즈앤루팡
 
     private String branch;      // 강남점, **점, ...
 
@@ -33,8 +36,8 @@ public class Cafe {
     private String image;       // 카페 이미지
 
     // MapDto로부터 CafeMap 객체를 생성하는 메소드
-    public static Cafe fromMapDto(MapDto mapDto) {
-        return Cafe.builder()
+    public static CafeMap fromMapDto(MapDto mapDto) {
+        return CafeMap.builder()
                 .brand(mapDto.getBrand())
                 .branch(mapDto.getBranch())
                 .location(mapDto.getAddress_name())
@@ -44,5 +47,5 @@ public class Cafe {
                 .image(mapDto.getPlace_url())
                 .build();
     }
-
 }
+
