@@ -19,6 +19,7 @@ export default function FollowBlock() {
       }
     };
     fetchData();
+    console.log(res.data)
   }, [loginUser.id]);
 
   return <div>{follow.id}</div>;

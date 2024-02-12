@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useParams } from "react-router-dom";
 import { moimAPI } from "../../api/moimAPI";
+import ReviewRegistModal from "./ReviewRegistModal";
 
 export default function GroupHistory() {
   const [history, setHistory] = useState([]);
@@ -62,7 +63,6 @@ export default function GroupHistory() {
                 {/* Status 에 따라서 바뀌도록 수정해야 */}
                 <button className="bg-blue-200">피드남기기</button>
               </TableCell>
-
             </TableRow>
           ))}
         </TableBody>
@@ -70,5 +70,10 @@ export default function GroupHistory() {
     </TableContainer>
   );
 
-  return table;
+  return (
+    <>
+      <ReviewRegistModal />
+      {table};
+    </>
+  );
 }
