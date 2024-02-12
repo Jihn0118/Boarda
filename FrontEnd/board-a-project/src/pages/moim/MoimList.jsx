@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { getMoimList, checkRoom } from '../../api/moimAPI';
-import { moimListState, locationState } from '../../recoil/atoms/moimState';
-import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { getMoimList, checkRoom } from "../../api/moimAPI";
+import { moimListState, locationState } from "../../recoil/atoms/moimState";
+import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 import Modal from "react-modal";
-import MoimDetailModal from './MoimDetailModal';
-import MoimMakeModal from './MoimMakeModal';
-import Pagination from '@material-ui/lab/Pagination';
+import MoimDetailModal from "./MoimDetailModal";
+import MoimMakeModal from "./MoimMakeModal";
+import Pagination from "@mui/material/Pagination";
 
 Modal.setAppElement("#root");
 
@@ -23,12 +23,10 @@ const StyledButton = styled.button`
   }
 `;
 
-
-
 const MoimList = () => {
   const [moimList, setMoimList] = useRecoilState(moimListState);
   const [location, setLocation] = useRecoilState(locationState);
-  const [sort, setSort] = useState('1');
+  const [sort, setSort] = useState("1");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const location2 = useLocation();
 
@@ -40,11 +38,6 @@ const MoimList = () => {
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const itemsCountPerPage = 2;
-
-  // const getMoimListData = async () => {
-  //   const data = await getMoimList(location, sort);
-  //   setMoimList(data);
-  // };
 
   const getMoimListData = async (selectedLocation) => {
     const locationToUse = selectedLocation ? selectedLocation : location;
@@ -65,7 +58,7 @@ const MoimList = () => {
       setSelectedMoimId(moimId);
       setDetailModalIsOpen(true);
     } else {
-      console.log('Modal is already open');
+      console.log("Modal is already open");
     }
   };
 
@@ -83,7 +76,6 @@ const MoimList = () => {
     }
   };
 
-
   const closeMakeModal = () => {
     setMakeModalIsOpen(false);
   };
@@ -92,15 +84,15 @@ const MoimList = () => {
     setActivePage(pageNumber);
   };
 
-
-  const currentMoimList = moimList.slice((activePage - 1) * itemsCountPerPage, activePage * itemsCountPerPage);
-
-  
+  const currentMoimList = moimList.slice(
+    (activePage - 1) * itemsCountPerPage,
+    activePage * itemsCountPerPage
+  );
 
   useEffect(() => {
     getMoimListData();
-    if (location2.state?.updated){
-      getMoimListData(); 
+    if (location2.state?.updated) {
+      getMoimListData();
     }
   }, [location2, location, sort]); // location 값이 변경될 때마다 API 요청
 
@@ -109,17 +101,17 @@ const MoimList = () => {
   }, [moimList]);
 
   useEffect(() => {
-    window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
-  }, [location2]); 
-  
+    window.scroll({ top: document.body.scrollHeight, behavior: "smooth" });
+  }, [location2]);
+
   return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="w-3/4 p-4 bg-white rounded shadow">
         <div className="flex justify-between mb-4">
           <label>
             Location:
-            <select 
-              value={location} 
+            <select
+              value={location}
               onChange={(e) => handleLocationChange(e.target.value)}
               className="ml-2 p-1 border rounded"
             >
@@ -130,8 +122,8 @@ const MoimList = () => {
           </label>
           <label>
             정렬:
-            <select 
-              value={sort} 
+            <select
+              value={sort}
               onChange={(e) => handleSortChange(e.target.value)}
               className="ml-2 p-1 border rounded"
             >
@@ -141,64 +133,94 @@ const MoimList = () => {
             </select>
           </label>
         </div>
-        <ul className="space-y-2">
+        {/* <ul className="space-y-2">
           {currentMoimList.map((moim) => (
             <li key={moim.id} className="border p-2 rounded">
               <button 
                 onClick={() => openDetailModal(moim.id)}
                 className="text-blue-500 hover:underline"
               >
-                {moim.id} {moim.title} {moim.datetime} {moim.currentNumber}/{moim.number}
+                {moim.id} {moim.title} {moim.datetime.split("T")[0]} {moim.currentNumber}/{moim.number}
               </button>
             </li>
           ))}
-        </ul>
+        </ul> */}
+        <table className="table-auto w-full text-left border-collapse border border-gray-300">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 px-4 py-2">번호</th>
+              <th className="border border-gray-300 px-4 py-2">제목</th>
+              <th className="border border-gray-300 px-4 py-2">날짜</th>
+              <th className="border border-gray-300 px-4 py-2">인원</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentMoimList.map((moim) => (
+              <tr
+                key={moim.id}
+                onClick={() => openDetailModal(moim.id)}
+                className="text-blue-500 hover:underline cursor-pointer"
+              >
+                <td className="border border-gray-300 px-4 py-2">{moim.id}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {moim.title}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {moim.datetime.split("T")[0]}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {moim.currentNumber}/{moim.number}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {selectedMoimId && (
+          <MoimDetailModal
+            moimId={selectedMoimId}
+            isOpen={detailModalIsOpen}
+            onRequestClose={closeDetailModal}
+          />
+        )}
 
-      {selectedMoimId && (
-        <MoimDetailModal
-          moimId={selectedMoimId}
-          isOpen={detailModalIsOpen}
-          onRequestClose={closeDetailModal}
-        />
-      )}
-
-      <div className="flex justify-center">
-        <Pagination
-          count={Math.ceil(totalItemsCount / itemsCountPerPage)}
-          page={activePage}
-          onChange={handlePageChange}
-        />
-      </div>
-
-      <div>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={() => setModalIsOpen(false)}
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.5)'
-            },
-            content: {
-              color: 'lightsteelblue'
-            }
-          }}
-        >
-          <h2>알림</h2>
-          <p>이미 참여 중인 모임이 있습니다!</p>
-          <StyledButton onClick={() => setModalIsOpen(false)}>확인</StyledButton>
-        </Modal>
-        <div className="flex justify-end">
-          <StyledButton onClick={() => openMakeModal()}>글쓰기</StyledButton>
+        <div className="flex justify-center">
+          <Pagination
+            count={Math.ceil(totalItemsCount / itemsCountPerPage)}
+            page={activePage}
+            onChange={handlePageChange}
+          />
         </div>
-        <MoimMakeModal
-        isOpen={makeModalIsOpen}
-        onRequestClose={closeMakeModal}
-        />
+
+        <div>
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={() => setModalIsOpen(false)}
+            style={{
+              overlay: {
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+              },
+              content: {
+                color: "lightsteelblue",
+              },
+            }}
+          >
+            <h2>알림</h2>
+            <p>이미 참여 중인 모임이 있습니다!</p>
+            <StyledButton onClick={() => setModalIsOpen(false)}>
+              확인
+            </StyledButton>
+          </Modal>
+          <div className="flex justify-end">
+            <StyledButton onClick={() => openMakeModal()}>글쓰기</StyledButton>
+          </div>
+          <MoimMakeModal
+            isOpen={makeModalIsOpen}
+            onRequestClose={closeMakeModal}
+          />
+        </div>
       </div>
-    </div>
     </div>
   );
 };
-
 
 export default MoimList;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import myPageAPI from "../../api/mypageAPI";
 import { useRecoilValue } from "recoil";
 import { loginUserState } from "../../recoil/atoms/userState";
 import Table from "@mui/material/Table";
@@ -9,6 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { moimAPI } from "../../api/moimAPI";
 
 export default function GroupNow() {
   const loginUser = useRecoilValue(loginUserState);
@@ -17,17 +17,20 @@ export default function GroupNow() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await myPageAPI.getParticipatingMoim(loginUser.id);
+        // const res = await moimAPI.getParticipatingMoim(loginUser.id);
+        const res = await moimAPI.getParticipatingMoim(2);
         setParticipatingGroup(res.data);
+        console.log(res.data);
       } catch (e) {
         console.log(e);
       }
     };
+    fetchData();
   }, [loginUser.id]);
 
   // mui table을 이용해서 구현
-  // row 값을 participatingGroup 객체 그대로
-  const row = participatingGroup;
+  // fetch한 값을 그대로 테이블로 -> 객체는 log찍어서 확인
+
 
   // 참여중인 그룹 표로 보여주기
   const table = (
@@ -43,16 +46,16 @@ export default function GroupNow() {
         </TableHead>
         <TableBody>
           <TableRow
-            key={row.name}
+            key={participatingGroup.id}
             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
           >
             <TableCell component="th" scope="row">
-              {row.name}
+              {participatingGroup.id}
             </TableCell>
-            <TableCell align="right">{row.calories}</TableCell>
-            <TableCell align="right">{row.fat}</TableCell>
+            <TableCell align="right">{participatingGroup.title}</TableCell>
+            <TableCell align="right">{participatingGroup.number}</TableCell>
             <TableCell align="right">
-              <button className="bg-gray-200">나가기버튼</button>
+              <button className="bg-blue-200">나가기버튼</button>
             </TableCell>
           </TableRow>
         </TableBody>
