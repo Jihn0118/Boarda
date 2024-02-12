@@ -1,6 +1,8 @@
 package site.gongtong.member.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,10 +18,11 @@ import site.gongtong.s3.FileService;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
+@Transactional
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
-    private final ImageRepository imageRepository;
     private final PasswordEncoder encoder;
     private final FileService fileService;
 

@@ -106,7 +106,7 @@ public class MoimCustomRepositoryImpl implements MoimCustomRepository {
                 .join(qMoimMember.moim, qMoim)
                 .where(qMoimMember.member.num.eq(userNum)
                         .and(qMoim.status.eq('P')))
-                .orderBy(qMoim.createAt.desc())
+                .orderBy(qMoim.createdAt.desc()) //필드명 바꿈 create->created
                 .fetchFirst()
                 .getMoim();
     }

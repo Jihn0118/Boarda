@@ -22,15 +22,14 @@ import java.util.List;
 public class MoimServiceImpl implements MoimService {
     private final MoimRepository moimRepository;
     private final MoimMemberRepository moimMemberRepository;
-//    private final MoimCustomRepository moimCustomRepository;
+    private final MoimCustomRepository moimCustomRepository;
     private final MoimMemberCustomRepository moimMemberCustomRepository;
     private final MemberRepository memberRepository;
     private final MemberCustomRepository memberCustomRepository;
 
     @Override
     public List<Moim> getDeadlineList() {
-//        return moimCustomRepository.findAllDeadLine();
-        return moimRepository.findAllDeadLine();
+        return moimCustomRepository.findAllDeadLine();
     }
 
     // 모임멤버 테이블에서 내 userNum 검색해서 모임id 리스트 가져오고
@@ -71,8 +70,7 @@ public class MoimServiceImpl implements MoimService {
     public Integer joinRoom(int moimId, String memberId) {
         int count = moimMemberCustomRepository.countMoimMemberByMoimId(moimId);
 
-//        Moim moim = moimCustomRepository.findById(moimId);
-        Moim moim = moimRepository.findById(moimId);
+        Moim moim = moimCustomRepository.findById(moimId);
 
         Member addMember = memberCustomRepository.findById(memberId);
 
@@ -107,14 +105,12 @@ public class MoimServiceImpl implements MoimService {
 
     @Override
     public List<Moim> getMyMoimList(int userNum) {
-//        return moimCustomRepository.findMoimListByMemberNum(userNum);
-        return moimRepository.findMoimListByMemberNum(userNum);
+        return moimCustomRepository.findMoimListByMemberNum(userNum);
     }
 
     @Override
     public Moim getMyMoim(int userNum) {
-//        return moimCustomRepository.findMoimByMemberNum(userNum);
-        return moimRepository.findMoimByMemberNum(userNum);
+        return moimCustomRepository.findMoimByMemberNum(userNum);
     }
 
     @Override
@@ -122,14 +118,11 @@ public class MoimServiceImpl implements MoimService {
         List<Moim> list;
 
         if (sorting == 2) {          // 마감임박순 정렬
-//            list = moimCustomRepository.findByLocationAndStatusOrderByCount(location);
-            list = moimRepository.findByLocationAndStatusOrderByCount(location);
+            list = moimCustomRepository.findByLocationAndStatusOrderByCount(location);
         } else if (sorting == 3) {   // 모집일시 정렬
-//            list = moimCustomRepository.findByLocationAndStatusOrderByDatetime(location);
-            list = moimRepository.findByLocationAndStatusOrderByDatetime(location);
+            list = moimCustomRepository.findByLocationAndStatusOrderByDatetime(location);
         } else {                    // 최신순 정렬
-//            list = moimCustomRepository.findByLocationAndStatusOrderByIdDesc(location);
-            list = moimRepository.findByLocationAndStatusOrderByIdDesc(location);
+            list = moimCustomRepository.findByLocationAndStatusOrderByIdDesc(location);
         }
 
         return list;

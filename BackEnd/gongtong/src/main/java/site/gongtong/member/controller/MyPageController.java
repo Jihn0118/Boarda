@@ -283,34 +283,6 @@ public class MyPageController {
         log.info("DO FOLLOW or BLOCK!!");
 
         String myId = TokenUtils.getUserIdFromToken(fetchToken(request));
-//        Member memMe;
-//        Member memYou;
-
-//        try {
-//            //1. 아이디, 닉네임 기반 멤버 찾아오기
-//            memMe = myPageService.findById(myId); //-> 여기가 팔로워
-//            memYou = myPageService.findByNickname(yourNickname);
-//            if(memMe==null || memYou==null) {
-//                return new ResponseEntity<>(0, HttpStatus.NOT_FOUND); //해당 유저 찾을 수 없으면 안 됨
-//            }
-//            if(memMe==memYou) {
-//                return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //팔로우==팔로잉은 안 됨
-//            }
-//
-//            //2. id 뽑아서, 디비에 관계 저장
-//            //이미 있는 관계는 패스
-//            if( followService.existRelation(memMe.getNum(), memYou.getNum()) > 0 ) { //팔로워 팔로잉
-//                return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST); //이미 있는 관계가 또 들어오면 무시
-//            }
-//            //이미 있는 관계가 아니면 수행하기
-//            Follow newRelation = followService.save(memMe, flag, memYou);
-//            if (newRelation == null) new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR); //객체 안 만들어짐
-//
-//        } catch (Exception e) {
-//            e.printStackTrace(); //예상치 못한 다중 테이블 참조 오류를 발생
-//            return new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//        return new ResponseEntity<>(1, HttpStatus.OK); //성공!
         int result = followService.doFollow(myId, flag, yourNickname);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

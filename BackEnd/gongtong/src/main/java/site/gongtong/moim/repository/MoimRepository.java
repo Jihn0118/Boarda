@@ -9,5 +9,5 @@ import site.gongtong.moim.model.Moim;
 import java.util.List;
 
 @Repository
-public interface MoimRepository extends JpaRepository<Moim, Integer>, MoimCustomRepository {
+public interface MoimRepository extends JpaRepository<Moim, Integer> {
 }

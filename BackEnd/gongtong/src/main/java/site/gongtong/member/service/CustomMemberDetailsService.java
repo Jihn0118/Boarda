@@ -24,7 +24,6 @@ public class CustomMemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-//    public SecurityMemberDetailsDto loadUserByUsername(String id) throws UsernameNotFoundException {
     public MemberDto loadUserByUsername(String id) throws UsernameNotFoundException {
         //1. memberRepository사용 : id로 유저 정보 받아오기
         Member infoById = memberRepository.findById(id)

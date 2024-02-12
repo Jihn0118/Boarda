@@ -31,7 +31,7 @@ public class CustomAuthFailureHandler implements AuthenticationFailureHandler {
 
         //[2] 발생한 exception에 대해 확인
         if (exception instanceof AuthenticationServiceException) {
-            failMessage ="로그인 정보가 일치하지 않습니다.";
+            failMessage = "로그인 정보가 일치하지 않습니다.";
         } else {
             failMessage = "인증 실패";
         }
@@ -49,12 +49,13 @@ public class CustomAuthFailureHandler implements AuthenticationFailureHandler {
             resultMap.put("memberInfo", null);
             resultMap.put("resultCode", 9999);
             resultMap.put("failMessage", failMessage);
-            jsonObject = new JSONObject(resultMap);
 
+            jsonObject = new JSONObject(resultMap);
             printWriter.println(jsonObject);
-            printWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
-            if(printWriter != null){
+            if (printWriter != null) {
                 printWriter.close();
             }
         }

@@ -50,18 +50,18 @@ public class FollowServiceImpl implements FollowService {
         Member memYou = myPageRepository.findByNickname(yourNickname);
 
         if(memMe == null || memYou == null || memMe == memYou) {
+            System.out.println("nononono MEMBER FOLLOW");
             return 0;
         }
         try {
-            if( followRepository.existRelation(memMe.getNum(), memYou.getNum()) >= 1)
+            if( followRepository.existRelation(memMe.getNum(), memYou.getNum()) >= 1) {
+                System.out.println("ALREADY FOLLOW/BLOCK");
                 return 0;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return 2;
         }
-//        if( followRepository.existRelation(memMe.getNum(), memYou.getNum()) >1) {
-//            return 0;
-//        }
 
         Follow newRelation = followRepository.save(new Follow(memMe, flag, memYou));
         if (newRelation == null){

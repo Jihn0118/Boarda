@@ -36,7 +36,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = (String) token.getCredentials();
 
         // Spring security - UserDetailsService를 통해 DB에서 username으로 사용자 조회
-//        SecurityMemberDetailsDto securityMemberDetailsDto = memberDetailsService.loadUserByUsername(id);
         MemberDetails securityMemberDetailsDto = memberDetailsService.loadUserByUsername(id);
 
         // 대소문자를 구분하는 matches() 메서드로 db와 사용자가 제출한 비밀번호를 비교

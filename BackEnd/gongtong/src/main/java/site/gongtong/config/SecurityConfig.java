@@ -141,8 +141,8 @@ public class SecurityConfig {
     ) {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager);
         // "/user/login" 엔드포인트로 들어오는 요청을 CustomAuthenticationFilter에서 처리하도록 지정한다.
-        customAuthenticationFilter.setAuthenticationSuccessHandler((AuthenticationSuccessHandler) customAuthSuccessHandler);    // '인증' 성공 시 해당 핸들러로 처리를 전가한다.
-        customAuthenticationFilter.setAuthenticationFailureHandler((AuthenticationFailureHandler) customAuthFailureHandler);    // '인증' 실패 시 해당 핸들러로 처리를 전가한다.
+        customAuthenticationFilter.setAuthenticationSuccessHandler(customAuthSuccessHandler);    // '인증' 성공 시 해당 핸들러로 처리를 전가한다.
+        customAuthenticationFilter.setAuthenticationFailureHandler(customAuthFailureHandler);    // '인증' 실패 시 해당 핸들러로 처리를 전가한다.
         customAuthenticationFilter.afterPropertiesSet();
         return customAuthenticationFilter;
     }
@@ -193,7 +193,7 @@ public class SecurityConfig {
      */
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter(CustomMemberDetailsService memberDetailsService) {
-        return new JwtAuthorizationFilter(null);
+        return new JwtAuthorizationFilter();
     }
 
     /**

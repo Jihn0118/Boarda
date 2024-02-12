@@ -1,17 +1,15 @@
 package site.gongtong.member.model;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@RequiredArgsConstructor
 public class MemberDetails implements UserDetails {
 
-    private Member member;
-
-    public MemberDetails(Member member) {
-        this.member = member;
-    }
+    private final Member member;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

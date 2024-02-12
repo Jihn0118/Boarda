@@ -27,9 +27,9 @@ import java.util.List;
  */
 
 @Slf4j
-@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    private final MemberDetailsService memberDetailsService;
+    @Autowired
+    private MemberDetailsService memberDetailsService;
 
     @Override
     protected void doFilterInternal(
@@ -95,6 +95,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     // [STEP.2-4] 사용자 아이디가 존재하는지에 대한 여부 체크
                     if(id != null && !id.equalsIgnoreCase("")) {
                         MemberDetails memberDetails = memberDetailsService.loadUserByUsername(id);
+//                        System.out.println("memberDetails!@!@!@!@!!@!@!@!: "+memberDetails);
                         // 전체 정보(패스워드 제외), 패스워드, 권한 리스트 => 토큰으로 뽑기
                         UsernamePasswordAuthenticationToken authentication
                                 = new UsernamePasswordAuthenticationToken(memberDetails, null, memberDetails.getAuthorities());
