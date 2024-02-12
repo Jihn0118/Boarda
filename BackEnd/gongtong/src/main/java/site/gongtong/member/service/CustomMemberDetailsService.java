@@ -2,17 +2,13 @@ package site.gongtong.member.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.model.MemberDto;
 import site.gongtong.member.model.constant.RoleType;
-//import site.gongtong.member.model.SecurityMemberDetailsDto;
 import site.gongtong.member.repository.MemberRepository;
-
-import java.util.Collections;
 
 /**
  * SecurityUserDetailsDto 객체가 생성
@@ -39,13 +35,6 @@ public class CustomMemberDetailsService implements UserDetailsService {
         //2. member을 dto로 변환
         MemberDto memberDto = entityToDto(infoById);
 
-        //3. 사용자 정보를 기반으로 SecurityUserDetailsDto 객체를 생성
-//        return new MemberDto(
-//                memberDto,
-//                Collections.singleton(new SimpleGrantedAuthority(
-//                        memberDto.getRoleType().toString()
-//                ))
-//        );
         return memberDto;
     }
 

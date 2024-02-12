@@ -2,7 +2,6 @@ package site.gongtong.member.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-//import site.gongtong.member.model.Member;
 
 import java.util.Collection;
 

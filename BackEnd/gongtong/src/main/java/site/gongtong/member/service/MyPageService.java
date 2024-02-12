@@ -1,7 +1,6 @@
 package site.gongtong.member.service;
 
 import site.gongtong.member.dto.EditProfileDto;
-import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
 import site.gongtong.review.model.Review;
 

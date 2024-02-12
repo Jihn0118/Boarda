@@ -23,7 +23,6 @@ import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.member.service.MemberService;
 import site.gongtong.member.service.MyPageService;
 import site.gongtong.moim.model.Moim;
-import site.gongtong.moim.repository.MoimRepository;
 import site.gongtong.moim.service.MoimService;
 import site.gongtong.review.model.Review;
 import site.gongtong.security.jwt.TokenUtils;

@@ -4,10 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.dto.EditProfileDto;
-import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
-import site.gongtong.member.repository.FollowRepository;
-import site.gongtong.member.repository.MyPageCustomRepository;
 import site.gongtong.member.repository.MyPageRepository;
 import site.gongtong.review.model.Review;
 

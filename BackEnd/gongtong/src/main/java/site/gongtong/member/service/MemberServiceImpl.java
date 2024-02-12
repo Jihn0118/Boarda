@@ -1,11 +1,9 @@
 package site.gongtong.member.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import site.gongtong.Image.model.Image;
 import site.gongtong.Image.repository.ImageRepository;
 import site.gongtong.member.dto.SignUpRequest;
 import site.gongtong.member.model.Member;

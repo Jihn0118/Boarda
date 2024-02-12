@@ -3,7 +3,6 @@ package site.gongtong.member.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,13 +20,11 @@ import site.gongtong.member.model.MemberDto;
 import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.member.service.MemberService;
 import site.gongtong.security.handler.CustomAuthSuccessHandler;
-import site.gongtong.security.jwt.TokenUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static site.gongtong.security.jwt.TokenUtils.getUserIdFromToken;
 
 @RestController
 @RequestMapping("/member")
