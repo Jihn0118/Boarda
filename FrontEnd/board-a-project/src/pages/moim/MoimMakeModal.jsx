@@ -87,42 +87,40 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
   }, [location, setMoim]);
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-xl w-2/3 h-1/1">
-        <div className="flex items-center space-x-2">
-          <span className="font-bold text-lg">제목</span>
-          <input type="text" name="title" value={moim.title} onChange={onChange} className="border rounded py-2 px-4" />
-        </div>
-        <div className="flex items-center space-x-2">
-          <label className="font-bold text-lg">
-            인원:
-            <select value={moim.number} name="number" onChange={onChange} className="ml-2 border rounded py-1">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-            </select>
-          </label>
-        </div>
-
-      <div>
+<MuiPickersUtilsProvider utils={DateFnsUtils}>
+  <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-lg shadow-xl w-2/3 h-1/1 flex flex-col items-center justify-center space-y-4">
+      <div className="flex items-center space-x-2 justify-center w-full">
+        <span className="font-bold text-lg">제목</span>
+        <input type="text" name="title" value={moim.title} onChange={onChange} className="border rounded py-2 px-4" />
+      </div>
+      <div className="flex items-center space-x-2 justify-center w-full">
+        <label className="font-bold text-lg">
+          인원:
+          <select value={moim.number} name="number" onChange={onChange} className="ml-2 border rounded py-1">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </label>
+      </div>
+      <div className="flex items-center justify-center w-full">
         <button onClick={toggleCalendar}>달력 보기</button>
         <div className="text-gray-500 mt-4">
           {moment(moim.datetime).format("YYYY년 MM월 DD일")} 
         </div>
         {isCalendarVisible && (
-          <div>
+          <div className="flex items-center justify-center">
             <Calendar onChange={onDateChange} value={new Date(moim.datetime)} />
-            
           </div>
         )}
       </div>
-      <div>
-        시간:
+      <div className="flex items-center justify-center w-full">
+      <span>시간: </span>
         <TimePicker
           autoOk
           ampm={false}
@@ -132,9 +130,7 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
           style={{ width: '100%' }}
         />
       </div>
-
-      <br />
-      <div>
+      <div className="flex items-center justify-center w-full">
         <span>내용</span>
         <textarea
           name="content"
@@ -144,14 +140,13 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
           onChange={onChange}
         ></textarea>
       </div>
-      <br />
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 justify-center w-full">
         <button onClick={saveMoimData} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">저장</button>
         <button onClick={backToList} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">취소</button>
       </div>
     </div>
-    </Modal>
-    </MuiPickersUtilsProvider>
+  </Modal>
+</MuiPickersUtilsProvider>
   );
 };
 
