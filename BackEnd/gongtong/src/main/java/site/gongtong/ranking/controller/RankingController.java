@@ -21,8 +21,7 @@ public class RankingController {
     @GetMapping("/games")
     public ResponseEntity<List<GameRankingDTO>> getGameRanking() {
         List<GameRankingDTO> gameRankings = rankingService.getGameRanking();
-        for(GameRankingDTO dto : gameRankings){
-        }
+
         return gameRankings.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT) // 데이터가 없을 경우, 204 No Content 반환
                 : new ResponseEntity<>(gameRankings, HttpStatus.OK); // 데이터가 있을 경우, 200 OK와 함께 데이터 반환
@@ -32,8 +31,7 @@ public class RankingController {
     public ResponseEntity<List<CafeRankingDTO>> getCafeRanking() {
 
         List<CafeRankingDTO> cafeRankings = rankingService.getCafeRanking();
-        for(CafeRankingDTO dto : cafeRankings){
-        }
+
         return cafeRankings.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT) // 데이터가 없을 경우, 204 No Content 반환
                 : new ResponseEntity<>(cafeRankings, HttpStatus.OK); // 데이터가 있을 경우, 200 OK와 함께 데이터 반환
