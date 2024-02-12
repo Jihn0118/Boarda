@@ -22,7 +22,6 @@ public class RankingController {
     public ResponseEntity<List<GameRankingDTO>> getGameRanking() {
         List<GameRankingDTO> gameRankings = rankingService.getGameRanking();
         for(GameRankingDTO dto : gameRankings){
-            System.out.println(dto.toString());
         }
         return gameRankings.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT) // 데이터가 없을 경우, 204 No Content 반환
@@ -34,7 +33,6 @@ public class RankingController {
 
         List<CafeRankingDTO> cafeRankings = rankingService.getCafeRanking();
         for(CafeRankingDTO dto : cafeRankings){
-            System.out.println(dto.toString());
         }
         return cafeRankings.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT) // 데이터가 없을 경우, 204 No Content 반환
