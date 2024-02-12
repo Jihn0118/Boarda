@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Carousel } from "@material-tailwind/react";
+import Carousel01 from "../assets/images/Carousel01.png";
+import Carousel02 from "../assets/images/Carousel02.png";
 
 const { kakao } = window;
 
@@ -42,12 +44,12 @@ const Home = () => {
       <div>
         <Carousel>
           <img
-            src="src/assets/images/Carousel01.png" // src import로 바꾸기
+            src={Carousel01} // src import로 바꾸기
             alt="image 1"
             className="h-full w-full object-cover"
           />
           <img
-            src="src/assets/images/Carousel02.png"
+            src={Carousel02}
             alt="image 2"
             className="h-full w-full object-cover"
           />
@@ -65,7 +67,9 @@ const Home = () => {
                   {rankData &&
                     rankData.map((data, idx) => (
                       <li key={idx}>
-                        <span>{idx+1}. {data}</span>
+                        <span>
+                          {idx + 1}. {data}
+                        </span>
                       </li>
                     ))}
                 </ol>
@@ -79,7 +83,9 @@ const Home = () => {
                   {rankData &&
                     rankData.map((data, idx) => (
                       <li key={idx}>
-                        <span>{idx+1}. {data}</span>
+                        <span>
+                          {idx + 1}. {data}
+                        </span>
                       </li>
                     ))}
                 </ol>
@@ -93,7 +99,9 @@ const Home = () => {
                   {rankData &&
                     rankData.map((data, idx) => (
                       <li key={idx}>
-                        <span>{idx+1}. {data}</span>
+                        <span>
+                          {idx + 1}. {data}
+                        </span>
                       </li>
                     ))}
                 </ol>
