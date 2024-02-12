@@ -7,9 +7,9 @@ import site.gongtong.member.model.Member;
 import java.util.List;
 
 public interface FollowService {
-    Follow save(Member memMe, char flag, Member memYou);
+//    Follow save(Member memMe, char flag, Member memYou);
 
-    int existRelation(int followerNum, int followingNum);
+//    int existRelation(int followerNum, int followingNum);
 
     Follow findBy2Nums(int myNum, int yourNum);
 
@@ -17,4 +17,5 @@ public interface FollowService {
 
     List<Tuple> getFollowList(int myNum);
 
+    int doFollow(String myId, char flag, String yourNickname);
 }

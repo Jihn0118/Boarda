@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.FollowRepository;
+import site.gongtong.member.repository.MyPageRepository;
 
 import java.util.List;
 
@@ -15,16 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
+    private final MyPageRepository myPageRepository;
 
-    @Override
-    public Follow save(Member memMe, char flag, Member memYou) {
-        return followRepository.save(new Follow(memMe, flag, memYou));
-    }
+//    @Override
+//    public Follow save(Member memMe, char flag, Member memYou) {
+//        return followRepository.save(new Follow(memMe, flag, memYou));
+//    }
 
-    @Override
-    public int existRelation(int followerNum, int followingNum) {
-        return followRepository.existRelation(followerNum, followingNum);
-    }
+//    @Override
+//    public int existRelation(int followerNum, int followingNum) {
+//        return followRepository.existRelation(followerNum, followingNum);
+//    }
 
     @Override
     public Follow findBy2Nums(int myNum, int yourNum) {
@@ -40,6 +42,33 @@ public class FollowServiceImpl implements FollowService {
     public List<Tuple> getFollowList(int myNum) {
         return followRepository.findAllByNum(myNum);
 
+    }
+
+    @Override
+    public int doFollow(String myId, char flag, String yourNickname) {
+        Member memMe = myPageRepository.findById(myId);
+        Member memYou = myPageRepository.findByNickname(yourNickname);
+
+        if(memMe == null || memYou == null || memMe == memYou) {
+            return 0;
+        }
+        try {
+            if( followRepository.existRelation(memMe.getNum(), memYou.getNum()) >= 1)
+                return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 2;
+        }
+//        if( followRepository.existRelation(memMe.getNum(), memYou.getNum()) >1) {
+//            return 0;
+//        }
+
+        Follow newRelation = followRepository.save(new Follow(memMe, flag, memYou));
+        if (newRelation == null){
+            return 2;
+        }
+
+        return 1;
     }
 
 }
