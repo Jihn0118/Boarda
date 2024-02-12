@@ -42,35 +42,45 @@ const Login = () => {
     <div>
       <div className="mt-4">
         <div className="flex flex-col justify-start items-center mx-auto mb-4">
-          <form onSubmit={onSubmitHandler}>
-            <label>Email</label>
-            <input type="email" value={Email} onChange={onEmailHandler} />
-            <label>비밀번호</label>
-            <input
-              type="password"
-              value={Password}
-              onChange={onPasswordHandler}
-            />
+          <form
+            onSubmit={onSubmitHandler}
+            className="flex flex-col justify-start items-center"
+          >
+            <div>
+              <label>Email</label>
+              <input type="email" value={Email} onChange={onEmailHandler} />
+            </div>
+            <div>
+              <label>비밀번호</label>
+              <input
+                type="password"
+                value={Password}
+                onChange={onPasswordHandler}
+              />
+            </div>
             <br />
-            <button>로그인</button>
+            <div>
+              <button>로그인</button>
+            </div>
           </form>
-        </div>
-        <div>또는</div>
-        <div>
-          <>
-            <button onClick={() => ssoLogin("kakao")}>카카오 로그인</button>
-            <button onClick={() => ssoLogin("google")}>구글 로그인</button>
-            <button onClick={() => ssoLogin("naver")}>네이버 로그인</button>
-          </>
-        </div>
 
-        <div>
-          <Link to="/find_pw">
-            <button>비밀번호 찾기</button>
-          </Link>
-          <Link to="/signup">
-            <button>회원가입</button>
-          </Link>
+          <div>또는</div>
+          <div>
+            <>
+              <button onClick={() => ssoLogin("kakao")}>카카오 로그인</button>
+              <button onClick={() => ssoLogin("google")}>구글 로그인</button>
+              <button onClick={() => ssoLogin("naver")}>네이버 로그인</button>
+            </>
+          </div>
+
+          <div>
+            <Link to="/find_pw">
+              <button>비밀번호 찾기</button>
+            </Link>
+            <Link to="/signup">
+              <button>회원가입</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
