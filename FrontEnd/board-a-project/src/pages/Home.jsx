@@ -4,6 +4,8 @@ import { Carousel } from "@material-tailwind/react";
 import Carousel01 from "../assets/images/Carousel01.png";
 import Carousel02 from "../assets/images/Carousel02.png";
 
+import { getRankingList } from "../api/rankingAPI";
+
 const { kakao } = window;
 
 const Home = () => {
@@ -21,6 +23,8 @@ const Home = () => {
 
   useEffect(() => {
     // rankData, endSoon axios 요청 해야하지만 일단은 더미데이터
+    const temp = getRankingList();
+    console.log(temp);
   }, []);
 
   const renderMap = () => {
@@ -37,14 +41,19 @@ const Home = () => {
     }, []);
     return <div id="map" style={{ width: "400px", height: "300px" }}></div>;
   };
+  
+  const getranking() = async(){
+
+  }
 
   return (
     <>
       <Outlet></Outlet>
+      
       <div>
         <Carousel>
           <img
-            src={Carousel01} // src import로 바꾸기
+            src={Carousel01}
             alt="image 1"
             className="h-full w-full object-cover"
           />
@@ -55,14 +64,14 @@ const Home = () => {
           />
         </Carousel>
       </div>
-      <div class="container mx-auto flex py-10">
+      <div className="container mx-auto flex py-10">
         <div className="w-2/3 px-4">
-          <h1 class="text-2xl font-bold ...">인기 순위</h1>
+          <h1 className="text-2xl font-bold ...">인기 순위</h1>
 
-          <div class="container flex justify-between py-5">
+          <div className="container flex justify-between py-5">
             <div>
-              <h2 class="text-xl text-center ...">전체</h2>
-              <div class="py-10">
+              <h2 className="text-xl text-center ...">전체</h2>
+              <div className="py-10">
                 <ol>
                   {rankData &&
                     rankData.map((data, idx) => (
@@ -77,8 +86,8 @@ const Home = () => {
             </div>
 
             <div>
-              <h2 class="text-xl text-center...">남성 | 여성</h2>
-              <div class="py-10">
+              <h2 className="text-xl text-center...">남성 | 여성</h2>
+              <div className="py-10">
                 <ol>
                   {rankData &&
                     rankData.map((data, idx) => (
@@ -93,8 +102,8 @@ const Home = () => {
             </div>
 
             <div>
-              <h2 class="text-xl ...">10대 | 20대 | 30대↑</h2>
-              <div class="py-10">
+              <h2 className="text-xl ...">10대 | 20대 | 30대↑</h2>
+              <div className="py-10">
                 <ol>
                   {rankData &&
                     rankData.map((data, idx) => (
@@ -111,8 +120,8 @@ const Home = () => {
         </div>
 
         <div className="w-1/3 px-4">
-          <h1 class="text-2xl font-bold ...">마감 임박</h1>
-          <div class="container flex justify-center py-5">
+          <h1 className="text-2xl font-bold ...">마감 임박</h1>
+          <div className="container flex justify-center py-5">
             <div>{renderMap()}</div>
           </div>
         </div>
