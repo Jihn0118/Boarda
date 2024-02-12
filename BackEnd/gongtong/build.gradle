@@ -82,26 +82,3 @@ tasks.withType(JavaCompile).configureEach {
 clean.doLast {
 	file(querydslDir).deleteDir()
 }
-
-// QueryDsl 빌드 옵션 (선택)
-// QueryDsl 디렉토리 경로
-def querydslDir = "src/main/generated"
-
-// 경로 추가 >> QueryDsl 소스 코드 컴파일 시 빌드
-sourceSets {
-	main.java.srcDirs += [ querydslDir ]
-}
-
-// 컴파일 설정(AnnotationProcessor가 생성하는 소스코드를 해당 경로로 설정)
-tasks.withType(JavaCompile).configureEach {
-	it.options.annotationProcessorGeneratedSourcesDirectory(file(querydslDir))
-}
-
-// clean실행 시 마지막 작업으로 디렉토리(QClass) 삭제 >> 충돌 방지
-clean.doLast {
-	file(querydslDir).deleteDir()
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
