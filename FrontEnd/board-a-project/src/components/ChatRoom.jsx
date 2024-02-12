@@ -8,6 +8,7 @@ import socketService from "../utils/socketService";
 
 const ChatContainer = styled(Box)`
   && {
+    background-color: white;
     box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem #d98f8f;
     border-radius: 5%;
     border-color: #d98f8f;
@@ -16,13 +17,13 @@ const ChatContainer = styled(Box)`
     height: 50vh;
     width: 20vw;
     margin: auto;
-    //border: 1px solid #000;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: fixed;
     right: 5rem;
     bottom: 2rem;
+    z-index: 2;
   }
 `;
 
@@ -31,6 +32,7 @@ const MessageList = styled(Box)`
     flex-grow: 1;
     overflow: auto;
     padding: 1rem;
+    z-index: 2;
   }
 `;
 
@@ -39,6 +41,7 @@ const MessageInput = styled.input`
   border: 0.05rem solid;
   width: 100%;
   height: 2rem;
+  z-index: 2;
 `;
 
 // const MessageInput = styled(TextField)`
@@ -53,6 +56,7 @@ const SendButton = styled(Button)`
     width: 5%;
     height: 30%;
     background-color: #d98f8f;
+    z-index: 2;
   }
 `;
 
