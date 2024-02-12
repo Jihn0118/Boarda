@@ -6,9 +6,17 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Info, InfoEyebrow, InfoSubtitle, InfoTitle } from "../info-basic";
 
-export function CardBlog({ title, minNum, maxNum, playTime, difficulty, year, age, imageUrl, feed }) {
-  const imageList = feed.slice(0, 5);
-  console.log(imageList);
+export function CardBlog({
+  title,
+  people,
+  playTime,
+  difficulty,
+  year,
+  age,
+  imageUrl,
+  review,
+  onImageClick,
+}) {
   return (
     <Card
       sx={(theme) => ({
@@ -105,44 +113,54 @@ export function CardBlog({ title, minNum, maxNum, playTime, difficulty, year, ag
                 };
               }}
             >
-              <InfoEyebrow >출시일: {year}</InfoEyebrow>
+              <InfoEyebrow>{year}</InfoEyebrow>
               <InfoTitle>{title}</InfoTitle>
-              <div style={{borderBottom: "1px solid black", margin: "10px 0"}}></div>
+              <div
+                style={{ borderBottom: "1px solid black", margin: "10px 0" }}
+              ></div>
               <InfoSubtitle>
-                인원수: {minNum} ~ {maxNum} 명 <br/>
-                플레이: {playTime} 분 <br/>
-                난이도: {difficulty} 점 <br/>
-                출시일: {year} 년 <br/>
-                연령: {age} 세 이상<br/>
+                {people} <br />
+                {playTime} <br />
+                {difficulty} <br />
+                {year} <br />
+                {age} <br />
                 Git is a distributed version control system. Every dev has a
                 working copy of the code and...
               </InfoSubtitle>
             </Info>
             <div style={{ textAlign: "right" }}>
-
-            <Button
-              sx={{
-                backgroundImage:
-                  "linear-gradient(147deg, #fe8a39 0%, #fd3838 74%)",
-                boxShadow: "0px 4px 32px rgba(252, 56, 56, 0.4)",
-                borderRadius: 100,
-                paddingLeft: 3,
-                paddingRight: 3,
-                color: "#ffffff",
-              }}
-            >
-              보유 매장
-            </Button>
+              <Button
+                sx={{
+                  backgroundImage:
+                    "linear-gradient(147deg, #fe8a39 0%, #fd3838 74%)",
+                  boxShadow: "0px 4px 32px rgba(252, 56, 56, 0.4)",
+                  borderRadius: 100,
+                  paddingLeft: 3,
+                  paddingRight: 3,
+                  color: "#ffffff",
+                }}
+              >
+                보유 매장
+              </Button>
             </div>
           </CardContent>
         </div>
         <Box sx={{ display: "flex", overflow: "auto", pt: 2 }}>
-          {imageList.map((image, index) => (
+          {/* {review.map((image, index) => (
             <img
               key={index}
-              src={import.meta.env.VITE_S3_BASE + image}
+              src={import.meta.env.VITE_S3_BASE + image.images[0]}
               alt={`review image ${index + 1}`}
               style={{ width: "120px", height: "120px", marginRight: "10px" }}
+            />
+          ))} */}
+          {review.map((reviewObj, index) => (
+            <img
+              key={index}
+              src={import.meta.env.VITE_S3_BASE + reviewObj.images[0].name} // 첫 번째 이미지 URL을 사용
+              alt={`review image ${index + 1}`}
+              style={{ width: "120px", height: "120px", marginRight: "10px", cursor: "pointer" }}
+              onClick={() => onImageClick(reviewObj)}
             />
           ))}
         </Box>
