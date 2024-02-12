@@ -6,6 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,14 +27,9 @@ import java.util.List;
  */
 
 @Slf4j
-//@RequiredArgsConstructor //이미 있는 생성자
+@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    @Autowired
-    private MemberDetailsService memberDetailsService;
-
-    public JwtAuthorizationFilter(MemberDetailsService memberDetailsService) {
-        this.memberDetailsService = memberDetailsService;
-    }
+    private final MemberDetailsService memberDetailsService;
 
     @Override
     protected void doFilterInternal(

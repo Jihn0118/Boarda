@@ -1,5 +1,6 @@
 package site.gongtong.member.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -10,13 +11,9 @@ import site.gongtong.member.model.MemberDetails;
 import site.gongtong.member.repository.MemberRepository;
 
 @Service
+@RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
-    @Autowired
-    MemberRepository memberRepository;
-
-    public MemberDetailsService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+    private final MemberRepository memberRepository;
 
     @Override
     public MemberDetails loadUserByUsername(String username) throws UsernameNotFoundException {
