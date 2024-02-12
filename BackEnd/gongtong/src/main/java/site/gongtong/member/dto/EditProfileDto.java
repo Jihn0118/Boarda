@@ -18,15 +18,15 @@ public class EditProfileDto { //프론트에서 리드온리 처리할 거~
     private Character gender; //read-only
     private String profileImage;
 
-   @Builder
+    @Builder
     public EditProfileDto(Member member) {
-       this.num = member.getNum();
-       this.id = member.getId();
-       this.nickname = member.getNickname();
-       this.birth = member.getBirth();
-       this.gender = member.getGender();
-       this.profileImage = member.getProfileImage();
-   }
+        this.num = member.getNum();
+        this.id = member.getId();
+        this.nickname = member.getNickname();
+        this.birth = member.getBirth();
+        this.gender = member.getGender();
+        this.profileImage = member.getProfileImage();
+    }
 
 
 }

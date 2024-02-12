@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
-import site.gongtong.member.repository.FollowCustomRepository;
 import site.gongtong.member.repository.FollowRepository;
+import site.gongtong.member.repository.MyPageRepository;
 
 import java.util.List;
 
@@ -16,26 +16,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
-    private final FollowCustomRepository followCustomRepository;
+    private final MyPageRepository myPageRepository;
 
-    @Override
-    public Follow save(Member memMe, char flag, Member memYou) {
-        Follow follow = Follow.builder()
-                .flag(flag)
-                .following(memYou)
-                .follower(memMe)
-                .build();
-        return followRepository.save(follow);
-    }
+//    @Override
+//    public Follow save(Member memMe, char flag, Member memYou) {
+//        return followRepository.save(new Follow(memMe, flag, memYou));
+//    }
 
-    @Override
-    public Integer existRelation(int followerNum, int followingNum) {
-        return followCustomRepository.existRelation(followerNum, followingNum);
-    }
+//    @Override
+//    public int existRelation(int followerNum, int followingNum) {
+//        return followRepository.existRelation(followerNum, followingNum);
+//    }
 
     @Override
     public Follow findBy2Nums(int myNum, int yourNum) {
-        return followCustomRepository.findBy2Nums(myNum, yourNum);
+        return followRepository.findBy2Nums(myNum, yourNum);
     }
 
     @Override
@@ -44,10 +39,41 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-
     public List<Tuple> getFollowList(int myNum) {
-        return followCustomRepository.findAllByNum(myNum);
+        return followRepository.findAllByNum(myNum);
 
     }
+
+    @Override
+    public int doFollow(String myId, char flag, String yourNickname) {
+        Member memMe = myPageRepository.findById(myId);
+        Member memYou = myPageRepository.findByNickname(yourNickname);
+
+        if(memMe == null || memYou == null || memMe == memYou) {
+            System.out.println("nononono MEMBER FOLLOW");
+            return 0;
+        }
+        try {
+            if( followRepository.existRelation(memMe.getNum(), memYou.getNum()) >= 1) {
+                System.out.println("ALREADY FOLLOW/BLOCK");
+                return 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 2;
+        }
+
+        Follow newRelation = followRepository.save(new Follow(memMe, flag, memYou));
+        if (newRelation == null){
+            return 2;
+        }
+
+        return 1;
+    }
+
+//    @Override
+//    public int deleteFollow(String myId, String followId) {
+//        return 0;
+//    }
 
 }

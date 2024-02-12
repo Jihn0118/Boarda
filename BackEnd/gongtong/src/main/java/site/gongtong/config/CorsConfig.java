@@ -12,6 +12,6 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")   // 모든 경로를 설정
                 .allowedMethods("*")            // 모든 http Method 허용
                 .allowedOrigins("https://www.boarda.site:3000", "http://localhost:3000");
-                //.allowedOrigins("http://localhost:3000");
+        //.allowedOrigins("http://localhost:3000");
     }
 }

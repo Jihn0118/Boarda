@@ -5,8 +5,6 @@ import site.gongtong.member.model.Follow;
 
 import java.util.List;
 
-import java.util.List;
-
 public interface FollowCustomRepository {
 
     int existRelation(int followerNum, int followingNum);

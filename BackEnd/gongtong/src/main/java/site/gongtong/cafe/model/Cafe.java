@@ -39,8 +39,8 @@ public class Cafe {
                 .branch(mapDto.getBranch())
                 .location(mapDto.getAddress_name())
                 .contact(mapDto.getPhone())
-                .latitude(mapDto.getY())
-                .longitude(mapDto.getX())
+                .latitude(mapDto.getX())
+                .longitude(mapDto.getY())
                 .image(mapDto.getPlace_url())
                 .build();
     }

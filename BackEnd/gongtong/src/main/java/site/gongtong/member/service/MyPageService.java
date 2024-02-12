@@ -1,20 +1,21 @@
 package site.gongtong.member.service;
 
 import site.gongtong.member.dto.EditProfileDto;
-import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
 import site.gongtong.review.model.Review;
 
 import java.util.List;
 
 public interface MyPageService {
-    Integer idToNum(String id);
+    int idToNum(String id);
+    List<Review> getReviewListByNum(int num);
+
     Member findById(String id);
     Member findByNickname(String nickname);
 
     Long modifyProfile(EditProfileDto editProfileDto);
 
-    Integer setPwd(String id, String newEncodedPwd);
+    int setPwd(String id, String newEncodedPwd);
 
-    Integer deleteMember(String id);
+    int deleteMember(String id);
 }

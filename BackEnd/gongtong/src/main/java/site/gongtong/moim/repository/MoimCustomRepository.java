@@ -7,7 +7,7 @@ import java.util.List;
 public interface MoimCustomRepository {
 
     Moim findById(int moimId);
-    
+
     //getMoimsDeadLine() 메서드임
     List<Moim> findAllDeadLine();
 

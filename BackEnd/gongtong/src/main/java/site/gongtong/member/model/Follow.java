@@ -34,6 +34,12 @@ public class Follow {
 
     @CreatedDate
     @Column(name = "created_at")
-    private LocalDateTime createAt; // 팔로우/차단 일시
+    private LocalDateTime createdAt; // 팔로우/차단 일시
+
+    public Follow(Member follower, Character flag, Member following) {
+        this.follower = follower;
+        this.flag = flag;
+        this.following = following;
+    }
 
 }
