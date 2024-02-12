@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import site.gongtong.map.model.MapDto;
 
-@Entity
+@Entity(name = "cafe")
 @Getter
 @Setter
 @NoArgsConstructor

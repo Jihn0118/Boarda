@@ -1,7 +1,12 @@
 package site.gongtong.cafe.service;
 
-import org.springframework.stereotype.Service;
+import site.gongtong.cafe.model.Cafe;
+import site.gongtong.cafe.model.CafeDetailDto;
 
-@Service
-public class CafeService {
+import java.util.List;
+
+public interface CafeService {
+    List<Cafe> getCafeList(String location, String brand);
+
+    CafeDetailDto getCafeInfo(Integer cafeId);
 }

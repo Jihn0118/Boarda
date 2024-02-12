@@ -4,6 +4,7 @@ package site.gongtong.review.model;
 import jakarta.persistence.*;
 import lombok.*;
 import site.gongtong.boardgame.model.BoardGame;
+import site.gongtong.cafe.model.Cafe;
 
 @Getter
 @Setter
@@ -25,4 +26,10 @@ public class Tag {
     @ManyToOne
     @JoinColumn(name="game_id")
     private BoardGame game;
+
+    @ManyToOne
+    @JoinColumn(name="cafe_id")
+    private Cafe cafe;
+
+
 }

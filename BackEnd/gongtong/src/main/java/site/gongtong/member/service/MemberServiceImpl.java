@@ -18,7 +18,6 @@ import site.gongtong.s3.FileService;
 import java.util.Optional;
 
 @Service
-//@AllArgsConstructor
 @Transactional
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {

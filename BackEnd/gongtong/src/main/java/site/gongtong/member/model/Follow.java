@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 @ToString
-
 public class Follow {
 
     @Id
