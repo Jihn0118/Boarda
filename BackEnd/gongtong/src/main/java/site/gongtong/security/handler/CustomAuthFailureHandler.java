@@ -40,7 +40,9 @@ public class CustomAuthFailureHandler implements AuthenticationFailureHandler {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
 
-        try(PrintWriter printWriter = response.getWriter()) {
+        PrintWriter printWriter = null;
+        try {
+            printWriter = response.getWriter();
             log.info(failMessage);
 
             HashMap<String, Object> resultMap = new HashMap<>();
@@ -51,6 +53,10 @@ public class CustomAuthFailureHandler implements AuthenticationFailureHandler {
 
             printWriter.println(jsonObject);
             printWriter.flush();
+        } finally {
+            if(printWriter != null){
+                printWriter.close();
+            }
         }
     }
 }
