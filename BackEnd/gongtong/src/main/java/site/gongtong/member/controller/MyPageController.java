@@ -320,6 +320,10 @@ public class MyPageController {
     public ResponseEntity<Integer> deleteFollow (@RequestParam (name = "id") String followId,
                                                  HttpServletRequest request) {
 
+//        log.info("DELETE FOLLOW or BLOCK!!");
+//
+//        String myId = TokenUtils.getUserIdFromToken(fetchToken(request));
+
         int myNum = myPageService.idToNum(TokenUtils.getUserIdFromToken(fetchToken(request)));
         int yourNum = myPageService.idToNum(followId);
 
@@ -330,8 +334,10 @@ public class MyPageController {
         }
 
         followService.deleteFollow(wannaDeleteFollow);
-        log.info("follow Delete: successful~!");
         return new ResponseEntity<>(1, HttpStatus.OK); //팔로우 끊기 완료
+
+//        int result = followService.deleteFollow(myId, followId); //팔로워 -> 팔로잉
+//        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //팔로우&차단 목록

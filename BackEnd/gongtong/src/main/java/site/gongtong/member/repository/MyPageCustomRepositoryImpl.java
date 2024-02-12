@@ -1,9 +1,7 @@
 package site.gongtong.member.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.model.QMember;
@@ -17,11 +15,6 @@ import java.util.List;
 public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
-
-    @Autowired
-    public MyPageCustomRepositoryImpl(EntityManager entityManager) {
-        this.jpaQueryFactory = new JPAQueryFactory(entityManager);
-    }
 
     @Override
     public int MemberidToNum(String user_id) {
@@ -99,17 +92,5 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
                 .where(member.id.eq(id))
                 .execute();
     }
-
-//    @Override
-//    public Member save(EditProfileDto editProfileDto) {//패스워드, 닉넴, 프사
-//        QMember member = QMember.member;
-//
-//        return jpaQueryFactory
-//                .update(member) // updatedField에는 실제 필드명을 넣어야 합니다.
-//                .set(member.nickname, editProfileDto.getNickname())
-//                .set(member.profileImage, editProfileDto.getProfileImage())
-//                .where(member.id.eq(editProfileDto.getId()))
-//                .execute();
-//    }
 
 }

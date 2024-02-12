@@ -51,7 +51,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 "/api/member/login",
                 "/api/member/signup",
                 "/api/mypage/forgetpwd",
-                "/api/mypage/profile"
+                "/api/mypage/profile",
+
+                "/api/game/list",
+                "/api/game/list",
+                "/api/game/list",
+                "/api/cafe/list",
+                "/api/cafe/detail",
+                "/api/moim/deadline",
+
+                "/api/ranking/games",
+                "/api/ranking/cafes"
         );
 
         //2. 위의 list에 있는(토큰 필요x) api url의 경우 => 로직 처리없이 다음 필터로 이동

@@ -18,4 +18,6 @@ public interface FollowService {
     List<Tuple> getFollowList(int myNum);
 
     int doFollow(String myId, char flag, String yourNickname);
+
+//    int deleteFollow(String myId, String followId);
 }

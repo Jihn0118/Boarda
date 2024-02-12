@@ -2,9 +2,7 @@ package site.gongtong.member.repository;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.QFollow;
@@ -16,11 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FollowCustomRepositoryImpl implements FollowCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
-
-    @Autowired
-    public FollowCustomRepositoryImpl(EntityManager entityManager) {
-        this.jpaQueryFactory = new JPAQueryFactory(entityManager);
-    }
 
     @Override
     public int existRelation(int followerNum, int followingNum) {
