@@ -1,11 +1,12 @@
 package site.gongtong.ranking.service;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import site.gongtong.ranking.repository.CafeRanking;
-import site.gongtong.ranking.repository.GameRanking;
+import site.gongtong.ranking.model.CafeRankingDTO;
+import site.gongtong.ranking.model.GameRankingDTO;
 import site.gongtong.review.repository.TagRepository;
 
 import java.util.List;
@@ -16,10 +17,10 @@ public class RankingService {
 
     // 게임 랭킹 정보를 저장할 List
     @Getter
-    private List<GameRanking> gameRanking;
+    private List<GameRankingDTO> gameRanking;
     // 카페 랭킹 정보를 저장할 List
     @Getter
-    private List<CafeRanking> cafeRanking;
+    private List<CafeRankingDTO> cafeRanking;
 
     public RankingService(TagRepository tagRepository) {
         this.tagRepository = tagRepository;

@@ -31,7 +31,6 @@ public class Ranking {
     private String flag;
     private Integer num;
     private LocalDateTime createdAt;
-//    private Integer cafeId;
 
     @ManyToOne
     @JoinColumn(name = "game_id")
@@ -48,8 +47,5 @@ public class Ranking {
     @ManyToOne
     @JoinColumn(name = "cafe_id")
     private Cafe cafe;
-
-//    @Column(name = "cafe_id")
-//    private Long cafeId;
 
 }
