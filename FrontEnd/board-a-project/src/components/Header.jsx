@@ -12,14 +12,26 @@ import Alarm from "./Alarm";
 // StyledHeader 컴포넌트 생성
 const StyledHeader = styled.header`
   background-color: #ffffff; /* 배경색 설정 */
-  padding: 0px 20px; /* 내부 여백 설정 */
+  padding: 0px 18px; /* 내부 여백 설정 */
   display: flex;
   justify-content: space-between;
   align-items: stretch;
 
-
-  /* Link 스타일링 */
   a {
+    color: #000000; /* 링크 텍스트 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: bold;
+
+    padding: 20px 24px; /* 링크 내부 여백 */
+    transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
+  }
+  a:hover {
+    background-color: #8976FD; /* 호버 시 배경색 변경 */
+    color: white;
+  }
+
+  /* login 스타일링 */
+  .login_btn {
     color: #000000; /* 링크 텍스트 색상 */
     text-decoration: none; /* 밑줄 제거 */
     margin: 5px 10px; /* 각 링크 사이 간격 */
@@ -27,9 +39,8 @@ const StyledHeader = styled.header`
     border-radius: 5px; /* 링크 테두리 둥글게 */
     transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
   }
-
-  /* 링크 호버 효과 */
-  a:hover {
+  /* 호버 효과 */
+  .login_btn:hover {
     background-color: #8976FD; /* 호버 시 배경색 변경 */
     color: white;
   }
@@ -85,7 +96,7 @@ export default function Header() {
 
   return (
     <StyledHeader>
-      <div class="leftH">
+      <div>
         <HeaderLogo
           onClick={() => {
             navigate("/home");
@@ -101,7 +112,7 @@ export default function Header() {
       </ItemContainer>
 
       <ItemContainer>
-        {!loginUser.id && <Link to="/login">로그인</Link>}
+        {!loginUser.id && <Link to="/login" className="login_btn">로그인</Link>}
         {loginUser.id && LoginUserDiv}
 
         <Link to="/my-page/2">마이페이지</Link>
