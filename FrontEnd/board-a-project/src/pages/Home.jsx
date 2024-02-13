@@ -4,7 +4,7 @@ import { Carousel } from "@material-tailwind/react";
 import Carousel01 from "../assets/images/Carousel01.png";
 import Carousel02 from "../assets/images/Carousel02.png";
 
-import { getRankingList } from "../api/rankingAPI";
+import {rankingAPI } from "../api/rankingAPI";
 
 const { kakao } = window;
 
@@ -24,8 +24,13 @@ const Home = () => {
   useEffect(() => {
     // rankData, endSoon axios 요청 해야하지만 일단은 더미데이터
     const fetchData = async () => {
-      const temp = await getRankingList();
-      console.log(temp);
+      try{
+        const res = await rankingAPI.getRankingList();
+        console.log(res);
+      }
+      catch (error) {
+        console.log(error);
+      }
     };
     fetchData();
   }, []);
