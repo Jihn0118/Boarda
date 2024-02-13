@@ -8,14 +8,14 @@ export const userState = atom({
 export const loginUserState = atom({
   key: "loginUserState",
   default: {
-    id: '',
-    password: '',
-    nickname: '',
-    birth: '',
-    gender: '',
-    profileImage: '',
-    jwt: '',
-    refresh: '',
-    userNum: '',
-  }
+    id: "", // 이메일
+    password: "", // 비밀번호
+    nickname: "", //닉네임
+    birth: "", // 980118
+    gender: "", // M or W
+    profileImage: "", // image.png
+    jwt: "", // token : "aslndlkasn"
+    num: "", // num : 1
+    userName: "",
+  },
 });
