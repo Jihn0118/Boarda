@@ -84,7 +84,7 @@ function LoginUserDiv() {
     <>
       <p>{loginUser.nickname}님 환영합니다</p>
       <Alarm></Alarm>
-      <Link to={`/myPage/${loginUser.id}`}>마이페이지</Link>
+      <Link to={`/my-page/${loginUser.id}`}>마이페이지</Link>
       <button
         onClick={() => {
           // 로그아웃 수행시
@@ -131,8 +131,6 @@ export default function Header() {
           </Link>
         )}
         {loginUser.id && <LoginUserDiv></LoginUserDiv>}
-
-        <Link to="/my-page/2">마이페이지</Link>
       </ItemContainer>
     </StyledHeader>
   );
