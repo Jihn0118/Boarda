@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Info, InfoEyebrow, InfoSubtitle, InfoTitle } from "../info-basic";
+import dice from "../../assets/images/dice.png";
 
 export function CardBlog({
   title,
@@ -44,15 +45,16 @@ export function CardBlog({
         style={{
           display: "flex",
           flexDirection: "column",
+          justifyContent:"center",
           alignItems: "center",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", paddingLeft: "30px",}}>
           <CardMedia
             image={imageUrl}
             sx={(theme) => ({
-              width: 200, // 여기를 수정하세요. 원하는 너비 값으로
-              height: 200,
+              width: 150, // 여기를 수정하세요. 원하는 너비 값으로
+              height: 210,
 
               // width: "88%",
               marginLeft: "auto",
@@ -66,8 +68,8 @@ export function CardBlog({
               position: "relative",
               [theme.breakpoints.up("md")]: {
                 // width: "100%",
-                width: 400,
-                marginLeft: theme.spacing(-3),
+                width: 150,
+                // marginLeft: theme.spacing(-3),
                 marginTop: 0,
                 transform: "translateX(-8px)",
               },
@@ -85,7 +87,10 @@ export function CardBlog({
             })}
           />
 
-          <CardContent>
+          <CardContent
+          sx={(theme) => ({
+            width: 270,
+          })}>
             <Info
               useStyles={(theme) => {
                 const family =
@@ -143,12 +148,12 @@ export function CardBlog({
             </div>
           </CardContent>
         </div>
-        <Box sx={{ display: "flex", overflow: "auto", pt: 2 }}>
+        <Box sx={{ display: "flex", overflow: "auto", pt: 2, maxWidth: "90%" }}>
           {review.map((reviewObj, index) => (
             <img
               key={index}
               src={import.meta.env.VITE_S3_BASE + reviewObj.images[0].name} // 첫 번째 이미지 URL을 사용
-              alt={`review image ${index + 1}`}
+              alt={`review image ${index + 1}`} onError={(e) =>e.target.src=dice}
               style={{ width: "120px", height: "120px", marginRight: "10px", cursor: "pointer" }}
               onClick={() => onImageClick(reviewObj)}
             />
