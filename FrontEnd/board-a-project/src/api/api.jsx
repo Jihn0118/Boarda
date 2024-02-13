@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const DEV = "http://localhost:8081/api/";
 const HOST = "https://www.boarda.site/api/";
 
@@ -11,7 +12,7 @@ api.interceptors.request.use(
     // 요청 성공 직전 호출됩니다.
     // console.log(config);
     return config;
-  },
+  }
   // function (error) {
   //   // 요청 에러 직전 호출됩니다.
   //   // console.log(error);
@@ -27,7 +28,7 @@ api.interceptors.response.use(
   function (response) {
     // console.log(response);
     return response;
-  },
+  }
   // function (error) {
   //   // console.log(error);
   //   if (error.response.status === 404 || error.response.status === 429) {
