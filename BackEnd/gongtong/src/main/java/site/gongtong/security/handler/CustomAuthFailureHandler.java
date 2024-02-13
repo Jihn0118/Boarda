@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -40,24 +41,17 @@ public class CustomAuthFailureHandler implements AuthenticationFailureHandler {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
 
-        PrintWriter printWriter = null;
-        try {
-            printWriter = response.getWriter();
-            log.info(failMessage);
+        log.info(failMessage);
 
-            HashMap<String, Object> resultMap = new HashMap<>();
-            resultMap.put("memberInfo", null);
-            resultMap.put("resultCode", 9999);
-            resultMap.put("failMessage", failMessage);
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("memberInfo", null);
+        resultMap.put("resultCode", 9999);
+        resultMap.put("failMessage", failMessage);
 
-            jsonObject = new JSONObject(resultMap);
-            printWriter.println(jsonObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (printWriter != null) {
-                printWriter.close();
-            }
+        jsonObject = new JSONObject(resultMap);
+        //response.getOutputStream().print(jsonObject.toString());
+        try (PrintStream printStream = new PrintStream(response.getOutputStream(), true, "UTF-8")) {
+            printStream.print(jsonObject);
         }
     }
 }

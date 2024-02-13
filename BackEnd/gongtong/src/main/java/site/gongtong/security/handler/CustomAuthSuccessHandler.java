@@ -15,6 +15,7 @@ import site.gongtong.member.model.MemberDto;
 import site.gongtong.security.jwt.TokenUtils;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -65,15 +66,9 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         //4. 구성한 응답값을 전달
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-
-        PrintWriter printWriter = null;
-        try {
-            printWriter = response.getWriter();
-            printWriter.println(jsonObject); // 최종 저장된 '사용자 정보', '사이트 정보'를 Front에 저장
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            printWriter.close();
+        try (PrintStream printStream = new PrintStream(response.getOutputStream(), true, "UTF-8")) {
+            printStream.print(jsonObject);
         }
+
     }
 }

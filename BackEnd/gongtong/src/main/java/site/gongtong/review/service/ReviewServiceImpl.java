@@ -110,7 +110,6 @@ public class ReviewServiceImpl implements ReviewService {
                     .review(resultReview)
                     .flag('R')
                     .name(str)
-                    .article(null)
                     .build();
 
             imageList.add(image);
