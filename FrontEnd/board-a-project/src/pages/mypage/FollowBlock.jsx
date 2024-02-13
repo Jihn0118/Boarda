@@ -12,14 +12,19 @@ export default function FollowBlock() {
     const fetchData = async () => {
       try {
         const res = await myPageAPI.getFollowList(loginUser.id);
-        console.log(res);
         setFollow(res.data);
+        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
   }, [loginUser.id]);
+  // Flag에 따라 차단/팔로우 디테일로 props 내려줄 것
+  let followList = [];
+  let blockList = [];
+  followList = follow.filter((e) => e.flag === "F");
+  blockList = follow.filter((e) => e.flag !== "F");
 
   return <div>{follow.id}</div>;
 }
