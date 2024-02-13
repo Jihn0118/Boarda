@@ -133,18 +133,6 @@ const MoimList = () => {
             </select>
           </label>
         </div>
-        {/* <ul className="space-y-2">
-          {currentMoimList.map((moim) => (
-            <li key={moim.id} className="border p-2 rounded">
-              <button 
-                onClick={() => openDetailModal(moim.id)}
-                className="text-blue-500 hover:underline"
-              >
-                {moim.id} {moim.title} {moim.datetime.split("T")[0]} {moim.currentNumber}/{moim.number}
-              </button>
-            </li>
-          ))}
-        </ul> */}
         <table className="table-auto w-full text-left border-collapse border border-gray-300">
           <thead>
             <tr>

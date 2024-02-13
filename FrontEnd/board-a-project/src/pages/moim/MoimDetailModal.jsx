@@ -45,36 +45,43 @@ const MoimDetailModal = ({ moimId, isOpen, onRequestClose }) => {
   }
 
   return (
-    // <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="fixed inset-0 flex items-center justify-center z-50">
-    //   <div className="bg-white p-6 rounded-lg shadow-xl w-2/3 h-2/3">
-    //     <h1 className="text-2xl font-bold mb-4 text-gray-700">{moim.title}</h1>
-    //     <p className="text-sm mb-1 text-gray-500">{moim.id}</p>
-    //     <p className="text-sm mb-1 text-gray-500">{moim.datetime.split('T')[0]}</p>
-    //     <p className="text-sm mb-1 text-gray-500">{moim.currentNumber}/{moim.number}</p>
-    //     <p className="text-sm mb-4 text-gray-500">{moim.content}</p>
-    //     <button onClick={joinMoimHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">참여</button>
-    //     <button onClick={onRequestClose} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">취소</button>
-    //   </div>
-    // </Modal>
-<Modal isOpen={isOpen} onRequestClose={onRequestClose} className="fixed inset-0 flex items-center justify-center z-50">
-  <div className="bg-white p-6 rounded-lg shadow-xl w-2/3 h-2/3 flex flex-col justify-between">
-    <div>
-      <div className="flex justify-between items-center mb-4">
-        <p className="text-sm text-gray-500">{moim.id}</p>
-        <h1 className="text-2xl font-bold text-gray-700">{moim.title}</h1>
-        <p className="text-sm text-gray-500">{moim.datetime.split('T')[0]}</p>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      className="fixed inset-0 flex items-center justify-center z-50"
+    >
+      <div className="bg-white p-6 rounded-lg shadow-xl w-2/3 h-2/3 flex flex-col justify-between">
+        <div>
+          <div className="flex justify-between items-center mb-4">
+            <p className="text-sm text-gray-500">{moim.id}</p>
+            <h1 className="text-2xl font-bold text-gray-700">{moim.title}</h1>
+            <p className="text-sm text-gray-500">
+              {moim.datetime.split("T")[0]}
+            </p>
+          </div>
+          <p className="text-sm text-gray-500">
+            인원: {moim.currentNumber}/{moim.number}
+          </p>
+        </div>
+        <div className="flex-1 flex items-center justify-center my-4">
+          <p className="text-sm text-gray-500">{moim.content}</p>
+        </div>
+        <div className="flex justify-center space-x-4 mt-4">
+          <button
+            onClick={joinMoimHandler}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            참여
+          </button>
+          <button
+            onClick={onRequestClose}
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+          >
+            취소
+          </button>
+        </div>
       </div>
-      <p className="text-sm text-gray-500">인원: {moim.currentNumber}/{moim.number}</p>
-    </div>
-    <div className="flex-1 flex items-center justify-center my-4">
-      <p className="text-sm text-gray-500">{moim.content}</p>
-    </div>
-    <div className="flex justify-center space-x-4 mt-4">
-      <button onClick={joinMoimHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">참여</button>
-      <button onClick={onRequestClose} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">취소</button>
-    </div>
-  </div>
-</Modal>
+    </Modal>
   );
 };
 

@@ -8,7 +8,6 @@ import GameFeed from './GameFeed'
 const GameDetail = ({ gameId, isModalOpen, setIsModalOpen }) => {
     const [gameDetail, setGameDetail] = useState([]);
     const [reviewList, setReviewList] = useState([]);
-    const [feedList, setFeedList] = useState([]);
 
     const [feedDetailOpen, setFeedDetailOpen] = useState(false); // FeedDetail Modal의 열림 상태
     const [selectedReview, setSelectedReview] = useState(null);

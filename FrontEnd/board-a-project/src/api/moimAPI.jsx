@@ -24,14 +24,18 @@ export const moimAPI = {
       },
     });
   },
-
 };
 
 export const getMoimList = async (location, sort) => {
   try {
-    const response = await api.get(
-      `${END_POINT}/list?location=${location}&sort=${sort}`
-    );
+    const response = await api({
+      method: "get",
+      url: `${END_POINT}/list`,
+      params: {
+        location: location,
+        sort: sort,
+      },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -41,9 +45,11 @@ export const getMoimList = async (location, sort) => {
 
 export const checkRoom = async (num) => {
   try {
-    const response = await api.get(`${END_POINT}/checkroom`, {
+    const response = await api({
+      method: "get",
+      url: `${END_POINT}/checkroom`,
       params: {
-        num,
+        num: num,
       },
     });
     return response.data;
@@ -54,7 +60,11 @@ export const checkRoom = async (num) => {
 
 export const saveMoim = async (moim) => {
   try {
-    const response = await api.post(`${END_POINT}/room`, moim);
+    const response = await api({
+      method: "post",
+      url: `${END_POINT}/room`,
+      data: moim,
+    });
     return response.data;
   } catch (error) {
     console.error("모임 저장 중 에러가 발생했습니다:", error);
@@ -64,7 +74,11 @@ export const saveMoim = async (moim) => {
 export const joinMoim = async (join) => {
   console.log(join);
   try {
-    const response = await api.post(`${END_POINT}/join`, join);
+    const response = await api({
+      method: "post",
+      url: `${END_POINT}/join`,
+      data: join,
+    });
     return response.data;
   } catch (error) {
     console.error("모임 저장 중 에러가 발생했습니다:", error);

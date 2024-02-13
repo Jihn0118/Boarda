@@ -4,9 +4,15 @@ const END_POINT = "game";
 
 export const getGameList = async (time, num, keyword) => {
   try {
-    const response = await api.get(
-      `${END_POINT}/list?time=${time}&num=${num}&keyword=${keyword}`
-    );
+    const response = await api({
+      method: "get",
+      url: `${END_POINT}/list`,
+      params: {
+        time: time,
+        num: num,
+        keyword: keyword,
+      },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -14,14 +20,13 @@ export const getGameList = async (time, num, keyword) => {
   }
 };
 
-export const getGameDetail = async (game_id) => {
+export const getGameDetail = async (gameId) => {
   try {
-    // const response = await api.get(`${END_POINT}/detail?game_id=${game_id}`);
     const response = await api({
       method: "get",
       url: `${END_POINT}/detail`,
       params: {
-        game_id: game_id,
+        game_id: gameId,
       },
     });
     console.log(response.data);
