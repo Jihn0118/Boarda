@@ -70,7 +70,7 @@ public class MyPageController {
                 }
                 profileDto.setReviews(reviews);
 
-                dbMoims = moimService.getMyMoimList(myPageService.idToNum(id));
+                dbMoims = moimService.getMyMoimList(id);
                 profileDto.setMoimList(dbMoims); //모임 리스트 넣기
 
                 Moim dbMoim = null;

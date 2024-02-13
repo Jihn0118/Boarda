@@ -24,10 +24,10 @@ public class AlarmServiceImpl implements AlarmService {
     private final AlarmRepository alarmRepository;
     private final AlarmCustomRepository alarmCustomRepository;
     private final MemberCustomRepository memberCustomRepository;
-    private static Map<Integer, Integer> alarmCounts = new HashMap<>();
+    private static final Map<String, Integer> alarmCounts = new HashMap<>();
 
     @Override
-    public Integer readAlarm(Integer id, Integer userNum) {
+    public Integer readAlarm(Integer id, String memberId) {
         Alarm alarm = alarmCustomRepository.findById(id);
 
         if (alarm == null) {
@@ -41,18 +41,18 @@ public class AlarmServiceImpl implements AlarmService {
             return 2;
         }
 
-        if (alarmCounts.containsKey(userNum)) {
-            int currentCount = alarmCounts.get(userNum);
+        if (alarmCounts.containsKey(memberId)) {
+            int currentCount = alarmCounts.get(memberId);
 
             if (currentCount > 0) {
-                alarmCounts.put(userNum, currentCount - 1);
+                alarmCounts.put(memberId, currentCount - 1);
             }
         }
 
-        SseEmitter sseEmitter = AlarmController.sseEmitters.get(userNum);
+        SseEmitter sseEmitter = AlarmController.sseEmitters.get(memberId);
 
         try {
-            sseEmitter.send(SseEmitter.event().name("alarmCount").data(alarmCounts.get(userNum)));
+            sseEmitter.send(SseEmitter.event().name("alarmCount").data(alarmCounts.get(memberId)));
         } catch (IOException e) {
             return 3;
         }
@@ -61,7 +61,7 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
-    public SseEmitter subscribe(int userNum) {
+    public SseEmitter subscribe(String memberId) {
         SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
 
         try {
@@ -71,40 +71,36 @@ public class AlarmServiceImpl implements AlarmService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AlarmController.sseEmitters.put(userNum, sseEmitter);
+        AlarmController.sseEmitters.put(memberId, sseEmitter);
 
-        sseEmitter.onCompletion(() -> AlarmController.sseEmitters.remove(userNum));
-        sseEmitter.onTimeout(() -> AlarmController.sseEmitters.remove(userNum));
-        sseEmitter.onError((e) -> AlarmController.sseEmitters.remove(userNum));
+        sseEmitter.onCompletion(() -> AlarmController.sseEmitters.remove(memberId));
+        sseEmitter.onTimeout(() -> AlarmController.sseEmitters.remove(memberId));
+        sseEmitter.onError((e) -> AlarmController.sseEmitters.remove(memberId));
 
         return sseEmitter;
     }
 
     @Override
-    public List<Alarm> getAlarmList(int userNum) {
-        return alarmCustomRepository.findAllByMember(userNum);
+    public List<Alarm> getAlarmList(String memberId) {
+        return alarmCustomRepository.findAllByMember(memberId);
     }
 
-    @Override
-    public Integer getCount(int userNum) {
-        return null;
-    }
 
     @Override
-    public Integer alarmMessage(int userNum) {
-        Member member = memberCustomRepository.findMemberByNum(userNum);
+    public Integer alarmMessage(String memberId) {
+        Member member = memberCustomRepository.findMemberById(memberId);
 
         if (member == null) {
             return 1;       // 해당 유저는 없음
         }
-        Alarm recieveAlarm = alarmCustomRepository.findFirstByRecieverOrderByCreatedAtDesc(userNum);
+        Alarm recieveAlarm = alarmCustomRepository.findFirstByRecieverOrderByCreatedAtDesc(memberId);
 
         if (recieveAlarm == null) {
             return 2;       // 알림이 1개도 없음
         }
 
-        if (AlarmController.sseEmitters.containsKey(userNum)) {
-            SseEmitter sseEmitter = AlarmController.sseEmitters.get(userNum);
+        if (AlarmController.sseEmitters.containsKey(memberId)) {
+            SseEmitter sseEmitter = AlarmController.sseEmitters.get(memberId);
             try {
                 Map<String, String> eventData = new HashMap<>();
                 eventData.put("alarm", "알림이 왔습니다.");
@@ -113,10 +109,14 @@ public class AlarmServiceImpl implements AlarmService {
                 eventData.put("link", recieveAlarm.getLink());
                 sseEmitter.send(SseEmitter.event().name("addAlarm").data(eventData));
             } catch (Exception e) {
-                AlarmController.sseEmitters.remove(userNum);
+                AlarmController.sseEmitters.remove(memberId);
             }
         }
 
         return 0;
+    }
+    @Override
+    public Long getCount(String memberId) {
+        return alarmCustomRepository.getAlarmCount(memberId);
     }
 }

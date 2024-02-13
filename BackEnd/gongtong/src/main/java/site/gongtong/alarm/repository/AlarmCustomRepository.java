@@ -5,9 +5,11 @@ import site.gongtong.alarm.model.Alarm;
 import java.util.List;
 
 public interface AlarmCustomRepository {
-    Alarm findFirstByRecieverOrderByCreatedAtDesc(int userNum);
+    Alarm findFirstByRecieverOrderByCreatedAtDesc(String memberId);
 
     Alarm findById(Integer id);
 
-    List<Alarm> findAllByMember(int userNum);
+    List<Alarm> findAllByMember(String memberId);
+
+    Long getAlarmCount(String memberId);
 }

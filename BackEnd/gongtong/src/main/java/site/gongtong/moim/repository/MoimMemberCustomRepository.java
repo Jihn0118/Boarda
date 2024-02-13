@@ -8,7 +8,7 @@ import site.gongtong.moim.model.MoimMember;
 import java.util.List;
 
 public interface MoimMemberCustomRepository {
-    Integer countMoimsByMemberIdAndStatus(@Param("memberId") int memberId);
+    Integer countMoimsByMemberIdAndStatus(@Param("memberId") String memberId);
 
     Integer countMoimMemberByMoimId(Integer moimId);
 

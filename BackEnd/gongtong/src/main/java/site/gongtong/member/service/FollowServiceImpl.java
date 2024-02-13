@@ -4,10 +4,12 @@ import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import site.gongtong.alarm.model.Alarm;
+import site.gongtong.alarm.repository.AlarmRepository;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.FollowRepository;
-import site.gongtong.member.repository.MyPageRepository;
+import site.gongtong.member.repository.MyPageCustomRepository;
 
 import java.util.List;
 
@@ -16,7 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
-    private final MyPageRepository myPageRepository;
+    private final MyPageCustomRepository myPageRepository;
+    private final AlarmRepository alarmRepository;
 
     @Override
     public Follow findBy2Nums(int myNum, int yourNum) {
@@ -39,12 +42,12 @@ public class FollowServiceImpl implements FollowService {
         Member memMe = myPageRepository.findById(myId);
         Member memYou = myPageRepository.findByNickname(yourNickname);
 
-        if(memMe == null || memYou == null || memMe == memYou) {
+        if (memMe == null || memYou == null || memMe == memYou) {
             System.out.println("nononono MEMBER FOLLOW");
             return 0;
         }
         try {
-            if( followRepository.existRelation(memMe.getNum(), memYou.getNum()) >= 1) {
+            if (followRepository.existRelation(memMe.getNum(), memYou.getNum()) >= 1) {
                 System.out.println("ALREADY FOLLOW/BLOCK");
                 return 0;
             }
@@ -53,11 +56,42 @@ public class FollowServiceImpl implements FollowService {
             return 2;
         }
 
-        Follow newRelation = followRepository.save(new Follow(memMe, flag, memYou));
-        if (newRelation == null){
+        Follow newRelation;
+
+        try {
+            newRelation = followRepository.save(new Follow(memMe, flag, memYou));
+        } catch (RuntimeException e) {
+            System.out.println("팔로우 중 문제 생김");
             return 2;
         }
 
+        Follow reverseRelation = followRepository.findBy2Nums(memYou.getNum(), memMe.getNum());
+        if (newRelation.getFlag() == 'F') {
+            if (reverseRelation != null) {
+                Alarm alarm1 = Alarm.builder()
+                        .link(null)
+                        .isRead(false)
+                        .member(memYou)
+                        .content(memMe.getNickname() + "님과 당신이 맞팔 했습니다.")
+                        .build();
+                Alarm alarm = Alarm.builder()
+                        .link(null)
+                        .isRead(false)
+                        .member(memMe)
+                        .content(memYou.getNickname() + "님과 당신이 맞팔 했습니다.")
+                        .build();
+                alarmRepository.save(alarm);
+                alarmRepository.save(alarm1);
+            } else {
+                Alarm alarm = Alarm.builder()
+                        .link(null)
+                        .isRead(false)
+                        .member(memYou)
+                        .content(memMe.getNickname() + "님이 당신을 팔로우 했습니다.")
+                        .build();
+                alarmRepository.save(alarm);
+            }
+        }
         return 1;
     }
 

@@ -17,13 +17,13 @@ public class MoimMemberCustomRepositoryImpl implements MoimMemberCustomRepositor
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Integer countMoimsByMemberIdAndStatus(int memberId) {
+    public Integer countMoimsByMemberIdAndStatus(String memberId) {
         QMoimMember moimMember = QMoimMember.moimMember;
 
         return (int) (long) jpaQueryFactory
                 .select(moimMember.count())
                 .from(moimMember)
-                .where(moimMember.member.num.eq(memberId), moimMember.moim.status.eq('P'))
+                .where(moimMember.member.id.eq(memberId), moimMember.moim.status.eq('P'))
                 .fetchOne();
     }
 
@@ -51,7 +51,6 @@ public class MoimMemberCustomRepositoryImpl implements MoimMemberCustomRepositor
     @Override
     public List<MoimMember> findMoimMembersByMoim(Moim moim) {
         QMoimMember moimMember = QMoimMember.moimMember;
-        QMember qMember = QMember.member;
 
         return jpaQueryFactory.selectFrom(moimMember)
                 .where(moimMember.moim.eq(moim))

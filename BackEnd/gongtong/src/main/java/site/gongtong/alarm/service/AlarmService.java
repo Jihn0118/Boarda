@@ -6,9 +6,9 @@ import site.gongtong.alarm.model.Alarm;
 import java.util.List;
 
 public interface AlarmService {
-    SseEmitter subscribe(int usernum);
-    Integer readAlarm(Integer id, Integer userNum);
-    List<Alarm> getAlarmList(int userNum);
-    Integer getCount(int userNum);
-    Integer alarmMessage(int userNum);
+    SseEmitter subscribe(String memberId);
+    Integer readAlarm(Integer id, String memberId);
+    List<Alarm> getAlarmList(String memberId);
+    Long getCount(String memberId);
+    Integer alarmMessage(String memberId);
 }

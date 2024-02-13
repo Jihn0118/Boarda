@@ -15,13 +15,13 @@ public class AlarmCustomRepositoryImpl implements AlarmCustomRepository{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Alarm findFirstByRecieverOrderByCreatedAtDesc(int userNum) {
+    public Alarm findFirstByRecieverOrderByCreatedAtDesc(String memberId) {
         QAlarm alarm = QAlarm.alarm;
         QMember member = QMember.member;
         return jpaQueryFactory
                 .selectFrom(alarm)
                 .join(alarm.member, member)
-                .where(member.num.eq(userNum))
+                .where(member.id.eq(memberId))
                 .orderBy(alarm.createdAt.desc())
                 .fetchFirst();
     }
@@ -36,14 +36,26 @@ public class AlarmCustomRepositoryImpl implements AlarmCustomRepository{
     }
 
     @Override
-    public List<Alarm> findAllByMember(int userNum) {
+    public List<Alarm> findAllByMember(String memberId) {
         QAlarm alarm = QAlarm.alarm;
         QMember member = QMember.member;
         return jpaQueryFactory
                 .selectFrom(alarm)
                 .join(alarm.member, member)
-                .where(member.num.eq(userNum))
+                .where(member.id.eq(memberId))
                 .orderBy(alarm.createdAt.desc())
                 .fetch();
+    }
+
+    @Override
+    public Long getAlarmCount(String memberId) {
+        QAlarm alarm = QAlarm.alarm;
+        QMember member = QMember.member;
+        return jpaQueryFactory
+                .select(alarm.count())
+                .from(alarm)
+                .join(alarm.member, member)
+                .where(member.id.eq(memberId).and(alarm.isRead.eq(false)))
+                .fetchOne();
     }
 }

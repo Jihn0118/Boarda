@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.alarm.model.Alarm;
-import site.gongtong.alarm.repository.AlarmCustomRepository;
 import site.gongtong.alarm.repository.AlarmRepository;
 import site.gongtong.alarm.service.AlarmService;
 import site.gongtong.member.model.Member;
@@ -37,13 +36,13 @@ public class MoimServiceImpl implements MoimService {
     }
 
     @Override
-    public Integer checkRoom(int userNum) {
-        return moimMemberCustomRepository.countMoimsByMemberIdAndStatus(userNum);
+    public Integer checkRoom(String memberId) {
+        return moimMemberCustomRepository.countMoimsByMemberIdAndStatus(memberId);
     }
 
     @Override
-    public Integer createRoom(Moim moim, int userNum) {
-        Member member = memberCustomRepository.findMemberByNum(userNum);
+    public Integer createRoom(Moim moim, String memberId) {
+        Member member = memberCustomRepository.findMemberById(memberId);
 
         if(member == null){
             return 1;
@@ -117,8 +116,6 @@ public class MoimServiceImpl implements MoimService {
             List<MoimMember> moimMemberList = moimMemberCustomRepository.findMoimMembersByMoim(moim);
             List<Alarm> alarms = new ArrayList<>();
 
-            moimMemberList.add(addMoimMember);
-
             for (MoimMember mm: moimMemberList) {
                 Member member = mm.getMember();
 
@@ -132,7 +129,7 @@ public class MoimServiceImpl implements MoimService {
                 alarms.add(addAlarm);
 
                 // SSE 알림
-                alarmService.alarmMessage(member.getNum());
+                alarmService.alarmMessage(member.getId());
             }
             alarmRepository.saveAll(alarms);
         }
@@ -140,13 +137,36 @@ public class MoimServiceImpl implements MoimService {
     }
 
     @Override
-    public List<Moim> getMyMoimList(int userNum) {
-        return moimCustomRepository.findMoimListByMemberNum(userNum);
+    public List<Moim> getMyMoimList(String memberId) {
+        return moimCustomRepository.findMoimListByMemberId(memberId);
     }
 
     @Override
-    public Moim getMyMoim(int userNum) {
-        return moimCustomRepository.findMoimByMemberNum(userNum);
+    public Moim getMyMoim(String memberId) {
+        return moimCustomRepository.findMoimByMemberId(memberId);
+    }
+
+    @Override
+    public int inviteFriend(String memberId, String friendId, int moimId) {
+        Member friend = memberCustomRepository.findById(friendId);
+        Moim moim = moimCustomRepository.findById(moimId);
+        
+        if(friend != null && moim != null){
+            Alarm addAlarm = Alarm.builder()
+                    .content("")
+                    .member(friend)
+                    .isRead(false)
+                    .content(memberId + "님이 " + moim.getTitle() + " 방에 초대하셨습니다.")
+                    .link("no link")
+                    .build();
+
+            alarmRepository.save(addAlarm);
+
+            return 0;
+        } else {
+            return 1;       // 프렌드나 모임이 널임
+        }
+
     }
 
     @Override

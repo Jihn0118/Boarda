@@ -2,6 +2,8 @@ package site.gongtong.security.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import site.gongtong.member.model.MemberDto;
@@ -130,5 +132,28 @@ public class TokenUtils {
     public static String getUserIdFromToken(String token) { //외부로 가지고 나갈 수 있게 public
         Claims claims = getClaimsFromToken(token);
         return claims.getSubject();
+    }
+
+    public static String fetchToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String jwt = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("jwt")) {
+                    jwt = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        return jwt;
+    }
+
+    //JWT에서 추출한 id값과 파라미터로 들어온 id값이 같은지 확인
+    public static boolean isSameId(String jwt, String id) {
+        // JWT 검증 및 클레임에서 현재 로그인한 사용자의 ID 추출
+        String loggedInUserId = TokenUtils.getUserIdFromToken(jwt);
+        return id.equals(loggedInUserId);
     }
 }

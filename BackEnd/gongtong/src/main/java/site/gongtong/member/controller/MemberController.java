@@ -113,9 +113,8 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(HttpServletRequest httprequest,
                                                      HttpServletResponse httpresponse,
-//                                                    Authentication authentication,
                                             @RequestBody LoginRequest loginRequest) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         ResponseEntity<Map<String, Object>> response;
 
         MemberDetails dbMember;
