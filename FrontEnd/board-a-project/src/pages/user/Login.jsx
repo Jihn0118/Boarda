@@ -21,8 +21,7 @@ export default function Login() {
     };
     try {
       const res = await userAPI.login(loginData);
-      console.log(res.data);
-      let user = res.data.memberinfo;
+      let user = res.data.memberInfo;
       // 스프링 HttpStatus.OK
       if (res.status === 200) {
         let newLoginUser = {
@@ -37,11 +36,15 @@ export default function Login() {
           userName: user.username,
         };
         setLoginUser(newLoginUser);
+        localStorage.setItem("loginUser", JSON.stringify(newLoginUser));
+        alert("로그인 완료!");
+        navigate("/home");
       } else {
         alert("로그인 실패!");
         navigate("/login");
       }
     } catch (error) {
+      console.log(error);
       alert("로그인 실패!");
       console.log("로그인 에러 발생");
       navigate("/login");

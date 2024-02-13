@@ -26,7 +26,7 @@ const StyledHeader = styled.header`
     transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
   }
   a:hover {
-    background-color: #8976FD; /* 호버 시 배경색 변경 */
+    background-color: #8976fd; /* 호버 시 배경색 변경 */
     color: white;
   }
 
@@ -41,7 +41,7 @@ const StyledHeader = styled.header`
   }
   /* 호버 효과 */
   .login_btn:hover {
-    background-color: #8976FD; /* 호버 시 배경색 변경 */
+    background-color: #8976fd; /* 호버 시 배경색 변경 */
     color: white;
   }
 `;
@@ -49,7 +49,7 @@ const StyledHeader = styled.header`
 const ItemContainer = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const HeaderLogo = styled.div`
   // flex: 1 0 auto;
@@ -68,6 +68,18 @@ const HeaderLogo = styled.div`
 function LoginUserDiv() {
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
 
+  const logoutUser = {
+    id: "",
+    password: "",
+    nickname: "",
+    birth: "",
+    gender: "",
+    profileImage: "",
+    jwt: "",
+    num: "",
+    userName: "",
+  };
+
   return (
     <>
       <p>{loginUser.nickname}님 환영합니다</p>
@@ -76,9 +88,8 @@ function LoginUserDiv() {
       <button
         onClick={() => {
           // 로그아웃 수행시
-          sessionStorage.clear; // 세션스토리지 비우기
-          setLoginUser({}); // 로그인 유저 빈객체로 바꾸기
-          localStorage.removeItem("jwt");
+          setLoginUser(logoutUser); // 로그인유저 정보 비우기
+          localStorage.clear();
           alert("로그아웃 되었습니다.");
           window.location.href = "/home";
         }}
@@ -93,6 +104,7 @@ function LoginUserDiv() {
 export default function Header() {
   const loginUser = useRecoilValue(loginUserState);
   const navigate = useNavigate();
+  console.log(loginUser);
 
   return (
     <StyledHeader>
@@ -108,12 +120,17 @@ export default function Header() {
         <Link to="/moim/">모임</Link>
         <Link to="/game">게임</Link>
         <Link to="/cafe">매장</Link>
-        <Link to="/board">게시판</Link>      
+
+        <Link to="/board">게시판</Link>
       </ItemContainer>
 
       <ItemContainer>
-        {!loginUser.id && <Link to="/login" className="login_btn">로그인</Link>}
-        {loginUser.id && LoginUserDiv}
+        {!loginUser.id && (
+          <Link to="/login" className="login_btn">
+            로그인
+          </Link>
+        )}
+        {loginUser.id && <LoginUserDiv></LoginUserDiv>}
 
         <Link to="/my-page/2">마이페이지</Link>
       </ItemContainer>
