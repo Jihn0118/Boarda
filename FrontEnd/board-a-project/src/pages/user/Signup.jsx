@@ -11,6 +11,7 @@ import {
   Card,
 } from "@mui/material";
 import { userAPI } from "../../api/userAPI";
+import { useNavigate } from "react-router";
 
 export default function SignUp() {
   const [email, setEmail] = useState();
@@ -22,6 +23,7 @@ export default function SignUp() {
 
   const [isEmailOk, setIsEmailOk] = useState(false);
   const [isNicknameOk, setIsNicknameOk] = useState(false);
+  const navigate = useNavigate();
 
   // 중복 체크했는데 값 바꾸면 ? 다시 체크하도록
   useEffect(() => {
@@ -51,7 +53,7 @@ export default function SignUp() {
     try {
       const res = await userAPI.checkId(email);
       // 스프링에서 HttpStatus.ACCEPTED로 응답 -> 202임
-      console.log(res)
+      console.log(res);
       if (res.status === 202) {
         setIsEmailOk(true);
         alert("사용 가능한 아이디(이메일)입니다.");
@@ -79,6 +81,52 @@ export default function SignUp() {
       console.log("이메일 중복체크 통신오류 발생");
     }
   }
+
+  // 회원가입 요청 날리기
+  // 멤버 컨트롤러 확인 DTO 그대로 보내주기 - 바뀌면 수정필요
+  async function handleSubmit() {
+    if (!isEmailOk) {
+      alert("이메일 중복 확인을 해주세요");
+      return;
+    }
+    if (!isNicknameOk) {
+      alert("닉네임 중복 확인을 해주세요");
+      return;
+    }
+    const formData = new FormData();
+
+    let gen = "M";
+    if (gender !== "male") {
+      gen = "W";
+    }
+
+    let signupValue = {
+      id: email,
+      password: password,
+      nickname: nickname,
+      birth: birthday,
+      gender: gen,
+    };
+
+    formData.append(
+      "signupValue",
+      new Blob([JSON.stringify(signupValue)], { type: "application/json" })
+    );
+
+    formData.append("image", profileImage);
+    try {
+      const res = await userAPI.signUp(formData);
+      console.log(res.data);
+      // https.status.created 임
+      if (res.status === 201) {
+        alert("회원가입 성공!");
+        navigate("/home");
+      } else {
+        alert("회원가입 실패");
+      }
+    } catch (error) {}
+  }
+
   return (
     <Box
       component="form"
@@ -160,7 +208,9 @@ export default function SignUp() {
             style={{ width: "100px", height: "100px" }}
           />
         )}
-        <Button variant="contained">회원가입</Button>
+        <Button variant="contained" onClick={handleSubmit}>
+          회원가입
+        </Button>
       </Card>
     </Box>
   );

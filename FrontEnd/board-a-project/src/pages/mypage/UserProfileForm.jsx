@@ -26,7 +26,8 @@ const UserInfo = () => {
   };
 
   const handleSave = () => {
-    // Save the user profile changes here
+
+
   };
 
   return (
