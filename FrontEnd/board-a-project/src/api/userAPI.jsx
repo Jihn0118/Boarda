@@ -3,6 +3,16 @@ import api from "./api";
 const END_POINT = "member";
 
 export const userAPI = {
+  // 로그인 요청 POST /login
+
+  login(loginData) {
+    return api({
+      method: "post",
+      url: `${END_POINT}/login`,
+      data: loginData,
+    });
+  },
+
   // 회원가입 @PostMapping("/signup")
   // 이미지까지 싹 합쳐서 formData로 보내기
   signUp(formData) {
@@ -37,22 +47,6 @@ export const userAPI = {
       },
     });
   },
-};
-
-// --- 자체 로그인 -------------------------------
-export const login = async (user_info) => {
-  try {
-    const response = await axios.post(`${END_POINT}/member/login`, {
-      // ${END_POINT}/member/login
-      params: {
-        id: user_info.id,
-        password: user_info.pw,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("로그인 중 에러가 발생했습니다:", error);
-  }
 };
 
 // --- SSO 로그인 -------------------------------
