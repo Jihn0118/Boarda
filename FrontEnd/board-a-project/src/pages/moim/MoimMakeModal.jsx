@@ -31,14 +31,6 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
     }));
   };
 
-  // const onTimeChange = timeValue => {
-  //   setTime(timeValue);
-  //   setMoim(prevMoim => ({
-  //     ...prevMoim,
-  //     datetime: moment(date).format('YYYY-MM-DD') + 'T' + timeValue + ':05',
-  //   }));
-  // };
-
   const onTimeChange = timeValue => {
     const newDate = new Date();
     newDate.setHours(timeValue.getHours());
