@@ -23,8 +23,11 @@ const Home = () => {
 
   useEffect(() => {
     // rankData, endSoon axios 요청 해야하지만 일단은 더미데이터
-    const temp = getRankingList();
-    console.log(temp);
+    const fetchData = async () => {
+      const temp = await getRankingList();
+      console.log(temp);
+    };
+    fetchData();
   }, []);
 
   const renderMap = () => {
@@ -41,15 +44,11 @@ const Home = () => {
     }, []);
     return <div id="map" style={{ width: "400px", height: "300px" }}></div>;
   };
-  
-  const getranking() = async(){
-
-  }
 
   return (
     <>
       <Outlet></Outlet>
-      
+
       <div>
         <Carousel>
           <img
