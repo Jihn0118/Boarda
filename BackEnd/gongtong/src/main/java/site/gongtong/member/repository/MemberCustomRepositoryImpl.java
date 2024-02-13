@@ -12,11 +12,11 @@ public class MemberCustomRepositoryImpl implements MemberCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Member findMemberByNum(int userNum) {
+    public Member findMemberById(String memberId) {
         QMember qMember = QMember.member;
 
         return jpaQueryFactory.selectFrom(qMember)
-                .where(qMember.num.eq(userNum))
+                .where(qMember.id.eq(memberId))
                 .fetchOne();
     }
 

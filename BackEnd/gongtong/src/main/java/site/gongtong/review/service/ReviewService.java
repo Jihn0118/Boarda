@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface ReviewService {
 
-    List<Review> getReviews(int userNum);
+    List<Review> getReviews(String memberId);
 
-    Long deleteReview(int reviewId, int userNum);
+    Long deleteReview(int reviewId, String memberId);
 
-    Integer createReview(ReviewDto reviewDto, List<String> gameNameList, List<MultipartFile> files);
+    Integer createReview(ReviewDto reviewDto, List<String> gameNameList, List<MultipartFile> files, String memberId);
 
     List<String> getGameNameList();
 }

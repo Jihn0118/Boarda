@@ -17,7 +17,7 @@ public interface MoimCustomRepository {
 
     List<Moim> findByLocationAndStatusOrderByCount(String location);
 
-    List<Moim> findMoimListByMemberNum(int userNum);
+    List<Moim> findMoimListByMemberId(String memberId);
 
-    Moim findMoimByMemberNum(int userNum);
+    Moim findMoimByMemberId(String memberId);
 }

@@ -5,12 +5,14 @@ import site.gongtong.member.model.Member;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.MoimMember;
 
+import java.util.List;
+
 public interface MoimMemberCustomRepository {
-    Integer countMoimsByMemberIdAndStatus(@Param("memberId") int memberId);
+    Integer countMoimsByMemberIdAndStatus(@Param("memberId") String memberId);
 
     Integer countMoimMemberByMoimId(Integer moimId);
 
     MoimMember findMoimMemberByMoimAndMember(Moim moim, Member member);
 
-
+    List<MoimMember> findMoimMembersByMoim(Moim moim);
 }

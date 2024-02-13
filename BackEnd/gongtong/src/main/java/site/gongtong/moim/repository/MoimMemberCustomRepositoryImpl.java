@@ -4,9 +4,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Member;
+import site.gongtong.member.model.QMember;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.MoimMember;
 import site.gongtong.moim.model.QMoimMember;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -14,13 +17,13 @@ public class MoimMemberCustomRepositoryImpl implements MoimMemberCustomRepositor
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Integer countMoimsByMemberIdAndStatus(int memberId) {
+    public Integer countMoimsByMemberIdAndStatus(String memberId) {
         QMoimMember moimMember = QMoimMember.moimMember;
 
         return (int) (long) jpaQueryFactory
                 .select(moimMember.count())
                 .from(moimMember)
-                .where(moimMember.member.num.eq(memberId), moimMember.moim.status.eq('P'))
+                .where(moimMember.member.id.eq(memberId), moimMember.moim.status.eq('P'))
                 .fetchOne();
     }
 
@@ -43,5 +46,14 @@ public class MoimMemberCustomRepositoryImpl implements MoimMemberCustomRepositor
                 .selectFrom(moimMember)
                 .where(moimMember.moim.eq(moim), moimMember.member.eq(member))
                 .fetchOne();
+    }
+
+    @Override
+    public List<MoimMember> findMoimMembersByMoim(Moim moim) {
+        QMoimMember moimMember = QMoimMember.moimMember;
+
+        return jpaQueryFactory.selectFrom(moimMember)
+                .where(moimMember.moim.eq(moim))
+                .fetch();
     }
 }

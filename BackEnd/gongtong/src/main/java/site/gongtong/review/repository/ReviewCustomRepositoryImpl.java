@@ -25,27 +25,27 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository{
     }
 
     @Override
-    public Long deleteReview(int reviewId, int userNum) {
+    public Long deleteReview(int reviewId, String memberId) {
         QReview removedReview = QReview.review;
 
         return jpaQueryFactory
                 .update(removedReview)
                 .set(removedReview.isRemoved, true)
-                .where(removedReview.member.num.eq(userNum),
+                .where(removedReview.member.id.eq(memberId),
                         removedReview.id.eq(reviewId),
                         removedReview.isRemoved.eq(false))
                 .execute();
     }
 
     @Override
-    public List<Review> findReviewsWithImagesByUserNum(int userNum){
+    public List<Review> findReviewsWithImagesByUserId(String memberId){
         QReview review = QReview.review;
         QImage image = QImage.image;
 
         return jpaQueryFactory.select(review)
                 .from(review)
                 .leftJoin(review.images, image).fetchJoin()
-                .where(review.member.num.eq(userNum))
+                .where(review.member.id.eq(memberId))
                 .orderBy(review.createdAt.desc())
                 .fetch();
     }

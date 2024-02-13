@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,20 +18,41 @@ public class QAlarm extends EntityPathBase<Alarm> {
 
     private static final long serialVersionUID = 244299261L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QAlarm alarm = new QAlarm("alarm");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final StringPath content = createString("content");
+
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final BooleanPath isRead = createBoolean("isRead");
+
+    public final StringPath link = createString("link");
+
+    public final site.gongtong.member.model.QMember member;
 
     public QAlarm(String variable) {
-        super(Alarm.class, forVariable(variable));
+        this(Alarm.class, forVariable(variable), INITS);
     }
 
     public QAlarm(Path<? extends Alarm> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QAlarm(PathMetadata metadata) {
-        super(Alarm.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QAlarm(PathMetadata metadata, PathInits inits) {
+        this(Alarm.class, metadata, inits);
+    }
+
+    public QAlarm(Class<? extends Alarm> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.member = inits.isInitialized("member") ? new site.gongtong.member.model.QMember(forProperty("member")) : null;
     }
 
 }

@@ -7,13 +7,28 @@ use boarda;
 CREATE TABLE `member` (
 	`num`	int	PRIMARY KEY auto_increment,
 	`id`	varchar(50)	UNIQUE,
-	`password`	varchar(200)	NULL,
+	`password`	varchar(200) NOT NULL,
 	`nickname`	varchar(20)	UNIQUE,
-	`birth`	varchar(20)	NULL,
+	`birth`	varchar(20) NULL,
 	`gender`	char(1)	NULL,
 	`profile_image`	text	NULL
 );
 
+<<<<<<< HEAD
+#DROP TABLE IF EXISTS `article`;
+
+-- CREATE TABLE `article` (
+-- 	`id`	int	PRIMARY KEY auto_increment,
+-- 	`type`	tinyint	NULL,
+-- 	`title`	varchar(45)	NULL,
+-- 	`content`	text	NULL,
+-- 	`created_at`	timestamp DEFAULT CURRENT_TIMESTAMP ,
+-- 	`status`	char(1)	NULL,
+-- 	`member_id`	int	NOT NULL
+-- );
+
+=======
+>>>>>>> 1dc7afca83aa3714480e2e99dafb2c8cd96a4eac
 #DROP TABLE IF EXISTS `boardgame`;
 
 CREATE TABLE `boardgame` (
@@ -41,8 +56,8 @@ CREATE TABLE `image` (
 
 CREATE TABLE `cafe` (
 	`id`	int	PRIMARY KEY auto_increment,
-	`brand`	varchar(10)	NULL,
-	`branch`	varchar(10)	NULL,
+	`brand`	VARCHAR(30)	NULL,
+	`branch`	VARCHAR(30)	NULL,
 	`location`	varchar(100)	NULL,
 	`contact`	varchar(20)	NULL,
 	`image`	text	NULL,
@@ -95,9 +110,10 @@ CREATE TABLE `tag` (
 
 CREATE TABLE `alarm` (
 	`id`	int	PRIMARY KEY auto_increment,
+	`link` VARCHAR(255) NULL,
 	`content`	text	NULL,
 	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
-	`read_at`	tinyint	NULL,
+	`is_read`	tinyint NOT NULL,
 	`member_num`	int	NOT NULL
 );
 
@@ -106,7 +122,7 @@ CREATE TABLE `alarm` (
 CREATE TABLE `moim` (
 	`id`	int	PRIMARY KEY auto_increment,
 	`status`	char(1)	NULL,
-	`leader_nickname`	varchar(20)	NULL,
+	`leader_nickname`	varchar(20)	NOT NULL,
 	`datetime`	datetime	NULL,
 	`location`	varchar(100)	NULL,
 	`number`	int	NULL,
