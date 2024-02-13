@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { gameListState } from "../../recoil/atoms/gameState";
 import GameDetail from "./GameDetail";
+import BackToTop from "../../components/ScrollTop";
 
 import { CardGalaxy } from "../../mui-treasury/card-galaxy/CardGalaxy";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import AccessibilityIcon from "@mui/icons-material/Accessibility";
 import SearchIcon from "@mui/icons-material/Search";
 import Grid from "@material-ui/core/Grid";
+
 
 const GameList = () => {
   const [gameList, setGameList] = useRecoilState(gameListState);
@@ -162,12 +164,14 @@ const GameList = () => {
         </Grid>
       </div>
 
-      <button
-        onClick={() => window.scrollTo(0, 0)}
+      {/* <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         style={{ position: "fixed", bottom: "50px", left: "50px" }}
       >
         맨 위로
-      </button>
+      </button> */}
+
+      <BackToTop/>
 
       {selectedGameId && (
         <GameDetail
