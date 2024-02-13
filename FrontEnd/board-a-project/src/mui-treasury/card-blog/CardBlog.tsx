@@ -124,8 +124,6 @@ export function CardBlog({
                 {difficulty} <br />
                 {year} <br />
                 {age} <br />
-                Git is a distributed version control system. Every dev has a
-                working copy of the code and...
               </InfoSubtitle>
             </Info>
             <div style={{ textAlign: "right" }}>
@@ -146,14 +144,6 @@ export function CardBlog({
           </CardContent>
         </div>
         <Box sx={{ display: "flex", overflow: "auto", pt: 2 }}>
-          {/* {review.map((image, index) => (
-            <img
-              key={index}
-              src={import.meta.env.VITE_S3_BASE + image.images[0]}
-              alt={`review image ${index + 1}`}
-              style={{ width: "120px", height: "120px", marginRight: "10px" }}
-            />
-          ))} */}
           {review.map((reviewObj, index) => (
             <img
               key={index}

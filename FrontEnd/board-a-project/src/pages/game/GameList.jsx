@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getGameList } from "../../api/gameAPI";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { gameListState } from "../../recoil/atoms/gameState";
 import GameDetail from "./GameDetail";
@@ -18,7 +17,6 @@ const GameList = () => {
   const [num, setNum] = useState(0);
   const [time, setTime] = useState(0);
   const [keyword, setKeyword] = useState("");
-  // const navigate = useNavigate();
   const [selectedGameId, setSelectedGameId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -163,13 +161,6 @@ const GameList = () => {
           ))}
         </Grid>
       </div>
-
-      {/* <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        style={{ position: "fixed", bottom: "50px", left: "50px" }}
-      >
-        맨 위로
-      </button> */}
 
       <BackToTop/>
 
