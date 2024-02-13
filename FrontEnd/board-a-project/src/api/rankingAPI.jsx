@@ -4,11 +4,17 @@ const END_POINT = "ranking";
 
 
 const rankingAPI = {
-  getRankingList() {
+  getRankingCafe() {
     return api({
       method: "get",
-      url: `${END_POINT}`,
+      url: `${END_POINT}/cafes`,
     });
   },
+  getRankingGame() {
+    return api({
+      method: "get",
+      url: `${END_POINT}/games`,
+    });
+  }
 }
 export default rankingAPI;
