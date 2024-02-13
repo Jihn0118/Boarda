@@ -11,7 +11,7 @@ const { kakao } = window;
 const Home = () => {
   const [rankGameData, setRankGame] = useState([]);
   const [rankCafeData, setRankCafe] = useState([]);
-  const rankData = ["a", "b", "c", "d", "e"];
+
   const endSoon = [
     {
       title: "레드버튼 강남점",
@@ -47,8 +47,6 @@ const Home = () => {
 
     fetchGameData();
     fetchCafeData();
-    console.log(rankGameData)
-
   }, []);
 
   const renderMap = () => {
