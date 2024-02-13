@@ -20,6 +20,7 @@ export default function SignUp() {
   const [birthday, setBirthday] = useState();
   const [gender, setGender] = useState();
   const [profileImage, setProfileImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const [isEmailOk, setIsEmailOk] = useState(false);
   const [isNicknameOk, setIsNicknameOk] = useState(false);
@@ -40,10 +41,11 @@ export default function SignUp() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setProfileImage(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImage(reader.result);
+        setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -203,7 +205,7 @@ export default function SignUp() {
         />
         {profileImage && (
           <img
-            src={profileImage}
+            src={imagePreview}
             alt="프로필 이미지 미리보기"
             style={{ width: "100px", height: "100px" }}
           />
