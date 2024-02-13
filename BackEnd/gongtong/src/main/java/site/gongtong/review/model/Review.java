@@ -10,7 +10,6 @@ import site.gongtong.member.model.Member;
 import site.gongtong.moim.model.Moim;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

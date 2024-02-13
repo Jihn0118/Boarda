@@ -23,7 +23,7 @@ public class MoimCondition {
     private String location;// 모임 지역
 
     private LocalDateTime datetime; // 모임 할 시간
-    
+
     // private Integer currentNumber;   // 현재 모인 사람 수
 
     //private List<Integer> friends;    // 초대할 친구 id 리스트 Integer 리스트

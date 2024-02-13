@@ -26,23 +26,28 @@ const useStyles = (): CSSObject & Partial<InfoSlotStyles> => {
       fontSize: "1.25rem",
       fontWeight: "bold" as const,
       lineHeight: 1.2,
+      marginBottom: 0, //타이틀, 섭타이틀 간격 줄일지 말지 결정하기
     },
     subtitle: {
       color: "rgba(255, 255, 255, 0.72)",
       lineHeight: 1.5,
       "&:last-child": {
-        marginTop: "1rem",
+        marginTop: "0",
       },
     },
   };
 };
 
 const StyledCard = styled(Card)({
+  transition: 'transform 0.3s',
+  '&:hover': {
+    transform: 'scale(1.05)',
+  },
   borderRadius: "1rem",
   boxShadow: "none",
   position: "relative",
-  minWidth: 200,
-  minHeight: 360,
+  minWidth: 150,
+  minHeight: 210,
   "&:after": {
     content: '""',
     display: "block",
@@ -68,22 +73,22 @@ const StyledCardMedia = styled(CardMedia)({
 });
 
 const Content = styled("div")(({ theme }) => ({
-  padding: theme.spacing(3, 2),
+  padding: theme.spacing(1.5, 2),
   position: "absolute",
   zIndex: 2,
   bottom: 0,
   width: "100%",
 }));
 
-export function CardGalaxy({ title, subtitle, imageUrl, onClick }) {
+export function CardGalaxy({ title, playTime, minNum, maxNum, imageUrl, onClick }) {
   return (
     <StyledCard onClick={onClick}>
       <StyledCardMedia image={imageUrl} />
       <Content>
         <Info useStyles={useStyles}>
-          <InfoEyebrow>Boarda</InfoEyebrow>
+          {/* <InfoEyebrow>Boarda</InfoEyebrow> */}
           <InfoTitle>{title}</InfoTitle>
-          <InfoSubtitle>{subtitle}</InfoSubtitle>
+          <InfoSubtitle>{playTime} 분 | {minNum}~{maxNum} 명</InfoSubtitle>
         </Info>
       </Content>
     </StyledCard>

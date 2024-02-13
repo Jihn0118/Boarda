@@ -20,9 +20,7 @@ public class MoimController {
     private final MoimService moimService;
 
     @GetMapping("/list")
-
     public ResponseEntity<List<Moim>> getSortedList(@RequestParam(name="location") String location, @RequestParam(name="sort") int sorting){
-
         log.info("리스트 정렬 들어옴!!!");
 
         List<Moim> sortedMoimList = moimService.getSortedMoimList(location, sorting);
@@ -82,5 +80,21 @@ public class MoimController {
         log.info("친구 초대하기");
         // 내 아이디랑 친구 아이디 받아서 내 모임에 친구 추가하기
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/mymoimlist")
+    public ResponseEntity<List<Moim>> getMyMoimList(@RequestParam(name="user_num") int userNum){
+        log.info("내 모임 이력 리스트 출력!!");
+        List<Moim> myMoimList = moimService.getMyMoimList(userNum);
+
+        return new ResponseEntity<>(myMoimList, HttpStatus.OK);
+    }
+
+    @GetMapping("/mymoim")
+    public ResponseEntity<Moim> getMyMoim(@RequestParam(name="user_num") int userNum){
+        log.info("현재 내가 참여중인 모임 들어옴!!!");
+        Moim myMoim = moimService.getMyMoim(userNum);
+
+        return new ResponseEntity<>(myMoim, HttpStatus.OK);
     }
 }

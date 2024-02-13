@@ -22,7 +22,7 @@ public class QFollow extends EntityPathBase<Follow> {
 
     public static final QFollow follow = new QFollow("follow");
 
-    public final DateTimePath<java.time.LocalDateTime> createAt = createDateTime("createAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
     public final ComparablePath<Character> flag = createComparable("flag", Character.class);
 

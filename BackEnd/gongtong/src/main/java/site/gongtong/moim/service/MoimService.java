@@ -15,4 +15,8 @@ public interface MoimService {
     Integer createRoom(Moim moim, int userNum);
 
     Integer joinRoom(int moimId, String memberId);
+
+    List<Moim> getMyMoimList(int userNum);
+
+    Moim getMyMoim(int userNum);
 }

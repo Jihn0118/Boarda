@@ -140,17 +140,26 @@ public class MoimServiceImpl implements MoimService {
     }
 
     @Override
-    public List<Moim> getSortedMoimList(String location, int sorting) {
+    public List<Moim> getMyMoimList(int userNum) {
+        return moimCustomRepository.findMoimListByMemberNum(userNum);
+    }
 
+    @Override
+    public Moim getMyMoim(int userNum) {
+        return moimCustomRepository.findMoimByMemberNum(userNum);
+    }
+
+    @Override
+    public List<Moim> getSortedMoimList(String location, int sorting) {
         List<Moim> list;
 
-        // 마감임박순 정렬
-        if (sorting == 2) {           // 마감임박순 정렬
-            list = moimCustomRepository.getMoimWithMemberCountOrder();
-        } else if (sorting == 3) {    // 모집일시 정렬
-            list = moimCustomRepository.findByLocationAndStatusOrderByDatetime(location, 'P');
+
+        if (sorting == 2) {          // 마감임박순 정렬
+            list = moimCustomRepository.findByLocationAndStatusOrderByCount(location);
+        } else if (sorting == 3) {   // 모집일시 정렬
+            list = moimCustomRepository.findByLocationAndStatusOrderByDatetime(location);
         } else {                    // 최신순 정렬
-            list = moimCustomRepository.findByLocationAndStatusOrderByIdDesc(location, 'P');
+            list = moimCustomRepository.findByLocationAndStatusOrderByIdDesc(location);
         }
 
         return list;

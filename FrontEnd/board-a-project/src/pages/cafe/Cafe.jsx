@@ -7,6 +7,10 @@ import { useRecoilState } from "recoil";
 import { cafeListState } from "../../recoil/atoms/cafeState";
 
 import { getCafeList } from "../../api/cafeAPI";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import AccessibilityIcon from "@mui/icons-material/Accessibility";
+import SearchIcon from "@mui/icons-material/Search";
+import Grid from "@material-ui/core/Grid";
 
 // 마커 이미지 주소(추후 디자인 변경 필요)
 const imageSrc =
@@ -49,10 +53,13 @@ export default function Cafe() {
         );
 
         for (let i = 0; i < positions.length; i++) {
+          if (positions[i].id <= 20) continue;
+          console.log(positions[i]);
           const temp_point = new kakao.maps.LatLng(
             positions[i].latitude,
             positions[i].longitude
           );
+          // console.log(temp_point);
           const marker = new window.kakao.maps.Marker({
             map: map,
             position: temp_point,
@@ -74,7 +81,7 @@ export default function Cafe() {
           {!!positions &&
             positions.map((data, idx) => (
               <li key={idx}>
-                <div style={{border: "1px solid black"}}>
+                <div style={{ border: "1px solid black" }}>
                   <div>
                     {data.brand} {data.branch}
                   </div>
@@ -91,32 +98,65 @@ export default function Cafe() {
 
   return (
     <div>
-      <div>
-        <form onSubmit={onSubmitHandler}>
-          <label>
-            지역 :
-            <select
-              value={Location}
-              onChange={(e) => setLocation(e.target.value)}
-            >
-              <option value="">상관없음</option>
-              <option value="강남구">강남구</option>
-              <option value="마포구">마포구</option>
-            </select>
-          </label>
-          <label>
-            브랜드 :
-            <select value={Brand} onChange={(e) => setBrand(e.target.value)}>
-              <option value="">상관없음</option>
-              <option value="레드버튼">레드버튼</option>
-              <option value="홈즈앤루팡">홈즈앤 루팡</option>
-              <option value="히어로">히어로 보드게임카페</option>
-            </select>
-          </label>
-          <button>검색</button>
-        </form>
+      <div className="mt-4">
+        <div
+          className="flex flex-col justify-start items-center mx-auto mb-4"
+          style={{ maxWidth: "1100px" }}
+        >
+          <div class="py-5">
+            <form onSubmit={onSubmitHandler}>
+              <label
+                className="relative block flex-grow mr-2 text-center"
+                style={{ flex: "0.3" }}
+              >
+                <span className="sr-only">Time:</span>
+                <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <AccessAlarmIcon style={{ color: "#718096" }} />
+                </span>
+                <select
+                  value={Location}
+                  onChange={(e) => handleTimeChange(e.target.value)}
+                  className="placeholder:italic placeholder:text-slate-400 block w-full bg-white border border-slate-300 rounded-md py-2 pl-10 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                >
+                  <option value="0">전체</option>
+                  <option value="15">0 ~ 15 분</option>
+                  <option value="30">16 ~ 30 분</option>
+                  <option value="45">31 ~ 45 분</option>
+                  <option value="60">46 ~ 60 분</option>
+                  <option value="75">61 ~ 75 분</option>
+                  <option value="90">76 ~ 90 분</option>
+                  <option value="105">91 분 이상</option>
+                </select>
+              </label>
+              <label>
+                지역 :
+                <select
+                  value={Location}
+                  onChange={(e) => setLocation(e.target.value)}
+                >
+                  <option value="">전체</option>
+                  <option value="강남구">강남구</option>
+                  <option value="마포구">마포구</option>
+                </select>
+              </label>
+              <label>
+                브랜드 :
+                <select
+                  value={Brand}
+                  onChange={(e) => setBrand(e.target.value)}
+                >
+                  <option value="">전체</option>
+                  <option value="레드버튼">레드버튼</option>
+                  <option value="홈즈앤루팡">홈즈앤 루팡</option>
+                  <option value="히어로">히어로 보드게임카페</option>
+                </select>
+              </label>
+              <button>검색</button>
+            </form>
+          </div>
+          <div>{renderContent()}</div>
+        </div>
       </div>
-      <div>{renderContent()}</div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 package site.gongtong.member.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Member;
@@ -18,7 +17,7 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Integer MemberidToNum(String user_id) {
+    public int MemberidToNum(String user_id) {
         QMember member = QMember.member;
 
         return jpaQueryFactory
@@ -26,6 +25,19 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
                 .from(member)
                 .where(member.id.eq(user_id))
                 .fetchOne();
+    }
+
+    @Override
+    public List<Review> findAllReviews(int user_num) {
+        QReview review = QReview.review;
+
+        System.out.println("repo usernum: "+ user_num);
+
+        return jpaQueryFactory
+                .selectFrom(review)
+                .where(review.member.num.eq(user_num)
+                        .and(review.isRemoved.eq(false)))
+                .fetch();
     }
 
     @Override
@@ -61,7 +73,7 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     }
 
     @Override
-    public Integer modifyPwd(String id, String newEncodedPwd) {
+    public int modifyPwd(String id, String newEncodedPwd) {
         //성공이면 1 반환, 실패면 0 반환
         QMember member = QMember.member;
         return (int) jpaQueryFactory
@@ -72,7 +84,7 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     }
 
     @Override
-    public Integer delete(String id) {
+    public int delete(String id) {
         QMember member = QMember.member;
 
         return (int) jpaQueryFactory
