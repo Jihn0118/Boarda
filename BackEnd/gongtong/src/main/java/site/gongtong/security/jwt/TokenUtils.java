@@ -129,6 +129,6 @@ public class TokenUtils {
      */
     public static String getUserIdFromToken(String token) { //외부로 가지고 나갈 수 있게 public
         Claims claims = getClaimsFromToken(token);
-        return claims.getSubject().toString();
+        return claims.getSubject();
     }
 }

@@ -49,8 +49,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 "/api/mypage/forgetpwd",
                 "/api/mypage/profile",
 
-                "/api/game/list",
-                "/api/game/list",
+                "/api/game/detail",
                 "/api/game/list",
                 "/api/cafe/list",
                 "/api/cafe/detail",

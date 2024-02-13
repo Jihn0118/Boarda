@@ -14,18 +14,6 @@ CREATE TABLE `member` (
 	`profile_image`	text	NULL
 );
 
-#DROP TABLE IF EXISTS `article`;
-
-CREATE TABLE `article` (
-	`id`	int	PRIMARY KEY auto_increment,
-	`type`	tinyint	NULL,
-	`title`	varchar(45)	NULL,
-	`content`	text	NULL,
-	`created_at`	timestamp DEFAULT CURRENT_TIMESTAMP ,
-	`status`	char(1)	NULL,
-	`member_id`	int	NOT NULL
-);
-
 #DROP TABLE IF EXISTS `boardgame`;
 
 CREATE TABLE `boardgame` (
@@ -40,41 +28,12 @@ CREATE TABLE `boardgame` (
 	`image`	text	NULL
 );
 
-#DROP TABLE IF EXISTS `chattingroom`;
-
-CREATE TABLE `chatting_room` (
-	`room_id`	int	PRIMARY KEY auto_increment,
-	`room_name`	varchar(50)	NULL,
-	`updated_at`	timestamp	DEFAULT CURRENT_TIMESTAMP
-);
-
-#DROP TABLE IF EXISTS `chatting`;
-
-CREATE TABLE `chatting` (
-	`chatting_id`	int PRIMARY KEY auto_increment,
-	`room_id`	int	NOT NULL,
-	`member_id`	int	NOT NULL,
-	`entry_time`	timestamp	DEFAULT CURRENT_TIMESTAMP
-);
-
-#DROP TABLE IF EXISTS `message`;
-
-CREATE TABLE `message` (
-	`message_id`	int	PRIMARY KEY auto_increment,
-	`room_id`	int	NOT NULL,
-	`member_id`	int	NOT NULL,
-	`content`	text	NULL,
-	`created_at`	timestamp	DEFAULT CURRENT_TIMESTAMP,
-	`is_read`	int	NULL
-);
-
 #DROP TABLE IF EXISTS `image`;
 
 CREATE TABLE `image` (
 	`id`	int	PRIMARY KEY auto_increment,
 	`name`	text	NOT NULL,
 	`flag`	char(1)	NULL,
-	`article_id`	int,
 	`review_id`	int
 );
 
@@ -182,34 +141,6 @@ REFERENCES `member` (
 	`num`
 );
 
-ALTER TABLE `chatting` ADD CONSTRAINT `FK_ChattingRoom_TO_Chatting_1` FOREIGN KEY (
-	`room_id`
-)
-REFERENCES `chatting_room` (
-	`room_id`
-);
-
-ALTER TABLE `chatting` ADD CONSTRAINT `FK_Member_TO_Chatting_1` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `member` (
-	`num`
-);
-
-ALTER TABLE `message` ADD CONSTRAINT `FK_Chatting_TO_Message_1` FOREIGN KEY (
-	`room_id`
-)
-REFERENCES `chatting` (
-	`room_id`
-);
-
-ALTER TABLE `message` ADD CONSTRAINT `FK_Chatting_TO_Message_2` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `chatting` (
-	`member_id`
-);
-
 ALTER TABLE `moim_member` ADD CONSTRAINT `FK_Member_TO_MoimMember_1` FOREIGN KEY (
 	`member_id`
 )
@@ -228,12 +159,5 @@ ALTER TABLE `image` ADD CONSTRAINT `FK_Review_TO_Image_1` FOREIGN KEY (
 	`review_id`
 )
 REFERENCES `review` (
-	`id`
-);
-
-ALTER TABLE `image` ADD CONSTRAINT `FK_Article_TO_Image_1` FOREIGN KEY (
-	`article_id`
-)
-REFERENCES `article` (
 	`id`
 );

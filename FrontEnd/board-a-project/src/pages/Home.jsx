@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Carousel } from "@material-tailwind/react";
 import Carousel01 from "../assets/images/Carousel01.png";
 import Carousel02 from "../assets/images/Carousel02.png";
 
+import rankingAPI from "../api/rankingAPI";
+
 const { kakao } = window;
 
 const Home = () => {
-  const rankData = ["알케미스트", "다빈치코드", "블루마블", "블리츠", "크랭크"];
+  const [rankGameData, setRankGame] = useState([]);
+  const [rankCafeData, setRankCafe] = useState([]);
+  const rankData = ["a", "b", "c", "d", "e"];
   const endSoon = [
     {
       title: "레드버튼 강남점",
@@ -20,7 +24,31 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    // rankData, endSoon axios 요청 해야하지만 일단은 더미데이터
+    // rankGameData, rankCafeData, endSoon axios 요청
+    const fetchGameData = async () => {
+      try {
+        const res = await rankingAPI.getRankingGame();
+        // console.log(res);
+        setRankGame(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchCafeData = async () => {
+      try {
+        const res = await rankingAPI.getRankingCafe();
+        // console.log(res);
+        setRankCafe(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchGameData();
+    fetchCafeData();
+    console.log(rankGameData)
+
   }, []);
 
   const renderMap = () => {
@@ -41,10 +69,12 @@ const Home = () => {
   return (
     <>
       <Outlet></Outlet>
+
+      {/* 캐러셀 */}
       <div>
         <Carousel>
           <img
-            src={Carousel01} // src import로 바꾸기
+            src={Carousel01}
             alt="image 1"
             className="h-full w-full object-cover"
           />
@@ -55,65 +85,58 @@ const Home = () => {
           />
         </Carousel>
       </div>
-      <div class="container mx-auto flex py-10">
+
+      {/* 인기매장 */}
+      <div className="container mx-auto flex py-10">
         <div className="w-2/3 px-4">
-          <h1 class="text-2xl font-bold ...">인기 순위</h1>
-
-          <div class="container flex justify-between py-5">
-            <div>
-              <h2 class="text-xl text-center ...">전체</h2>
-              <div class="py-10">
-                <ol>
-                  {rankData &&
-                    rankData.map((data, idx) => (
-                      <li key={idx}>
-                        <span>
-                          {idx + 1}. {data}
-                        </span>
-                      </li>
-                    ))}
-                </ol>
-              </div>
-            </div>
-
-            <div>
-              <h2 class="text-xl text-center...">남성 | 여성</h2>
-              <div class="py-10">
-                <ol>
-                  {rankData &&
-                    rankData.map((data, idx) => (
-                      <li key={idx}>
-                        <span>
-                          {idx + 1}. {data}
-                        </span>
-                      </li>
-                    ))}
-                </ol>
-              </div>
-            </div>
-
-            <div>
-              <h2 class="text-xl ...">10대 | 20대 | 30대↑</h2>
-              <div class="py-10">
-                <ol>
-                  {rankData &&
-                    rankData.map((data, idx) => (
-                      <li key={idx}>
-                        <span>
-                          {idx + 1}. {data}
-                        </span>
-                      </li>
-                    ))}
-                </ol>
-              </div>
+          <h1 className="text-2xl font-bold ...">인기 매장</h1>
+          <div className="container flex justify-center py-5">
+            <div className="container flex justify-between py-5">
+                {rankCafeData &&
+                  rankCafeData.map((data, idx) => (
+                      idx <= 2 && ( // 인기매장 top 3만 표시
+                      <div key = {idx}>
+                        <span>{rankCafeData[idx].cafe.image}</span>
+                        <h2 className="text-xl text-center...">
+                          {rankCafeData[idx].cafe.brand}{" "}
+                          {rankCafeData[idx].cafe.branch}
+                        </h2>
+                        <div className="py-10">
+                          <span>{rankCafeData[idx].cafe.rate} / 5</span>
+                        </div>
+                      </div>
+                      )
+                  ))}
             </div>
           </div>
         </div>
-
+        
+        {/* 마감임박 */}
         <div className="w-1/3 px-4">
-          <h1 class="text-2xl font-bold ...">마감 임박</h1>
-          <div class="container flex justify-center py-5">
+          <h1 className="text-2xl font-bold ...">마감 임박</h1>
+          <div className="container flex justify-center py-5">
             <div>{renderMap()}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 인기게임 */}
+      <div>
+        <h1 className="text-2xl font-bold ...">인기 게임</h1>
+        <div className="container flex justify-center py-5">
+          <div className="container flex justify-between py-5">
+            <div>
+                <ol>
+                  {rankGameData &&
+                    rankGameData.map((data, idx) => (
+                      <li key={idx}>
+                        <span>
+                          {idx + 1}. {data.game.title}
+                        </span>
+                      </li>
+                    ))}
+                </ol>
+            </div>
           </div>
         </div>
       </div>

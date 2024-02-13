@@ -26,7 +26,7 @@ const useStyles = (): CSSObject & Partial<InfoSlotStyles> => {
       fontSize: "1.25rem",
       fontWeight: "bold" as const,
       lineHeight: 1.2,
-      // marginBottom: 0, 타이틀, 섭타이틀 간격 줄일지 말지 결정하기
+      marginBottom: 0, //타이틀, 섭타이틀 간격 줄일지 말지 결정하기
     },
     subtitle: {
       color: "rgba(255, 255, 255, 0.72)",
@@ -47,7 +47,7 @@ const StyledCard = styled(Card)({
   boxShadow: "none",
   position: "relative",
   minWidth: 150,
-  minHeight: 270,
+  minHeight: 210,
   "&:after": {
     content: '""',
     display: "block",
@@ -73,7 +73,7 @@ const StyledCardMedia = styled(CardMedia)({
 });
 
 const Content = styled("div")(({ theme }) => ({
-  padding: theme.spacing(3, 2),
+  padding: theme.spacing(1.5, 2),
   position: "absolute",
   zIndex: 2,
   bottom: 0,

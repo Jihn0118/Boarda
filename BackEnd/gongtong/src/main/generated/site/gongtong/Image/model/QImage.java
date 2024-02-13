@@ -22,8 +22,6 @@ public class QImage extends EntityPathBase<Image> {
 
     public static final QImage image = new QImage("image");
 
-    public final site.gongtong.article.model.QArticle article;
-
     public final ComparablePath<Character> flag = createComparable("flag", Character.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -50,7 +48,6 @@ public class QImage extends EntityPathBase<Image> {
 
     public QImage(Class<? extends Image> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.article = inits.isInitialized("article") ? new site.gongtong.article.model.QArticle(forProperty("article")) : null;
         this.review = inits.isInitialized("review") ? new site.gongtong.review.model.QReview(forProperty("review"), inits.get("review")) : null;
     }
 
