@@ -9,6 +9,7 @@ import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.QMoim;
 import site.gongtong.moim.model.QMoimMember;
 
+
 import java.util.List;
 
 @Repository
@@ -84,7 +85,7 @@ public class MoimCustomRepositoryImpl implements MoimCustomRepository {
     }
 
     @Override
-    public List<Moim> findMoimListByMemberNum(int userNum) {
+    public List<Moim> findMoimListByMemberId(String memberId) {
         QMoim moim2 = QMoim.moim;
         QMoimMember moimMember2 = QMoimMember.moimMember;
 
@@ -92,19 +93,19 @@ public class MoimCustomRepositoryImpl implements MoimCustomRepository {
                 .selectFrom(moim2)
                 .join(moimMember2)
                 .on(moim2.id.eq(moimMember2.moim.id))
-                .where(moimMember2.member.num.eq(userNum))
+                .where(moimMember2.member.id.eq(memberId))
                 .orderBy(moim2.datetime.desc())
                 .fetch();
     }
 
     @Override
-    public Moim findMoimByMemberNum(int userNum) {
+    public Moim findMoimByMemberId(String memberId) {
         QMoim qMoim = QMoim.moim;
         QMoimMember qMoimMember = QMoimMember.moimMember;
 
         return jpaQueryFactory.selectFrom(qMoimMember)
                 .join(qMoimMember.moim, qMoim)
-                .where(qMoimMember.member.num.eq(userNum)
+                .where(qMoimMember.member.id.eq(memberId)
                         .and(qMoim.status.eq('P')))
                 .orderBy(qMoim.createdAt.desc()) //필드명 바꿈 create->created
                 .fetchFirst()

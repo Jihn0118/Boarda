@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import site.gongtong.alarm.model.Alarm;
 
 @Repository
-public interface AlarmRepository extends JpaRepository<Alarm, Long> {
+public interface AlarmRepository extends JpaRepository<Alarm, Integer> {
 }

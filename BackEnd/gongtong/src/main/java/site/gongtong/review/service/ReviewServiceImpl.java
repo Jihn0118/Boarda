@@ -12,7 +12,6 @@ import site.gongtong.cafe.model.Cafe;
 import site.gongtong.cafe.repository.CafeCustomRepository;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.MemberCustomRepository;
-import site.gongtong.member.repository.MemberRepository;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.repository.MoimCustomRepository;
 import site.gongtong.review.model.Review;
@@ -46,23 +45,25 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getReviews(int userNum) {
-        return reviewCustomRepository.findReviewsWithImagesByUserNum(userNum);
+    public List<Review> getReviews(String memberId) {
+        return reviewCustomRepository.findReviewsWithImagesByUserId(memberId);
     }
 
     @Override
     @Transactional
-    public Long deleteReview(int reviewId, int userNum) {
-        return reviewCustomRepository.deleteReview(reviewId, userNum);
+    public Long deleteReview(int reviewId, String memberId) {
+        return reviewCustomRepository.deleteReview(reviewId, memberId);
     }
 
     @Override
     @Transactional
-    public Integer createReview(ReviewDto reviewDto, List<String> gameNameList, List<MultipartFile> files) {
+    public Integer createReview(ReviewDto reviewDto,
+                                List<String> gameNameList,
+                                List<MultipartFile> files, String memberId) {
         // TODO 보드게임 리스트도 받아서 같이 저장해줘야 함
         Moim moim = moimRepository.findById(reviewDto.getMoimId());
         Cafe cafe = cafeCustomRepository.findById(reviewDto.getCafeId());
-        Member member = memberCustomRepository.findMemberByNum(reviewDto.getUserNum());
+        Member member = memberCustomRepository.findMemberById(memberId);
 
         Review review = Review.builder()
                 .content(reviewDto.getContent())
