@@ -60,7 +60,7 @@ public class MyPageController {
             // 정상 처리
             if(dbMember != null) {
                 //멤버 프로필 내용 넣기
-                profileDto.setMember(mapToMember(dbMember, isSameId(fetchToken(request), id)));
+                profileDto.setMember(mapToMember(dbMember, TokenUtils.isSameId(TokenUtils.fetchToken(request), id)));
 
                 //리스트 뽑기
                 reviews = myPageService.getReviewListByNum(myPageService.idToNum(id));
@@ -111,7 +111,7 @@ public class MyPageController {
                                                 @RequestBody EditProfileDto editProfileDto,
                                                 HttpServletRequest request) {
         //본인 아니면 리턴
-        if(!isSameId(fetchToken(request), id)) {
+        if(!TokenUtils.isSameId(TokenUtils.fetchToken(request), id)) {
             return new ResponseEntity<>("권한 없음", HttpStatus.UNAUTHORIZED);
         }
         else {
@@ -209,7 +209,7 @@ public class MyPageController {
     public ResponseEntity<Integer> modifyPwd(@RequestBody PasswordChangeDto passwordChangeDto,
                                              HttpServletRequest request) {
         //토큰에서 추출한 아이디와 dto의 아이디가 같은지 확인, 다르면 return
-        if(!isSameId(fetchToken(request), passwordChangeDto.getId())){
+        if(!TokenUtils.isSameId(TokenUtils.fetchToken(request), passwordChangeDto.getId())){
             return new ResponseEntity<>(-1, HttpStatus.UNAUTHORIZED);
         }
 
@@ -248,9 +248,8 @@ public class MyPageController {
     public ResponseEntity<Integer> deleteMember(@RequestParam String id,
                                                 HttpServletRequest request,
                                                 HttpServletResponse response) {
-
-        String jwt = fetchToken(request);
-        if (!isSameId(jwt, id)) {
+        String jwt = TokenUtils.fetchToken(request);
+        if (!TokenUtils.isSameId(jwt, id)) {
             log.info("id and loggedInUserId is not same");
             return new ResponseEntity<>(0, HttpStatus.UNAUTHORIZED); // 권한 없음 에러 반환
         }
@@ -282,7 +281,7 @@ public class MyPageController {
 
         log.info("DO FOLLOW or BLOCK!!");
 
-        String myId = TokenUtils.getUserIdFromToken(fetchToken(request));
+        String myId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
         int result = followService.doFollow(myId, flag, yourNickname);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -296,7 +295,7 @@ public class MyPageController {
 //
 //        String myId = TokenUtils.getUserIdFromToken(fetchToken(request));
 
-        int myNum = myPageService.idToNum(TokenUtils.getUserIdFromToken(fetchToken(request)));
+        int myNum = myPageService.idToNum(TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request)));
         int yourNum = myPageService.idToNum(followId);
 
         Follow wannaDeleteFollow = followService.findBy2Nums(myNum, yourNum); //팔로워 팔로잉
@@ -315,7 +314,7 @@ public class MyPageController {
     //팔로우&차단 목록
     @GetMapping("/follow")
     public ResponseEntity<List<FollowListDto>> getFollowList (HttpServletRequest request) {
-        String id = TokenUtils.getUserIdFromToken(fetchToken(request));
+        String id = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
         int userNum = -1;
 
         try {
@@ -349,28 +348,5 @@ public class MyPageController {
         }
     }
 
-    //쿠키에서 JWT 추츨하기
-    public String fetchToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        String jwt = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("jwt")) {
-                    jwt = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        return jwt;
-    }
-
-    //JWT에서 추출한 id값과 파라미터로 들어온 id값이 같은지 확인
-    public boolean isSameId(String jwt, String id) {
-        // JWT 검증 및 클레임에서 현재 로그인한 사용자의 ID 추출
-        String loggedInUserId = TokenUtils.getUserIdFromToken(jwt);
-        return id.equals(loggedInUserId);
-    }
 }
 
