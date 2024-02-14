@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import dice from "../../assets/images/dice.png";
 
 export default function GameFeed({info}) {
 
@@ -10,6 +11,7 @@ export default function GameFeed({info}) {
         height="300"
         image={import.meta.env.VITE_S3_BASE + info.images[0].name}
         alt="피드 이미지"
+        onError={(e) =>e.target.src=dice}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
