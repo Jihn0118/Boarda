@@ -174,7 +174,9 @@ public class MemberController {
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         //SSE 연결 닫기
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
-        AlarmController.sseEmitters.get(memberId).complete();
+        if(AlarmController.sseEmitters.get(memberId) != null){
+            AlarmController.sseEmitters.get(memberId).complete();
+        }
 
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
