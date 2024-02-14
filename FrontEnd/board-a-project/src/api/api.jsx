@@ -5,6 +5,8 @@ const HOST = "https://www.boarda.site/api/";
 
 const api = axios.create({
   baseURL: HOST,
+  withCredentials: true,
+
 });
 // 요청 인터셉터
 api.interceptors.request.use(
