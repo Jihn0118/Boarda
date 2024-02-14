@@ -8,7 +8,6 @@ export const moimAPI = {
     return api({
       method: "get",
       url: `${END_POINT}/mymoimlist`,
-      withCredentials: true,
       headers: {
         jwt: jwt,
       },

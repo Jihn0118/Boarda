@@ -23,8 +23,10 @@ export default function FollowBlock() {
   // Flag에 따라 차단/팔로우 디테일로 props 내려줄 것
   let followList = [];
   let blockList = [];
-  followList = follow.filter((e) => e.flag === "F");
-  blockList = follow.filter((e) => e.flag !== "F");
+  if (!!follow) {
+    followList = follow.filter((e) => e.flag === "F");
+    blockList = follow.filter((e) => e.flag !== "F");
+  }
 
-  return <div>{follow.id}</div>;
+  return <div>팔로우차단페이지</div>;
 }
