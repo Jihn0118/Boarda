@@ -118,7 +118,8 @@ export function CardBlog({
                 };
               }}
             >
-              <InfoEyebrow>{year}</InfoEyebrow>
+              
+              <InfoEyebrow></InfoEyebrow>
               <InfoTitle>{title}</InfoTitle>
               <div
                 style={{ borderBottom: "1px solid black", margin: "10px 0" }}
