@@ -74,7 +74,7 @@ const Home = () => {
       </div>
 
       {/* 인기매장 */}
-      <div className="container mx-auto flex py-10">
+      <div className="container mx-auto flex justify-between py-10">
         <div className="w-2/3 px-4">
           <h1 className="text-2xl font-bold ...">인기 매장</h1>
           <div className="container flex justify-center py-5">
