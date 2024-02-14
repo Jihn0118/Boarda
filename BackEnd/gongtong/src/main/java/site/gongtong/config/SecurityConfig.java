@@ -67,6 +67,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList("https://www.boarda.site:3000", "http://localhost:3000", "https://www.boarda.site")); //,   "https://www.boarda.site:3000", "http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Content-Type", "Authorization", "X-XSRF-token", "jwt"));
+        configuration.setExposedHeaders(Arrays.asList("Content-Type", "X-Requested-With", "Authorization"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L); //1시간
 
