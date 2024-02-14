@@ -4,13 +4,10 @@ const END_POINT = "moim";
 
 export const moimAPI = {
   // 지금까지 속했던 모든 모임 목록 get -> /moim/mymoimlist?user_num={user_num}
-  getMoimHistory(userNum, jwt) {
+  getMoimHistory(userNum) {
     return api({
       method: "get",
       url: `${END_POINT}/mymoimlist`,
-      headers: {
-        jwt: jwt,
-      },
       params: {
         user_num: userNum,
       },
@@ -34,7 +31,6 @@ export const getMoimList = async (location, sort) => {
     const response = await api({
       method: "get",
       url: `${END_POINT}/list`,
-      withCredentials:true,
       params: {
         location: location,
         sort: sort,
@@ -53,7 +49,6 @@ export const checkRoom = async (num) => {
     const response = await api({
       method: "get",
       url: `${END_POINT}/checkroom`,
-      withCredentials:true,
       params: {
         num: num,
       },
@@ -69,7 +64,6 @@ export const saveMoim = async (moim) => {
     const response = await api({
       method: "post",
       url: `${END_POINT}/room`,
-      withCredentials:true,
       data: moim,
     });
     return response.data;
@@ -84,7 +78,6 @@ export const joinMoim = async (join) => {
     const response = await api({
       method: "post",
       url: `${END_POINT}/join`,
-      withCredentials:true,
       data: join,
     });
     return response.data;
