@@ -9,6 +9,7 @@ export const userAPI = {
     return api({
       method: "post",
       url: `${END_POINT}/login`,
+      withCredentials: true,
       data: loginData,
     });
   },

@@ -11,8 +11,6 @@ export const moimAPI = {
       withCredentials: true,
       headers: {
         jwt: jwt,
-        "Access-Control-Allow-Origin": `http://localhost:3000`,
-
       },
       params: {
         user_num: userNum,

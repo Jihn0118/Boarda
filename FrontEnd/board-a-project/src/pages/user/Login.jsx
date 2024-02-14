@@ -22,6 +22,7 @@ export default function Login() {
     try {
       const res = await userAPI.login(loginData);
       let user = res.data.memberInfo;
+      console.log(res)
       // 스프링 HttpStatus.OK
       if (res.status === 200) {
         let newLoginUser = {

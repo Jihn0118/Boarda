@@ -22,8 +22,8 @@ export default function GroupHistory() {
       try {
         const jwt = JSON.parse(localStorage.getItem("loginUser")).jwt;
         const res = await moimAPI.getMoimHistory(params.userId,jwt);
+        console.log(res)
         console.log(res.data);
-        console.log(123);
         setHistory(res.data);
       } catch (err) {
         console.log("모임 이력 받아오기 실패");
@@ -46,7 +46,7 @@ export default function GroupHistory() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {history.map((e, index) => (
+          {history && history.map((e, index) => (
             <TableRow
               key={e.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
