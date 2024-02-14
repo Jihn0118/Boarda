@@ -4,13 +4,10 @@ const END_POINT = "moim";
 
 export const moimAPI = {
   // 지금까지 속했던 모든 모임 목록 get -> /moim/mymoimlist?user_num={user_num}
-  getMoimHistory(userNum, jwt) {
+  getMoimHistory(userNum) {
     return api({
       method: "get",
       url: `${END_POINT}/mymoimlist`,
-      headers: {
-        jwt: jwt,
-      },
       params: {
         user_num: userNum,
       },
@@ -38,8 +35,9 @@ export const getMoimList = async (location, sort) => {
         location: location,
         sort: sort,
       },
+      
     });
-    console.log(response.data);
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error("데이터를 가져오는 중 에러 발생:", error);

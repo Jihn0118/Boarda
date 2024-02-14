@@ -1,24 +1,36 @@
-import React from "react";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions } from '@mui/material';
+import boardGame from "../../assets/images/boardGame.png";
 
-export default function GameFeed({info}) {
-
+export default function MultiActionAreaCard({info}) {
   return (
-    <Card sx={{ maxHeight: 700, maxWidth: 300, width: "100%", height: "100%" }}>
-      <CardMedia
-        component="img"
-        height="300"
-        image={import.meta.env.VITE_S3_BASE + info.images[0].name}
-        alt="피드 이미지"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+    <Card sx={{ maxWidth: 345 }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          image={import.meta.env.VITE_S3_BASE + info.images[0].name}
+          alt="green iguana"
+          onError={(e) =>e.target.src=boardGame}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
           {info.cafe.brand}
-        </Typography>
-        <Typography variant="body1" color="text.primary" component="p">
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
           {info.content}
-        </Typography>
-      </CardContent>
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+      </CardActions>
     </Card>
   );
 }
