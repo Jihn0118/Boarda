@@ -46,7 +46,7 @@ export default function MyPage() {
   const params = useParams(); // 파라미터가 키:밸류 형태로 뽑힘
 
   // 넘어온 파라미터와 같으면 본인 마이페이지, 아니면 타인
-  const isLoginUser = params.id === loginUser.id;
+  const isLoginUser = params.userId === loginUser.id;
 
   // 백과 통신하여 param으로 넘어온 유저의 정보 조회
 
