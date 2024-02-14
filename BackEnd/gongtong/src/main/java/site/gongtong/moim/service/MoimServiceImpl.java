@@ -69,6 +69,8 @@ public class MoimServiceImpl implements MoimService {
 
             alarmRepository.save(alarm);
 
+            alarmService.alarmMessage(memberId);
+
             return 0;
         } else {
             System.out.println("에러");
@@ -115,9 +117,12 @@ public class MoimServiceImpl implements MoimService {
         if(isFull){     // 모임이 꽉 찼으니 모임 멤버들에게 알림 생성
             List<MoimMember> moimMemberList = moimMemberCustomRepository.findMoimMembersByMoim(moim);
             List<Alarm> alarms = new ArrayList<>();
+            List<String> memberIdList = new ArrayList<>();
 
             for (MoimMember mm: moimMemberList) {
                 Member member = mm.getMember();
+                String memId = mm.getMember().getId();
+                memberIdList.add(memId);
 
                 Alarm addAlarm = Alarm.builder()
                         .link("다 모인 방의 상세 페이지 화면 링크")
@@ -132,6 +137,10 @@ public class MoimServiceImpl implements MoimService {
                 alarmService.alarmMessage(member.getId());
             }
             alarmRepository.saveAll(alarms);
+
+            for(String memId: memberIdList){
+                alarmService.alarmMessage(memId);
+            }
         }
         return 0;
     }
@@ -161,6 +170,8 @@ public class MoimServiceImpl implements MoimService {
                     .build();
 
             alarmRepository.save(addAlarm);
+
+            alarmService.alarmMessage(friendId);
 
             return 0;
         } else {

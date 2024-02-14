@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.alarm.model.Alarm;
 import site.gongtong.alarm.repository.AlarmRepository;
+import site.gongtong.alarm.service.AlarmService;
 import site.gongtong.member.model.Follow;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.FollowRepository;
@@ -17,6 +18,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class FollowServiceImpl implements FollowService {
+    private final AlarmService alarmService;
     private final FollowRepository followRepository;
     private final MyPageCustomRepository myPageRepository;
     private final AlarmRepository alarmRepository;
@@ -82,6 +84,9 @@ public class FollowServiceImpl implements FollowService {
                         .build();
                 alarmRepository.save(alarm);
                 alarmRepository.save(alarm1);
+
+                alarmService.alarmMessage(memMe.getId());
+                alarmService.alarmMessage(memYou.getId());
             } else {
                 Alarm alarm = Alarm.builder()
                         .link(null)
@@ -90,6 +95,7 @@ public class FollowServiceImpl implements FollowService {
                         .content(memMe.getNickname() + "님이 당신을 팔로우 했습니다.")
                         .build();
                 alarmRepository.save(alarm);
+                alarmService.alarmMessage(memYou.getId());
             }
         }
         return 1;
