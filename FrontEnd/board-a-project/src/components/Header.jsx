@@ -3,41 +3,61 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/userState";
-import boardaLogo from "../assets/images/boardaLogo.png"
-import Alarm from "./Alarm"
-
+import boardaLogo from "../assets/images/boardaLogo.png";
+import bellImg from "../assets/images/bellImg.png";
+import Alarm from "./Alarm";
 
 // 헤더 - mui paper로 다시 작업중입니다.
 
 // StyledHeader 컴포넌트 생성
 const StyledHeader = styled.header`
-  background-color: #d98f8f; /* 배경색 설정 */
-  padding: 10px 20px; /* 내부 여백 설정 */
+  background-color: #ffffff; /* 배경색 설정 */
+  padding: 0px 18px; /* 내부 여백 설정 */
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
 
-  /* Link 스타일링 */
   a {
-    color: #fff; /* 링크 텍스트 색상 */
+    color: #000000; /* 링크 텍스트 색상 */
     text-decoration: none; /* 밑줄 제거 */
-    margin-right: 10px; /* 각 링크 사이 간격 */
-    padding: 8px 12px; /* 링크 내부 여백 */
+    font-weight: bold;
+
+    padding: 20px 24px; /* 링크 내부 여백 */
+    transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
+  }
+  a:hover {
+    background-color: #8976FD; /* 호버 시 배경색 변경 */
+    color: white;
+  }
+
+  /* login 스타일링 */
+  .login_btn {
+    color: #000000; /* 링크 텍스트 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    margin: 5px 10px; /* 각 링크 사이 간격 */
+    padding: 0px 12px; /* 링크 내부 여백 */
     border-radius: 5px; /* 링크 테두리 둥글게 */
     transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
   }
-
-  /* 링크 호버 효과 */
-  a:hover {
-    background-color: #555; /* 호버 시 배경색 변경 */
+  /* 호버 효과 */
+  .login_btn:hover {
+    background-color: #8976FD; /* 호버 시 배경색 변경 */
+    color: white;
   }
 `;
+
+const ItemContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const HeaderLogo = styled.div`
   // flex: 1 0 auto;
   background-image: url(${boardaLogo});
   background-size: cover;
-  width: 11vw;
-  height: 5vh;
+  width: 160px;
+  height: 40px;
+  margin: 10px 10px;
   &:hover {
     cursor: pointer;
   }
@@ -76,23 +96,27 @@ export default function Header() {
 
   return (
     <StyledHeader>
-      <HeaderLogo
-        onClick={() => {
-          navigate("/home");
-        }}
-      ></HeaderLogo>
       <div>
-        <Link to="/home">홈</Link>
+        <HeaderLogo
+          onClick={() => {
+            navigate("/home");
+          }}
+        ></HeaderLogo>
+      </div>
+
+      <ItemContainer>
         <Link to="/moim/">모임</Link>
         <Link to="/game">게임</Link>
         <Link to="/cafe">매장</Link>
-        <Link to="/board">게시판</Link>
-      </div>
-      <div>
-        {!loginUser.id && <Link to="/login">로그인</Link>}
+        <Link to="/board">게시판</Link>      
+      </ItemContainer>
+
+      <ItemContainer>
+        {!loginUser.id && <Link to="/login" className="login_btn">로그인</Link>}
         {loginUser.id && LoginUserDiv}
-      </div>
-      <Link to="/my-page/2">마이페이지개발중</Link>
+
+        <Link to="/my-page/2">마이페이지</Link>
+      </ItemContainer>
     </StyledHeader>
   );
 }

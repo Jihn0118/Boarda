@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 public class MoimCondition {
-    private int userId;     // 모임 방 만든 멤버 id
-
     private String title;   // 모임 방 제목
 
     private String content; // 모임 방 본문

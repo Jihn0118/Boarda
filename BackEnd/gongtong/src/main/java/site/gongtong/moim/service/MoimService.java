@@ -10,13 +10,15 @@ public interface MoimService {
 
     List<Moim> getDeadlineList();
 
-    Integer checkRoom(int userNum);
+    Integer checkRoom(String memberId);
 
-    Integer createRoom(Moim moim, int userNum);
+    Integer createRoom(Moim moim, String memberId);
 
     Integer joinRoom(int moimId, String memberId);
 
-    List<Moim> getMyMoimList(int userNum);
+    List<Moim> getMyMoimList(String memberId);
 
-    Moim getMyMoim(int userNum);
+    Moim getMyMoim(String memberId);
+
+    int inviteFriend(String memberId, String friendId, int moimId);
 }

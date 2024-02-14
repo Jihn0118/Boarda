@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.gongtong.member.dto.EditProfileDto;
 import site.gongtong.member.model.Member;
-import site.gongtong.member.repository.MyPageRepository;
+import site.gongtong.member.repository.MyPageCustomRepository;
 import site.gongtong.review.model.Review;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class MyPageServiceImpl implements MyPageService {
-    private final MyPageRepository myPageRepository;
+    private final MyPageCustomRepository myPageRepository;
 
     @Override
     public int idToNum(String id) {

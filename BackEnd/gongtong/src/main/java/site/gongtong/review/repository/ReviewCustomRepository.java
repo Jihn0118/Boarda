@@ -7,7 +7,7 @@ import java.util.List;
 public interface ReviewCustomRepository {
     Review findById(int reviewId);
 
-    Long deleteReview(int reviewId, int userNum);
+    Long deleteReview(int reviewId, String memberId);
 
-    List<Review> findReviewsWithImagesByUserNum(int userNum);
+    List<Review> findReviewsWithImagesByUserId(String memberId);
 }
