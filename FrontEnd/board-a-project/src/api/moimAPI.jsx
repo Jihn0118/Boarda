@@ -4,10 +4,14 @@ const END_POINT = "moim";
 
 export const moimAPI = {
   // 지금까지 속했던 모든 모임 목록 get -> /moim/mymoimlist?user_num={user_num}
-  getMoimHistory(userNum) {
+  getMoimHistory(userNum, jwt) {
     return api({
       method: "get",
       url: `${END_POINT}/mymoimlist`,
+      withCredentials: true,
+      headers: {
+        jwt: jwt,
+      },
       params: {
         user_num: userNum,
       },
