@@ -12,17 +12,6 @@ const Home = () => {
   const [rankGameData, setRankGame] = useState([]);
   const [rankCafeData, setRankCafe] = useState([]);
 
-  const endSoon = [
-    {
-      title: "레드버튼 강남점",
-      latlng: new kakao.maps.LatLng(37.501931286572834, 127.0264523435014),
-    },
-    {
-      title: "레드버튼 강남2호점",
-      latlng: new kakao.maps.LatLng(37.4998154950733, 127.027458092239),
-    },
-  ];
-
   useEffect(() => {
     // rankGameData, rankCafeData, endSoon axios 요청
     const fetchGameData = async () => {
