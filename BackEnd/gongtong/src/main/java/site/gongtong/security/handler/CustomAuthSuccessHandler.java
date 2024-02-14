@@ -38,6 +38,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         MemberDto memberDto = (MemberDto) authentication.getPrincipal();
         String memberId = memberDto.getUsername();
         String memberNickname = memberDto.getNickname();
+        String memberImage = memberDto.getProfileImage();
 
         // 2. 조회한 데이터를 JsonObject 형태로 파싱
         ObjectMapper objectMapper = new ObjectMapper();
@@ -53,6 +54,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
 //        responseMap.put("memberInfo", memberDtoObject);
         responseMap.put("memberId", memberId);
         responseMap.put("memberNickname", memberNickname);
+        responseMap.put("memberImage", memberImage);
         responseMap.put("resultCode", 200);
         responseMap.put("failMessage", null);
         jsonObject = new JSONObject(responseMap);
