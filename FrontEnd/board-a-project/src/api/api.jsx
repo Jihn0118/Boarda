@@ -4,8 +4,7 @@ const DEV = "http://localhost:8081/api/";
 const HOST = "https://www.boarda.site/api/";
 
 const api = axios.create({
-  baseURL: HOST,
-  withCredentials:true
+  baseURL: DEV,
 });
 // 요청 인터셉터
 api.interceptors.request.use(
