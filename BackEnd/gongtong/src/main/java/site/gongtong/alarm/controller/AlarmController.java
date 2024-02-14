@@ -15,7 +15,6 @@ import site.gongtong.alarm.model.Alarm;
 import site.gongtong.alarm.service.AlarmService;
 import site.gongtong.security.jwt.TokenUtils;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,7 +38,7 @@ public class AlarmController {
 
     @GetMapping("/read")
     public ResponseEntity<Integer> readAlarm(@RequestParam("alarm_id") Integer id,
-                                             HttpServletRequest request) throws IOException {
+                                             HttpServletRequest request) {
 
         log.info("알림 읽기");
 
@@ -75,4 +74,13 @@ public class AlarmController {
         }
     }
 
+    @GetMapping("/start")
+    public ResponseEntity<Long> getLatestAlarm(HttpServletRequest request){
+        log.info("로그인 후 최신 알람 받아오기");
+        String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
+
+        long result = alarmService.getLatestAlarm(memberId);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
