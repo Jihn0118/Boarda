@@ -23,12 +23,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
-import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-//import site.gongtong.member.filter.LoginAuthenticationFilter;
 import site.gongtong.member.service.CustomMemberDetailsService;
 import site.gongtong.member.service.MemberDetailsService;
 import site.gongtong.security.filter.CustomAuthenticationFilter;
@@ -66,7 +64,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() { //여기서 cors 커스텀 가능
         CorsConfiguration configuration = new CorsConfiguration();
 //        configuration.setAllowedOrigins(Arrays.asList("*")); //,   "https://www.boarda.site:3000", "http://localhost:3000"));
-        configuration.setAllowedOrigins(Arrays.asList("https://www.boarda.site:3000", "http://localhost:3000")); //,   "https://www.boarda.site:3000", "http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList("https://www.boarda.site:3000", "http://localhost:3000", "https://www.boarda.site")); //,   "https://www.boarda.site:3000", "http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Content-Type", "Authorization", "X-XSRF-token", "jwt"));
         configuration.setAllowCredentials(true);
