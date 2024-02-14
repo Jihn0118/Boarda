@@ -3,7 +3,16 @@ import { getGameDetail } from "../../api/gameAPI";
 import { CardBlog } from "../../mui-treasury/card-blog/CardBlog";
 import DetailModal from "../../components/DetailModal";
 import Modal from "@mui/material/Modal";
-import GameFeed from "./GameFeed";
+import MultiActionAreaCard from "./GameFeed";
+import styled from "styled-components";
+
+const SecondModalStyle = styled(Modal)`
+  && {
+    position: fixed;
+    left: 70%;
+    margin-top: 12%;
+  }
+`;
 
 const GameDetail = ({ gameId, isModalOpen, setIsModalOpen }) => {
   const [gameDetail, setGameDetail] = useState([]);
@@ -44,22 +53,22 @@ const GameDetail = ({ gameId, isModalOpen, setIsModalOpen }) => {
 
   return (
     <>
-      <DetailModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <CardBlog
-          title={gameDetail.title}
-          people={`인원수: ${gameDetail.minNum} ~ ${gameDetail.maxNum} 명`}
-          playTime={`플레이: ${gameDetail.playTime} 분`}
-          difficulty={`난이도: ${gameDetail.difficulty} 점`}
-          year={`출시일: ${gameDetail.year} 년`}
-          age={`연령: ${gameDetail.age} 세 이상`}
-          imageUrl={gameDetail.image}
-          review={reviewList}
-          onImageClick={handleImageClick}
-        ></CardBlog>
-      </DetailModal>
-      <Modal open={feedDetailOpen} onClose={handleFeedDetailClose}>
-        <GameFeed info={selectedReview} />
-      </Modal>
+        <DetailModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <CardBlog
+            title={gameDetail.title}
+            people={`인원수: ${gameDetail.minNum} ~ ${gameDetail.maxNum} 명`}
+            playTime={`플레이: ${gameDetail.playTime} 분`}
+            difficulty={`난이도: ${gameDetail.difficulty} 점`}
+            year={`출시일: ${gameDetail.year} 년`}
+            age={`연령: ${gameDetail.age} 세 이상`}
+            imageUrl={gameDetail.image}
+            review={reviewList}
+            onImageClick={handleImageClick}
+          ></CardBlog>
+        </DetailModal>
+        <SecondModalStyle open={feedDetailOpen} onClose={handleFeedDetailClose}>
+          <MultiActionAreaCard info={selectedReview} />
+        </SecondModalStyle>
     </>
   );
 };

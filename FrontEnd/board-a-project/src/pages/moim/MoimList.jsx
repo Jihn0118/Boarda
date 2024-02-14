@@ -143,7 +143,7 @@ const MoimList = () => {
             </tr>
           </thead>
           <tbody>
-            {currentMoimList.map((moim) => (
+            {currentMoimList && currentMoimList.map((moim) => (
               <tr
                 key={moim.id}
                 onClick={() => openDetailModal(moim.id)}
