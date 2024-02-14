@@ -149,8 +149,8 @@ public class MemberController {
                 customAuthSuccessHandler.onAuthenticationSuccess( httprequest, httpresponse, authenticationToken);
 
                 resultMap.put("message", "로그인 성공");
-                resultMap.put("dbMember", dbMember);
-                resultMap.put("token", token); //뺴기
+//                resultMap.put("dbMember", dbMember);
+//                resultMap.put("token", token); //뺴기
 
                 response = ResponseEntity
                         .status(HttpStatus.OK)
