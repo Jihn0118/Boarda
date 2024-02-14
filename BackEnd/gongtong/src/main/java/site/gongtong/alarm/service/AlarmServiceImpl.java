@@ -10,7 +10,6 @@ import site.gongtong.alarm.repository.AlarmCustomRepository;
 import site.gongtong.alarm.repository.AlarmRepository;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.MemberCustomRepository;
-import site.gongtong.member.repository.MemberRepository;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,7 +23,29 @@ public class AlarmServiceImpl implements AlarmService {
     private final AlarmRepository alarmRepository;
     private final AlarmCustomRepository alarmCustomRepository;
     private final MemberCustomRepository memberCustomRepository;
-    private static final Map<String, Integer> alarmCounts = new HashMap<>();
+    private static final Map<String, Long> alarmCounts = new HashMap<>();
+
+    @Override
+    public SseEmitter subscribe(String memberId) {
+        SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
+        try {
+            // SSE 연결
+            // 첫 구독 시 이벤트를 보냄, 연결되었다는 응답으로 보내는 것, 안 보내면 503에러
+            sseEmitter.send(SseEmitter.event().name("connect"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        AlarmController.sseEmitters.put(memberId, sseEmitter);
+
+        long cnt = getCount(memberId);
+        alarmCounts.put(memberId, cnt);
+
+        sseEmitter.onCompletion(() -> AlarmController.sseEmitters.remove(memberId));
+        sseEmitter.onTimeout(() -> AlarmController.sseEmitters.remove(memberId));
+        sseEmitter.onError((e) -> AlarmController.sseEmitters.remove(memberId));
+
+        return sseEmitter;
+    }
 
     @Override
     public Integer readAlarm(Integer id, String memberId) {
@@ -33,16 +54,13 @@ public class AlarmServiceImpl implements AlarmService {
         if (alarm == null) {
             return 1;
         }
+
         alarm.setIsRead(true);
 
         Alarm readAlarm = alarmRepository.save(alarm);
 
-        if(readAlarm == null){
-            return 2;
-        }
-
         if (alarmCounts.containsKey(memberId)) {
-            int currentCount = alarmCounts.get(memberId);
+            long currentCount = alarmCounts.get(memberId);
 
             if (currentCount > 0) {
                 alarmCounts.put(memberId, currentCount - 1);
@@ -54,30 +72,13 @@ public class AlarmServiceImpl implements AlarmService {
         try {
             sseEmitter.send(SseEmitter.event().name("alarmCount").data(alarmCounts.get(memberId)));
         } catch (IOException e) {
+            AlarmController.sseEmitters.remove(memberId);
+            SseEmitter newEmitter = new SseEmitter(Long.MAX_VALUE);
+            AlarmController.sseEmitters.put(memberId, newEmitter);
             return 3;
         }
 
         return 0;
-    }
-
-    @Override
-    public SseEmitter subscribe(String memberId) {
-        SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
-
-        try {
-            // SSE 연결
-            // 첫 구독 시 이벤트를 보냄, 연결되었다는 응답으로 보내는 것, 안 보내면 503에러
-            sseEmitter.send(SseEmitter.event().name("connect"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        AlarmController.sseEmitters.put(memberId, sseEmitter);
-
-        sseEmitter.onCompletion(() -> AlarmController.sseEmitters.remove(memberId));
-        sseEmitter.onTimeout(() -> AlarmController.sseEmitters.remove(memberId));
-        sseEmitter.onError((e) -> AlarmController.sseEmitters.remove(memberId));
-
-        return sseEmitter;
     }
 
     @Override
@@ -115,6 +116,34 @@ public class AlarmServiceImpl implements AlarmService {
 
         return 0;
     }
+
+    @Override
+    public long getLatestAlarm(String memberId) {
+        Long count = getCount(memberId);
+
+        SseEmitter sseEmitter = AlarmController.sseEmitters.get(memberId);
+
+        if (count == null) {
+            count = 0L;
+        }
+
+        try {
+            Map<String, String> eventData = new HashMap<>();
+            if (count == 0) {
+                eventData.put("alarm", "미확인 알람이 없습니다.");
+                eventData.put("count", "0");
+            } else {
+                eventData.put("alarm", "미확인 알람이 " + count + "개 있습니다");
+                eventData.put("count", count.toString());
+            }
+            sseEmitter.send(SseEmitter.event().name("latestAlarm").data(eventData));
+        } catch (Exception e) {
+            AlarmController.sseEmitters.remove(memberId);
+        }
+
+        return count;
+    }
+
     @Override
     public Long getCount(String memberId) {
         return alarmCustomRepository.getAlarmCount(memberId);

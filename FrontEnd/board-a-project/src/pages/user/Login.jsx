@@ -75,7 +75,7 @@ export default function Login() {
         </Button>
       </Box>
       <Typography variant="body1">또는</Typography>
-      <Grid container spacing={2} justifyContent="center">
+      {/* <Grid container spacing={2} justifyContent="center">
         <Grid item>
           <Button variant="outlined" onClick={() => ssoLogin("kakao")}>
             카카오 로그인
@@ -91,7 +91,7 @@ export default function Login() {
             네이버 로그인
           </Button>
         </Grid>
-      </Grid>
+      </Grid> */}
       <Grid container spacing={2} justifyContent="center">
         <Grid item>
           <Link to="/find_pw">

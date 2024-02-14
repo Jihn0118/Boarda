@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/userState";
@@ -7,12 +7,13 @@ import boardaLogo from "../assets/images/boardaLogo.png";
 import bellImg from "../assets/images/bellImg.png";
 import Alarm from "./Alarm";
 
-// 헤더 - mui paper로 다시 작업중입니다.
+// Material-UI
+import { Drawer, Hidden } from "@mui/material";
 
 // StyledHeader 컴포넌트 생성
 const StyledHeader = styled.header`
   background-color: #ffffff; /* 배경색 설정 */
-  padding: 0px 18px; /* 내부 여백 설정 */
+  padding: 0px 20px; /* 내부 여백 설정 */
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -22,7 +23,7 @@ const StyledHeader = styled.header`
     text-decoration: none; /* 밑줄 제거 */
     font-weight: bold;
 
-    padding: 20px 24px; /* 링크 내부 여백 */
+    padding: 18px 24px; /* 링크 내부 여백 */
     transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
   }
   a:hover {
@@ -34,9 +35,8 @@ const StyledHeader = styled.header`
   .login_btn {
     color: #000000; /* 링크 텍스트 색상 */
     text-decoration: none; /* 밑줄 제거 */
-    margin: 5px 10px; /* 각 링크 사이 간격 */
-    padding: 0px 12px; /* 링크 내부 여백 */
-    border-radius: 5px; /* 링크 테두리 둥글게 */
+    padding: 12px 20px; /* 링크 내부 여백 */
+    border-radius: 10px; /* 링크 테두리 둥글게 */
     transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
   }
   /* 호버 효과 */
@@ -46,11 +46,7 @@ const StyledHeader = styled.header`
   }
 `;
 
-const ItemContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
+// 로고 스타일
 const HeaderLogo = styled.div`
   // flex: 1 0 auto;
   background-image: url(${boardaLogo});
@@ -60,6 +56,37 @@ const HeaderLogo = styled.div`
   margin: 10px 10px;
   &:hover {
     cursor: pointer;
+  }
+`;
+
+// 메뉴 담는 컨테이너 스타일
+const ItemContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 900px) {
+    display: none; // 900px 이하에서는 숨김
+  }
+`;
+
+// Drawer 메뉴 스타일
+const HamburgerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  a {
+    color: #000000; /* 링크 텍스트 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: bold;
+
+    padding: 18px 24px; /* 링크 내부 여백 */
+    transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
+    //setDrawerOpen(false);
+  }
+  a:hover {
+    background-color: #8976fd; /* 호버 시 배경색 변경 */
+    color: white;
   }
 `;
 
@@ -104,11 +131,24 @@ function LoginUserDiv() {
 export default function Header() {
   const loginUser = useRecoilValue(loginUserState);
   const navigate = useNavigate();
-  console.log(loginUser);
+
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerOpen(open);
+  };
 
   return (
     <StyledHeader>
       <div>
+        {/* 로고 */}
         <HeaderLogo
           onClick={() => {
             navigate("/home");
@@ -116,14 +156,15 @@ export default function Header() {
         ></HeaderLogo>
       </div>
 
+      {/* 중간메뉴 */}
       <ItemContainer>
         <Link to="/moim/">모임</Link>
         <Link to="/game">게임</Link>
         <Link to="/cafe">매장</Link>
-
         <Link to="/board">게시판</Link>
       </ItemContainer>
 
+      {/* 우측메뉴 */}
       <ItemContainer>
         {!loginUser.id && (
           <Link to="/login" className="login_btn">
@@ -132,72 +173,25 @@ export default function Header() {
         )}
         {loginUser.id && <LoginUserDiv></LoginUserDiv>}
       </ItemContainer>
+
+      {/* Drawer */}
+      <Hidden mdUp>
+        <button onClick={toggleDrawer(true)}>
+          &#9776; {/* 햄버거 아이콘 */}
+        </button>
+        <Drawer
+          anchor="right"
+          open={isDrawerOpen}
+          onClose={toggleDrawer(false)}
+        >
+          <HamburgerContainer onClick={toggleDrawer(false)}>
+            <Link to="/moim/">모임</Link>
+            <Link to="/game">게임</Link>
+            <Link to="/cafe">매장</Link>
+            <Link to="/board">게시판</Link>
+          </HamburgerContainer>
+        </Drawer>
+      </Hidden>
     </StyledHeader>
   );
 }
-
-// const Header = () => {
-//   return (
-//     <header>
-//       <Link to="/home">홈</Link>
-//       &nbsp;&nbsp;|&nbsp;&nbsp;
-//       <Link to="/moim/list">모임</Link>
-//       &nbsp;&nbsp;|&nbsp;&nbsp;
-//       <Link to="/game">게임</Link>
-//       <Link to="/login">로그인</Link>
-//       <hr/>
-//     </header>
-//   );
-// };
-
-// export default Header;
-
-// import React from 'react';
-// import { Link as RouterLink } from 'react-router-dom';
-// import { AppBar, Toolbar, IconButton, Typography, Link, Box } from '@mui/material';
-// import HomeIcon from '@mui/icons-material/Home';
-// import GroupIcon from '@mui/icons-material/Group';
-// import GameIcon from '@mui/icons-material/Gamepad';
-
-// const Header = () => {
-//   return (
-//     <AppBar position="static" style={{ background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)' }}>
-//       <Toolbar>
-//         <Link color="inherit" component={RouterLink} to="/home">
-//           <Box display="flex" alignItems="center" marginRight={2}>
-//             <IconButton edge="start" color="inherit" aria-label="home" marginRight={1}>
-//               <HomeIcon />
-//             </IconButton>
-//             <Typography variant="h6" component="div">
-//               홈
-//             </Typography>
-//           </Box>
-//         </Link>
-
-//         <Link color="inherit" component={RouterLink} to="/moim/list">
-//           <Box display="flex" alignItems="center" marginRight={2}>
-//             <IconButton edge="start" color="inherit" aria-label="moim" marginRight={1}>
-//               <GroupIcon />
-//             </IconButton>
-//             <Typography variant="h6" component="div">
-//               모임
-//             </Typography>
-//           </Box>
-//         </Link>
-
-//         <Link color="inherit" component={RouterLink} to="/game">
-//           <Box display="flex" alignItems="center">
-//             <IconButton edge="start" color="inherit" aria-label="game" marginRight={1}>
-//               <GameIcon />
-//             </IconButton>
-//             <Typography variant="h6" component="div">
-//               게임
-//             </Typography>
-//           </Box>
-//         </Link>
-//       </Toolbar>
-//     </AppBar>
-//   );
-// };
-
-// export default Header;
