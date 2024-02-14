@@ -37,7 +37,7 @@ const MoimList = () => {
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  const itemsCountPerPage = 2;
+  const itemsCountPerPage = 5;
 
   const getMoimListData = async (selectedLocation) => {
     const locationToUse = selectedLocation ? selectedLocation : location;

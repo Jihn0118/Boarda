@@ -81,7 +81,7 @@ const MoimMakeModal = ({ isOpen, onRequestClose }) => {
   return (
 <MuiPickersUtilsProvider utils={DateFnsUtils}>
   <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="fixed inset-0 flex items-center justify-center z-50">
-    <div className="bg-white p-6 rounded-lg shadow-xl w-2/3 h-1/1 flex flex-col items-center justify-center space-y-4">
+    <div className="bg-white p-6 rounded-lg shadow-xl w-2/4 h-3/4 flex flex-col items-center justify-center space-y-4">
       <div className="flex items-center space-x-2 justify-center w-full">
         <span className="font-bold text-lg">제목</span>
         <input type="text" name="title" value={moim.title} onChange={onChange} className="border rounded py-2 px-4" />

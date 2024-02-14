@@ -4,7 +4,7 @@ const DEV = "http://localhost:8081/api/";
 const HOST = "https://www.boarda.site/api/";
 
 const api = axios.create({
-  baseURL: HOST,
+  baseURL: DEV,
   withCredentials: true,
 
 });
