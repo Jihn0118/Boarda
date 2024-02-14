@@ -21,20 +21,12 @@ export default function Login() {
     };
     try {
       const res = await userAPI.login(loginData);
-      let user = res.data.memberInfo;
       console.log(res)
       // 스프링 HttpStatus.OK
       if (res.status === 200) {
         let newLoginUser = {
-          id: user.id,
-          password: user.password,
-          nickname: user.nickname,
-          birth: user.birth,
-          gender: user.gender,
-          profileImage: user.profileImage,
-          jwt: res.data.token,
-          num: user.num,
-          userName: user.username,
+          id: res.data.memberId,
+          nickname: res.data.memberNickname,
         };
         setLoginUser(newLoginUser);
         localStorage.setItem("loginUser", JSON.stringify(newLoginUser));
