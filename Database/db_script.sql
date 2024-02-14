@@ -14,21 +14,6 @@ CREATE TABLE `member` (
 	`profile_image`	text	NULL
 );
 
-<<<<<<< HEAD
-#DROP TABLE IF EXISTS `article`;
-
--- CREATE TABLE `article` (
--- 	`id`	int	PRIMARY KEY auto_increment,
--- 	`type`	tinyint	NULL,
--- 	`title`	varchar(45)	NULL,
--- 	`content`	text	NULL,
--- 	`created_at`	timestamp DEFAULT CURRENT_TIMESTAMP ,
--- 	`status`	char(1)	NULL,
--- 	`member_id`	int	NOT NULL
--- );
-
-=======
->>>>>>> 1dc7afca83aa3714480e2e99dafb2c8cd96a4eac
 #DROP TABLE IF EXISTS `boardgame`;
 
 CREATE TABLE `boardgame` (
