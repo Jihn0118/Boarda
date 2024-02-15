@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { useRecoilValue } from "recoil";
+import { loginUserState } from "../recoil/atoms/userState";
 
 const MypageDiv = styled.div`
   width: 80vw;
@@ -13,11 +15,15 @@ const MypageDiv = styled.div`
 `;
 
 export default function MypageHeader() {
+  // 로그인 유저 정보를 받아옴
+  const loginUser = useRecoilValue(loginUserState);
+
+  const profileSrc = loginUser.profile;
   return (
     <MypageDiv className="flex content-center justify-between rounded-3xl">
       {/* 프로필 이미지 */}
       <div className="container flex items-center px-10">
-        <img src="" alt="profile img" />
+        <img src={`${import.meta.env.VITE_S3_BASE}${profileSrc}`} alt="profile img" />
         <span className="text-sm">닉네임</span>
       </div>
 
