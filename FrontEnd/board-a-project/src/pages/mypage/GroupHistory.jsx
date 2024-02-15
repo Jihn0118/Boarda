@@ -151,7 +151,7 @@ export default function GroupHistory() {
   }
 
   // 함께한 플레이어 모달
-  function teammateModal() {
+  function TeammateModal() {
     const body = (
       <Box
         component="form"
@@ -255,7 +255,7 @@ export default function GroupHistory() {
         </TableContainer>
       </div>
       <ReviewModal></ReviewModal>
-      <teammateModal></teammateModal>
+      <TeammateModal></TeammateModal>
     </>
   );
 }
