@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class AlarmCustomRepositoryImpl implements AlarmCustomRepository{
+public class AlarmCustomRepositoryImpl implements AlarmCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override

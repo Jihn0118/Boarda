@@ -58,14 +58,14 @@ public class MyPageController {
         try {
             dbMember = memberDetailsService.loadUserByUsername(id);
             // 정상 처리
-            if(dbMember != null) {
+            if (dbMember != null) {
                 //멤버 프로필 내용 넣기
                 profileDto.setMember(mapToMember(dbMember, TokenUtils.isSameId(TokenUtils.fetchToken(request), id)));
 
                 //리스트 뽑기
                 reviews = myPageService.getReviewListByNum(myPageService.idToNum(id));
 
-                for(int i = 0; i< reviews.size(); i++){
+                for (int i = 0; i < reviews.size(); i++) {
                     log.info(reviews.get(i).toString());
                 }
                 profileDto.setReviews(reviews);
@@ -74,7 +74,7 @@ public class MyPageController {
                 profileDto.setMoimList(dbMoims); //모임 리스트 넣기
 
                 Moim dbMoim = null;
-                if(dbMoims.size() >= 1) {
+                if (dbMoims.size() >= 1) {
                     dbMoim = dbMoims.get(0);
                     profileDto.setMoim(dbMoim);
                 } else {
@@ -100,11 +100,11 @@ public class MyPageController {
         showMember.setNum(dbMember.getNum()); // 마이페이지에는 안 나오게 하면 됨.
 
 
-        if(issameId) { //나==id 일 때만
+        if (issameId) { //나==id 일 때만
             showMember.setId(dbMember.getUsername());
             showMember.setBirth(dbMember.getBirth());
             showMember.setGender(dbMember.getGender());
-        } 
+        }
 
         return showMember;
     }
@@ -115,10 +115,9 @@ public class MyPageController {
                                                 @RequestBody EditProfileDto editProfileDto,
                                                 HttpServletRequest request) {
         //본인 아니면 리턴
-        if(!TokenUtils.isSameId(TokenUtils.fetchToken(request), id)) {
+        if (!TokenUtils.isSameId(TokenUtils.fetchToken(request), id)) {
             return new ResponseEntity<>("권한 없음", HttpStatus.UNAUTHORIZED);
-        }
-        else {
+        } else {
             log.info("profile modify start!!");
 
             //read only는 원래 값 그대로 넣기 (id기반으로 Member 찾아서 넣기)
@@ -161,7 +160,7 @@ public class MyPageController {
         //1. 임시 비번 만들기
         //1-랜덤 문자열 생성
         String newRawPwd = getRandomPwd(10);
-          System.out.println("tmp rawPwd: "+newRawPwd);
+        System.out.println("tmp rawPwd: " + newRawPwd);
         //2-위의 문자열 bcrypt로 암호화하기
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String newEncodedPwd = encoder.encode(newRawPwd); //암호화된 문자열
@@ -182,6 +181,7 @@ public class MyPageController {
             return new ResponseEntity<>(2, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     //랜덤 문자 만들기
     public String getRandomPwd(int length) {
         char[] rndAllCharacters = new char[]{
@@ -213,7 +213,7 @@ public class MyPageController {
     public ResponseEntity<Integer> modifyPwd(@RequestBody PasswordChangeDto passwordChangeDto,
                                              HttpServletRequest request) {
         //토큰에서 추출한 아이디와 dto의 아이디가 같은지 확인, 다르면 return
-        if(!TokenUtils.isSameId(TokenUtils.fetchToken(request), passwordChangeDto.getId())){
+        if (!TokenUtils.isSameId(TokenUtils.fetchToken(request), passwordChangeDto.getId())) {
             return new ResponseEntity<>(-1, HttpStatus.UNAUTHORIZED);
         }
 
@@ -221,11 +221,11 @@ public class MyPageController {
         Member member;
         try {
             member = myPageService.findById(passwordChangeDto.getId());
-            if(member == null)
+            if (member == null)
                 return new ResponseEntity<>(0, HttpStatus.NOT_FOUND); // id에 해당하는 유저 없음
 
             //2. member의 비번 - 입력된 현재비번 동일성 여부
-            if( !passwordEncoder.matches(passwordChangeDto.getCurPwd(), member.getPassword()) )
+            if (!passwordEncoder.matches(passwordChangeDto.getCurPwd(), member.getPassword()))
                 return new ResponseEntity<>(2, HttpStatus.UNAUTHORIZED); // 현재 비밀번호 불일치 시 땡~!!
 
             //3. db에 새로운 비밀번호 encode해서 대체하기
@@ -279,9 +279,9 @@ public class MyPageController {
 
     //팔로우 하기
     @PostMapping("/follow")
-    public ResponseEntity<Integer> registFollow (@RequestParam(name = "nickname") String yourNickname,
-                                                 @RequestParam(name = "flag") char flag,
-                                                 HttpServletRequest request) {
+    public ResponseEntity<Integer> registFollow(@RequestParam(name = "nickname") String yourNickname,
+                                                @RequestParam(name = "flag") char flag,
+                                                HttpServletRequest request) {
 
         log.info("DO FOLLOW or BLOCK!!");
 
@@ -292,8 +292,8 @@ public class MyPageController {
 
     //팔로우 취소하기
     @DeleteMapping("/follow")
-    public ResponseEntity<Integer> deleteFollow (@RequestParam (name = "id") String followId,
-                                                 HttpServletRequest request) {
+    public ResponseEntity<Integer> deleteFollow(@RequestParam(name = "id") String followId,
+                                                HttpServletRequest request) {
 
 //        log.info("DELETE FOLLOW or BLOCK!!");
 //
@@ -317,7 +317,7 @@ public class MyPageController {
 
     //팔로우&차단 목록
     @GetMapping("/follow")
-    public ResponseEntity<List<FollowListDto>> getFollowList (HttpServletRequest request) {
+    public ResponseEntity<List<FollowListDto>> getFollowList(HttpServletRequest request) {
         String id = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
         int userNum = -1;
 
@@ -334,7 +334,7 @@ public class MyPageController {
 
         try {
             followList = followService.getFollowList(userNum);
-            for(Tuple t : followList) {
+            for (Tuple t : followList) {
                 Member member = t.get(0, Member.class);
                 Follow follow = t.get(1, Follow.class);
 

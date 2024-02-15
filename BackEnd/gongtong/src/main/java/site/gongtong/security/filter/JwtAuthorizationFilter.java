@@ -6,7 +6,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +21,7 @@ import java.util.List;
 
 /**
  * 지정한 URL별 JWT의 유효성 검증을 수행하며 직접적인 사용자 인증을 확인
- *
+ * <p>
  * OncePerRequestFilter 을 상속 받아 -> 요청 당 필터 한 번만 적용
  */
 
@@ -63,7 +62,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
          * OPTIONS: 주로 사전 요청이며, 서버의 상태에 영향을 주지 않는 경우가 많기 때문
          */
         if (list.contains(request.getRequestURI())
-                || request.getMethod().equalsIgnoreCase("OPTIONS") ) {
+                || request.getMethod().equalsIgnoreCase("OPTIONS")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -73,7 +72,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String token = null;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if("jwt".equals(cookie.getName())) { //쿠키 돌다가 토큰 정보가 jwt인 거 찾으면
+                if ("jwt".equals(cookie.getName())) { //쿠키 돌다가 토큰 정보가 jwt인 거 찾으면
                     token = cookie.getValue(); //토큰 정보 뽑기
                     break;
                 }
@@ -90,7 +89,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     String id = TokenUtils.getUserIdFromToken(token);
 
                     // [STEP.2-4] 사용자 아이디가 존재하는지에 대한 여부 체크
-                    if(id != null && !id.equalsIgnoreCase("")) {
+                    if (id != null && !id.equalsIgnoreCase("")) {
                         MemberDetails memberDetails = memberDetailsService.loadUserByUsername(id);
 //                        System.out.println("memberDetails!@!@!@!@!!@!@!@!: "+memberDetails);
                         // 전체 정보(패스워드 제외), 패스워드, 권한 리스트 => 토큰으로 뽑기
@@ -101,7 +100,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                         //                      인증 및 권한 부여와 같은 보안 작업을 처리
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                         filterChain.doFilter(request, response);
-                     } else {
+                    } else {
                         log.info("no user like that");
                     }
                 }

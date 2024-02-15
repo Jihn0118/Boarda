@@ -2,9 +2,6 @@ package site.gongtong.review.model;
 
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Getter
 @Setter

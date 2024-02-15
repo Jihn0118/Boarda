@@ -109,12 +109,12 @@ public class FollowServiceImpl implements FollowService {
         Long followerCount = followRepository.countFollower(id);
         Long followingCount = followRepository.countFollowing(id);
 
-        if(followerCount == null){
+        if (followerCount == null) {
             countList.add(0L);
         } else {
             countList.add(followerCount);
         }
-        if(followingCount == null){
+        if (followingCount == null) {
             countList.add(0L);
         } else {
             countList.add(followingCount);

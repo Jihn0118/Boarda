@@ -24,7 +24,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="is_removed")
+    @Column(name = "is_removed")
     private Boolean isRemoved;
 
     private Character status;
@@ -45,7 +45,7 @@ public class Review {
     private Moim moim;
 
     @ManyToOne
-    @JoinColumn(name="cafe_id")
+    @JoinColumn(name = "cafe_id")
     private Cafe cafe;
 
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)

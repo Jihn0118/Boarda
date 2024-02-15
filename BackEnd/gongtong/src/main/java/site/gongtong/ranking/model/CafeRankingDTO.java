@@ -1,6 +1,9 @@
 package site.gongtong.ranking.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import site.gongtong.cafe.model.Cafe;
 
 

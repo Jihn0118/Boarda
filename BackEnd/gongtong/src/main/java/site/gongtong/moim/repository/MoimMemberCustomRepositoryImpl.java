@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class MoimMemberCustomRepositoryImpl implements MoimMemberCustomRepository{
+public class MoimMemberCustomRepositoryImpl implements MoimMemberCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override

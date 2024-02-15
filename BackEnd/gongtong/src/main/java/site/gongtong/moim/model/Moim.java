@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Entity(name="moim")
+@Entity(name = "moim")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,7 +25,7 @@ public class Moim {
     //진행 = P, 성공 = S, 실패 = F
     private Character status;       // 모임 상태
 
-    @Column(name="leader_nickname")
+    @Column(name = "leader_nickname")
     private String leaderNickname;
 
     private LocalDateTime datetime; // 모임 일시
@@ -41,7 +41,7 @@ public class Moim {
     @CreatedDate
     private LocalDateTime createdAt; // TODO createdAt으로 바꿔야함
 
-    @Column(name="current_number")
+    @Column(name = "current_number")
     private Integer currentNumber;   // 모임 현재 인원수
 }
 

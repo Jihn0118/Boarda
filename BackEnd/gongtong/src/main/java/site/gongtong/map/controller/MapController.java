@@ -17,7 +17,7 @@ public class MapController {
 
     @GetMapping
     public List<Cafe> getCafeByLocationAndBrand(@RequestParam("location") String location, @RequestParam("brand") String brand) {
-        if(brand.equals("상관없음")) {
+        if (brand.equals("상관없음")) {
             return mapRepository.findByLocationContaining(location);
         }
         return mapRepository.findByLocationContainingAndBrand(location, brand);

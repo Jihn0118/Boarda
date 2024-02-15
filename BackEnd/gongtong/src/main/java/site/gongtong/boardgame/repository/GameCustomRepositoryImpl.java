@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class GameCustomRepositoryImpl implements GameCustomRepository{
+public class GameCustomRepositoryImpl implements GameCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
@@ -27,13 +27,13 @@ public class GameCustomRepositoryImpl implements GameCustomRepository{
 
         if (0 < time && time <= 90) {
             builder.and(boardgame.playTime.loe(time).and(boardgame.playTime.goe(time - 14)));
-        } else if(time > 90){
+        } else if (time > 90) {
             builder.and(boardgame.playTime.goe(91));
         }
 
-        if (0 < num && num <=8) {
+        if (0 < num && num <= 8) {
             builder.and(boardgame.minNum.loe(num).and(boardgame.maxNum.goe(num)));
-        } else if(num > 8){
+        } else if (num > 8) {
             builder.and(boardgame.minNum.goe(num));
         }
 
@@ -46,7 +46,6 @@ public class GameCustomRepositoryImpl implements GameCustomRepository{
                 .where(builder)
                 .fetch();
     }
-
 
 
     @Override

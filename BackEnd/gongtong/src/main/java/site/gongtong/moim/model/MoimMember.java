@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import site.gongtong.member.model.Member;
 
-@Entity(name="moim_member")
+@Entity(name = "moim_member")
 @Getter
 @Setter
 @NoArgsConstructor

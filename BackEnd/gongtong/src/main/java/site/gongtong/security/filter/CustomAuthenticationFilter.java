@@ -27,10 +27,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     /**
      * 사용자가 로그인을 시도할 때 호출.
-     *
+     * <p>
      * HTTP 요청에서 사용자 이름과 비밀번호를 추출하여 UsernamePasswordAuthenticationToken 객체를 생성,
      * 이를 AuthenticationManager에 전달하여 인증을 시도
-     *
+     * <p>
      * 인증이 성공 -> 인증된 사용자의 정보와 권한을 담은 Authentication 객체를 반환,
      * 인증이 실패 -> AuthenticationException을 던짐
      */
@@ -61,10 +61,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     /**
      * HTTP 요청에서 사용자 이름과 비밀번호를 추출
-     *  -> UsernamePasswordAuthenticationToken 객체를 생성하는 역할
-     *
+     * -> UsernamePasswordAuthenticationToken 객체를 생성하는 역할
+     * <p>
      * HTTP 요청의 입력 스트림에서 JSON 형태의 사용자 이름과 비밀번호를 읽어 UserDto 객체를 생성
-     *  -> 이를 기반으로 UsernamePasswordAuthenticationToken 객체를 생성
+     * -> 이를 기반으로 UsernamePasswordAuthenticationToken 객체를 생성
      */
     private UsernamePasswordAuthenticationToken getAuthRequest(HttpServletRequest request) throws Exception {
 
