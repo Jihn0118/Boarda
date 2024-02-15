@@ -220,28 +220,35 @@ const Home = () => {
       </div>
 
       {/* 인기게임 */}
-      <div className="ml-10">
+      <div className="px-20">
         <h1 className="text-2xl font-bold ...">인기 게임 TOP10</h1>
-        <div className="flex flex-col justify-center py-5 ">
+        <div className="flex flex-col justify-center my-5 py-2">
           {/* 범례 */}
-          <div className="flex justify-start">
-            <div>순위</div>
-            <div>이름</div>
-            <div>플레이 인원</div>
+          <div className="flex justify-start space-x-4">
+            <div className="w-20 text-center">순위</div>
+            <div className="w-96"style={{padding:'0px 12px'}}>게임</div>
+            <div className="w-40 text-center">플레이 인원</div>
           </div>
           {/* 게임목록 */}
-          <div className="flex justify-between py-5">
-            <div>
-              <ol>
-                {rankGameData &&
-                  rankGameData.map((data, idx) => (
-                    <div className="flex">
-                      <div>{idx+1}</div>
-                      <div>{data.game.title}</div>
-                      <div>{data.game.minNum == data.game.maxNum?data.game.minNum:data.game.minNum + ' ~ ' + data.game.maxNum}</div>
+          <div className="flex justify-start py-5">
+            <div className="space-y-6">
+              {rankGameData &&
+                rankGameData.map((data, idx) => (
+                  <div className="flex justify-start items-center space-x-4">
+                    <div className="w-20 text-center">{idx + 1}</div>
+                    <div className="flex w-96 space-x-4 items-center">
+                      <div style={{width: '60px', height: '60px', margin:'10px 0px' }}>
+                        <img src={data.game.image} alt="game_img" style={{width:'100%', height:'100%'}}/>
+                      </div> 
+                      <span>{data.game.title}</span>
                     </div>
-                  ))}
-              </ol>
+                    <div className="w-40 text-center">
+                      {data.game.minNum == data.game.maxNum
+                        ? data.game.minNum
+                        : data.game.minNum + " - " + data.game.maxNum} 인
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
