@@ -169,9 +169,7 @@ export default function GroupHistory() {
       >
         <div>
           {memberList &&
-            memberList.map((data, idx) => {
-              <div>{data.nickname}</div>;
-            })}
+            memberList.map((data, idx) => <div>{data.nickname}</div>)}
         </div>
       </Box>
     );
