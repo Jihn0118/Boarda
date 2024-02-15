@@ -48,6 +48,6 @@ public class Review {
     @JoinColumn(name = "cafe_id")
     private Cafe cafe;
 
-    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "review", fetch = FetchType.EAGER)
     private List<Image> images;
 }
