@@ -1,6 +1,7 @@
 package site.gongtong.moim.service;
 
 import site.gongtong.moim.model.Moim;
+import site.gongtong.moim.model.MoimGroup;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface MoimService {
     int inviteFriend(String memberId, String friendId, int moimId);
 
     long exitRoom(String memberId, int moimId);
+
+    List<MoimGroup> getMyMoimGroupList(String memberId);
 }
