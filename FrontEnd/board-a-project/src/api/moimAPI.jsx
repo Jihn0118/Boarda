@@ -85,3 +85,11 @@ export const joinMoim = async (join) => {
     console.error("모임 저장 중 에러가 발생했습니다:", error);
   }
 };
+
+export const urgentMoim = () => {
+  return api({
+    method: "get",
+    url: `${END_POINT}/deadline`,
+  });
+};
+
