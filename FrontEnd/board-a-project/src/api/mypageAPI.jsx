@@ -55,12 +55,11 @@ const myPageAPI = {
 
   // 팔로우 하기 post인데 쿼리스트링으로 ->
   // follow?id=what2@w.com&nickname=박소영&flag=F
-  userMakeFollow(userId, followNickname, flag) {
+  userMakeFollow(followNickname, flag) {
     return api({
       method: "post",
-      url: `${END_POINT}/modifypwd`,
+      url: `${END_POINT}/follow`,
       params: {
-        id: userId,
         nickname: followNickname,
         flag: flag,
       },
