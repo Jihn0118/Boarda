@@ -228,6 +228,9 @@ const Home = () => {
             <div className="w-20 text-center">순위</div>
             <div className="w-96"style={{padding:'0px 12px'}}>게임</div>
             <div className="w-40 text-center">플레이 인원</div>
+            <div className="w-40 text-center">난이도</div>
+            <div className="w-40 text-center">사용 연령</div>
+            <div className="w-40 text-center">플레이 시간</div>
           </div>
           {/* 게임목록 */}
           <div className="flex justify-start py-5">
