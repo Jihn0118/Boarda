@@ -19,7 +19,9 @@ const Home = () => {
   const [rankGameData, setRankGame] = useState([]);
   const [rankCafeData, setRankCafe] = useState([]);
   const [deadlineMoim, setDeadlineMoim] = useState([]);
-  let temp_dict = {};
+  let temp_dict = {
+
+  };
   const cord_info = {
     '강남구': [127.0495556, 37.514575],
     '강동구': [127.1258639, 37.52736667],
@@ -74,7 +76,7 @@ const Home = () => {
       try {
         const res = await urgentMoim();
         setDeadlineMoim(res.data);
-
+        console.log(deadlineMoim);
 
       } catch (error) {
         console.log(error);
@@ -84,7 +86,6 @@ const Home = () => {
     fetchGameData();
     fetchCafeData();
     fetchMoimData();
-    console.log(deadlineMoim)
   }, []);
 
   const renderMap = () => {
@@ -145,7 +146,7 @@ const Home = () => {
         circle.setMap(map);
       });
       console.log(temp_dict)
-    }, []);
+    }, [temp_dict]);
     
     return <div id="map" style={{ width: "400px", height: "300px" }}></div>;
   };
