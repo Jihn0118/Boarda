@@ -54,8 +54,6 @@ export default function Alarm() {
         console.log("sse 연결됨");
         await alarmAPI.getStart();
         await alarmAPI.getList();
-
-        setAlarmData([...alarmData, e.data]);
       };
     }
   }, [loginUser.id]);

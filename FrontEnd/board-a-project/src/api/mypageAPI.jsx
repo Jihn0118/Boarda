@@ -49,13 +49,10 @@ const myPageAPI = {
   // get 팔로우 목록 보기 ->/follow?id={user_id}
   // 리턴 -> OK : 팔로우객체
 
-  getFollowList(userId) {
+  getFollowList() {
     return api({
       method: "get",
       url: `${END_POINT}/follow`,
-      params: {
-        id: userId,
-      },
     });
   },
 
@@ -72,7 +69,5 @@ const myPageAPI = {
       },
     });
   },
-
-  
 };
 export default myPageAPI;

@@ -67,7 +67,7 @@ const MoimList = () => {
   };
 
   const openMakeModal = async () => {
-    const data = await checkRoom(11);
+    const data = await checkRoom();
     console.log("ㅇㅇ" + data);
     if (data === 0) {
       setMakeModalIsOpen(true);

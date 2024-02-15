@@ -26,7 +26,7 @@ export const moimAPI = {
   },
 
   // 현재 참여중인 그룹 1개 조회 /moim/mymoim?user_num={user_num}
-  getParticipatingMoim(userNum) {
+  getParticipatingMoim() {
     return api({
       method: "get",
       url: `${END_POINT}/mymoim`,
