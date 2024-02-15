@@ -38,7 +38,9 @@ public class AlarmServiceImpl implements AlarmService {
         AlarmController.sseEmitters.put(memberId, sseEmitter);
 
         long cnt = getCount(memberId);
+
         alarmCounts.put(memberId, cnt);
+        System.out.println("memberId" + memberId + "  "+alarmCounts.get(memberId));
 
         sseEmitter.onCompletion(() -> AlarmController.sseEmitters.remove(memberId));
         sseEmitter.onTimeout(() -> AlarmController.sseEmitters.remove(memberId));
