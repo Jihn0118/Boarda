@@ -27,7 +27,7 @@ const StyledHeader = styled.header`
     transition: background-color 0.3s ease; /* 배경색 변경 트랜지션 */
   }
   a:hover {
-    background-color: #8976fd; /* 호버 시 배경색 변경 */
+    background-color: #bad8fc; /* 호버 시 배경색 변경 */
     color: white;
   }
 
@@ -127,7 +127,6 @@ function LoginUserDiv() {
       <button
         onClick={() => {
           // 로그아웃 수행시
-          setLoginUser(logoutUser); // 로그인유저 정보 비우기
           localStorage.clear();
           alert("로그아웃 되었습니다.");
           window.location.href = "/home";

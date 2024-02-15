@@ -3,6 +3,17 @@ import api from "./api";
 const END_POINT = "moim";
 
 export const moimAPI = {
+  // 방나가기 delete 요청
+  exitMoim(moim_id) {
+    return api({
+      method: "delete",
+      url: `${END_POINT}/exit`,
+      params: {
+        moim_id: moim_id,
+      },
+    });
+  },
+
   // 지금까지 속했던 모든 모임 목록 get -> /moim/mymoimlist?user_num={user_num}
   getMoimHistory(userNum) {
     return api({
@@ -15,7 +26,7 @@ export const moimAPI = {
   },
 
   // 현재 참여중인 그룹 1개 조회 /moim/mymoim?user_num={user_num}
-  getParticipatingMoim(userNum) {
+  getParticipatingMoim() {
     return api({
       method: "get",
       url: `${END_POINT}/mymoim`,
@@ -35,7 +46,6 @@ export const getMoimList = async (location, sort) => {
         location: location,
         sort: sort,
       },
-      
     });
     console.log(response);
     return response.data;
@@ -92,4 +102,3 @@ export const urgentMoim = () => {
     url: `${END_POINT}/deadline`,
   });
 };
-

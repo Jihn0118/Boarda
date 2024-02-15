@@ -24,7 +24,7 @@ const StyledTabs = styled(Tabs)`
 const StyledTab = styled(Tab)`
   && {
     &.Mui-selected {
-      background-color: lightblue; /* 선택된 Tab의 배경색을 lightblue로 지정 */
+      background-color: #bad8fc;
       color: white;
     }
     font-size: large;
