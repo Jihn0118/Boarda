@@ -61,7 +61,7 @@ export default function GroupNow() {
                   onClick={() => {
                     moimAPI.exitMoim(participatingGroup.id);
                     alert("방 나가기 완료");
-                    navigate("/home");
+                    setParticipatingGroup({})
                   }}
                   className="bg-blue-200"
                 >
