@@ -259,16 +259,16 @@ export default function GroupHistory() {
                 <TableCell align="center" className="w-1/12">
                   방번호
                 </TableCell>
-                <TableCell align="center" className="w-2/3">
+                <TableCell align="center" className="w-1/2">
                   방 제목
                 </TableCell>
                 <TableCell align="center" className="w-1/12">
                   인원
                 </TableCell>
-                <TableCell align="center" className="w-1/12">
+                <TableCell align="center" className="w-1/6">
                   함께한 유저
                 </TableCell>
-                <TableCell align="center" className="w-1/12">
+                <TableCell align="center" className="w-1/6">
                   피드남기기
                 </TableCell>
               </TableRow>
@@ -288,13 +288,13 @@ export default function GroupHistory() {
                     >
                       {e.moim.id}
                     </TableCell>
-                    <TableCell align="center" className="w-2/3">
+                    <TableCell align="left" className="w-1/2">
                       {e.moim.title}
                     </TableCell>
                     <TableCell align="center" className="w-1/12">
                       {e.moim.number}
                     </TableCell>
-                    <TableCell align="center" className="w-1/12">
+                    <TableCell align="center" className="w-1/6">
                       {/* Status 에 따라서 바뀌도록 수정해야 */}
                       <button
                         className="bg-blue-200 px-4 py-2 rounded-lg text-white font-bold ..."
@@ -303,7 +303,7 @@ export default function GroupHistory() {
                         목록 보기
                       </button>
                     </TableCell>
-                    <TableCell align="center" className="w-1/12">
+                    <TableCell align="center" className="w-1/6">
                       {/* Status 에 따라서 바뀌도록 수정해야 */}
                       <button
                         className="bg-blue-200 px-4 py-2 rounded-lg text-white font-bold ..."
