@@ -51,8 +51,8 @@ export default function FollowBlock() {
           textColor="primary"
           centered
         >
-          <Tab label="차단 목록" />
           <Tab label="팔로우 목록" />
+          <Tab label="차단 목록" />
         </Tabs>
         {selectedTab === 0 ? (
           <FollowDetail followList={followList} />

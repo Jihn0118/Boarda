@@ -15,13 +15,10 @@ export const moimAPI = {
   },
 
   // 지금까지 속했던 모든 모임 목록 get -> /moim/mymoimlist?user_num={user_num}
-  getMoimHistory(userNum) {
+  getMoimHistory() {
     return api({
       method: "get",
       url: `${END_POINT}/mymoimlist`,
-      params: {
-        user_num: userNum,
-      },
     });
   },
 
@@ -30,9 +27,6 @@ export const moimAPI = {
     return api({
       method: "get",
       url: `${END_POINT}/mymoim`,
-      params: {
-        user_num: userNum,
-      },
     });
   },
 };

@@ -9,10 +9,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { moimAPI } from "../../api/moimAPI";
+import { useNavigate } from "react-router-dom";
 
 export default function GroupNow() {
   const loginUser = useRecoilValue(loginUserState);
   const [participatingGroup, setParticipatingGroup] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +32,6 @@ export default function GroupNow() {
 
   // mui table을 이용해서 구현
   // fetch한 값을 그대로 테이블로 -> 객체는 log찍어서 확인
-
 
   // 참여중인 그룹 표로 보여주기
   const table = (
@@ -55,7 +56,18 @@ export default function GroupNow() {
             <TableCell align="right">{participatingGroup.title}</TableCell>
             <TableCell align="right">{participatingGroup.number}</TableCell>
             <TableCell align="right">
-              {participatingGroup.id && <button onClick={() => moimAPI.exitMoim(participatingGroup.id)} className="bg-blue-200">나가기버튼</button>}
+              {participatingGroup.id && (
+                <button
+                  onClick={() => {
+                    moimAPI.exitMoim(participatingGroup.id);
+                    alert("방 나가기 완료");
+                    navigate("/home");
+                  }}
+                  className="bg-blue-200"
+                >
+                  나가기버튼
+                </button>
+              )}
             </TableCell>
           </TableRow>
         </TableBody>
