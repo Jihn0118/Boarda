@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/userState";
 import myPageAPI from "../api/mypageAPI";
+import {useParams} from "react-router-dom"
 
 const MypageDiv = styled.div`
   width: 80vw;
@@ -38,7 +39,7 @@ export default function MypageHeader({info}) {
   console.log(info)
   // 로그인 유저 정보를 받아옴
   const loginUser = useRecoilValue(loginUserState);
-  const loginUserId = loginUser.id;
+  const param = useParams();
 
   const handleFollowClick = async () => {
     try {
@@ -63,7 +64,7 @@ export default function MypageHeader({info}) {
         </div>
         <span className="text-sm font-bold">{info && info.member.nickname}</span>
         {/* 팔로우 버튼 */}
-        <FollowButton onClick={handleFollowClick}>팔로우</FollowButton>
+        {info && info.member.id !== loginUser.id && <FollowButton onClick={handleFollowClick}>팔로우</FollowButton>}
       </div>
 
       {/* 팔로워 수 */}
