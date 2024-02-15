@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { loginUserState } from "../recoil/atoms/userState";
+import myPageAPI from "../api/mypageAPI";
 
 const MypageDiv = styled.div`
   width: 80vw;
@@ -39,6 +40,20 @@ export default function MypageHeader({info}) {
   const loginUser = useRecoilValue(loginUserState);
   const loginUserId = loginUser.id;
 
+  const handleFollowClick = async () => {
+    try {
+      const res = await myPageAPI.userMakeFollow(info.member.nickname, "F");
+      console.log(res);
+      if (res.data === 1){
+        alert("팔로우 성공!");
+      } else {
+        alert("이미 팔로우 한 유저입니다!");
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <MypageDiv className="flex content-center justify-between rounded-3xl">
       {/* 프로필 이미지 */}
@@ -48,7 +63,7 @@ export default function MypageHeader({info}) {
         </div>
         <span className="text-sm font-bold">{info && info.member.nickname}</span>
         {/* 팔로우 버튼 */}
-        <FollowButton>팔로우</FollowButton>
+        <FollowButton onClick={handleFollowClick}>팔로우</FollowButton>
       </div>
 
       {/* 팔로워 수 */}
