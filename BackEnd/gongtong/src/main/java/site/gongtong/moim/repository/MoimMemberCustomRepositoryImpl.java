@@ -4,7 +4,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Member;
-import site.gongtong.member.model.QMember;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.MoimMember;
 import site.gongtong.moim.model.QMoimMember;
@@ -55,5 +54,15 @@ public class MoimMemberCustomRepositoryImpl implements MoimMemberCustomRepositor
         return jpaQueryFactory.selectFrom(moimMember)
                 .where(moimMember.moim.eq(moim))
                 .fetch();
+    }
+
+    @Override
+    public long deleteMoimMember(String memberId, int moimId) {
+        QMoimMember moimMember = QMoimMember.moimMember;
+
+        return jpaQueryFactory.delete(moimMember)
+                .where(moimMember.moim.id.eq(moimId).and(moimMember.member.id.eq(memberId)))
+                .execute();
+
     }
 }

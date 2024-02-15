@@ -20,4 +20,8 @@ public interface MoimCustomRepository {
     List<Moim> findMoimListByMemberId(String memberId);
 
     Moim findMoimByMemberId(String memberId);
+
+    long minusCurrentNumber(String memberId, int moimId, int num);
+
+    long deleteMoim(int moimId);
 }

@@ -196,4 +196,27 @@ public class MoimServiceImpl implements MoimService {
         return list;
     }
 
+    @Override
+    public long exitRoom(String memberId, int moimId) {
+        long result = moimMemberCustomRepository.deleteMoimMember(memberId, moimId);
+        if(result != 1){
+            return -1;  // 모임 멤버 안 지워짐
+        }
+
+        Moim moim = moimCustomRepository.findById(moimId);
+
+        long result2;
+        if(moim.getCurrentNumber() > 1){
+            result2 = moimCustomRepository.minusCurrentNumber(memberId, moimId, moim.getCurrentNumber() - 1);
+        } else {
+            result2 = moimCustomRepository.deleteMoim(moimId);
+        }
+
+        if(result2 != 1){
+            return -2;  // 모임 인원수 -1 이 안되거나, 모임 삭제가 안되거나
+        }
+        return result;
+    }
+
+
 }

@@ -21,4 +21,6 @@ public interface MoimService {
     Moim getMyMoim(String memberId);
 
     int inviteFriend(String memberId, String friendId, int moimId);
+
+    long exitRoom(String memberId, int moimId);
 }
