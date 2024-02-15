@@ -12,6 +12,7 @@ import Carousel02 from "../assets/images/Carousel02.png";
 import logo_1 from "../assets/images/logo_1.png";
 import logo_2 from "../assets/images/logo_2.png";
 import logo_3 from "../assets/images/logo_3.png";
+import TextsmsIcon from '@mui/icons-material/Textsms';
 
 const { kakao } = window;
 
@@ -127,15 +128,18 @@ const Home = () => {
       map.setZoomable(false);
 
       Object.entries(cord_info).map(([key, data], idx) => {
-        const circle = new kakao.maps.Circle({
-          center: new kakao.maps.LatLng(data[1], data[0]),
-          radius: 1000 * deadlineMoim[key],
-          strokeColor: "#FF0000",
-          strokeWeight: 2,
-          fillColor: "#FF0000",
-          fillOpacity: 0.35,
-        });
-        circle.setMap(map);
+        const position = new kakao.maps.LatLng(data[1], data[0])
+        
+        // circle.setMap(map);
+        if (deadlineMoim[key]!=0) {
+          const content =`<div style="width: ${10 * deadlineMoim[key]}px; height: ${10 * deadlineMoim[key]}px; border-radius: 50%; background-color: #ff0000; display: flex; justify-content: center; align-items: center;"><span>${deadlineMoim[key]}</span></div>
+          </div>`;
+          const my_overlay = new kakao.maps.CustomOverlay({
+            position: position,
+            content: content,
+          })
+          my_overlay.setMap(map);
+        }
       });
     }, []);
 
@@ -174,7 +178,7 @@ const Home = () => {
                     idx <= 2 && ( // 인기매장 top 3만 표시
                       <div
                         key={idx}
-                        className="flex flex-col px-12 py-5 items-center border-2 border-rose-600 ..."
+                        className="flex flex-col w-72 px-12 py-5 items-center border-2 border-rose-600 ..."
                       >
                         <div className="flex flex-col items-center">
                           <img
@@ -231,6 +235,7 @@ const Home = () => {
             <div className="w-40 text-center">난이도</div>
             <div className="w-40 text-center">사용 연령</div>
             <div className="w-40 text-center">플레이 시간</div>
+            <div className="w-40 text-center">상세정보</div>
           </div>
           {/* 게임목록 */}
           <div className="flex justify-start py-5">
@@ -258,6 +263,9 @@ const Home = () => {
                     </div>
                     <div className="w-40 text-center">
                       {data.game.playTime}분
+                    </div>
+                    <div className="w-40 text-center">
+                      <TextsmsIcon onclick=""/>
                     </div>
                   </div>
                 ))}
