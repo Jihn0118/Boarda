@@ -211,7 +211,7 @@ const Home = () => {
                           </h2>
                         </div>
                         <div className="py-10">
-                          <span>{rankCafeData[idx].cafe.rate} / 5</span>
+                          <span>{idx + 1} 위</span>
                         </div>
                       </div>
                     )

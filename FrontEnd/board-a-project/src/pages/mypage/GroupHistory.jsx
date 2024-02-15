@@ -25,7 +25,7 @@ export default function GroupHistory() {
     const fetchData = async () => {
       try {
         const res = await moimAPI.getMoimHistory();
-        console.log(res)
+        console.log(res);
         console.log(res.data);
         setHistory(res.data);
       } catch (err) {
@@ -281,13 +281,16 @@ export default function GroupHistory() {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {e.id}
+                      {e.moim.id}
                     </TableCell>
-                    <TableCell align="right">{e.title}</TableCell>
-                    <TableCell align="right">{e.number}</TableCell>
+                    <TableCell align="right">{e.moim.title}</TableCell>
+                    <TableCell align="right">{e.moim.number}</TableCell>
                     <TableCell align="right">
                       {/* Status 에 따라서 바뀌도록 수정해야 */}
-                      <button className="bg-blue-200" onClick={handleOpen}>
+                      <button
+                        className="bg-blue-200 px-4 py-2 rounded-lg text-white font-bold ..."
+                        onClick={handleOpen}
+                      >
                         피드남기기
                       </button>
                     </TableCell>
