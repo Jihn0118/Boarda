@@ -9,6 +9,7 @@ import site.gongtong.alarm.service.AlarmService;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.MemberCustomRepository;
 import site.gongtong.moim.model.Moim;
+import site.gongtong.moim.model.MoimGroup;
 import site.gongtong.moim.model.MoimMember;
 import site.gongtong.moim.repository.MoimCustomRepository;
 import site.gongtong.moim.repository.MoimMemberCustomRepository;
@@ -216,6 +217,11 @@ public class MoimServiceImpl implements MoimService {
             return -2;  // 모임 인원수 -1 이 안되거나, 모임 삭제가 안되거나
         }
         return result;
+    }
+
+    @Override
+    public List<MoimGroup> getMyMoimGroupList(String memberId) {
+        return moimMemberCustomRepository.findMoimGroupByMemberId(memberId);
     }
 
 

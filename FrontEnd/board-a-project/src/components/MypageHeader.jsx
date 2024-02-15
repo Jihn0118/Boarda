@@ -14,13 +14,31 @@ const MypageDiv = styled.div`
   text-align: center;
 `;
 
+const FollowButton = styled.button`
+  background-color: white; /* Green */
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  &:hover {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #bad8fc;
+  }
+`;
+
 export default function MypageHeader({info}) {
   console.log(info)
   // 로그인 유저 정보를 받아옴
   const loginUser = useRecoilValue(loginUserState);
+  const loginUserId = loginUser.id;
 
-  const profileSrc = loginUser.profile;
-  const nickname = loginUser.nickname;
   return (
     <MypageDiv className="flex content-center justify-between rounded-3xl">
       {/* 프로필 이미지 */}
@@ -28,7 +46,9 @@ export default function MypageHeader({info}) {
         <div style={{width: '60px', height: '60px', margin: '20px'}}>
         <img src={`${import.meta.env.VITE_S3_BASE}${info && info.member.profileImage}`} alt="profile img" style={{widht:'100%', height:'100%'}}/>
         </div>
-        <span className="text-sm font-bold">{nickname}</span>
+        <span className="text-sm font-bold">{info && info.member.nickname}</span>
+        {/* 팔로우 버튼 */}
+        <FollowButton>팔로우</FollowButton>
       </div>
 
       {/* 팔로워 수 */}

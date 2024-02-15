@@ -1,17 +1,17 @@
 import React from "react";
 import Modal from "react-modal";
 import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router-dom";
 import { moimListState } from "../../recoil/atoms/moimState";
 import { joinMoim } from "../../api/moimAPI";
+import { loginUserState } from "../../recoil/atoms/userState";
 
 const MoimDetailModal = ({ moimId, isOpen, onRequestClose }) => {
   const moimList = useRecoilValue(moimListState);
   const moim = moimList.find((m) => m.id === moimId);
-  const navigate = useNavigate();
+  const loginUser = useRecoilValue(loginUserState);
   const join = {
     moimId: moimId,
-    memberId: "b@b.com",
+    memberId: loginUser.id,
   };
 
   const joinMoimHandler = async () => {
@@ -21,7 +21,7 @@ const MoimDetailModal = ({ moimId, isOpen, onRequestClose }) => {
       console.log(response);
       if (response === 0) {
         alert("등록되었습니다.");
-        navigate("/moim/list");
+        onRequestClose();
       } else if (response === 1) {
         alert("모임 정보가 없습니다.");
         console.error("모임 정보가 없습니다.");
