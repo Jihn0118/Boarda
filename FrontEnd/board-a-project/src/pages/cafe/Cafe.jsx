@@ -91,6 +91,7 @@ export default function Cafe() {
 
         map.setBounds(bounds);
       }
+      map.setZoomable(false);
     }, [positions]);
 
     return (
