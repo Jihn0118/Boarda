@@ -15,7 +15,7 @@ import { Outlet } from "react-router-dom";
 
 const StyledTabs = styled(Tabs)`
   && {
-    width: 20%;
+    width: 100%;
     margin-top: 10%;
     border: black solid;
     border-radius: 10%;
@@ -118,15 +118,23 @@ export default function MyPage() {
     </StyledTabs>
   );
 
+  const Container = styled.div`
+    width: 100%;
+  `;
+
   return (
     <>
       <MypageHeader></MypageHeader>
 
       {/* 로그인 유저와 같으면 본인 마이페이지로 아니면 다른사람페이지 */}
-      <div className="flex">
-        {isLoginUser && loginUserMypage}
-        {!isLoginUser && otherUserMypage}
-        <Outlet></Outlet>
+      <div className="flex ">
+        <div className="flex-none">
+          {isLoginUser && loginUserMypage}
+          {!isLoginUser && otherUserMypage}
+        </div>
+        <Container>
+          <Outlet></Outlet>
+        </Container>
       </div>
     </>
   );
