@@ -9,10 +9,12 @@ import { urgentMoim } from "../api/moimAPI";
 // import icon, image
 import Carousel01 from "../assets/images/Carousel01.png";
 import Carousel02 from "../assets/images/Carousel02.png";
+import banner from "../assets/images/banner.png";
+import banner2 from "../assets/images/banner_2.png";
 import logo_1 from "../assets/images/logo_1.png";
 import logo_2 from "../assets/images/logo_2.png";
 import logo_3 from "../assets/images/logo_3.png";
-import TextsmsIcon from '@mui/icons-material/Textsms';
+import TextsmsIcon from "@mui/icons-material/Textsms";
 
 const { kakao } = window;
 
@@ -119,8 +121,8 @@ const Home = () => {
     useEffect(() => {
       const container = document.getElementById("map");
       const options = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 10,
+        center: new kakao.maps.LatLng(37.536826, 126.9786567),
+        level: 9,
         disableDoubleClickZoom: true,
         draggable: false,
       };
@@ -128,22 +130,28 @@ const Home = () => {
       map.setZoomable(false);
 
       Object.entries(cord_info).map(([key, data], idx) => {
-        const position = new kakao.maps.LatLng(data[1], data[0])
-        
+        const position = new kakao.maps.LatLng(data[1], data[0]);
+
         // circle.setMap(map);
-        if (deadlineMoim[key]!=0) {
-          const content =`<div style="width: ${10 * deadlineMoim[key]}px; height: ${10 * deadlineMoim[key]}px; border-radius: 50%; background-color: #ff0000; display: flex; justify-content: center; align-items: center;"><span>${deadlineMoim[key]}</span></div>
+        if (deadlineMoim[key] != 0) {
+          const content = `<div style="width: ${
+            10 * deadlineMoim[key]
+          }px; height: ${
+            10 * deadlineMoim[key]
+          }px; border-radius: 50%; background-color: #ff0000; display: flex; justify-content: center; align-items: center;"><span>${
+            deadlineMoim[key]
+          }</span></div>
           </div>`;
           const my_overlay = new kakao.maps.CustomOverlay({
             position: position,
             content: content,
-          })
+          });
           my_overlay.setMap(map);
         }
       });
     }, []);
 
-    return <div id="map" style={{ width: "400px", height: "300px" }}></div>;
+    return <div id="map" style={{ width: "400px", height: "344px" }}></div>;
   };
 
   return (
@@ -154,12 +162,12 @@ const Home = () => {
       <div>
         <Carousel>
           <img
-            src={Carousel01}
+            src={banner}
             alt="image 1"
             className="h-full w-full object-cover"
           />
           <img
-            src={Carousel02}
+            src={banner2}
             alt="image 2"
             className="h-full w-full object-cover"
           />
@@ -171,7 +179,7 @@ const Home = () => {
         <div className="w-2/3 px-4">
           <h1 className="text-2xl font-bold pl-10 ...">인기 매장</h1>
           <div className="container flex justify-center py-5 px-10">
-            <div className="container flex justify-start space-x-10 py-5">
+            <div className="container flex justify-start space-x-10 py-5 h-96">
               {rankCafeData &&
                 rankCafeData.map(
                   (data, idx) =>
@@ -215,7 +223,7 @@ const Home = () => {
         {/* 마감임박 */}
         <div className="w-1/3 px-4">
           <h1 className="text-2xl font-bold ...">마감 임박</h1>
-          <div className="container flex justify-center py-5">
+          <div className="flex justify-center py-10">
             <div>
               <Rendermap />
             </div>
@@ -230,12 +238,13 @@ const Home = () => {
           {/* 범례 */}
           <div className="flex justify-start space-x-4">
             <div className="w-20 text-center">순위</div>
-            <div className="w-96"style={{padding:'0px 12px'}}>게임</div>
+            <div className="w-96" style={{ padding: "0px 12px" }}>
+              게임
+            </div>
             <div className="w-40 text-center">플레이 인원</div>
             <div className="w-40 text-center">난이도</div>
             <div className="w-40 text-center">사용 연령</div>
             <div className="w-40 text-center">플레이 시간</div>
-            <div className="w-40 text-center">상세정보</div>
           </div>
           {/* 게임목록 */}
           <div className="flex justify-start py-5">
@@ -245,15 +254,26 @@ const Home = () => {
                   <div className="flex justify-start items-center space-x-4 border-b-2 border-rose-600 ...">
                     <div className="w-20 text-center">{idx + 1}</div>
                     <div className="flex w-96 space-x-4 items-center">
-                      <div style={{width: '60px', height: '60px', margin:'10px 0px' }}>
-                        <img src={data.game.image} alt="game_img" style={{width:'100%', height:'100%'}}/>
-                      </div> 
+                      <div
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          margin: "10px 0px",
+                        }}
+                      >
+                        <img
+                          src={data.game.image}
+                          alt="game_img"
+                          style={{ width: "100%", height: "100%" }}
+                        />
+                      </div>
                       <span>{data.game.title}</span>
                     </div>
                     <div className="w-40 text-center">
                       {data.game.minNum == data.game.maxNum
                         ? data.game.minNum
-                        : data.game.minNum + " - " + data.game.maxNum} 인
+                        : data.game.minNum + " - " + data.game.maxNum}{" "}
+                      인
                     </div>
                     <div className="w-40 text-center">
                       {data.game.difficulty} / 5
@@ -263,9 +283,6 @@ const Home = () => {
                     </div>
                     <div className="w-40 text-center">
                       {data.game.playTime}분
-                    </div>
-                    <div className="w-40 text-center">
-                      <TextsmsIcon onclick=""/>
                     </div>
                   </div>
                 ))}
