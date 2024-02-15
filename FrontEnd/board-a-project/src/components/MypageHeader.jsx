@@ -19,12 +19,15 @@ export default function MypageHeader() {
   const loginUser = useRecoilValue(loginUserState);
 
   const profileSrc = loginUser.profile;
+  const nickname = loginUser.nickname;
   return (
     <MypageDiv className="flex content-center justify-between rounded-3xl">
       {/* 프로필 이미지 */}
       <div className="container flex items-center px-10">
-        <img src={`${import.meta.env.VITE_S3_BASE}${profileSrc}`} alt="profile img" />
-        <span className="text-sm">닉네임</span>
+        <div style={{width: '60px', height: '60px', margin: '20px'}}>
+        <img src={`${import.meta.env.VITE_S3_BASE}${profileSrc}`} alt="profile img" style={{widht:'100%', height:'100%'}}/>
+        </div>
+        <span className="text-sm font-bold">{nickname}</span>
       </div>
 
       {/* 팔로워 수 */}

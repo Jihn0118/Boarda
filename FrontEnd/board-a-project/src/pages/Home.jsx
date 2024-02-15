@@ -222,7 +222,7 @@ const Home = () => {
       {/* 인기게임 */}
       <div className="px-20">
         <h1 className="text-2xl font-bold ...">인기 게임 TOP10</h1>
-        <div className="flex flex-col justify-center my-5 py-2">
+        <div className="conatiner mx-auto flex-col justify-center my-5 py-2">
           {/* 범례 */}
           <div className="flex justify-start space-x-4">
             <div className="w-20 text-center">순위</div>
@@ -249,6 +249,15 @@ const Home = () => {
                       {data.game.minNum == data.game.maxNum
                         ? data.game.minNum
                         : data.game.minNum + " - " + data.game.maxNum} 인
+                    </div>
+                    <div className="w-40 text-center">
+                      {data.game.difficulty} / 5
+                    </div>
+                    <div className="w-40 text-center">
+                      {data.game.age} 이상
+                    </div>
+                    <div className="w-40 text-center">
+                      {data.game.playTime}분
                     </div>
                   </div>
                 ))}
