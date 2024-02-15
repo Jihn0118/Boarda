@@ -44,9 +44,19 @@ function Review({ review }) {
 }
 
 export default function AlignItemsList({reviewList}) {
+  
+  const uniqueReviewList = reviewList.reduce((acc, current) => {
+    if(!acc.find(review => review.cafe.id === current.cafe.id)) {
+      return acc.concat([current]);
+    } else {
+      return acc;
+    }
+  }, []);
+
+
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {reviewList.map((review, index) => (
+      {uniqueReviewList.map((review, index) => (
         <Review
           key={index}
           review={review}
