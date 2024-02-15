@@ -19,7 +19,35 @@ const Home = () => {
   const [rankGameData, setRankGame] = useState([]);
   const [rankCafeData, setRankCafe] = useState([]);
   const [deadlineMoim, setDeadlineMoim] = useState([]);
-
+  let temp_dict = {};
+  const cord_info = {
+    '강남구': [127.0495556, 37.514575],
+    '강동구': [127.1258639, 37.52736667],
+    '강북구': [127.0277194, 37.63695556],
+    '강서구': [126.851675, 37.54815556],
+    '관악구': [126.9538444, 37.47538611],
+    '광진구': [127.0845333, 37.53573889],
+    '구로구': [126.8895972, 37.49265],
+    '금천구': [126.9041972, 37.44910833],
+    '노원구': [127.0583889, 37.65146111],
+    '도봉구': [127.0495222, 37.66583333],
+    '동대문구': [127.0421417, 37.571625],
+    '동작구': [126.941575, 37.50965556],
+    '마포구': [126.9105306, 37.56070556],
+    '서대문구': [126.9388972, 37.57636667],
+    '서초구': [127.0348111, 37.48078611],
+    '성동구': [127.039, 37.56061111],
+    '성북구': [127.0203333, 37.58638333],
+    '송파구': [127.1079306, 37.51175556],
+    '양천구': [126.8687083, 37.51423056],
+    '영등포구': [126.8983417, 37.52361111],
+    '용산구': [126.9675222, 37.53609444],
+    '은평구': [126.9312417, 37.59996944],
+    '종로구': [126.9816417, 37.57037778],
+    '중구': [126.9996417, 37.56100278],
+    '중랑구': [127.0947778, 37.60380556]
+  };
+    
   useEffect(() => {
     // rankGameData, rankCafeData, endSoon axios 요청
     const fetchGameData = async () => {
@@ -45,7 +73,9 @@ const Home = () => {
     const fetchMoimData = async () => {
       try {
         const res = await urgentMoim();
-        console.log(res);
+        setDeadlineMoim(res.data);
+
+
       } catch (error) {
         console.log(error);
       }
@@ -54,6 +84,7 @@ const Home = () => {
     fetchGameData();
     fetchCafeData();
     fetchMoimData();
+    console.log(deadlineMoim)
   }, []);
 
   const renderMap = () => {
@@ -67,7 +98,55 @@ const Home = () => {
       };
       const map = new kakao.maps.Map(container, options);
       map.setZoomable(false);
+
+      let temp_dict = {
+        '강남구': 0,
+        '강동구': 0,
+        '강북구': 0,
+        '강서구': 0,
+        '관악구': 0,
+        '광진구': 0,
+        '구로구': 0,
+        '금천구': 0,
+        '노원구': 0,
+        '도봉구': 0,
+        '동대문구': 0,
+        '동작구': 0,
+        '마포구': 0,
+        '서대문구': 0,
+        '서초구': 0,
+        '성동구': 0,
+        '성북구': 0,
+        '송파구': 0,
+        '양천구': 0,
+        '영등포구': 0,
+        '용산구': 0,
+        '은평구': 0,
+        '종로구': 0,
+        '중구': 0,
+        '중랑구': 0
+      };
+
+      deadlineMoim && deadlineMoim.map((data, idx)=>{
+        const gu = data.location.split(' ')[1]
+        console.log(gu, data)
+        temp_dict[gu] += 1;
+      });
+
+      Object.entries(cord_info).map(([key, data], idx)=>{
+        const circle = new kakao.maps.Circle({
+          center: new kakao.maps.LatLng(data[1], data[0]),
+          radius: 1000 * (temp_dict[key]),
+          strokeColor: "#FF0000",
+          strokeWeight: 2,
+          fillColor: "#FF0000",
+          fillOpacity: 0.35,
+        })
+        circle.setMap(map);
+      });
+      console.log(temp_dict)
     }, []);
+    
     return <div id="map" style={{ width: "400px", height: "300px" }}></div>;
   };
 
