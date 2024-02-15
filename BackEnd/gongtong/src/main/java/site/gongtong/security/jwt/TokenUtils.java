@@ -51,15 +51,16 @@ public class TokenUtils {
     /**
      * -
      * 멤버 정보를 기반으로 '클래임을 생성해주는 메서드'
+     *
      * @param memberDto
      * @return Map<String, Object>
      */
-    private static Map<String,Object> createClaims(MemberDto memberDto) {
+    private static Map<String, Object> createClaims(MemberDto memberDto) {
         // 공개 클래임에 멤버의 닉네임과 아이디(이메일)을 설정해서 정보를 조회
         Map<String, Object> claims = new HashMap<>();
 
         claims.put(LOGIN_ID, memberDto.getId());
-        claims.put(NICKNAME,memberDto.getNickname());
+        claims.put(NICKNAME, memberDto.getNickname());
 
         return claims;
     }
@@ -105,6 +106,7 @@ public class TokenUtils {
     /**
      * -
      * 토큰의 만료 기간 지정 함수 : 24시간
+     *
      * @return Date
      */
     private static Date createExpiredDate() {
@@ -115,6 +117,7 @@ public class TokenUtils {
 
     /**
      * 토큰에서 'Claims 정보만 가져오기'
+     *
      * @return Claims : Claims
      */
     private static Claims getClaimsFromToken(String token) {
@@ -127,6 +130,7 @@ public class TokenUtils {
 
     /**
      * 토큰을 기반 '사용자 정보를 반환받음' (수)
+     *
      * @return String : 사용자 아이디
      */
     public static String getUserIdFromToken(String token) { //외부로 가지고 나갈 수 있게 public

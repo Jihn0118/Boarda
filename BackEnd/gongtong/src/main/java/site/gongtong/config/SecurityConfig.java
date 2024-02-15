@@ -89,9 +89,9 @@ public class SecurityConfig {
      *     <li>사용자 이름과 비밀번호 인증을 위한 `CustomAuthenticationFilter` 적용</li>
      * </ul>
      *
-     * @param http Spring Security의 HttpSecurity 객체
+     * @param http                       Spring Security의 HttpSecurity 객체
      * @param customAuthenticationFilter 사용자 정의 인증 필터
-     * @param jwtAuthorizationFilter JWT 인증 필터
+     * @param jwtAuthorizationFilter     JWT 인증 필터
      * @return 구성된 SecurityFilterChain 객체
      * @throws Exception 설정 중 발생할 수 있는 예외
      */
@@ -129,7 +129,7 @@ public class SecurityConfig {
 
     /**
      * 1. 커스텀을 수행한 '인증' 필터로
-     *    접근 URL, 데이터 전달방식(form) 등 인증 과정 및 인증 후 처리에 대한 설정을 구성하는 메서드
+     * 접근 URL, 데이터 전달방식(form) 등 인증 과정 및 인증 후 처리에 대한 설정을 구성하는 메서드
      * 이 메서드는 사용자 정의 인증 필터를 생성한다. 이 필터는 로그인 요청을 처리하고, 인증 성공/실패 핸들러를 설정한다.
      *
      * @return CustomAuthenticationFilter
@@ -170,7 +170,7 @@ public class SecurityConfig {
 
     /**
      * 4. Spring Security 기반의
-     *    사용자의 정보가 맞을 경우 수행. 결과값을 리턴해주는 Handler
+     * 사용자의 정보가 맞을 경우 수행. 결과값을 리턴해주는 Handler
      * customLoginSuccessHandler: 이 메서드는 인증 성공 핸들러를 생성. 인증 성공 핸들러는 인증 성공 시 수행할 작업을 정의
      */
     @Bean
@@ -198,10 +198,10 @@ public class SecurityConfig {
     }
 
     /**
-     * Supplier<Authentication>와 
-     * RequestAuthorizationContext를 인자로 받아서 
+     * Supplier<Authentication>와
+     * RequestAuthorizationContext를 인자로 받아서
      * "USER" 역할을 가진 사용자인지 확인 = 로그인했는지 확인
-     *
+     * <p>
      * 만약 사용자가 "USER" 역할을 가지고 있다면, AuthorizationDecision 객체는 true를 반환하고,
      * 그렇지 않다면 false를 반환
      */

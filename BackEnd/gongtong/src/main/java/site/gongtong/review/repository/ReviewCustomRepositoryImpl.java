@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ReviewCustomRepositoryImpl implements ReviewCustomRepository{
+public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
@@ -38,7 +38,7 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository{
     }
 
     @Override
-    public List<Review> findReviewsWithImagesByUserId(String memberId){
+    public List<Review> findReviewsWithImagesByUserId(String memberId) {
         QReview review = QReview.review;
         QImage image = QImage.image;
 

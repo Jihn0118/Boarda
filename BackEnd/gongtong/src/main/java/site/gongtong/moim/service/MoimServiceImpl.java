@@ -44,7 +44,7 @@ public class MoimServiceImpl implements MoimService {
     public Integer createRoom(Moim moim, String memberId) {
         Member member = memberCustomRepository.findMemberById(memberId);
 
-        if(member == null){
+        if (member == null) {
             return 1;
         }
 
@@ -90,7 +90,7 @@ public class MoimServiceImpl implements MoimService {
 
         if (moim == null) {
             return 1;
-        } else if(addMember == null){
+        } else if (addMember == null) {
             return 2;
         }
 
@@ -114,12 +114,12 @@ public class MoimServiceImpl implements MoimService {
 
         moimMemberRepository.save(addMoimMember);
 
-        if(isFull){     // 모임이 꽉 찼으니 모임 멤버들에게 알림 생성
+        if (isFull) {     // 모임이 꽉 찼으니 모임 멤버들에게 알림 생성
             List<MoimMember> moimMemberList = moimMemberCustomRepository.findMoimMembersByMoim(moim);
             List<Alarm> alarms = new ArrayList<>();
             List<String> memberIdList = new ArrayList<>();
 
-            for (MoimMember mm: moimMemberList) {
+            for (MoimMember mm : moimMemberList) {
                 Member member = mm.getMember();
                 String memId = mm.getMember().getId();
                 memberIdList.add(memId);
@@ -138,7 +138,7 @@ public class MoimServiceImpl implements MoimService {
             }
             alarmRepository.saveAll(alarms);
 
-            for(String memId: memberIdList){
+            for (String memId : memberIdList) {
                 alarmService.alarmMessage(memId);
             }
         }
@@ -159,8 +159,8 @@ public class MoimServiceImpl implements MoimService {
     public int inviteFriend(String memberId, String friendId, int moimId) {
         Member friend = memberCustomRepository.findById(friendId);
         Moim moim = moimCustomRepository.findById(moimId);
-        
-        if(friend != null && moim != null){
+
+        if (friend != null && moim != null) {
             Alarm addAlarm = Alarm.builder()
                     .content("")
                     .member(friend)
@@ -199,20 +199,20 @@ public class MoimServiceImpl implements MoimService {
     @Override
     public long exitRoom(String memberId, int moimId) {
         long result = moimMemberCustomRepository.deleteMoimMember(memberId, moimId);
-        if(result != 1){
+        if (result != 1) {
             return -1;  // 모임 멤버 안 지워짐
         }
 
         Moim moim = moimCustomRepository.findById(moimId);
 
-        long result2;
-        if(moim.getCurrentNumber() > 1){
+        long result2 = 0L;
+        if (moim.getCurrentNumber() > 1) {
             result2 = moimCustomRepository.minusCurrentNumber(memberId, moimId, moim.getCurrentNumber() - 1);
-        } else {
+        } else if (moim.getCurrentNumber() == 1) {
             result2 = moimCustomRepository.deleteMoim(moimId);
         }
 
-        if(result2 != 1){
+        if (result2 != 1) {
             return -2;  // 모임 인원수 -1 이 안되거나, 모임 삭제가 안되거나
         }
         return result;

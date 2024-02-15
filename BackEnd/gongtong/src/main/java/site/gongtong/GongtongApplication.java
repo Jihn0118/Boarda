@@ -11,8 +11,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling //랭킹
 public class GongtongApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GongtongApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GongtongApplication.class, args);
+    }
 
 }

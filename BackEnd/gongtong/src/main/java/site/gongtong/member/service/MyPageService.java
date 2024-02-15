@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface MyPageService {
     int idToNum(String id);
+
     List<Review> getReviewListByNum(int num);
 
     Member findById(String id);
+
     Member findByNickname(String nickname);
 
     Long modifyProfile(EditProfileDto editProfileDto);

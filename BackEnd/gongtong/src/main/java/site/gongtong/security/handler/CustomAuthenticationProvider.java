@@ -39,7 +39,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         MemberDetails securityMemberDetailsDto = memberDetailsService.loadUserByUsername(id);
 
         // 대소문자를 구분하는 matches() 메서드로 db와 사용자가 제출한 비밀번호를 비교
-        if( !bCryptPasswordEncoder().matches(password, securityMemberDetailsDto.getUsername()) ) {
+        if (!bCryptPasswordEncoder().matches(password, securityMemberDetailsDto.getUsername())) {
             throw new BadCredentialsException(securityMemberDetailsDto.getUsername() + "Invalid password");
         }
 

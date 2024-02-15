@@ -22,7 +22,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/showgames")
-    public ResponseEntity<List<String>> showGames(){
+    public ResponseEntity<List<String>> showGames() {
         log.info("보드게임 제목 리스트 들어옴!!!");
         List<String> gameNameList = reviewService.getGameNameList();
 
@@ -30,7 +30,7 @@ public class ReviewController {
     }
 
     @GetMapping("/myreview")
-    public ResponseEntity<List<Review>> getMyReview(HttpServletRequest request){
+    public ResponseEntity<List<Review>> getMyReview(HttpServletRequest request) {
         log.info("내 리뷰리스트 보기 들어옴!!!");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
@@ -40,10 +40,10 @@ public class ReviewController {
     }
 
     @PostMapping("/regist")
-    public ResponseEntity<Integer> createReview(@RequestPart(name="review") ReviewDto reviewDto,
-                                                @RequestPart(name="gamenames") List<String> gameNameList,
-                                                @RequestPart(name="images")List<MultipartFile> files,
-                                                HttpServletRequest request){
+    public ResponseEntity<Integer> createReview(@RequestPart(name = "review") ReviewDto reviewDto,
+                                                @RequestPart(name = "gamenames") List<String> gameNameList,
+                                                @RequestPart(name = "images") List<MultipartFile> files,
+                                                HttpServletRequest request) {
         log.info("리뷰 등록 들어옴!!!");
 
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
@@ -54,7 +54,7 @@ public class ReviewController {
     }
 
     @PutMapping("/delete")
-    public ResponseEntity<Long> deleteReview(@RequestParam(name="reviewId") int reviewId, HttpServletRequest request){
+    public ResponseEntity<Long> deleteReview(@RequestParam(name = "reviewId") int reviewId, HttpServletRequest request) {
         log.info("리뷰 삭제 들어옴!!!");
 
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));

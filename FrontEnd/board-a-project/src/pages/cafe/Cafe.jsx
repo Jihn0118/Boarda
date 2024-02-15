@@ -53,17 +53,17 @@ export default function Cafe() {
           imageSize
         );
 
-        const makeOverListener = (map, marker, infowindow) =>{
-          return function(){
+        const makeOverListener = (map, marker, infowindow) => {
+          return function () {
             infowindow.open(map, marker);
-          }
-        }
+          };
+        };
 
-        const makeOutListener = (infowindow) =>{
-          return function(){
+        const makeOutListener = (infowindow) => {
+          return function () {
             infowindow.close();
-          }
-        }
+          };
+        };
 
         for (let i = 0; i < positions.length; i++) {
           if (positions[i].id <= 20) continue;
@@ -81,16 +81,25 @@ export default function Cafe() {
           });
 
           const infowindow = new kakao.maps.InfoWindow({
-            content: positions[i].branch
-          })
+            content: positions[i].branch,
+          });
 
           bounds.extend(temp_point);
-          kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-          kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+          kakao.maps.event.addListener(
+            marker,
+            "mouseover",
+            makeOverListener(map, marker, infowindow)
+          );
+          kakao.maps.event.addListener(
+            marker,
+            "mouseout",
+            makeOutListener(infowindow)
+          );
         }
 
         map.setBounds(bounds);
       }
+      map.setZoomable(false);
     }, [positions]);
 
     return (
@@ -167,7 +176,9 @@ export default function Cafe() {
                   <option value="히어로">히어로 보드게임카페</option>
                 </select>
               </label>
-              <button>검색</button>
+              <button className="bg-blue-500 px-4 py-2 rounded-lg text-white font-bold ...">
+                검색
+              </button>
             </form>
           </div>
           <div>{renderContent()}</div>

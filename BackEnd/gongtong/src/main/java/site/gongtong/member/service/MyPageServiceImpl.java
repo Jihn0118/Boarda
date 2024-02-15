@@ -49,7 +49,7 @@ public class MyPageServiceImpl implements MyPageService {
         //1. id로 해당 유저 찾기
         Member member = myPageRepository.findById(id);
         //예외처리 - id에 해당하는 member가 없으면 0리턴
-        if(member == null) return 0; 
+        if (member == null) return 0;
 
         //2. id에 해당하는 비번 바꾸기...
         return myPageRepository.modifyPwd(id, newEncodedPwd);

@@ -31,7 +31,7 @@ public class MyPageCustomRepositoryImpl implements MyPageCustomRepository {
     public List<Review> findAllReviews(int user_num) {
         QReview review = QReview.review;
 
-        System.out.println("repo usernum: "+ user_num);
+        System.out.println("repo usernum: " + user_num);
 
         return jpaQueryFactory
                 .selectFrom(review)

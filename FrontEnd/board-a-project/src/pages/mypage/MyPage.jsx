@@ -8,6 +8,7 @@ import { useRecoilValue } from "recoil";
 import { loginUserState } from "../../recoil/atoms/userState";
 import MypageHeader from "../../components/MypageHeader";
 import { Outlet } from "react-router-dom";
+import myPageAPI from "../../api/mypageAPI";
 
 // 마이페이지 -> 로그인 한 유저가 접근하면 내 마이페이지로
 // 타인 프로필을 클릭했으면 타인 피드로
@@ -15,7 +16,7 @@ import { Outlet } from "react-router-dom";
 
 const StyledTabs = styled(Tabs)`
   && {
-    width: 20%;
+    width: 100%;
     margin-top: 10%;
     border: black solid;
     border-radius: 10%;
@@ -36,11 +37,28 @@ const StyledTab = styled(Tab)`
 export default function MyPage() {
   // 네비게이터로 이동시키기
   const navigate = useNavigate();
+  const params = useParams(); // 파라미터가 키:밸류 형태로 뽑힘
 
   // 현재 로그인한 유저 상태
   const loginUser = useRecoilValue(loginUserState);
+  const [userData, setUserData] = useState();
+  const [info, setInfo] = useState();
 
-  const params = useParams(); // 파라미터가 키:밸류 형태로 뽑힘
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await myPageAPI.getUserFeeds(params.userId);
+        console.log(res);
+        setUserData(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [loginUser.id]);
+  useEffect(() => {
+    setInfo(userData);
+  }, [userData]);
 
   // 넘어온 파라미터와 같으면 본인 마이페이지, 아니면 타인
   const isLoginUser = params.userId === loginUser.id;
@@ -118,15 +136,23 @@ export default function MyPage() {
     </StyledTabs>
   );
 
+  const Container = styled.div`
+    width: 100%;
+  `;
+
   return (
     <>
-      <MypageHeader></MypageHeader>
+      <MypageHeader info={info}></MypageHeader>
 
       {/* 로그인 유저와 같으면 본인 마이페이지로 아니면 다른사람페이지 */}
-      <div className="flex">
-        {isLoginUser && loginUserMypage}
-        {!isLoginUser && otherUserMypage}
-        <Outlet></Outlet>
+      <div className="flex ">
+        <div className="flex-none">
+          {isLoginUser && loginUserMypage}
+          {!isLoginUser && otherUserMypage}
+        </div>
+        <Container>
+          <Outlet></Outlet>
+        </Container>
       </div>
     </>
   );

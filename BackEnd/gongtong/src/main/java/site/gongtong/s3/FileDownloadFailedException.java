@@ -1,6 +1,6 @@
 package site.gongtong.s3;
 
-public class FileDownloadFailedException extends RuntimeException{
+public class FileDownloadFailedException extends RuntimeException {
     public FileDownloadFailedException() {
     }
 

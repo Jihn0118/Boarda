@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import site.gongtong.member.model.Follow;
 
 @Repository
-public interface FollowRepository extends JpaRepository<Follow,Integer>, FollowCustomRepository {
+public interface FollowRepository extends JpaRepository<Follow, Integer>, FollowCustomRepository {
 
 }

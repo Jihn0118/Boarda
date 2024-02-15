@@ -11,6 +11,7 @@ import site.gongtong.Image.model.Image;
 public class ImageReviewDto {
     private Image image;
     private Review review;
+
     public ImageReviewDto(Image image, Review review) {
         this.image = image;
         this.review = review;

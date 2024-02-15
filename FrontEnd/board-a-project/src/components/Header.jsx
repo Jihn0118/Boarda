@@ -161,22 +161,22 @@ export default function Header() {
   };
 
   return (
-    <StyledHeader>
+    <StyledHeader className="sticky top-0 z-10">
       <div>
         {/* 로고 */}
         <HeaderLogo
           onClick={() => {
-            navigate("/home");
+            navigate("");
           }}
         ></HeaderLogo>
       </div>
 
       {/* 중간메뉴 */}
       <ItemContainer>
+        <Link to="/home">홈</Link>
         <Link to="/moim/">모임</Link>
         <Link to="/game">게임</Link>
         <Link to="/cafe">매장</Link>
-        <Link to="/board">게시판</Link>
       </ItemContainer>
 
       {/* 우측메뉴 */}

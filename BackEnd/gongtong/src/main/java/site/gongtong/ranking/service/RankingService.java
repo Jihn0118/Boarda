@@ -1,7 +1,6 @@
 package site.gongtong.ranking.service;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

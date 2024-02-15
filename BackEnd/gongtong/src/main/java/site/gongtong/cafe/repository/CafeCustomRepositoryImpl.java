@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class CafeCustomRepositoryImpl implements CafeCustomRepository{
+public class CafeCustomRepositoryImpl implements CafeCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override

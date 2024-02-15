@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CafeCustomRepository {
     List<Cafe> findWithConditions(String location, String brand);
+
     List<ImageReviewDto> getImagesAndReviewIdsByCafeId(Integer cafeId);
+
     Cafe findById(int cafeId);
 }

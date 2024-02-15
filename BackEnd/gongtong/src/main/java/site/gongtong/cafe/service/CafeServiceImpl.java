@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CafeServiceImpl implements CafeService{
+public class CafeServiceImpl implements CafeService {
     private final CafeRepository cafeRepository;
     private final CafeCustomRepository cafeCustomRepository;
 
