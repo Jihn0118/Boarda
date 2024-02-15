@@ -69,7 +69,7 @@ const MoimList = () => {
     console.log("ㅇㅇ" + data);
     if (data === 0) {
       setMakeModalIsOpen(true);
-    } else if (data === 1) {
+    } else {
       alert("이미 참여 중인 모임이 있습니다!");
     }
   };
