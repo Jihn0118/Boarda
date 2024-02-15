@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import reviewAPI from "../../api/reviewAPI";
 import styled from "@emotion/styled";
+import { loginUserState } from "../../recoil/atoms/userState";
+import { useRecoilValue } from "recoil";
 
 const FeedItem = styled.img`
   &:hover {
@@ -13,15 +15,16 @@ const FeedItem = styled.img`
 export default function Feed() {
   const [feeds, setFeeds] = useState([]); // 피드 정보 백에서 받아와서 뿌리기
   // 파람 기준 id로 보내면 백에서 피드 셀렉 후 리스트로 넘겨줄 것
-  const params = useParams();
   const location = useLocation();
+
+  const loginUser = useRecoilValue(loginUserState);
 
   useEffect(() => {
     // 랜더링 될 때 feed정보 요청
     // 비동기로 받아오고 랜더링할 것
     const fetchData = async () => {
       try {
-        let res = await reviewAPI.getMyReview(params.userId);
+        let res = await reviewAPI.getMyReview(loginUser.id);
 
         res.data.sort((a, b) => {
           new Date(b.createdAt) - new Date(a.createdAt);
