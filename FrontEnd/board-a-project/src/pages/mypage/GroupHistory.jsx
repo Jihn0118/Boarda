@@ -234,7 +234,7 @@ export default function GroupHistory() {
                       {/* Status 에 따라서 바뀌도록 수정해야 */}
                       <button
                         className="bg-blue-200 px-4 py-2 rounded-lg text-white font-bold ..."
-                        onClick={handleOpen2(e.memberList)}
+                        onClick={() => handleOpen2(e.memberList)}
                       >
                         목록 보기
                       </button>
