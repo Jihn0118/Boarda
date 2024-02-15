@@ -58,7 +58,7 @@ export default function Alarm() {
         setAlarmData([...alarmData, e.data]);
       };
     }
-  }, [localStorage.getItem("loginUser")]);
+  }, [loginUser.id]);
 
   return (
     <Badge badgeContent={alarmData?.length}>
