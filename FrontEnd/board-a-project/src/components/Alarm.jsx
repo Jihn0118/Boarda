@@ -12,7 +12,7 @@ export default function Alarm() {
   const [alarmData, setAlarmData] = useRecoilState(alarmState);
   const loginUser = useRecoilValue(loginUserState);
   const localURL = "http://localhost:8081/api/alarm/subscribe";
-  const remoteURL = "https://www.boarda.site/api/alarm/subscribe";
+  const remoteURL = "https://boarda.site/api/alarm/subscribe";
 
   useEffect(() => {
     // 로그인 되어있는 경우 sse 요청
@@ -58,7 +58,7 @@ export default function Alarm() {
         setAlarmData([...alarmData, e.data]);
       };
     }
-  }, [loginUser]);
+  }, [localStorage.getItem("loginUser")]);
 
   return (
     <Badge badgeContent={alarmData?.length}>
