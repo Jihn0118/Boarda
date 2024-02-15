@@ -166,15 +166,15 @@ const Home = () => {
       <div className="container mx-auto flex justify-between py-10">
         <div className="w-2/3 px-4">
           <h1 className="text-2xl font-bold pl-10 ...">인기 매장</h1>
-          <div className="container flex justify-center py-5">
-            <div className="container flex justify-between py-5">
+          <div className="container flex justify-center py-5 px-10">
+            <div className="container flex justify-start space-x-10 py-5">
               {rankCafeData &&
                 rankCafeData.map(
                   (data, idx) =>
                     idx <= 2 && ( // 인기매장 top 3만 표시
                       <div
                         key={idx}
-                        className="container flex flex-col items-center"
+                        className="flex flex-col px-12 py-5 items-center border-2 border-rose-600 ..."
                       >
                         <div className="flex flex-col items-center">
                           <img
@@ -193,7 +193,7 @@ const Home = () => {
                             }}
                           />
 
-                          <h2 className="text-xl text-center...">
+                          <h2 className="text-xl text-center font-bold ...">
                             {rankCafeData[idx].cafe.brand}{" "}
                             {rankCafeData[idx].cafe.branch}
                           </h2>
@@ -254,7 +254,7 @@ const Home = () => {
                       {data.game.difficulty} / 5
                     </div>
                     <div className="w-40 text-center">
-                      {data.game.age} 이상
+                      {data.game.age}세 이상
                     </div>
                     <div className="w-40 text-center">
                       {data.game.playTime}분
