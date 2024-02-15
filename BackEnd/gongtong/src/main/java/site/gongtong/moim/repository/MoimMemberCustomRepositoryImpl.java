@@ -73,18 +73,25 @@ public class MoimMemberCustomRepositoryImpl implements MoimMemberCustomRepositor
         QMoimMember qMoimMember = QMoimMember.moimMember;
         QMember qMember = QMember.member;
 
-        List<Tuple> result = jpaQueryFactory
-                .select(qMoim, qMember)
+        List<Moim> moims = jpaQueryFactory
+                .select(qMoim)
                 .from(qMoim)
                 .leftJoin(qMoimMember).on(qMoim.id.eq(qMoimMember.moim.id))
                 .leftJoin(qMember).on(qMoimMember.member.num.eq(qMember.num))
                 .where(qMember.id.eq(memberId))
                 .fetch();
 
-        return result.stream()
-                .collect(Collectors.groupingBy(tuple -> tuple.get(qMoim)))
-                .entrySet().stream()
-                .map(entry -> new MoimGroup(entry.getKey(), entry.getValue().stream().map(tuple -> tuple.get(qMember)).collect(Collectors.toList())))
+        // 각 모임에 참여한 모든 멤버 목록을 모임별로 조회
+        return moims.stream()
+                .map(moim -> {
+                    List<Member> members = jpaQueryFactory
+                            .select(qMember)
+                            .from(qMember)
+                            .leftJoin(qMoimMember).on(qMember.num.eq(qMoimMember.member.num))
+                            .where(qMoimMember.moim.id.eq(moim.getId()))
+                            .fetch();
+                    return new MoimGroup(moim, members);
+                })
                 .collect(Collectors.toList());
     }
 }
