@@ -40,6 +40,7 @@ export default function Cafe() {
       const options = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
         level: 9,
+        draggable: false,
       };
       const map = new kakao.maps.Map(container, options);
 
@@ -52,14 +53,26 @@ export default function Cafe() {
           imageSize
         );
 
+        const makeOverListener = (map, marker, infowindow) =>{
+          return function(){
+            infowindow.open(map, marker);
+          }
+        }
+
+        const makeOutListener = (infowindow) =>{
+          return function(){
+            infowindow.close();
+          }
+        }
+
         for (let i = 0; i < positions.length; i++) {
           if (positions[i].id <= 20) continue;
-          // console.log(positions[i]);
+
           const temp_point = new kakao.maps.LatLng(
             positions[i].latitude,
             positions[i].longitude
           );
-          // console.log(temp_point);
+
           const marker = new window.kakao.maps.Marker({
             map: map,
             position: temp_point,
@@ -67,7 +80,13 @@ export default function Cafe() {
             image: markerImage,
           });
 
+          const infowindow = new kakao.maps.InfoWindow({
+            content: positions[i].branch
+          })
+
           bounds.extend(temp_point);
+          kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+          kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
         }
 
         map.setBounds(bounds);
@@ -118,7 +137,22 @@ export default function Cafe() {
                 >
                   <option value="">전체</option>
                   <option value="강남구">강남구</option>
+                  <option value="강동구">강동구</option>
+                  <option value="강북구">강북구</option>
+                  <option value="강서구">강서구</option>
+                  <option value="관악구">관악구</option>
+                  <option value="광진구">광진구</option>
+                  <option value="노원구">노원구</option>
+                  <option value="동대문구">동대문구</option>
+                  <option value="동작구">동작구</option>
                   <option value="마포구">마포구</option>
+                  <option value="서대문구">서대문구</option>
+                  <option value="성동구">성동구</option>
+                  <option value="성북구">성북구</option>
+                  <option value="송파구">송파구</option>
+                  <option value="용산구">용산구</option>
+                  <option value="은평구">은평구</option>
+                  <option value="종로구">종로구</option>
                 </select>
               </label>
               <label className="px-5">

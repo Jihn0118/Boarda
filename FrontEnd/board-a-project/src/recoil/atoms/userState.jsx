@@ -11,5 +11,6 @@ export const loginUserState = atom({
   default: {
     id: loginUser ? loginUser.id : "", // 이메일(아이디)
     nickname: loginUser ? loginUser.nickname : "", //닉네임
+    profile: loginUser ? loginUser.profile : "", //프로필 경로
   },
 });

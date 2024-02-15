@@ -27,6 +27,7 @@ export default function Login() {
         let newLoginUser = {
           id: res.data.memberId,
           nickname: res.data.memberNickname,
+          profile: res.data.memberImage,
         };
         setLoginUser(newLoginUser);
         localStorage.setItem("loginUser", JSON.stringify(newLoginUser));
