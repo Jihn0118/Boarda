@@ -19,7 +19,6 @@ export default function GroupNow() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const res = await moimAPI.getParticipatingMoim(loginUser.id);
         const res = await moimAPI.getParticipatingMoim();
         setParticipatingGroup(res.data);
         console.log(res.data);
@@ -61,7 +60,7 @@ export default function GroupNow() {
                   onClick={() => {
                     moimAPI.exitMoim(participatingGroup.id);
                     alert("방 나가기 완료");
-                    navigate("/home");
+                    setParticipatingGroup({})
                   }}
                   className="bg-blue-200"
                 >

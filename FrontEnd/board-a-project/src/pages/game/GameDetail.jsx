@@ -4,13 +4,25 @@ import { CardBlog } from "../../mui-treasury/card-blog/CardBlog";
 import DetailModal from "../../components/DetailModal";
 import Modal from "@mui/material/Modal";
 import MultiActionAreaCard from "./GameFeed";
+import AlignItemsList from "./GameCafeList";
 import styled from "styled-components";
 
-const SecondModalStyle = styled(Modal)`
+
+const FeedModalStyle = styled(Modal)`
   && {
     position: fixed;
     left: 70%;
     margin-top: 12%;
+  }
+`;
+
+const CafeModalStyle = styled(Modal)`
+  && {
+    position: fixed;
+    overflow-y: auto;
+    left: 8%;
+    margin-top: 13%;  // 추가
+    height: 450px;    // 부모 요소의 높이 설정
   }
 `;
 
@@ -20,6 +32,8 @@ const GameDetail = ({ gameId, isModalOpen, setIsModalOpen }) => {
 
   const [feedDetailOpen, setFeedDetailOpen] = useState(false); // FeedDetail Modal의 열림 상태
   const [selectedReview, setSelectedReview] = useState(null);
+
+  const [cafeListOpen, setCafeListOpen] = useState(false);
 
   const getGameDetailData = async () => {
     console.log(gameId);
@@ -47,6 +61,14 @@ const GameDetail = ({ gameId, isModalOpen, setIsModalOpen }) => {
     setFeedDetailOpen(false); // FeedDetail Modal 닫기
   };
 
+  const handleCafeListOpen = () => {
+    setCafeListOpen(true);
+  };
+
+  const handleCafeListClose = () => {
+    setCafeListOpen(false);
+  };
+
   useEffect(() => {
     getGameDetailData();
   }, [gameId]);
@@ -64,11 +86,15 @@ const GameDetail = ({ gameId, isModalOpen, setIsModalOpen }) => {
             imageUrl={gameDetail.image}
             review={reviewList}
             onImageClick={handleImageClick}
+            onCafeButtonClick={handleCafeListOpen}
           ></CardBlog>
         </DetailModal>
-        <SecondModalStyle open={feedDetailOpen} onClose={handleFeedDetailClose}>
+        <FeedModalStyle open={feedDetailOpen} onClose={handleFeedDetailClose}>
           <MultiActionAreaCard info={selectedReview} />
-        </SecondModalStyle>
+        </FeedModalStyle>
+        <CafeModalStyle open={cafeListOpen} onClose={handleCafeListClose}>
+          <AlignItemsList reviewList={reviewList}/>
+        </CafeModalStyle>
     </>
   );
 };

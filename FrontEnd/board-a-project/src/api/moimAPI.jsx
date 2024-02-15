@@ -41,21 +41,18 @@ export const getMoimList = async (location, sort) => {
         sort: sort,
       },
     });
-    console.log(response);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("데이터를 가져오는 중 에러 발생:", error);
   }
 };
 
-export const checkRoom = async (num) => {
+export const checkRoom = async () => {
   try {
     const response = await api({
       method: "get",
       url: `${END_POINT}/checkroom`,
-      params: {
-        num: num,
-      },
     });
     return response.data;
   } catch (error) {

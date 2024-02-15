@@ -17,6 +17,7 @@ export function CardBlog({
   imageUrl,
   review,
   onImageClick,
+  onCafeButtonClick,
 }) {
   return (
     <Card
@@ -143,6 +144,7 @@ export function CardBlog({
                   paddingRight: 3,
                   color: "#ffffff",
                 }}
+                onClick={() => onCafeButtonClick()}
               >
                 보유 매장
               </Button>
