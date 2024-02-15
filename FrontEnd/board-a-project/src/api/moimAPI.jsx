@@ -15,13 +15,10 @@ export const moimAPI = {
   },
 
   // 지금까지 속했던 모든 모임 목록 get -> /moim/mymoimlist?user_num={user_num}
-  getMoimHistory(userNum) {
+  getMoimHistory() {
     return api({
       method: "get",
       url: `${END_POINT}/mymoimlist`,
-      params: {
-        user_num: userNum,
-      },
     });
   },
 
@@ -30,9 +27,6 @@ export const moimAPI = {
     return api({
       method: "get",
       url: `${END_POINT}/mymoim`,
-      params: {
-        user_num: userNum,
-      },
     });
   },
 };
@@ -47,21 +41,18 @@ export const getMoimList = async (location, sort) => {
         sort: sort,
       },
     });
-    console.log(response);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("데이터를 가져오는 중 에러 발생:", error);
   }
 };
 
-export const checkRoom = async (num) => {
+export const checkRoom = async () => {
   try {
     const response = await api({
       method: "get",
       url: `${END_POINT}/checkroom`,
-      params: {
-        num: num,
-      },
     });
     return response.data;
   } catch (error) {

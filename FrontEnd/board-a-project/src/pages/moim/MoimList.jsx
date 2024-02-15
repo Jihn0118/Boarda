@@ -10,7 +10,6 @@ import MoimMakeModal from "./MoimMakeModal";
 import Pagination from "@mui/material/Pagination";
 
 Modal.setAppElement("#root");
-
 const StyledButton = styled.button`
   padding: 10px 20px;
   border-radius: 5px;
@@ -27,7 +26,6 @@ const MoimList = () => {
   const [moimList, setMoimList] = useRecoilState(moimListState);
   const [location, setLocation] = useRecoilState(locationState);
   const [sort, setSort] = useState("1");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const location2 = useLocation();
 
   const [detailModalIsOpen, setDetailModalIsOpen] = useState(false);
@@ -66,13 +64,13 @@ const MoimList = () => {
     setDetailModalIsOpen(false);
   };
 
-  const openMakeModal = async () => {
+  const MakeRoom = async () => {
     const data = await checkRoom();
     console.log("ㅇㅇ" + data);
     if (data === 0) {
       setMakeModalIsOpen(true);
     } else if (data === 1) {
-      setModalIsOpen(true);
+      alert("이미 참여 중인 모임이 있습니다!");
     }
   };
 
@@ -118,6 +116,8 @@ const MoimList = () => {
               <option value="">선택없음</option>
               <option value="서울시 강남구">강남구</option>
               <option value="서울시 마포구">마포구</option>
+              <option value="서울시 성동구">성동구</option>
+              <option value="서울시 강서구">강서구</option>
             </select>
           </label>
           <label>
@@ -180,26 +180,8 @@ const MoimList = () => {
         </div>
 
         <div>
-          <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={() => setModalIsOpen(false)}
-            style={{
-              overlay: {
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-              },
-              content: {
-                color: "lightsteelblue",
-              },
-            }}
-          >
-            <h2>알림</h2>
-            <p>이미 참여 중인 모임이 있습니다!</p>
-            <StyledButton onClick={() => setModalIsOpen(false)}>
-              확인
-            </StyledButton>
-          </Modal>
           <div className="flex justify-end">
-            <StyledButton onClick={() => openMakeModal()}>글쓰기</StyledButton>
+            <StyledButton onClick={() => MakeRoom()}>글쓰기</StyledButton>
           </div>
           <MoimMakeModal
             isOpen={makeModalIsOpen}
