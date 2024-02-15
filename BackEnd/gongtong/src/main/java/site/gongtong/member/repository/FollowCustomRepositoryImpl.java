@@ -50,4 +50,26 @@ public class FollowCustomRepositoryImpl implements FollowCustomRepository {
                 .where(follow.follower.num.eq(userNum))
                 .fetch();
     }
+
+    @Override
+    public Long countFollower(String id) {
+        QFollow qFollow = QFollow.follow;
+
+        return jpaQueryFactory
+                .select(qFollow.count())
+                .from(qFollow)
+                .where(qFollow.follower.id.eq(id))
+                .fetchOne();
+    }
+
+    @Override
+    public Long countFollowing(String id) {
+        QFollow qFollow = QFollow.follow;
+
+        return jpaQueryFactory
+                .select(qFollow.count())
+                .from(qFollow)
+                .where(qFollow.following.id.eq(id))
+                .fetchOne();
+    }
 }

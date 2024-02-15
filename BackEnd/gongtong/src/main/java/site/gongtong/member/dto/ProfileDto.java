@@ -17,4 +17,6 @@ public class ProfileDto {
     List<Review> reviews;
     Moim moim; //현재 참가한 모임, status가 P인 것만
     List<Moim> moimList;
+    long followerCount;
+    long followingCount;
 }

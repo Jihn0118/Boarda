@@ -12,6 +12,7 @@ import site.gongtong.member.model.Member;
 import site.gongtong.member.repository.FollowRepository;
 import site.gongtong.member.repository.MyPageCustomRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -99,6 +100,27 @@ public class FollowServiceImpl implements FollowService {
             }
         }
         return 1;
+    }
+
+    @Override
+    public List<Long> getFollowCount(String id) {
+        List<Long> countList = new ArrayList<>();
+
+        Long followerCount = followRepository.countFollower(id);
+        Long followingCount = followRepository.countFollowing(id);
+
+        if(followerCount == null){
+            countList.add(0L);
+        } else {
+            countList.add(followerCount);
+        }
+        if(followingCount == null){
+            countList.add(0L);
+        } else {
+            countList.add(followingCount);
+        }
+
+        return countList;
     }
 
 }

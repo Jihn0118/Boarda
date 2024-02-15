@@ -1,7 +1,6 @@
 package site.gongtong.member.controller;
 
 import com.querydsl.core.Tuple;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,8 @@ import site.gongtong.review.model.Review;
 import site.gongtong.security.jwt.TokenUtils;
 
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/mypage")
@@ -53,7 +53,7 @@ public class MyPageController {
         ProfileDto profileDto = new ProfileDto();
         List<Review> reviews; //리뷰 리스트
 
-        List<Moim> dbMoims ;
+        List<Moim> dbMoims;
 
         try {
             dbMember = memberDetailsService.loadUserByUsername(id);
@@ -80,6 +80,10 @@ public class MyPageController {
                 } else {
                     profileDto.setMoim(dbMoim); //현재 진행 중인 모임이 없으면 null
                 }
+
+                List<Long> followCount = followService.getFollowCount(id);
+                profileDto.setFollowerCount(followCount.get(0));
+                profileDto.setFollowingCount(followCount.get(1));
             }
         } catch (Exception e) { //로그인 멤버 찾아오다가 오류
             e.printStackTrace();

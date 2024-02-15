@@ -18,7 +18,7 @@ export default function GroupNow() {
     const fetchData = async () => {
       try {
         // const res = await moimAPI.getParticipatingMoim(loginUser.id);
-        const res = await moimAPI.getParticipatingMoim(2);
+        const res = await moimAPI.getParticipatingMoim();
         setParticipatingGroup(res.data);
         console.log(res.data);
       } catch (e) {
@@ -55,7 +55,7 @@ export default function GroupNow() {
             <TableCell align="right">{participatingGroup.title}</TableCell>
             <TableCell align="right">{participatingGroup.number}</TableCell>
             <TableCell align="right">
-              <button className="bg-blue-200">나가기버튼</button>
+              {participatingGroup.id && <button onClick={() => moimAPI.exitMoim(participatingGroup.id)} className="bg-blue-200">나가기버튼</button>}
             </TableCell>
           </TableRow>
         </TableBody>

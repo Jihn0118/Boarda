@@ -16,6 +16,7 @@ import Signup from "../pages/user/Signup";
 import Arcade from "../pages/arcade/Arcade";
 import ErrorPage from "../pages/ErrorPage";
 import Board from "../pages/board/Board";
+
 import Cafe from "../pages/cafe/Cafe";
 import MyPage from "../pages/mypage/MyPage";
 import FollowBlock from "../pages/mypage/FollowBlock";
@@ -26,6 +27,7 @@ import GroupHistory from "../pages/mypage/GroupHistory";
 import GroupNow from "../pages/mypage/GroupNow";
 import Feed from "../pages/mypage/Feed";
 import FeedDetail from "../pages/mypage/FeedDetail";
+import FoodGame from "../components/FoodGame";
 
 // ----------------------------------------------------------------
 
@@ -75,7 +77,7 @@ const routes = createBrowserRouter([
           },
         ],
       }, // 마이페이지
-      { path: "board", element: <Board></Board> }, // 게시판
+      { path: "board", element: <FoodGame></FoodGame> }, // 게시판
       { path: "cafe", element: <Cafe></Cafe> }, // 매장정보
       { path: "home", element: <Home></Home> }, // 홈화면 (실질적인 첫 화면)
       {

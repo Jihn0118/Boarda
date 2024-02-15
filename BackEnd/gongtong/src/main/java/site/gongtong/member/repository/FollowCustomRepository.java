@@ -12,4 +12,8 @@ public interface FollowCustomRepository {
     Follow findBy2Nums(int myNum, int yourNum);
 
     List<Tuple> findAllByNum(int userNum);
+
+    Long countFollower(String id);
+
+    Long countFollowing(String id);
 }

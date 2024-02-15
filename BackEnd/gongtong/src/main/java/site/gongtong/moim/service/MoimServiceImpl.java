@@ -205,10 +205,10 @@ public class MoimServiceImpl implements MoimService {
 
         Moim moim = moimCustomRepository.findById(moimId);
 
-        long result2;
+        long result2 = 0L;
         if(moim.getCurrentNumber() > 1){
             result2 = moimCustomRepository.minusCurrentNumber(memberId, moimId, moim.getCurrentNumber() - 1);
-        } else {
+        } else if(moim.getCurrentNumber() == 1){
             result2 = moimCustomRepository.deleteMoim(moimId);
         }
 
