@@ -55,7 +55,7 @@ export default function GroupNow() {
             <TableCell align="right">{participatingGroup.title}</TableCell>
             <TableCell align="right">{participatingGroup.number}</TableCell>
             <TableCell align="right">
-              <button className="bg-blue-200">나가기버튼</button>
+              <button onClick={() => moimAPI.exitMoim(participatingGroup.id)} className="bg-blue-200">나가기버튼</button>
             </TableCell>
           </TableRow>
         </TableBody>

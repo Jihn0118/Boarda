@@ -17,7 +17,7 @@ export default function Alarm() {
   useEffect(() => {
     // 로그인 되어있는 경우 sse 요청
     if (!!loginUser.id) {
-      const sse = new EventSource(`${remoteURL}`, { withCredentials: true });
+      const sse = new EventSource(`${localURL}`, { withCredentials: true });
 
       // 연결 성공 시 메시지 수신
       sse.addEventListener("connect", (e) => {
@@ -58,7 +58,7 @@ export default function Alarm() {
         setAlarmData([...alarmData, e.data]);
       };
     }
-  }, [localStorage.getItem("loginUser")]);
+  }, [loginUser.id]);
 
   return (
     <Badge badgeContent={alarmData?.length}>
