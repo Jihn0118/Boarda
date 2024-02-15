@@ -109,4 +109,15 @@ public class MoimController {
 
         return new ResponseEntity<>(myMoim, HttpStatus.OK);
     }
+
+    @DeleteMapping("/exit")
+    public ResponseEntity<Long> exitMoim(HttpServletRequest request, @RequestParam("moim_id") int moimId){
+        log.info("모임 나가기 들어옴!!!");
+
+        String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
+
+        long result = moimService.exitRoom(memberId, moimId);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

@@ -15,4 +15,6 @@ public interface MoimMemberCustomRepository {
     MoimMember findMoimMemberByMoimAndMember(Moim moim, Member member);
 
     List<MoimMember> findMoimMembersByMoim(Moim moim);
+
+    long deleteMoimMember(String memberId, int moimId);
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { isAuthed } from "../../utils/authUtil";
 import { useNavigate } from "react-router";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -7,10 +6,8 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { loginUserState } from "../../recoil/atoms/userState";
-import mypageAPI from "../../api/mypageAPI";
 import MypageHeader from "../../components/MypageHeader";
 import { Outlet } from "react-router-dom";
-
 
 // 마이페이지 -> 로그인 한 유저가 접근하면 내 마이페이지로
 // 타인 프로필을 클릭했으면 타인 피드로
@@ -127,12 +124,8 @@ export default function MyPage() {
 
       {/* 로그인 유저와 같으면 본인 마이페이지로 아니면 다른사람페이지 */}
       <div className="flex">
-        {/* {isLoginUser && loginUserMypage}
-        {!isLoginUser && otherUserMypage} */}
-
-        
-        {/* 작업용 */}
-        {loginUserMypage}
+        {isLoginUser && loginUserMypage}
+        {!isLoginUser && otherUserMypage}
         <Outlet></Outlet>
       </div>
     </>

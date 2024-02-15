@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Carousel } from "@material-tailwind/react";
+
+//import API
+import rankingAPI from "../api/rankingAPI";
+import { urgentMoim } from "../api/moimAPI";
+
+// import icon, image
 import Carousel01 from "../assets/images/Carousel01.png";
 import Carousel02 from "../assets/images/Carousel02.png";
-
-import rankingAPI from "../api/rankingAPI";
+import logo_1 from "../assets/images/logo_1.png";
+import logo_2 from "../assets/images/logo_2.png";
+import logo_3 from "../assets/images/logo_3.png";
 
 const { kakao } = window;
 
 const Home = () => {
   const [rankGameData, setRankGame] = useState([]);
   const [rankCafeData, setRankCafe] = useState([]);
+  const [deadlineMoim, setDeadlineMoim] = useState([]);
 
   useEffect(() => {
     // rankGameData, rankCafeData, endSoon axios 요청
@@ -34,8 +42,18 @@ const Home = () => {
       }
     };
 
+    const fetchMoimData = async () => {
+      try {
+        const res = await urgentMoim();
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchGameData();
     fetchCafeData();
+    fetchMoimData();
   }, []);
 
   const renderMap = () => {
@@ -76,28 +94,45 @@ const Home = () => {
       {/* 인기매장 */}
       <div className="container mx-auto flex justify-between py-10">
         <div className="w-2/3 px-4">
-          <h1 className="text-2xl font-bold ...">인기 매장</h1>
+          <h1 className="text-2xl font-bold pl-10 ...">인기 매장</h1>
           <div className="container flex justify-center py-5">
             <div className="container flex justify-between py-5">
-                {rankCafeData &&
-                  rankCafeData.map((data, idx) => (
-                      idx <= 2 && ( // 인기매장 top 3만 표시
-                      <div key = {idx}>
-                        <span>{rankCafeData[idx].cafe.image}</span>
-                        <h2 className="text-xl text-center...">
-                          {rankCafeData[idx].cafe.brand}{" "}
-                          {rankCafeData[idx].cafe.branch}
-                        </h2>
+              {rankCafeData &&
+                rankCafeData.map(
+                  (data, idx) =>
+                    idx <= 2 && ( // 인기매장 top 3만 표시
+                      <div
+                        key={idx}
+                        className="container flex flex-col items-center"
+                      >
+                        <div className="flex flex-col items-center">
+                          <img
+                            src={
+                              rankCafeData[idx].cafe.brand === "레드버튼"
+                                ? logo_1
+                                : rankCafeData[idx].cafe.brand === "홈즈앤루팡"
+                                ? logo_2
+                                : logo_3
+                            }
+                            alt="brand logo"
+                          style={{width:"150px", height:"150px", marginBottom:"20px"}}
+                          />
+
+                          <h2 className="text-xl text-center...">
+                            {rankCafeData[idx].cafe.brand}{" "}
+                            {rankCafeData[idx].cafe.branch}
+                          </h2>
+                        </div>
                         <div className="py-10">
                           <span>{rankCafeData[idx].cafe.rate} / 5</span>
                         </div>
                       </div>
-                      )
-                  ))}
+                    )
+                )}
             </div>
           </div>
         </div>
-        
+
         {/* 마감임박 */}
         <div className="w-1/3 px-4">
           <h1 className="text-2xl font-bold ...">마감 임박</h1>
@@ -108,21 +143,21 @@ const Home = () => {
       </div>
 
       {/* 인기게임 */}
-      <div>
-        <h1 className="text-2xl font-bold ...">인기 게임</h1>
+      <div className="ml-10">
+        <h1 className="text-2xl font-bold ...">인기 게임 TOP10</h1>
         <div className="container flex justify-center py-5">
           <div className="container flex justify-between py-5">
             <div>
-                <ol>
-                  {rankGameData &&
-                    rankGameData.map((data, idx) => (
-                      <li key={idx}>
-                        <span>
-                          {idx + 1}. {data.game.title}
-                        </span>
-                      </li>
-                    ))}
-                </ol>
+              <ol>
+                {rankGameData &&
+                  rankGameData.map((data, idx) => (
+                    <li key={idx}>
+                      <span>
+                        {idx + 1}. {data.game.title}
+                      </span>
+                    </li>
+                  ))}
+              </ol>
             </div>
           </div>
         </div>

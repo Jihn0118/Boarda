@@ -64,9 +64,10 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() { //여기서 cors 커스텀 가능
         CorsConfiguration configuration = new CorsConfiguration();
 //        configuration.setAllowedOrigins(Arrays.asList("*")); //,   "https://www.boarda.site:3000", "http://localhost:3000"));
-        configuration.setAllowedOrigins(Arrays.asList("https://www.boarda.site:3000", "http://localhost:3000", "https://www.boarda.site")); //,   "https://www.boarda.site:3000", "http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList("https://www.boarda.site:3000", "http://localhost:3000", "https://www.boarda.site", "https://boarda.site")); //,   "https://www.boarda.site:3000", "http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Content-Type", "Authorization", "X-XSRF-token", "jwt"));
+        configuration.setExposedHeaders(Arrays.asList("Content-Type", "X-Requested-With", "Authorization"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L); //1시간
 

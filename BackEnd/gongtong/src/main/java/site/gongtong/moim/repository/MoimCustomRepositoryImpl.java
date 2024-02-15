@@ -111,4 +111,21 @@ public class MoimCustomRepositoryImpl implements MoimCustomRepository {
                 .fetchFirst()
                 .getMoim();
     }
+
+    @Override
+    public long minusCurrentNumber(String memberId, int moimId, int num) {
+        QMoim moim = QMoim.moim;
+        return jpaQueryFactory.update(moim)
+                .set(moim.currentNumber, num)
+                .where(moim.id.eq(moimId))
+                .execute();
+    }
+
+    @Override
+    public long deleteMoim(int moimId) {
+        QMoim moim = QMoim.moim;
+        return jpaQueryFactory.delete(moim)
+                .where(moim.id.eq(moimId))
+                .execute();
+    }
 }

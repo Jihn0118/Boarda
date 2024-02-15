@@ -31,6 +31,8 @@ public class AlarmController {
 
     @GetMapping(value = "/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter subscribe(HttpServletRequest request){
+        log.info("SSE 구독 컨트롤러 들어옴!!!");
+
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
         return alarmService.subscribe(memberId);

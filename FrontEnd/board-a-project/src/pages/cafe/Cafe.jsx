@@ -40,6 +40,7 @@ export default function Cafe() {
       const options = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
         level: 9,
+        draggable: false,
       };
       const map = new kakao.maps.Map(container, options);
 
@@ -52,14 +53,26 @@ export default function Cafe() {
           imageSize
         );
 
+        const makeOverListener = (map, marker, infowindow) =>{
+          return function(){
+            infowindow.open(map, marker);
+          }
+        }
+
+        const makeOutListener = (infowindow) =>{
+          return function(){
+            infowindow.close();
+          }
+        }
+
         for (let i = 0; i < positions.length; i++) {
           if (positions[i].id <= 20) continue;
-          console.log(positions[i]);
+
           const temp_point = new kakao.maps.LatLng(
             positions[i].latitude,
             positions[i].longitude
           );
-          // console.log(temp_point);
+
           const marker = new window.kakao.maps.Marker({
             map: map,
             position: temp_point,
@@ -67,7 +80,13 @@ export default function Cafe() {
             image: markerImage,
           });
 
+          const infowindow = new kakao.maps.InfoWindow({
+            content: positions[i].branch
+          })
+
           bounds.extend(temp_point);
+          kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+          kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
         }
 
         map.setBounds(bounds);
@@ -76,22 +95,27 @@ export default function Cafe() {
 
     return (
       <>
-        <div id="map" style={{ width: "500px", height: "400px" }}></div>
-        <ul>
-          {!!positions &&
-            positions.map((data, idx) => (
-              <li key={idx}>
-                <div style={{ border: "1px solid black" }}>
-                  <div>
-                    {data.brand} {data.branch}
-                  </div>
-                  <div> 위치: {data.location} </div>
-                  <div> 연락처: {data.contact} </div>
-                  <div> 평점: {data.rate} </div>
-                </div>
-              </li>
-            ))}
-        </ul>
+        <div className="container mx-auto flex justify-between py-10 space-x-20">
+          {/* map */}
+          <div id="map" style={{ width: "500px", height: "400px" }}></div>
+
+          {/* list */}
+          <div>
+            <ul>
+              {!!positions &&
+                positions.map((data, idx) => (
+                  <li key={idx} className="py-2">
+                    <div>
+                      <div className="text-xl font-bold ...">{data.branch}</div>
+                      <div> 위치: {data.location} </div>
+                      <div> 연락처: {data.contact} </div>
+                      <div> 평점: {data.rate} </div>
+                    </div>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </div>
       </>
     );
   };
@@ -105,42 +129,34 @@ export default function Cafe() {
         >
           <div class="py-5">
             <form onSubmit={onSubmitHandler}>
-              <label
-                className="relative block flex-grow mr-2 text-center"
-                style={{ flex: "0.3" }}
-              >
-                <span className="sr-only">Time:</span>
-                <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                  <AccessAlarmIcon style={{ color: "#718096" }} />
-                </span>
-                <select
-                  value={Location}
-                  onChange={(e) => handleTimeChange(e.target.value)}
-                  className="placeholder:italic placeholder:text-slate-400 block w-full bg-white border border-slate-300 rounded-md py-2 pl-10 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                >
-                  <option value="0">전체</option>
-                  <option value="15">0 ~ 15 분</option>
-                  <option value="30">16 ~ 30 분</option>
-                  <option value="45">31 ~ 45 분</option>
-                  <option value="60">46 ~ 60 분</option>
-                  <option value="75">61 ~ 75 분</option>
-                  <option value="90">76 ~ 90 분</option>
-                  <option value="105">91 분 이상</option>
-                </select>
-              </label>
-              <label>
-                지역 :
+              <label className="px-5">
+                <span>지역: </span>
                 <select
                   value={Location}
                   onChange={(e) => setLocation(e.target.value)}
                 >
                   <option value="">전체</option>
                   <option value="강남구">강남구</option>
+                  <option value="강동구">강동구</option>
+                  <option value="강북구">강북구</option>
+                  <option value="강서구">강서구</option>
+                  <option value="관악구">관악구</option>
+                  <option value="광진구">광진구</option>
+                  <option value="노원구">노원구</option>
+                  <option value="동대문구">동대문구</option>
+                  <option value="동작구">동작구</option>
                   <option value="마포구">마포구</option>
+                  <option value="서대문구">서대문구</option>
+                  <option value="성동구">성동구</option>
+                  <option value="성북구">성북구</option>
+                  <option value="송파구">송파구</option>
+                  <option value="용산구">용산구</option>
+                  <option value="은평구">은평구</option>
+                  <option value="종로구">종로구</option>
                 </select>
               </label>
-              <label>
-                브랜드 :
+              <label className="px-5">
+                <span>브랜드: </span>
                 <select
                   value={Brand}
                   onChange={(e) => setBrand(e.target.value)}
