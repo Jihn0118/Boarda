@@ -90,6 +90,7 @@ public class ReviewServiceImpl implements ReviewService {
             Tag tag = Tag.builder()
                     .game(game)
                     .review(resultReview)
+                    .cafe(cafe)
                     .build();
             tagList.add(tag);
         }
