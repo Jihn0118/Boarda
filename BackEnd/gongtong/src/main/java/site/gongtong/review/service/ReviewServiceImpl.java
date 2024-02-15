@@ -86,7 +86,7 @@ public class ReviewServiceImpl implements ReviewService {
         List<BoardGame> gameList = boardGameRepository.findAllByTitle(gameNameList);
         List<Tag> tagList = new ArrayList<>();
 
-        for(BoardGame game: gameList){
+        for (BoardGame game : gameList) {
             Tag tag = Tag.builder()
                     .game(game)
                     .review(resultReview)
@@ -95,14 +95,14 @@ public class ReviewServiceImpl implements ReviewService {
         }
         List<Tag> resultTagList = tagRepository.saveAll(tagList);
 
-        if(!tagList.isEmpty() && resultTagList.isEmpty()){
+        if (!tagList.isEmpty() && resultTagList.isEmpty()) {
             System.out.println("태그 저장 실패");
             return 2;   // 태그 저장 에러
         }
         // 보드게임 이미지 만들기
         List<Image> imageList = new ArrayList<>();
 
-        for(int i = 0; i < files.size(); i++){
+        for (int i = 0; i < files.size(); i++) {
             MultipartFile file = files.get(i);
 
             String str = fileService.uploadFile(file, FileFolder.REVIEW_IMAGES);
@@ -118,7 +118,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         List<Image> resultImageList = imageRepository.saveAll(imageList);
 
-        if(!imageList.isEmpty() && resultImageList.isEmpty()){
+        if (!imageList.isEmpty() && resultImageList.isEmpty()) {
             System.out.println("이미지 저장 실패");
             return 3;   // 이미지 에러
         }

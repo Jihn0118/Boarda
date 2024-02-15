@@ -22,13 +22,13 @@ public class ImageController {
     private final FileService fileService;
 
     @PostMapping("/upload")
-    public ResponseEntity<List<String>> upload(@RequestBody List<MultipartFile> fileList){
+    public ResponseEntity<List<String>> upload(@RequestBody List<MultipartFile> fileList) {
         List<String> list = new ArrayList<>();
-        for(int i = 0; i < fileList.size(); i++){
+        for (int i = 0; i < fileList.size(); i++) {
             MultipartFile file = fileList.get(i);
             String str = fileService.uploadFile(file, FileFolder.REVIEW_IMAGES);
             list.add(str);
         }
-        return  new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

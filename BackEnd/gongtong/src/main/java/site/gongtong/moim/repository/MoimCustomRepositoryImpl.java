@@ -9,7 +9,6 @@ import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.QMoim;
 import site.gongtong.moim.model.QMoimMember;
 
-
 import java.util.List;
 
 @Repository
@@ -63,7 +62,7 @@ public class MoimCustomRepositoryImpl implements MoimCustomRepository {
                 .fetch();
     }
 
-    public List<Moim> findByLocationAndStatusOrderByCount(String location){
+    public List<Moim> findByLocationAndStatusOrderByCount(String location) {
         QMoim moim = QMoim.moim;
         QMoimMember moimMember = QMoimMember.moimMember;
 

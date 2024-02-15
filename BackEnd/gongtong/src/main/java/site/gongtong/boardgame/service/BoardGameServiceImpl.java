@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BoardGameServiceImpl implements BoardGameService{
+public class BoardGameServiceImpl implements BoardGameService {
     private final GameCustomRepository gameCustomRepository;
 
     @Override
@@ -21,7 +21,7 @@ public class BoardGameServiceImpl implements BoardGameService{
 
     @Override
     public BoardGameDetailDto getGameInfo(Integer gameId) {
-        BoardGame  boardGame = gameCustomRepository.findById(gameId);
+        BoardGame boardGame = gameCustomRepository.findById(gameId);
         List<ImageReviewDto> imageReviewDtos = gameCustomRepository.getImagesAndReviewIdsByGameId(gameId);
 
         return BoardGameDetailDto.builder()

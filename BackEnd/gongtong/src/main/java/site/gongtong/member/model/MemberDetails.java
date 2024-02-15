@@ -25,9 +25,11 @@ public class MemberDetails implements UserDetails {
     public String getUsername() {
         return member.getId();
     }
+
     public String getNickname() {
         return member.getNickname();
     }
+
     public String getBirth() {
         return member.getBirth();
     }
@@ -37,7 +39,9 @@ public class MemberDetails implements UserDetails {
     }
 
     //글 불러올 때 필요
-    public Integer getNum() { return member.getNum(); }
+    public Integer getNum() {
+        return member.getNum();
+    }
 
     public String getProfileImage() {
         return member.getProfileImage();

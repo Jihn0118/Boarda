@@ -22,8 +22,8 @@ import java.io.IOException;
  */
 public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    public LoginAuthenticationFilter (final String defaultFilterProcessUrl,
-                                      final AuthenticationManager authenticationManager) { //인증(로그인) 수행하는 인터페이스
+    public LoginAuthenticationFilter(final String defaultFilterProcessUrl,
+                                     final AuthenticationManager authenticationManager) { //인증(로그인) 수행하는 인터페이스
         super(defaultFilterProcessUrl, authenticationManager); //필터가 처리할 url, 이 필터가 사용할 설정
     }
 
@@ -31,7 +31,7 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         String method = request.getMethod(); //get인지 post인지
 
-        if(!method.equals("POST")) { //로그인인데 포스트 요청이 아니야?
+        if (!method.equals("POST")) { //로그인인데 포스트 요청이 아니야?
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
 
@@ -42,9 +42,9 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
         System.out.println("Can i make UPAToken??!?!?!"); //나오는지 확인
         return this.getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken( //사용자 인증 시도 - 사용자의 인증 정보
-                    loginRequest.getId(),
-                    loginRequest.getPassword() //이 두 내용으로 UPA토큰 발급
-            )
+                        loginRequest.getId(),
+                        loginRequest.getPassword() //이 두 내용으로 UPA토큰 발급
+                )
         );
     }
 }

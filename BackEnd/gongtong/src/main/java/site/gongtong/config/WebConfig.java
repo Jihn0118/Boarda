@@ -27,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     *  정적 리소스가 위치할 수 있는 경로를 나열하기
+     * 정적 리소스가 위치할 수 있는 경로를 나열하기
      */ //추후 수정
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/static/"

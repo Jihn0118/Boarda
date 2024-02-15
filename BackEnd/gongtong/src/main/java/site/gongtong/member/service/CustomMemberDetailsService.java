@@ -12,7 +12,7 @@ import site.gongtong.member.repository.MemberRepository;
 
 /**
  * SecurityUserDetailsDto 객체가 생성
- *     => 스프링 시큐리티에서 사용자의 상세 정보를 담는 역할
+ * => 스프링 시큐리티에서 사용자의 상세 정보를 담는 역할
  * 스프링 시큐리티에서 사용자 정보를 불러오고, 인증 및 권한 부여 과정에서 중요한 역할
  */
 

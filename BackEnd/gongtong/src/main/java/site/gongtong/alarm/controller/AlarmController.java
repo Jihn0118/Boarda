@@ -30,7 +30,7 @@ public class AlarmController {
     public static Map<String, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
 
     @GetMapping(value = "/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribe(HttpServletRequest request){
+    public SseEmitter subscribe(HttpServletRequest request) {
         log.info("SSE 구독 컨트롤러 들어옴!!!");
 
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
@@ -52,7 +52,7 @@ public class AlarmController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Alarm>> getAlarmList(HttpServletRequest request){
+    public ResponseEntity<List<Alarm>> getAlarmList(HttpServletRequest request) {
         log.info("내 알람 리스트 가져오기");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
@@ -62,14 +62,14 @@ public class AlarmController {
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Integer> getAlarmCount(HttpServletRequest request){
+    public ResponseEntity<Integer> getAlarmCount(HttpServletRequest request) {
 
         log.info("알람 카운트 받아오기");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
         Long count = alarmService.getCount(memberId);
 
-        if(count == null){
+        if (count == null) {
             return new ResponseEntity<>(0, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(count.intValue(), HttpStatus.OK);
@@ -77,7 +77,7 @@ public class AlarmController {
     }
 
     @GetMapping("/start")
-    public ResponseEntity<Long> getLatestAlarm(HttpServletRequest request){
+    public ResponseEntity<Long> getLatestAlarm(HttpServletRequest request) {
         log.info("로그인 후 최신 알람 받아오기");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 

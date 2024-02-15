@@ -1,19 +1,16 @@
 package site.gongtong.member.service;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import site.gongtong.Image.repository.ImageRepository;
 import site.gongtong.member.dto.SignUpRequest;
 import site.gongtong.member.model.Member;
 import site.gongtong.member.model.MemberDto;
 import site.gongtong.member.repository.MemberRepository;
 import site.gongtong.s3.FileFolder;
 import site.gongtong.s3.FileService;
-
 
 import java.util.Optional;
 
@@ -53,12 +50,12 @@ public class MemberServiceImpl implements MemberService {
 
     public Member login(String id, String password) {
         Optional<Member> optionalMember = memberRepository.findById(id);
-        if(optionalMember.isEmpty()) {
+        if (optionalMember.isEmpty()) {
             return null;
         }
 
         Member member = optionalMember.get();
-        if(!member.getPassword().equals(password)) {
+        if (!member.getPassword().equals(password)) {
             return null;
         }
 
@@ -66,10 +63,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public MemberDto getLoginMemberById(String id) { //인증, 인가 시 사용
-        if(id == null) return null; //로그아웃 상태
+        if (id == null) return null; //로그아웃 상태
         Optional<Member> optionalMember = memberRepository.findById(id);
 
-        if(optionalMember.isEmpty()) return null;
+        if (optionalMember.isEmpty()) return null;
 
         //Member을 MemberDto로 바꿔서 리턴
         Member member = memberRepository.findById(id)

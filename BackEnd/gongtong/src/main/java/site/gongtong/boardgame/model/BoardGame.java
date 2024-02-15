@@ -19,13 +19,13 @@ public class BoardGame {
 
     private String title;       // 게임 제목
 
-    @Column(name="min_num")
+    @Column(name = "min_num")
     private int minNum;         // 최소인원
 
-    @Column(name="max_num")
+    @Column(name = "max_num")
     private int maxNum;         // 최대인원
 
-    @Column(name="time")
+    @Column(name = "time")
     private int playTime;       // 플레이시간
 
     private int age;            // 사용연령

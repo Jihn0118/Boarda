@@ -22,7 +22,7 @@ public class MoimController {
     private final MoimService moimService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Moim>> getSortedList(@RequestParam(name="location") String location, @RequestParam(name="sort") int sorting){
+    public ResponseEntity<List<Moim>> getSortedList(@RequestParam(name = "location") String location, @RequestParam(name = "sort") int sorting) {
         log.info("리스트 정렬 들어옴!!!");
 
         List<Moim> sortedMoimList = moimService.getSortedMoimList(location, sorting);
@@ -31,7 +31,7 @@ public class MoimController {
     }
 
     @GetMapping("/deadline")
-    public ResponseEntity<List<Moim>> getDeadlineList(){
+    public ResponseEntity<List<Moim>> getDeadlineList() {
         log.info("마감임박 들어옴!!");
         return new ResponseEntity<>(moimService.getDeadlineList(), HttpStatus.OK);
     }
@@ -39,7 +39,7 @@ public class MoimController {
     // 조건
     // 1. 참여한 진행 중인 모임이 있으면 못 만들게 한다.
     @GetMapping("/checkroom")
-    public ResponseEntity<Integer> checkRoom(HttpServletRequest request){
+    public ResponseEntity<Integer> checkRoom(HttpServletRequest request) {
         log.info("진행중인 방 체크");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
@@ -47,7 +47,7 @@ public class MoimController {
     }
 
     @PostMapping("/room")
-    public ResponseEntity<Integer> createRoom(@RequestBody MoimCondition moimCondition, HttpServletRequest request){
+    public ResponseEntity<Integer> createRoom(@RequestBody MoimCondition moimCondition, HttpServletRequest request) {
         log.info("방 만들기");
         log.info(moimCondition.toString());
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
@@ -68,7 +68,7 @@ public class MoimController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Integer> joinMoim(@RequestBody JoinCondition joinCondition, HttpServletRequest request){
+    public ResponseEntity<Integer> joinMoim(@RequestBody JoinCondition joinCondition, HttpServletRequest request) {
         log.info("방에 참여하기");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
@@ -80,7 +80,7 @@ public class MoimController {
 
     // TODO 팔로우 기능 생기면 친구 초대 기능(알림만 보내줌) 추가해야 됨.
     @GetMapping("/friend")
-    public ResponseEntity<Integer> inviteFriend(HttpServletRequest request, @RequestParam(name="f_id") String friendId, @RequestParam(name="moim_id") int moimId){
+    public ResponseEntity<Integer> inviteFriend(HttpServletRequest request, @RequestParam(name = "f_id") String friendId, @RequestParam(name = "moim_id") int moimId) {
         log.info("친구 초대하기");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
         // 내 아이디랑 친구 아이디 받아서 내 모임에 친구 추가하기
@@ -91,7 +91,7 @@ public class MoimController {
     }
 
     @GetMapping("/mymoimlist")
-    public ResponseEntity<List<Moim>> getMyMoimList(HttpServletRequest request){
+    public ResponseEntity<List<Moim>> getMyMoimList(HttpServletRequest request) {
         log.info("내 모임 이력 리스트 출력!!");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
@@ -101,7 +101,7 @@ public class MoimController {
     }
 
     @GetMapping("/mymoim")
-    public ResponseEntity<Moim> getMyMoim(HttpServletRequest request){
+    public ResponseEntity<Moim> getMyMoim(HttpServletRequest request) {
         log.info("현재 내가 참여중인 모임 들어옴!!!");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
@@ -111,7 +111,7 @@ public class MoimController {
     }
 
     @DeleteMapping("/exit")
-    public ResponseEntity<Long> exitMoim(HttpServletRequest request, @RequestParam("moim_id") int moimId){
+    public ResponseEntity<Long> exitMoim(HttpServletRequest request, @RequestParam("moim_id") int moimId) {
         log.info("모임 나가기 들어옴!!!");
 
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
