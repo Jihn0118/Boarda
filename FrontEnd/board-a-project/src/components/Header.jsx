@@ -90,6 +90,23 @@ const HamburgerContainer = styled.div`
   }
 `;
 
+const ProfileImage = styled.img`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 70%;
+  object-fit: cover;
+  border: black 0.1rem solid;
+  margin-right: 1rem;
+  margin-left: 0.5rem;
+`;
+
+const StyledAlarm = styled(Alarm)`
+  && {
+    margin-left: 5rem;
+    padding-left: 3rem;
+  }
+`;
+
 // 로그인 상태일 때 보이는 부분 - 마이페이지로, 로그아웃 버튼
 // 헤더에서만 쓰이는 컴포넌트
 function LoginUserDiv() {
@@ -97,21 +114,16 @@ function LoginUserDiv() {
 
   const logoutUser = {
     id: "",
-    password: "",
     nickname: "",
-    birth: "",
-    gender: "",
-    profileImage: "",
-    jwt: "",
-    num: "",
-    userName: "",
+    profile: "",
   };
 
   return (
     <>
       <p>{loginUser.nickname}님 환영합니다</p>
-      <Alarm></Alarm>
+      <StyledAlarm></StyledAlarm>
       <Link to={`/my-page/${loginUser.id}`}>마이페이지</Link>
+
       <button
         onClick={() => {
           // 로그아웃 수행시
@@ -123,6 +135,10 @@ function LoginUserDiv() {
       >
         로그아웃
       </button>
+      <ProfileImage
+        src={`${import.meta.env.VITE_S3_BASE}${loginUser.profile}`}
+        alt=""
+      />
     </>
   );
 }
