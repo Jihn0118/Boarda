@@ -19,7 +19,6 @@ export default function GroupNow() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const res = await moimAPI.getParticipatingMoim(loginUser.id);
         const res = await moimAPI.getParticipatingMoim();
         setParticipatingGroup(res.data);
         console.log(res.data);

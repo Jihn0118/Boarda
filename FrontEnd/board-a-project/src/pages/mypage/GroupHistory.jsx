@@ -24,9 +24,8 @@ export default function GroupHistory() {
     // 백 로그인 완성되면 파람에서 로그인 유저 기준으로 로직 고치기
     const fetchData = async () => {
       try {
-        const jwt = JSON.parse(localStorage.getItem("loginUser")).jwt;
-        const res = await moimAPI.getMoimHistory(params.userId, jwt);
-        console.log(res);
+        const res = await moimAPI.getMoimHistory();
+        console.log(res)
         console.log(res.data);
         setHistory(res.data);
       } catch (err) {

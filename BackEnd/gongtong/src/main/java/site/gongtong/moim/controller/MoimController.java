@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import site.gongtong.moim.model.JoinCondition;
 import site.gongtong.moim.model.Moim;
 import site.gongtong.moim.model.MoimCondition;
+import site.gongtong.moim.model.MoimGroup;
 import site.gongtong.moim.service.MoimService;
 import site.gongtong.security.jwt.TokenUtils;
 
@@ -78,7 +79,6 @@ public class MoimController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    // TODO 팔로우 기능 생기면 친구 초대 기능(알림만 보내줌) 추가해야 됨.
     @GetMapping("/friend")
     public ResponseEntity<Integer> inviteFriend(HttpServletRequest request, @RequestParam(name = "f_id") String friendId, @RequestParam(name = "moim_id") int moimId) {
         log.info("친구 초대하기");
@@ -90,12 +90,22 @@ public class MoimController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+//    @GetMapping("/mymoimlist")
+//    public ResponseEntity<List<Moim>> getMyMoimList(HttpServletRequest request) {
+//        log.info("내 모임 이력 리스트 출력!!");
+//        String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
+//
+//        List<Moim> myMoimList = moimService.getMyMoimList(memberId);
+//
+//        return new ResponseEntity<>(myMoimList, HttpStatus.OK);
+//    }
+
     @GetMapping("/mymoimlist")
-    public ResponseEntity<List<Moim>> getMyMoimList(HttpServletRequest request) {
+    public ResponseEntity<List<MoimGroup>> getMyMoimList(HttpServletRequest request) {
         log.info("내 모임 이력 리스트 출력!!");
         String memberId = TokenUtils.getUserIdFromToken(TokenUtils.fetchToken(request));
 
-        List<Moim> myMoimList = moimService.getMyMoimList(memberId);
+        List<MoimGroup> myMoimList = moimService.getMyMoimGroupList(memberId);
 
         return new ResponseEntity<>(myMoimList, HttpStatus.OK);
     }
