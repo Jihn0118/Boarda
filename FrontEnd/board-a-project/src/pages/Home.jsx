@@ -74,7 +74,7 @@ const Home = () => {
       try {
         const res = await urgentMoim();
         setDeadlineMoim(res.data);
-
+        console.log(deadlineMoim);
 
       } catch (error) {
         console.log(error);
@@ -84,7 +84,6 @@ const Home = () => {
     fetchGameData();
     fetchCafeData();
     fetchMoimData();
-    console.log(deadlineMoim)
   }, []);
 
   const renderMap = () => {
