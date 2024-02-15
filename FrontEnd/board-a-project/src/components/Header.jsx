@@ -161,7 +161,7 @@ export default function Header() {
   };
 
   return (
-    <StyledHeader>
+    <StyledHeader className="sticky top-0 z-10">
       <div>
         {/* 로고 */}
         <HeaderLogo
