@@ -14,13 +14,10 @@ const reviewAPI = {
 
   // 내가 작성한 리뷰 리스트 요청 -> get, /myreview
   // 파라미터 -> int userNum (이후 토큰으로 수정 예정)
-  getMyReview(user_num) {
+  getMyReview() {
     return api({
       method: "get",
       url: `${END_POINT}/myreview`,
-      params: {
-        user_num: user_num,
-      },
     });
   },
 

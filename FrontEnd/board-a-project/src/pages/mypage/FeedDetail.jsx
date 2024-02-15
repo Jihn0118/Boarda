@@ -25,12 +25,10 @@ const LargeFeed = styled(CardMedia)`
   }
 `;
 
-export default function FeedDetail() {
-  const info = useOutletContext(); // Feed에서 넘어온 것
+export default function FeedDetail({feedDetailInfo}) {
   // 클릭하면 크게 보일 대표 이미지
-  const [refImage, setRefImage] = useState(info.images[0].name);
-
-  console.log(info);
+  const [refImage, setRefImage] = useState(feedDetailInfo.images[0].name);
+  console.log(feedDetailInfo)
 
   return (
     <Card
@@ -46,7 +44,7 @@ export default function FeedDetail() {
           alt="피드 이미지"
         />
         <div className="flex ml-2 ">
-          {info.images.map((e, index) => (
+          {feedDetailInfo.images.map((e, index) => (
             <SmallFeed
               className="grow"
               component="img"
@@ -61,10 +59,10 @@ export default function FeedDetail() {
       <hr></hr>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {info.cafe.brand}
+          {feedDetailInfo.cafe.brand}
         </Typography>
         <Typography variant="body1" color="text.primary" component="p">
-          {info.content}
+          {feedDetailInfo.content}
         </Typography>
       </CardContent>
     </Card>

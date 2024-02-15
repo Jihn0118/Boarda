@@ -166,10 +166,10 @@ export default function GroupHistory() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {e.id}
+                    {e.moim.id}
                   </TableCell>
-                  <TableCell align="right">{e.title}</TableCell>
-                  <TableCell align="right">{e.number}</TableCell>
+                  <TableCell align="right">{e.moim.title}</TableCell>
+                  <TableCell align="right">{e.moim.number}</TableCell>
                   <TableCell align="right">
                     {/* Status 에 따라서 바뀌도록 수정해야 */}
                     <button className="bg-blue-200" onClick={handleOpen}>피드남기기</button>
