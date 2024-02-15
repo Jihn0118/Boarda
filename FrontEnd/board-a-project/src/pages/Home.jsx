@@ -6,7 +6,7 @@ import { Carousel } from "@material-tailwind/react";
 import rankingAPI from "../api/rankingAPI";
 import { urgentMoim } from "../api/moimAPI";
 
-// import icon, image 
+// import icon, image
 import Carousel01 from "../assets/images/Carousel01.png";
 import Carousel02 from "../assets/images/Carousel02.png";
 import logo_1 from "../assets/images/logo_1.png";
@@ -19,7 +19,7 @@ const Home = () => {
   const [rankGameData, setRankGame] = useState([]);
   const [rankCafeData, setRankCafe] = useState([]);
   const [deadlineMoim, setDeadlineMoim] = useState([]);
-  
+
   useEffect(() => {
     // rankGameData, rankCafeData, endSoon axios 요청
     const fetchGameData = async () => {
@@ -46,10 +46,10 @@ const Home = () => {
       try {
         const res = await urgentMoim();
         console.log(res);
-      } catch(error){
+      } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     fetchGameData();
     fetchCafeData();
@@ -101,14 +101,28 @@ const Home = () => {
                 rankCafeData.map(
                   (data, idx) =>
                     idx <= 2 && ( // 인기매장 top 3만 표시
-                      <div key={idx} className="container flex flex-col items-center">
-                        <div className="w-1/3">
-                          <img src={logo_2} alt="brand logo" />
+                      <div
+                        key={idx}
+                        className="container flex flex-col items-center"
+                      >
+                        <div className="flex flex-col items-center">
+                          <img
+                            src={
+                              rankCafeData[idx].cafe.brand === "레드버튼"
+                                ? logo_1
+                                : rankCafeData[idx].cafe.brand === "홈즈앤루팡"
+                                ? logo_2
+                                : logo_3
+                            }
+                            alt="brand logo"
+                          style={{width:"150px", height:"150px", marginBottom:"20px"}}
+                          />
+
+                          <h2 className="text-xl text-center...">
+                            {rankCafeData[idx].cafe.brand}{" "}
+                            {rankCafeData[idx].cafe.branch}
+                          </h2>
                         </div>
-                        <h2 className="text-xl text-center...">
-                          {rankCafeData[idx].cafe.brand}{" "}
-                          {rankCafeData[idx].cafe.branch}
-                        </h2>
                         <div className="py-10">
                           <span>{rankCafeData[idx].cafe.rate} / 5</span>
                         </div>
