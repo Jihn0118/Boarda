@@ -251,7 +251,7 @@ export default function GroupHistory() {
 
   return (
     <>
-      <div className="px-32 mx-auto text-center">
+      <div className="px-16 mx-auto text-center">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -280,12 +280,30 @@ export default function GroupHistory() {
                     key={e.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      align="center"
+                      className="w-1/12"
+                      component="th"
+                      scope="row"
+                    >
                       {e.moim.id}
                     </TableCell>
-                    <TableCell align="right">{e.moim.title}</TableCell>
-                    <TableCell align="right">{e.moim.number}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center" className="w-2/3">
+                      {e.moim.title}
+                    </TableCell>
+                    <TableCell align="center" className="w-1/12">
+                      {e.moim.number}
+                    </TableCell>
+                    <TableCell align="center" className="w-1/12">
+                      {/* Status 에 따라서 바뀌도록 수정해야 */}
+                      <button
+                        className="bg-blue-200 px-4 py-2 rounded-lg text-white font-bold ..."
+                        onClick={handleOpen}
+                      >
+                        목록 보기
+                      </button>
+                    </TableCell>
+                    <TableCell align="center" className="w-1/12">
                       {/* Status 에 따라서 바뀌도록 수정해야 */}
                       <button
                         className="bg-blue-200 px-4 py-2 rounded-lg text-white font-bold ..."
