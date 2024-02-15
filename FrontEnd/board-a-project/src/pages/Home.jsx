@@ -231,10 +231,10 @@ const Home = () => {
           </div>
           {/* 게임목록 */}
           <div className="flex justify-start py-5">
-            <div className="space-y-6">
+            <div>
               {rankGameData &&
                 rankGameData.map((data, idx) => (
-                  <div className="flex justify-start items-center space-x-4">
+                  <div className="flex justify-start items-center space-x-4 border-b-2 border-rose-600 ...">
                     <div className="w-20 text-center">{idx + 1}</div>
                     <div className="flex w-96 space-x-4 items-center">
                       <div style={{width: '60px', height: '60px', margin:'10px 0px' }}>
