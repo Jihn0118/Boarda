@@ -66,7 +66,7 @@ export default function Cafe() {
         };
 
         for (let i = 0; i < positions.length; i++) {
-          if (positions[i].id <= 20) continue;
+
 
           const temp_point = new kakao.maps.LatLng(
             positions[i].latitude,
