@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import site.gongtong.moim.model.Moim;
 
 @Repository
-public interface MoimRepository extends JpaRepository<Moim,Long> {
+public interface MoimRepository extends JpaRepository<Moim, Integer> {
 }

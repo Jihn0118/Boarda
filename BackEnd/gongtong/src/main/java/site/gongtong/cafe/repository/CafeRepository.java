@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import site.gongtong.cafe.model.Cafe;
 
 @Repository
-public interface CafeRepository extends JpaRepository<Cafe,Long> {
+public interface CafeRepository extends JpaRepository<Cafe, Integer> {
 }
