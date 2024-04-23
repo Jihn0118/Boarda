@@ -4,4 +4,4 @@
 
 ## ERD
 
-![ERD](/Docs/Images/Boarda%20ERD.png)
+![ERD](/Docs/Images/Boarda_ERD.png)
